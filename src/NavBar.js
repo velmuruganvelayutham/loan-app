@@ -10,7 +10,7 @@ function NavBar(){
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="ms-auto" >
-                <Nav.Item><Nav.Link href="/">Home</Nav.Link></Nav.Item>
+                <Nav.Item><Nav.Link href="#">Home</Nav.Link></Nav.Item>
 
                 <NavDropdown title="Master" id="basic-nav-dropdown">
                     <NavDropdown.Item href="create">Borrower</NavDropdown.Item>
