@@ -13,17 +13,17 @@ function NavBar(){
                 <Nav.Item><Nav.Link href="/">Home</Nav.Link></Nav.Item>
 
                 <NavDropdown title="Master" id="basic-nav-dropdown">
-                    <NavDropdown.Item href="/create">Borrower</NavDropdown.Item>
-                    <NavDropdown.Item href="/citycreate">City</NavDropdown.Item>
-                    <NavDropdown.Item href="/linemancreate">LineMan</NavDropdown.Item>
+                    <NavDropdown.Item href="create">Borrower</NavDropdown.Item>
+                    <NavDropdown.Item href="citycreate">City</NavDropdown.Item>
+                    <NavDropdown.Item href="linemancreate">LineMan</NavDropdown.Item>
                     <NavDropdown.Item href="#action/3.3">Father/Husband</NavDropdown.Item>
                 </NavDropdown>
                 <NavDropdown title="Entry" id="basic-nav-dropdown">
-                    <NavDropdown.Item href="/loan">Loan</NavDropdown.Item>
-                    <NavDropdown.Item href="/receipt">Receipt</NavDropdown.Item>
+                    <NavDropdown.Item href="loan">Loan</NavDropdown.Item>
+                    <NavDropdown.Item href="receipt">Receipt</NavDropdown.Item>
                 </NavDropdown>
                 <NavDropdown title="Report" id="basic-nav-dropdown">
-                    <NavDropdown.Item href="/ledger">Ledger</NavDropdown.Item>
+                    <NavDropdown.Item href="ledger">Ledger</NavDropdown.Item>
                 </NavDropdown>  
                 </Nav>
                 </Navbar.Collapse>
