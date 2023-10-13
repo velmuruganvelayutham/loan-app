@@ -16,7 +16,7 @@ function App() {
     <div className="app">
       <React.Fragment >
         <NavBar />
-          <Router  >
+          <Router basename="/loan-app"  >
             <Routes >
                 <Route path='/' element={<Home />} />
                 <Route path='/create' element={<AddCustomer />} />
@@ -24,7 +24,7 @@ function App() {
                 <Route path='/linemancreate' element={<AddLineMan/>}/>
                 <Route path='/loan' element={<LoanForm />} />
                 <Route path='/receipt' element={< AddReceipt/>} />
-                <Route path='/ledgercreate' element={< Ledger/>} />
+                <Route path='/ledger' element={< Ledger/>} />
             </Routes>
         </Router>
         <Footer />
