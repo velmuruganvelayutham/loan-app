@@ -1,17 +1,8 @@
 import logo from './logo.svg';
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import './App.css';
 import Home from './Home';
 import { BrowserRouter as Router, Route, Routes, useNavigate, Navigate } from "react-router-dom";
-import AddCustomer from './AddCustomer';
-import NavBar from './NavBar';
-import Footer from './Footer';
-import LoanForm from './LoanForm';
-import AddCityName from './AddCityName';
-import AddLineMan from './AddLineMan';
-import AddReceipt from './Receipt';
-import Ledger from './Reports/Ledger';
-
 import {
   ClerkProvider,
   SignedIn,
@@ -23,6 +14,15 @@ import {
   ClerkLoading,
   RedirectToSignIn,
 } from "@clerk/clerk-react";
+const AddCustomer = lazy(() => import('./AddCustomer'));
+const NavBar = lazy(() => import('./NavBar'));
+const Footer = lazy(() => import('./Footer'));
+const LoanForm = lazy(() => import('./LoanForm'));
+const AddCityName = lazy(() => import('./AddCityName'));
+const AddLineMan = lazy(() => import('./AddLineMan'));
+const AddReceipt = lazy(() => import('./Receipt'));
+const Ledger = lazy(() => import('./Reports/Ledger'));
+
 if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key")
 }
@@ -125,18 +125,25 @@ function ClerkProviderWithRoutes() {
   );
 }
 
-function App() {
-  return (
-    <div className="app">
-      <React.Fragment >
-        <NavBar />
-        <Router basename="/loan-app" >
-          <ClerkProviderWithRoutes />
-        </Router>
-        <Footer />
-      </React.Fragment>
-    </div>
-  );
+function Loading() {
+  return <h2>🌀 Loading...</h2>;
 }
 
-export default App;
+  function App() {
+    return (
+      <div className="app">
+        <React.Fragment >
+          <NavBar />
+          <Router basename="/loan-app" >
+            <Suspense fallback={<Loading />}>
+              <ClerkProviderWithRoutes />
+            </Suspense>
+          </Router>
+
+          <Footer />
+        </React.Fragment>
+      </div>
+    );
+  }
+
+  export default App;
