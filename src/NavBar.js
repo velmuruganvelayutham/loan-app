@@ -2,16 +2,32 @@ import React from "react";
 import {Button,Navbar,Container ,Nav} from 'react-bootstrap';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import {Link} from 'react-router-dom';
+import { useTranslation } from "react-i18next";
+import "./i18n";
+
 function NavBar(){
+    const { t, i18n } = useTranslation();
+    const handleSelect = (eventKey,e) => {
+        console.log(`selected ${eventKey}`, e, e.target.innerText);
+        const languageValue = e.target.innerText;
+        if (languageValue === "English" ){
+            i18n.changeLanguage('en');
+        }else {
+            i18n.changeLanguage('ta');
+        }
+    }
     return(
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" >
+    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" onSelect={handleSelect} >
             <Container>
                 <Navbar.Brand href="#home">Loan ManageMent</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="ms-auto" >
                 <Nav.Item><Nav.Link href="#">Home</Nav.Link></Nav.Item>
-
+                <NavDropdown title="Language" id="basic-nav-dropdown">
+                    <NavDropdown.Item href="#">English</NavDropdown.Item>
+                    <NavDropdown.Item href="#">Tamil</NavDropdown.Item>
+                </NavDropdown>
                 <NavDropdown title="Master" id="basic-nav-dropdown">
                     <NavDropdown.Item href="create">Borrower</NavDropdown.Item>
                     <NavDropdown.Item href="citycreate">City</NavDropdown.Item>

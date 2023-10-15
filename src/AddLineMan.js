@@ -4,6 +4,7 @@ import ListLineMan from "./components/ListLineMan"
 import axios from "axios"
 import { baseURL } from "./utils/constant";
 import LoadingSpinner from "./components/spinner/LoadingSpinner";
+import { useTranslation } from "react-i18next";
 var maxCitycode = 0;
 function AddLineMan() {
   const [input, setInput] = useState("");
@@ -13,7 +14,7 @@ function AddLineMan() {
   const [updateId, setUpdateId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
+  const { t, i18n } = useTranslation();
   useEffect(() => {
     setIsLoading(true);
     axios.get(`${baseURL}/linemancreate/get`).then((res) => {
@@ -100,7 +101,7 @@ function AddLineMan() {
             <Col xs={12} md={12} >
               <Form.Group className="mb-3" name="linemanname" border="primary" >
                 <Form.Label>LineMan Name</Form.Label>
-                <Form.Control type="text" placeholder="Enter LineMan Name" required value={input} onChange={(e) => setInput(e.target.value)} />
+                <Form.Control type="text" placeholder={t('placeholder')} required value={input} onChange={(e) => setInput(e.target.value)} />
               </Form.Group>
             </Col>
 

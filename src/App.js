@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import React, { Suspense, lazy } from 'react';
 import './App.css';
 import Home from './Home';
-import { BrowserRouter as Router, Route, Routes, useNavigate, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useNavigate, Navigate, Link } from "react-router-dom";
 import {
   ClerkProvider,
   SignedIn,
@@ -129,21 +129,21 @@ function Loading() {
   return <h2>🌀 Loading...</h2>;
 }
 
-  function App() {
-    return (
-      <div className="app">
-        <React.Fragment >
-          <NavBar />
-          <Router basename="/loan-app" >
-            <Suspense fallback={<Loading />}>
-              <ClerkProviderWithRoutes />
-            </Suspense>
-          </Router>
+function App() {
+  return (
+    <div className="app">
+      <React.Fragment >
+     
+        <Router basename="/loan-app" >
+          <Suspense fallback={<Loading />}>
+            <ClerkProviderWithRoutes />
+          </Suspense>
+        </Router>
 
-          <Footer />
-        </React.Fragment>
-      </div>
-    );
-  }
+        <Footer />
+      </React.Fragment>
+    </div>
+  );
+}
 
-  export default App;
+export default App;
