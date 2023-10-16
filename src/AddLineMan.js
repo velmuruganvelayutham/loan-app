@@ -4,6 +4,7 @@ import ListLineMan from "./components/ListLineMan"
 import axios from "axios"
 import { baseURL } from "./utils/constant";
 import LoadingSpinner from "./components/spinner/LoadingSpinner";
+import PlaceHolder from "./components/spinner/placeholder";
 import { useTranslation } from "react-i18next";
 var maxCitycode = 0;
 function AddLineMan() {
@@ -120,7 +121,7 @@ function AddLineMan() {
                 Submit
               </Button>
             </div>
-            {isLoading ? <LoadingSpinner /> : renderLineManList}
+            {isLoading ? <PlaceHolder /> : renderLineManList}
             {errorMessage && <div className="error">{errorMessage}</div>}
 
           </Row>

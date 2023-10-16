@@ -133,13 +133,13 @@ function App() {
   return (
     <div className="app">
       <React.Fragment >
-     
+       
         <Router basename="/loan-app" >
+        <NavBar/>
           <Suspense fallback={<Loading />}>
             <ClerkProviderWithRoutes />
           </Suspense>
         </Router>
-
         <Footer />
       </React.Fragment>
     </div>

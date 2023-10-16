@@ -18,7 +18,7 @@ function AddCityName(){
             //console.log(res.data)
             setCityNames(res.data)
         })
-    },[[updateUI]]);
+    },[updateUI]);
     useEffect(()=>{
         axios.get(`${baseURL}/linemancreate/get/lines`).then((res)=>{
             setLineNames(res.data);
