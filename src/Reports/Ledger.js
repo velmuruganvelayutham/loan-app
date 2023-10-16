@@ -7,19 +7,19 @@ import{dateFormatdd} from '../FunctionsGlobal/StartDateFn'
 var first=[];
 var arr1=Array.from(Array(13).keys());
 var arr2=Array.from({length: 12}, (_, i) => i + 13)
-
-function Ledger() {
+//var arr2=Array.from(Array(12).keys());;
+export function Ledger({loanno}) {
     const[ledger,setLedger]=useState([])
     var serialno=0;
     useEffect(()=>{
-        axios.get(`${baseURL}/ledger/get`).then((res)=>{
+        axios.get(`${baseURL}/ledger/get`,{params:{loanno:loanno}}).then((res)=>{
             setLedger(res.data);
-             
+             console.log(res.data)
         })
     },[])
      first=ledger[0];
      let totalamount=ledger.length>0?first.totalamount:0;
-     //console.log(ledger.slice(13,ledger.length));
+     console.log(ledger.slice(13,ledger.length));
     const componentRef=useRef()
     const handlePrint=()=>{
         window.print()
@@ -39,11 +39,7 @@ function Ledger() {
     }
     return (
         <div >
-            <ReactToPrint trigger={()=>(
-                <Button className='btn btn-primary'>Print</Button>
-            )}
-            content={()=>componentRef.current}
-            />
+            
             <Container ref={componentRef} className="rounded bg-white ">
             
             <Row className="justify-content-md-center  ">
@@ -303,4 +299,3 @@ function Ledger() {
       )
     
 }
-export default Ledger

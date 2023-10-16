@@ -14,6 +14,7 @@ import {
   ClerkLoading,
   RedirectToSignIn,
 } from "@clerk/clerk-react";
+import LedgerForm from './Reports/LedgerForm';
 const AddCustomer = lazy(() => import('./AddCustomer'));
 const NavBar = lazy(() => import('./NavBar'));
 const Footer = lazy(() => import('./Footer'));
@@ -21,7 +22,7 @@ const LoanForm = lazy(() => import('./LoanForm'));
 const AddCityName = lazy(() => import('./AddCityName'));
 const AddLineMan = lazy(() => import('./AddLineMan'));
 const AddReceipt = lazy(() => import('./Receipt'));
-const Ledger = lazy(() => import('./Reports/Ledger'));
+const Ledger = lazy(() => import('./Reports/LedgerForm'));
 
 if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key")
@@ -110,7 +111,7 @@ function ClerkProviderWithRoutes() {
           element={
             <>
               <SignedIn>
-                <Ledger />
+                <LedgerForm />
               </SignedIn>
               <SignedOut>
                 <RedirectToSignIn />

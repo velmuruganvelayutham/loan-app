@@ -1,35 +1,33 @@
-import React, { Fragment,useState } from 'react'
+import React, { Fragment,useState,useRef } from 'react'
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Table,Pagination } from "react-bootstrap";
-import {BiEditAlt} from "react-icons/bi"
+import {BiEditAlt,BiPrinter} from "react-icons/bi"
 import {BsTrash} from "react-icons/bs"
 import axios from 'axios'
 import {baseURL} from "../utils/constant";
 import { useTranslation } from "react-i18next";
-
-const myStyle = {
-  columncount :"2",
-  columngap :"25px"
-};
+import { dateFormatdd } from '../FunctionsGlobal/StartDateFn';
+import ReactToPrint from 'react-to-print';
+import {Ledger} from './Ledger';
 /*const List = ({id,customer,customermobile,setUpdateUI,updateMode}) => {*/
   
-const List=({customers,setUpdateUI,updateMode})=>{
+const LedgerList=({loanDetails,updateMode})=>{
   const { t, i18n } = useTranslation();
 const[currentPage,setCurrentPage]=useState(1);
+
+const componentRef=useRef();
+const handlePrint=()=>{
+    //window.print()
+}
 const recordsPerPage=5;
 const lastIndex=currentPage*recordsPerPage;
 const firstIndex=lastIndex-recordsPerPage;
-const records=customers.slice(firstIndex,lastIndex);
-const nPage=Math.ceil(Object.keys(customers).length/recordsPerPage);
+const records=loanDetails.slice(firstIndex,lastIndex);
+const nPage=Math.ceil(Object.keys(loanDetails).length/recordsPerPage);
 const numbers=[...Array(nPage+1).keys()].slice(1);
 var serialno=0;
 serialno=(currentPage-1) * recordsPerPage;
-  const removeCustomer=(id)=>{
-    axios.delete(`${baseURL}/delete/${id}`).then((res)=>{
-      console.log(res.data);
-      setUpdateUI((preveState)=>!preveState)
-    })
-  }
+  
   function prevPage(){
     if(currentPage!==firstIndex)
     {
@@ -53,25 +51,28 @@ serialno=(currentPage-1) * recordsPerPage;
           <thead>
             <tr>
               <th>
-                {t('customertableno')}
+                {t('no')}
               </th>
               <th>
-                {t('customertablecustomername')}
+                {t('loanno')}
               </th>
               <th>
-                {t('customertablephonelabel')}
+                {t('customer')}
               </th>
               <th>
-                {t('customertablecitynamelabel')}
+                {t('phoneno')}
               </th>
-              <th colSpan={2}>
-                {t('customertablefathername')}
-              </th>
-              <th>
-                {t('customertableaddresslabel')}
+              <th >
+                {t('city')}
               </th>
               <th>
-                {t('customertableworklabel')}
+                {t('loanamount')}
+              </th>
+              <th>
+                {t('startdate')}
+              </th>
+              <th>
+                {t('startdate')}
               </th>
               <th>
                 {t('tableaction')}
@@ -87,16 +88,21 @@ serialno=(currentPage-1) * recordsPerPage;
                 return(
                   <tr>
                     <td>{serialno}</td>
+                    <td>{customer.loannumber}</td>
                     <td>{customer.customer}</td>
                     <td>{customer.mobileno}</td>
-                    <td>{customer.cityname}</td>
-                    <td>{customer.relationtype==0 ? "F" : "H"}</td>
-                    <td >{customer.fathername}</td>
-                    <td>{customer.address}</td>
-                    <td>{customer.work}</td>
+                    <td>{customer.city}</td>
+                    <td >{customer.totalamount}</td>
+                    <td>{dateFormatdd(customer.startdate)}</td>
+                    <td>{dateFormatdd(customer.finisheddate)}</td>
                     <td>
-                    <BiEditAlt  className='icons' onClick={()=>updateMode(customer._id,customer.customer,customer.mobileno,customer.city_id,customer.fathername,customer.address,customer.work,customer.relationtype)} />
-                    <BsTrash className='icons' onClick={()=>removeCustomer(customer._id)}  />
+                    <ReactToPrint trigger={()=>(
+                    <BiPrinter  className='icons' onClick={()=>handlePrint} />
+                    )}
+                    content={()=>componentRef.current} />
+                    <div ref={componentRef}><Ledger loanno={customer.loannumber} /></div>
+                        
+                    
                     </td>
                   </tr>
                   
@@ -108,6 +114,7 @@ serialno=(currentPage-1) * recordsPerPage;
             }
           </tbody>
         </Table>
+        
         <nav>
         
           <Pagination>
@@ -132,4 +139,4 @@ serialno=(currentPage-1) * recordsPerPage;
     </Fragment>
   )
 }
-export default List
+export default LedgerList
