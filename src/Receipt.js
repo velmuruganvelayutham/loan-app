@@ -11,6 +11,7 @@ function AddReceipt(){
   const[childLoan,setChildLoan]=useState([]);
   const[startdateRef,setStartDateRef]=useState(startOfWeek());
   const [line,setLine]=useState(0);
+  const[updateUI,setUpdateUI]=useState(false);
   const receipt=useRef(null)
   
   
@@ -19,23 +20,27 @@ function AddReceipt(){
         setLineNames(res.data);
         //console.log(res.data);
     })
-    },[]);
+    },[updateUI]);
    
     useEffect(()=>{
-     // {new Date(dateobject ).toLocaleDateString()}
+     
       axios.get(`${baseURL}/receipt/get/loanpending`,{params:{cityid:line.toString(),receiptdate:dateFormat(startdateRef).toString()}}).then((res)=>{
         setPendingLoan(res.data);
         //console.log(res.data);
       })
-      },[line]);
+      },[line,updateUI]);
 
 
 
     const saveReceipt=()=>{
-      //console.log(childLoan);
+      
         axios.post(`${baseURL}/receipt/save/details`,{receiptdata:childLoan,receiptdate:new Date(startdateRef)}).then((res)=>{
-          console.log(res.data);
+          //console.log(res.data);
+        }).then((res)=>{
+          setStartDateRef(startOfWeek);
+          setUpdateUI((prevState)=>!prevState)
         })
+        alert("Collection Added Successfully")
     }
     
     return(
@@ -63,14 +68,15 @@ function AddReceipt(){
                 <Col xs={12} md={4} className="rounded bg-white">
                     <Form.Group className="mb-3" name="startdate" border="primary" >
                         <Form.Label>Date</Form.Label>
-                        <Form.Control type="date"  placeholder="loan start date" value={startdateRef} onChange={(e)=>setStartDateRef(e.target.value)}/>
+                        <Form.Control type="date"  placeholder="loan start date" value={startdateRef} 
+                        onChange={(e)=>setStartDateRef(e.target.value)} />
                     </Form.Group>
                 </Col>
                 </Row>
                 <Row>
                     <div className="col-md-12 text-center " >
                     
-                    <Button variant="primary" type="submit" className="text-center" onClick={saveReceipt}>
+                    <Button variant="primary" type="button" className="text-center" onClick={saveReceipt}>
                     Save
                     </Button>
                     </div> 

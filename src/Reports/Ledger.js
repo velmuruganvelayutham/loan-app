@@ -5,27 +5,21 @@ import {baseURL} from '../utils/constant';
 import ReactToPrint from 'react-to-print';
 import{dateFormatdd} from '../FunctionsGlobal/StartDateFn'
 var first=[];
-var arr1=Array.from(Array(14).keys());
-var arr2=Array.from({length: 12}, (_, i) => i + 14)
-//var arr2=Array.from(Array(12).keys());;
+var arr1=Array.from(Array(13).keys());
+var arr2=Array.from({length: 12}, (_, i) => i + 13)
+
 function Ledger() {
     const[ledger,setLedger]=useState([])
     var serialno=0;
-    //console.log(arr1);
-     //console.log(arr2);
     useEffect(()=>{
         axios.get(`${baseURL}/ledger/get`).then((res)=>{
             setLedger(res.data);
-            //console.log(res.data);
-            
              
         })
     },[])
      first=ledger[0];
-     //console.log(first);
-     //console.log(ledger.slice(1,3));
      let totalamount=ledger.length>0?first.totalamount:0;
-     
+     //console.log(ledger.slice(13,ledger.length));
     const componentRef=useRef()
     const handlePrint=()=>{
         window.print()
@@ -76,23 +70,23 @@ function Ledger() {
                 <Row>
                     <Col  md={3} style={{outline:'1px solid orange',borderRadius:' 30px 30px 30px 30px'}}>
                     <Form.Group   border="primary" >
-                            <Form.Label>பெயர்&nbsp;:</Form.Label>
+                            <Form.Label>பெயர்&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                             <Form.Label>&nbsp;{ledger.length>0?first.customer:""}</Form.Label>
                         </Form.Group>
                         <Form.Group   border="primary" >
-                            <Form.Label>தகப்பனார்&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                            <Form.Label>த.பெயர்&nbsp;:</Form.Label>
                             <Form.Label>&nbsp;{ledger.length>0?first.fathername:""}</Form.Label>
                         </Form.Group>
                         <Form.Group   border="primary" >
-                            <Form.Label>முகவரி&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                            <Form.Label>முகவரி&nbsp;&nbsp;&nbsp;:</Form.Label>
                             <Form.Label>&nbsp;{ledger.length>0?first.address:""}</Form.Label>
                         </Form.Group>
                         <Form.Group   border="primary" >
-                            <Form.Label>ஊர்&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                            <Form.Label>ஊர்&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                             <Form.Label>&nbsp;{ledger.length>0?first.cityname:""}</Form.Label>
                         </Form.Group>
                         <Form.Group   border="primary" >
-                            <Form.Label>வேலை&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                            <Form.Label>வேலை&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                             <Form.Label>&nbsp;{ledger.length>0?first.work:""}</Form.Label>
                         </Form.Group>
                         <Form.Group   border="primary" >
@@ -102,19 +96,19 @@ function Ledger() {
                     </Col>
                     <Col md={3} style={{outline:'1px solid orange',borderRadius:' 30px 30px 30px 30px'}}>
                     <Form.Group   border="primary" >
-                            <Form.Label>வாரம்&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                            <Form.Label>வாரம்&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                             <Form.Label>&nbsp;{ledger.length>0?first.weekcount:""}</Form.Label>
                         </Form.Group>
                         <Form.Group   border="primary" >
-                            <Form.Label>லைன்&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                            <Form.Label>லைன்&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                             <Form.Label>&nbsp;{ledger.length>0?first.lineno:""}</Form.Label>
                         </Form.Group>
                         <Form.Group   border="primary" >
-                            <Form.Label>வார எண்&nbsp;No&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                            <Form.Label>வா.எண்&nbsp;&nbsp;&nbsp;:</Form.Label>
                             <Form.Label>&nbsp;{ledger.length>0?first.weekno:""}</Form.Label>
                         </Form.Group>
                         <Form.Group   border="primary" >
-                            <Form.Label>புக் எண்&nbsp;No&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                            <Form.Label>புக் எண்&nbsp;&nbsp;&nbsp;:</Form.Label>
                             <Form.Label>&nbsp;{ledger.length>0?first.bookno:""}</Form.Label>
                         </Form.Group>
                         <Form.Group   border="primary" >
@@ -122,29 +116,29 @@ function Ledger() {
                             <Form.Label>&nbsp;{ledger.length>0?first.document:""}</Form.Label>
                         </Form.Group>
                         <Form.Group   border="primary" >
-                            <Form.Label>செக்&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                            <Form.Label>செக்&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                             <Form.Label>&nbsp;{ledger.length>0?first.cheque:""}</Form.Label>
                         </Form.Group>
                     </Col>
                     <Col md={3} style={{outline:'1px solid orange',borderRadius:' 30px 30px 30px 30px'}}>
                     <Form.Group   border="primary" >
-                            <Form.Label>சீட்டு&nbsp;எண்&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                            <Form.Label>சீட்டு&nbsp;எண்&nbsp;&nbsp;&nbsp;:</Form.Label>
                             <Form.Label>&nbsp;<h5>{ledger.length>0?first.loannumber:""}</h5></Form.Label>
                         </Form.Group>
                         <Form.Group   border="primary" >
-                            <Form.Label>ஆரம்ப&nbsp;தேதி&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                            <Form.Label>ஆரம்ப&nbsp;தேதி&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                             <Form.Label>&nbsp;{ledger.length>0?dateFormatdd(first.startdate):""}</Form.Label>
                         </Form.Group>
                         <Form.Group   border="primary" >
-                            <Form.Label>கொடுத்த&nbsp;தேதி&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                            <Form.Label>கொடுத்த&nbsp;தேதி&nbsp;&nbsp;:</Form.Label>
                             <Form.Label>&nbsp;{ledger.length>0?dateFormatdd(first.givendate):""}</Form.Label>
                         </Form.Group>
                         <Form.Group   border="primary" >
-                            <Form.Label>முடிவு&nbsp;தேதி&nbsp;&nbsp;:</Form.Label>
+                            <Form.Label>முடிவு&nbsp;தேதி&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                             <Form.Label>&nbsp;1{ledger.length>0?dateFormatdd(first.finisheddate):""}</Form.Label>
                         </Form.Group>
                         <Form.Group   border="primary" >
-                            <Form.Label>கொடுப்பவர்&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                            <Form.Label>கொடுப்பவர்&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                             <Form.Label>&nbsp;{ledger.length>0?first.lineman_id:""}</Form.Label>
                         </Form.Group>
                         
@@ -155,7 +149,7 @@ function Ledger() {
                             <Form.Label>&nbsp;{ledger.length>0?first.givenamount:""}</Form.Label>
                         </Form.Group>
                         <Form.Group   border="primary" >
-                            <Form.Label>டாகுமெண்ட்&nbsp;சார்ச்&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                            <Form.Label>டா.சார்ச்&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                             <Form.Label>&nbsp;{ledger.length>0?first.documentamount:""}</Form.Label>
                         </Form.Group>
                         <Form.Group   border="primary" >
@@ -163,7 +157,7 @@ function Ledger() {
                             <Form.Label>&nbsp;{ledger.length>0?first.interestamount:""}</Form.Label>
                         </Form.Group>
                         <Form.Group   border="primary" >
-                            <Form.Label>மொத்தம்&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                            <Form.Label>மொத்தம்&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                             <Form.Label>&nbsp;{ledger.length>0?first.totalamount:""}</Form.Label>
                         </Form.Group>
                         <Form.Group   border="primary" >
@@ -209,16 +203,18 @@ function Ledger() {
                 </thead>
                 <tbody>
                 {
+                    
                     ledger && ledger.length>0
                     ?
-                    (ledger.map((ledgerr,i)=>{
+                    (ledger.slice(0,12).map((ledgerr)=>{
                         serialno=serialno+1;
                         
                         totalamount=totalamount-parseInt(ledgerr["joined"].collectedamount);
                         //totalamount=ledgerr.collectedamount;
                         
                     return(
-                        <Fragment>
+                            
+                            <Fragment>
                             {TablesRows(serialno,ledgerr.receiptdate,ledgerr["joined"].collectedamount,ledgerr["joined"].weekno)}
                             {serialno==1?TablesRows(serialno,first.startdate,ledgerr.totalamount,""):""}
                         </Fragment>
@@ -232,7 +228,7 @@ function Ledger() {
                 {
 
                     
-                    arr1.slice(ledger.length+1,14).map((i)=>{
+                    arr1.slice(ledger.length+1,13).map((i)=>{
                         serialno=serialno+1;
                         return(
                             TablesRows(serialno,"","","")
@@ -269,13 +265,31 @@ function Ledger() {
                 </thead>
                 <tbody>
                 {
-                    arr2.slice(0,12).map((i)=>{
+                    ledger.length>12 ?
+                    ledger.slice(12,ledger.length).map((ledg)=>{
+                        serialno=serialno+1;
+                        totalamount=totalamount-parseInt(ledg["joined"].collectedamount);
+                        return(
+                            TablesRows(serialno,ledg.receiptdate,ledg["joined"].collectedamount,ledg["joined"].weekno)
+                        )
+                    })
+                    :
+                    arr2.slice(0,13).map((i)=>{
                         serialno=serialno+1;
                         return(
                             TablesRows(serialno,"","","")
                         )
                     })
+                    
                 }
+                {(ledger.length>12)? 
+                arr2.slice(ledger.length-arr2.length-1,13).map((i)=>{
+                    serialno=serialno+1;
+                        return(
+                            TablesRows(serialno,"","","")
+                        )
+                })
+                :""}
                 </tbody>
             </Table>
             </div>
