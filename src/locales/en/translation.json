@@ -1,4 +1,17 @@
 {
     "placeholder": "Enter LineMan Name",
-    "manish": "Manish"
+    "manish": "Manish",
+    "cityheadername":"CITY MASTER",
+    "citypageprev":"Prev",
+    "citypagenext":"Next",
+    "citynamelabel":"City",
+    "citynameplaceholder":"City",
+    "citylinelabel":"Line",
+    "citylineplaceholder":"Select Line Menu",
+    "citysavebuttonlabel":"Save",
+    "citynewbttonlabel":"New",
+    "citytableno":"No",
+    "citytablecityname":"Name",
+    "citytablecityline":"Line",
+    "citytableaction":"Action"
   }

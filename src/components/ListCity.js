@@ -5,8 +5,9 @@ import {BiEditAlt} from "react-icons/bi"
 import {BsTrash} from "react-icons/bs"
 import axios from 'axios'
 import {baseURL} from "../utils/constant";
-
+import { useTranslation } from "react-i18next";
 const ListCity=({citynames,setUpdateUI,updateMode})=>{
+  const { t, i18n } = useTranslation();
 const[currentPage,setCurrentPage]=useState(1);
 const recordsPerPage=5;
 const lastIndex=currentPage*recordsPerPage;
@@ -46,16 +47,16 @@ function prevPage(){
           <thead>
             <tr>
               <th>
-              எண்
+              {t('citytableno')}
               </th>
               <th>
-              பெயர்
+              {t('citytablecityname')}
               </th>
               <th>
-                லைன்
+                {t('citytablecityline')}
               </th>
               <th>
-                செயல்
+                {t('citytableaction')}
               </th>
             </tr>
           </thead>
@@ -88,7 +89,7 @@ function prevPage(){
         
           <Pagination>
             <Pagination.Prev >
-            <a href="#" className='page-link' onClick={prevPage}>முன்</a>
+            <a href="#" className='page-link' onClick={prevPage}>{t('citypageprev')}</a>
             </Pagination.Prev>
             {
             numbers.map((n,i)=>(
@@ -99,7 +100,7 @@ function prevPage(){
             ))
           }
             <Pagination.Next>
-            <a href="#" className='page-link' onClick={nextPage}>பின்</a>
+            <a href="#" className='page-link' onClick={nextPage}>{t('citypagenext')}</a>
             </Pagination.Next>
           </Pagination>
         </nav>

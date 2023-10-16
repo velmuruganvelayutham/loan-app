@@ -3,7 +3,6 @@ import { Button, Container, Form, Row, Col } from 'react-bootstrap';
 import ListLineMan from "./components/ListLineMan"
 import axios from "axios"
 import { baseURL } from "./utils/constant";
-import LoadingSpinner from "./components/spinner/LoadingSpinner";
 import PlaceHolder from "./components/spinner/placeholder";
 import { useTranslation } from "react-i18next";
 var maxCitycode = 0;
