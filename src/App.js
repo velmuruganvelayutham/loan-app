@@ -1,16 +1,10 @@
-import logo from './logo.svg';
 import React, { Suspense, lazy } from 'react';
 import './App.css';
-import Home from './Home';
-import { BrowserRouter as Router, Route, Routes, useNavigate, Navigate, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useNavigate, Navigate } from "react-router-dom";
 import {
   ClerkProvider,
   SignedIn,
   SignedOut,
-  SignUp,
-  UserButton,
-  SignIn,
-  useUser,
   ClerkLoading,
   RedirectToSignIn,
 } from "@clerk/clerk-react";
@@ -22,8 +16,7 @@ const LoanForm = lazy(() => import('./LoanForm'));
 const AddCityName = lazy(() => import('./AddCityName'));
 const AddLineMan = lazy(() => import('./AddLineMan'));
 const AddReceipt = lazy(() => import('./Receipt'));
-const Ledger = lazy(() => import('./Reports/LedgerForm'));
-const LinecheckingReport=lazy(()=>import('./Reports/LinecheckingReport'))
+const LinecheckingReport = lazy(() => import('./Reports/LinecheckingReport'))
 
 if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key")
@@ -148,9 +141,9 @@ function App() {
   return (
     <div className="app">
       <React.Fragment >
-       
+
         <Router basename="/loan-app" >
-        <NavBar/>
+          <NavBar />
           <Suspense fallback={<Loading />}>
             <ClerkProviderWithRoutes />
           </Suspense>

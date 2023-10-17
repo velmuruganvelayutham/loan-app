@@ -34,6 +34,10 @@ function NavBar() {
         else if (languageValue === "Ledger") {
             navigate("/ledger");
         }
+        else if (languageValue === "LineChecking") {
+            navigate("/linechecking");
+        }
+        
 
     }
     return (
@@ -52,7 +56,6 @@ function NavBar() {
                             <NavDropdown.Item href="create">Borrower</NavDropdown.Item>
                             <NavDropdown.Item href="citycreate">City</NavDropdown.Item>
                             <NavDropdown.Item href="linemancreate">LineMan</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.3">Father/Husband</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title="Entry" id="basic-nav-dropdown">
                             <NavDropdown.Item href="loan">Loan</NavDropdown.Item>
@@ -60,6 +63,7 @@ function NavBar() {
                         </NavDropdown>
                         <NavDropdown title="Report" id="basic-nav-dropdown">
                             <NavDropdown.Item href="ledger">Ledger</NavDropdown.Item>
+                            <NavDropdown.Item href="linechecking">LineChecking</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>
