@@ -44,6 +44,12 @@
     "city":"ஊர்",
     "loanamount":"கடன்",
     "startdate":"ஆ.தேதி",
-    "enddate":"மு.தேதி"
+    "enddate":"மு.தேதி",
+    "fathername":"தகப்பனார்",
+    "paidamount":"க.பணம்",
+    "pending":"பெண்டிங்",
+    "address":"முகவரி",
+    "printbutton":"பிரிண்ட்",
+    "date":"தேதி"
 
   }

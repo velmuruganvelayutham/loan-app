@@ -44,5 +44,11 @@
     "city":"City Name",
     "loanamount":"Loan Amount",
     "startdate":"Start Date",
-    "enddate":"End Date"
+    "enddate":"End Date",
+    "fathername":"Father Name",
+    "paidamount":"Paid Amount",
+    "pending":"Pending",
+    "address":"Address",
+    "printbutton":"Print",
+    "date":"Date"
   }
