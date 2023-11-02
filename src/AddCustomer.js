@@ -30,7 +30,7 @@ function AddCustomer() {
       setIsLoading(false);
     }).catch(error => {
       console.log("error=", error);
-      setErrorMessage("Unable to fetch city list");
+      setErrorMessage(t('errormessagecity'));
       setIsLoading(false);
     })
 
@@ -42,7 +42,7 @@ function AddCustomer() {
       setIsLoading(false);
     }).catch(error => {
       console.log("error=", error);
-      setErrorMessage("Unable to fetch customer list");
+      setErrorMessage(t('errormessagecustomer'));
       setIsLoading(false);
     })
   }, [updateUI]);
@@ -81,9 +81,10 @@ function AddCustomer() {
       setUpdateUI((prevState) => !prevState)
     }).catch(error => {
       console.log("error=", error);
-      setErrorMessage("Unable to fetch linenam list");
+      setErrorMessage(t('errormessagesavecustomer'));
       setIsLoading(false);
     })
+    alert(t('savealertmessage'));
   }
 
   const updateMode = (id, text, mobilenum, cityid, father, addr, wrk, relation) => {
@@ -118,9 +119,10 @@ function AddCustomer() {
 
     }).catch(error => {
       console.log("error=", error);
-      setErrorMessage("Unable to fetch city list");
+      setErrorMessage(t('errormessagesavecustomer'));
       setIsLoading(false);
     })
+    alert(t('savealertmessage'));
   }
   const clearFields = () => {
     setInput("");
@@ -133,8 +135,8 @@ function AddCustomer() {
     setUpdateId(null);
   }
   const radios = [
-    { name: 'F', value: '0' },
-    { name: 'H', value: '1' }
+    { name: t('fathershort'), value: '0' },
+    { name: t('husbandshort'), value: '1' }
   ];
 
   const renderCustomerList = (
@@ -154,22 +156,22 @@ function AddCustomer() {
           <Row >
             <Col xs={12} md={4} className="rounded bg-white">
               <Form.Group className="mb-3" name="customername" border="primary" >
-                <Form.Label>{t('customernamelabel')}</Form.Label>
-                <Form.Control type="text" placeholder={t('customernameplaceholder')} required value={input} onChange={(e) => setInput(e.target.value)} />
+                <Form.Label>{t('customer')}</Form.Label>
+                <Form.Control type="text" placeholder={t('customerplaceholderlabel')} required value={input} onChange={(e) => setInput(e.target.value)} />
               </Form.Group>
             </Col>
             <Col xs={12} md={4} className="rounded bg-white">
               <Form.Group className="mb-3" name="mobilenumber" border="primary" >
-                <Form.Label>{t('customerphonelabel')}</Form.Label>
-                <Form.Control type="number" placeholder={t('customerphoneplaceholder')} required value={inputmobileno}
+                <Form.Label>{t('phone')}</Form.Label>
+                <Form.Control type="number" placeholder={t('phonenoplaceholder')} required value={inputmobileno}
                   onChange={(e) => setInputMobileno(e.target.value)} />
               </Form.Group>
             </Col>
             <Col xs={12} md={4} className="rounded bg-white">
               <Form.Group className="mb-3" name="cityname" border="primary" >
-                <Form.Label>{t('customercitynamelabel')}</Form.Label>
+                <Form.Label>{t('city')}</Form.Label>
                 <Form.Select aria-label="Default select example" value={city} onChange={(e) => setCity(e.target.value)} required>
-                  <option key={city} value={""} >{t('customercitynameplaceholder')}</option>
+                  <option key={city} value={""} >{t('cityplaceholder')}</option>
 
                   {
                     citynames.map((cityname) => (
@@ -200,30 +202,30 @@ function AddCustomer() {
                     </ToggleButton>
                   ))}
                 </ButtonGroup>
-                <Form.Control type="text" placeholder={t('customerfathernameplaceholder')} ref={fathernameref} required />
+                <Form.Control type="text" placeholder={t('fatherhusbandnameplaceholder')} ref={fathernameref} required />
 
               </Form.Group>
             </Col>
             <Col xs={12} md={4} className="rounded bg-white">
               <Form.Group className="mb-3" name="address1" border="primary" >
-                <Form.Label>{t('customeraddresslabel')}</Form.Label>
-                <Form.Control type="text" placeholder={t('customeraddressplaceholder')} ref={addressRef} required />
+                <Form.Label>{t('address')}</Form.Label>
+                <Form.Control type="text" placeholder={t('addressplaceholder')} ref={addressRef} required />
               </Form.Group>
             </Col>
             <Col xs={12} md={4} className="rounded bg-white">
               <Form.Group className="mb-3" name="work" border="primary" >
-                <Form.Label>{t('customerworklabel')}</Form.Label>
-                <Form.Control type="text" placeholder={t('customerworkplaceholder')} ref={workRef} required />
+                <Form.Label>{t('work')}</Form.Label>
+                <Form.Control type="text" placeholder={t('workplaceholder')} ref={workRef} required />
               </Form.Group>
             </Col>
           </Row>
           <Row className="rounded bg-white text-center">
             <div className="col-md-12 mb-4 " >
               <Button variant="primary" size="lg" type="button" className="text-center" onClick={updateId ? updateCustomer : handleSubmit}>
-                {t('customersavebuttonlabel')}
+                {t('savebutton')}
               </Button>{' '}
               <Button variant="primary" size="lg" type="button" className="text-center" onClick={clearFields}>
-                {t('customernewbttonlabel')}
+                {t('newbutton')}
               </Button>
             </div>
             {isLoading ? <PlaceHolder /> : renderCustomerList}

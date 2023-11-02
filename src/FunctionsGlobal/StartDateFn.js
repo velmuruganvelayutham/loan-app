@@ -28,7 +28,7 @@ export function dateFormat(datevalue)
 export function dateFormatdd(datevalue)
 {
     const datesformat=new Date(datevalue).toLocaleDateString('en-GB',{
-        year:'numeric',
+        year:'2-digit',
         month:'2-digit',
         day:'2-digit',
     }).split("/").join("-");

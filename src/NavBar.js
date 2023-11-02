@@ -37,8 +37,9 @@ function NavBar() {
         else if (languageValue === "LineChecking") {
             navigate("/linechecking");
         }
-        
-
+        else if (languageValue === "TotalLedger") {
+            navigate("/totalledger");
+        }
     }
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" onSelect={handleSelect} >

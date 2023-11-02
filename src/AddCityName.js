@@ -25,7 +25,7 @@ function AddCityName() {
             setIsLoading(false);
         }).catch(error => {
             console.log("error=", error);
-            setErrorMessage("Unable to fetch cityname list");
+            setErrorMessage(t('errormessagecity'));
             setIsLoading(false);
         })
     }, [updateUI]);
@@ -36,7 +36,7 @@ function AddCityName() {
             setIsLoading(false);
         }).catch(error => {
             console.log("error=", error);
-            setErrorMessage("Unable to fetch lines list");
+            setErrorMessage(t('errormessageline'));
             setIsLoading(false);
         })
     }, [])
@@ -63,10 +63,10 @@ function AddCityName() {
                 setUpdateUI((prevState) => !prevState);
             }).catch(error => {
                 console.log("error=", error);
-                setErrorMessage("Unable to Add City to the list");
+                setErrorMessage(t('errormessagesavecity'));
                 setIsLoading(false);
             })
-        alert("City Saved Successfully");
+        alert(t('savealertmessage'));
     }
     const clearFields = () => {
         setInputCity("");
@@ -92,13 +92,14 @@ function AddCityName() {
             setUpdateId(null);
         }).catch(error => {
             console.log("error=", error);
-            setErrorMessage("Unable to update city list");
+            setErrorMessage(t('errormessagesavecity'));
             setIsLoading(false);
         })
+        alert(t('savealertmessage'));
     }
     const renderCityNameList = (
         <ul>
-            <ListCity citynames={cityNames} setUpdateUI={setUpdateUI} updateMode={updateMode} />
+            <ListCity citynames={cityNames}  updateMode={updateMode} />
         </ul>
     );
 
@@ -109,13 +110,13 @@ function AddCityName() {
                 <Col xs={6} lg={6} className="rounded bg-white">
                     <Form validated={validated}>
                         <Form.Group className="mb-3" name="cityname" border="primary" >
-                            <Form.Label>{t('citynamelabel')}</Form.Label>
-                            <Form.Control type="text" placeholder={t('citynameplaceholder')} required value={inputCity} onChange={(e) => setInputCity(e.target.value)} />
+                            <Form.Label>{t('city')}</Form.Label>
+                            <Form.Control type="text" placeholder={t('cityplaceholderlabel')} required value={inputCity} onChange={(e) => setInputCity(e.target.value)} />
                         </Form.Group>
                         <Form.Group className="mb-3" name="linenumber" border="primary" >
-                            <Form.Label>{t('citylinelabel')}</Form.Label>
+                            <Form.Label>{t('line')}</Form.Label>
                             <Form.Select aria-label="Default select example" value={lineNo} onChange={(e) => setLineNo(e.target.value)} required>
-                                <option key={lineNo} value={""} >{t('citylineplaceholder')}</option>
+                                <option key={lineNo} value={""} >{t('lineplaceholder')}</option>
 
                                 {
                                     lineNames.map((lines) => (
@@ -127,10 +128,10 @@ function AddCityName() {
                         </Form.Group>
                         <div className="col-md-12 text-center " >
                             <Button variant="primary" type="button" className="text-center" onClick={updateId ? updateCity : handleSubmit}>
-                                {t('citysavebuttonlabel')}
+                                {t('savebutton')}
                             </Button>{' '}
                             <Button variant="primary"
-                                type="button" className="text-center" onClick={clearFields}>{t('citynewbttonlabel')}</Button>
+                                type="button" className="text-center" onClick={clearFields}>{t('newbutton')}</Button>
                         </div>
                         {isLoading ? <PlaceHolder /> : renderCityNameList}
                         {errorMessage && <div className="error">{errorMessage}</div>}

@@ -1,16 +1,11 @@
 import React, { Fragment,useState } from 'react'
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Table,Pagination } from "react-bootstrap";
-import {BiEditAlt} from "react-icons/bi"
-import {BsTrash} from "react-icons/bs"
-import axios from 'axios'
-import {baseURL} from "../utils/constant";
 import { useTranslation } from "react-i18next";
 import {dateFormatdd} from "../FunctionsGlobal/StartDateFn"
 
-
-  
-const ListLineChecking=({pendingLoans})=>{
+var first = [];
+const ListLineChecking=({pendingLoans,date})=>{
   const { t, i18n } = useTranslation();
 const[currentPage,setCurrentPage]=useState(1);
 const recordsPerPage=20;
@@ -20,6 +15,7 @@ const records=pendingLoans.slice(firstIndex,lastIndex);
 const nPage=Math.ceil(Object.keys(pendingLoans).length/recordsPerPage);
 const numbers=[...Array(nPage+1).keys()].slice(1);
 var serialno=0;
+first = records.length > 0 ? pendingLoans[0] : "";
 serialno=(currentPage-1) * recordsPerPage;
   
   function prevPage(){
@@ -41,16 +37,16 @@ serialno=(currentPage-1) * recordsPerPage;
   return (
     <Fragment>
       <div className='col-md-6'>
-        <h2>Company Name</h2>
+        <h2></h2>
       </div>
-        <div className='col-md-6'><h3>Line Checking</h3></div>
-      <div className='col-md-3'>Ventrilingapuram</div>
-      <div className='col-md-3'>Murugan</div>
-      <div className='col-md-2'>Line 5</div>
-      <div className='col-md-2'>BookNo:1221</div>
-      <div className='col-md-2'>12/03/2023</div>
+        <div className='col-md-6'><h3>{t('linechecking')}</h3></div>
+      <div className='col-md-3'>{first.city}</div>
+      <div className='col-md-3'>{first.linemanname}</div>
+      <div className='col-md-2'>{t('line')+":"+(pendingLoans.length>0?first.lineno:"")}</div>
+      <div className='col-md-2'>{t("bookno")+":"+(pendingLoans.length>0?first.bookno:"")}</div>
+      <div className='col-md-2'>{dateFormatdd(date)}</div>
       <div >
-        <Table striped bordered hover   >
+        <Table  className='table text-center fs-6 table-bordered border-dark'  >
           <thead>
             <tr>
             <th>
@@ -94,20 +90,35 @@ serialno=(currentPage-1) * recordsPerPage;
               ?
               (records.map((customer,i)=>{
                 serialno=serialno+1;
+                //console.log("enddatediff"+customer['addFields'].daysCountloan);
+                //console.log("weekdiff"+customer['addFields'].daysCount);
                 return(
                   <tr>
                     <td>{serialno}</td>
-                    <td>{dateFormatdd(customer['_id'].startdate)}</td>
+                    <td>{dateFormatdd(customer.startdate)}</td>
                     <td>{customer.loannumber}</td>
-                    <td>{customer['_id'].customer}</td>
+                    <td>{customer.customer}</td>
                     <td>{customer.relationtype==0 ? "F" : "H"}</td>
-                    <td >{customer['_id'].fathername}</td>
-                    <td>{customer['_id'].address}</td>
-                    <td>{customer['_id'].mobileno}</td>
-                    <td>{dateFormatdd(customer['_id'].finisheddate)}</td>
-                    <td>{customer.totalamount}</td>
-                    <td>{customer.collected}</td>
-                    <td>{customer.pending}</td>
+                    <td >{customer.fathername}</td>
+                    <td>{customer.address}</td>
+                    <td>{customer.mobileno}</td>
+                    <td>{dateFormatdd(customer.finisheddate)}</td>
+                    <td>{customer.totalamount-customer.collectedtotal}</td>
+                    <td>{customer.collectedamountdate}</td>
+                    {
+                      customer['addFields'].daysCountloan>0
+                      ?
+                      <td style={{backgroundColor:"red"}}>{customer.totalamount-customer.collectedtotal}</td>
+                      :
+                      customer['addFields'].daysCount>2 && customer.collectedamountdate===0
+                      ?
+                      <td style={{backgroundColor:"black",color:"white"}}>{(customer['addFields'].daysCount * customer.dueamount)-(customer.collectedamountdate)}</td>
+                      :
+                      <td >{(customer['addFields'].daysCount * customer.dueamount)-(customer.collectedamountdate)}</td>
+                    }
+                      
+                    
+                    
                   </tr>
                   
                 )

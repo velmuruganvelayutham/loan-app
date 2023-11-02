@@ -1,23 +1,19 @@
-import React, { useState, Fragment, useRef, useEffect } from 'react'
-import { Container, Row, Col, Form, FormGroup, FormControl, Button, Alert, Table } from 'react-bootstrap'
-import axios from "axios";
-import { baseURL } from '../utils/constant';
-
+import React, { Fragment} from 'react'
+import { Container, Row, Col, Form,Table } from 'react-bootstrap'
+import { useTranslation } from "react-i18next";
 import { dateFormatdd } from '../FunctionsGlobal/StartDateFn'
 var first = [];
-var arr1 = Array.from(Array(13).keys());
-var arr2 = Array.from({ length: 12 }, (_, i) => i + 13)
-//var arr2=Array.from(Array(12).keys());;
-
+var arr1 = Array.from(Array(12).keys());
+var arr2 = Array.from({ length: 13 }, (_, i) => i + 12)
  function Ledger({ loanno, ledger }) {
-    var style = "flex";
     let totalamount = 0;
-    
+    const { t, i18n } = useTranslation();
     
     var serialno = 0;
     var records=ledger
     
     function TablesRows(no, date, income, weekno) {
+        
         return (
             <tr>
                 <td>{date !== "" ? dateFormatdd(date) : ""}</td>
@@ -43,19 +39,19 @@ var arr2 = Array.from({ length: 12 }, (_, i) => i + 13)
         
         <div >
             {
-            loanno==""?<div>muru</div>:<div><Container  className="rounded bg-white ">
+            loanno==""?<div>{t('nodatas')}</div>:<div><Container  className="rounded bg-white ">
 
             <Row className="justify-content-md-center  ">
                 <Form>
                     <Row>
                         <Col xs={12} md={4} className="rounded bg-white">
-                            <h4 >லெட்ஜெர்</h4>
+                            <h4 >{t('ledger')}</h4>
                         </Col>
                         <Col xs={12} md={4} className="rounded bg-white">
-                            <h2 >Comapany Name</h2>
+                            <h2 >{t('companyname')}</h2>
                         </Col>
                         <Col xs={12} md={4} className="rounded bg-white">
-                            <h4 >தேதி</h4>
+                            <h4 >{t('date')}</h4>
                         </Col>
                     </Row>
                     <Row>
@@ -69,98 +65,98 @@ var arr2 = Array.from({ length: 12 }, (_, i) => i + 13)
                     <Row>
                         <Col md={3} style={{ outline: '1px solid orange', borderRadius: ' 30px 30px 30px 30px' }}>
                             <Form.Group border="primary" >
-                                <Form.Label>பெயர்&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label>{t('customer')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                                 <Form.Label>&nbsp;{ledger.length > 0 ? first.customer : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group border="primary" >
-                                <Form.Label>த.பெயர்&nbsp;:</Form.Label>
+                                <Form.Label>{t('fathername')}&nbsp;:</Form.Label>
                                 <Form.Label>&nbsp;{ledger.length > 0 ? first.fathername : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group border="primary" >
-                                <Form.Label>முகவரி&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label>{t('address')}&nbsp;&nbsp;&nbsp;:</Form.Label>
                                 <Form.Label>&nbsp;{ledger.length > 0 ? first.address : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group border="primary" >
-                                <Form.Label>ஊர்&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label>{t('city')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                                 <Form.Label>&nbsp;{ledger.length > 0 ? first.cityname : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group border="primary" >
-                                <Form.Label>வேலை&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label>{t('work')}&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                                 <Form.Label>&nbsp;{ledger.length > 0 ? first.work : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group border="primary" >
-                                <Form.Label>போன்&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label>{t('phoneno')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                                 <Form.Label>&nbsp;{ledger.length > 0 ? first.mobileno : ""}</Form.Label>
                             </Form.Group>
                         </Col>
                         <Col md={3} style={{ outline: '1px solid orange', borderRadius: ' 30px 30px 30px 30px' }}>
                             <Form.Group border="primary" >
-                                <Form.Label>வாரம்&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label>{t('week')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                                 <Form.Label>&nbsp;{ledger.length > 0 ? first.weekcount : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group border="primary" >
-                                <Form.Label>லைன்&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label>{t('line')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                                 <Form.Label>&nbsp;{ledger.length > 0 ? first.lineno : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group border="primary" >
-                                <Form.Label>வா.எண்&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label>{t('weekno')}&nbsp;&nbsp;&nbsp;:</Form.Label>
                                 <Form.Label>&nbsp;{ledger.length > 0 ? first.weekno : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group border="primary" >
-                                <Form.Label>புக் எண்&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label>{t('bookno')}&nbsp;&nbsp;&nbsp;:</Form.Label>
                                 <Form.Label>&nbsp;{ledger.length > 0 ? first.bookno : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group border="primary" >
-                                <Form.Label>டாகுமெண்ட்&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label>{t('document')}&nbsp;&nbsp;:</Form.Label>
                                 <Form.Label>&nbsp;{ledger.length > 0 ? first.document : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group border="primary" >
-                                <Form.Label>செக்&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label>{t('cheque')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                                 <Form.Label>&nbsp;{ledger.length > 0 ? first.cheque : ""}</Form.Label>
                             </Form.Group>
                         </Col>
                         <Col md={3} style={{ outline: '1px solid orange', borderRadius: ' 30px 30px 30px 30px' }}>
                             <Form.Group border="primary" >
-                                <Form.Label>சீட்டு&nbsp;எண்&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label>{t('loanno')}&nbsp;&nbsp;&nbsp;:</Form.Label>
                                 <Form.Label>&nbsp;<h5>{ledger.length > 0 ? first.loannumber : ""}</h5></Form.Label>
                             </Form.Group>
                             <Form.Group border="primary" >
-                                <Form.Label>ஆரம்ப&nbsp;தேதி&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label>{t('startdate')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                                 <Form.Label>&nbsp;{ledger.length > 0 ? dateFormatdd(first.startdate) : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group border="primary" >
-                                <Form.Label>கொடுத்த&nbsp;தேதி&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label>{t('givendate')}&nbsp;&nbsp;:</Form.Label>
                                 <Form.Label>&nbsp;{ledger.length > 0 ? dateFormatdd(first.givendate) : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group border="primary" >
-                                <Form.Label>முடிவு&nbsp;தேதி&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
-                                <Form.Label>&nbsp;1{ledger.length > 0 ? dateFormatdd(first.finisheddate) : ""}</Form.Label>
+                                <Form.Label>{t('enddate')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label>&nbsp;{ledger.length > 0 ? dateFormatdd(first.finisheddate) : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group border="primary" >
-                                <Form.Label>கொடுப்பவர்&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
-                                <Form.Label>&nbsp;{ledger.length > 0 ? first.lineman_id : ""}</Form.Label>
+                                <Form.Label>{t('lineman')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label>&nbsp;{ledger.length > 0 ? first.linemanname : ""}</Form.Label>
                             </Form.Group>
 
                         </Col>
                         <Col md={3} style={{ outline: '1px solid orange', borderRadius: ' 30px 30px 30px 30px' }}>
                             <Form.Group border="primary" >
-                                <Form.Label>கொடுத்த&nbsp;பணம்&nbsp;:</Form.Label>
+                                <Form.Label>{t('givenamount')}&nbsp;:</Form.Label>
                                 <Form.Label>&nbsp;{ledger.length > 0 ? first.givenamount : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group border="primary" >
-                                <Form.Label>டா.சார்ச்&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label>{t('documentcharge')}&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                                 <Form.Label>&nbsp;{ledger.length > 0 ? first.documentamount : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group border="primary" >
-                                <Form.Label>வட்டி&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label>{t('interest')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                                 <Form.Label>&nbsp;{ledger.length > 0 ? first.interestamount : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group border="primary" >
-                                <Form.Label>மொத்தம்&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label>{t('total')}&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                                 <Form.Label>&nbsp;{ledger.length > 0 ? first.totalamount : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group border="primary" >
-                                <Form.Label>தவணை&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label>{t('due')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                                 <Form.Label>&nbsp;{ledger.length > 0 ? first.dueamount : ""}</Form.Label>
                             </Form.Group>
 
@@ -185,19 +181,19 @@ var arr2 = Array.from({ length: 12 }, (_, i) => i + 13)
                                 <thead>
                                     <tr >
                                         <th className="col-sm-12 col-md-3">
-                                            தேதி
+                                        {t('date')}
                                         </th>
                                         <th className="col-sm-12 col-md-1">
-                                            த.எண்
+                                        {t('dueno')}
                                         </th>
                                         <th className="col-sm-12 col-md-4">
-                                            வரவு
+                                        {t('credit')} 
                                         </th>
                                         <th className="col-sm-12 col-md-4">
-                                            இருப்பு
+                                        {t('balance')} 
                                         </th>
-                                        <th className="col-sm-12 col-md-2 text-end">பற்று</th>
-                                        <th className="col-sm-12 col-md-2 text-end">வா.எண்</th>
+                                        <th className="col-sm-12 col-md-2 text-end">{t('loanamount')}</th>
+                                        <th className="col-sm-12 col-md-2 text-end">{t('weekno')}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -207,7 +203,6 @@ var arr2 = Array.from({ length: 12 }, (_, i) => i + 13)
                                             ?
                                             (ledger.slice(0, 12).map((ledgerr) => {
                                                 serialno = serialno + 1;
-
                                                 totalamount = totalamount - parseInt(ledgerr["joined"].collectedamount);
                                                 //totalamount=ledgerr.collectedamount;
 
@@ -222,12 +217,12 @@ var arr2 = Array.from({ length: 12 }, (_, i) => i + 13)
                                             )
 
                                             :
-                                            "தரவு இல்லை"
+                                            t('nodatas')
                                     }
                                     {
 
 
-                                        arr1.slice(ledger.length + 1, 13).map((i) => {
+                                        arr1.slice(ledger.length, (arr1.length)).map((i) => {
                                             serialno = serialno + 1;
                                             return (
                                                 TablesRows(serialno, "", "", "")
@@ -247,19 +242,19 @@ var arr2 = Array.from({ length: 12 }, (_, i) => i + 13)
                                 <thead>
                                     <tr >
                                         <th className="col-sm-12 col-md-3">
-                                            தேதி
+                                        {t('date')}
                                         </th>
                                         <th className="col-sm-12 col-md-1">
-                                            த.எண்
+                                        {t('dueno')}
                                         </th>
                                         <th className="col-sm-12 col-md-4">
-                                            வரவு
+                                        {t('credit')}
                                         </th>
                                         <th className="col-sm-12 col-md-4">
-                                            இருப்பு
+                                        {t('balance')}
                                         </th>
-                                        <th className="col-sm-12 col-md-2 text-end">பற்று</th>
-                                        <th className="col-sm-12 col-md-2 text-end">வா.எண்</th>
+                                        <th className="col-sm-12 col-md-2 text-end">{t('loanamount')}</th>
+                                        <th className="col-sm-12 col-md-2 text-end">{t('weekno')}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -282,7 +277,7 @@ var arr2 = Array.from({ length: 12 }, (_, i) => i + 13)
 
                                     }
                                     {(ledger.length > 12) ?
-                                        arr2.slice(ledger.length - arr2.length - 1, 13).map((i) => {
+                                        arr2.slice(ledger.length - arr2.length - 1, 13-(ledger.length - arr2.length)).map((i) => {
                                             serialno = serialno + 1;
                                             return (
                                                 TablesRows(serialno, "", "", "")

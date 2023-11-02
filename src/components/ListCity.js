@@ -2,11 +2,10 @@ import React, { Fragment, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Table, Pagination } from "react-bootstrap";
 import { BiEditAlt } from "react-icons/bi"
-import { BsTrash } from "react-icons/bs"
 import axios from 'axios'
 import { baseURL } from "../utils/constant";
 import { useTranslation } from "react-i18next";
-const ListCity = ({ citynames, setUpdateUI, updateMode }) => {
+const ListCity = ({ citynames, updateMode }) => {
   const { t, i18n } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 5;
@@ -18,11 +17,11 @@ const ListCity = ({ citynames, setUpdateUI, updateMode }) => {
   var serialno = 0;
 
   serialno = (currentPage - 1) * recordsPerPage;
-  const removeCity = (id) => {
+  /*const removeCity = (id) => {
     axios.delete(`${baseURL}/delete/${id}`).then((res) => {
       setUpdateUI((preveState) => !preveState)
     })
-  }
+  }*/
   function prevPage() {
     if (currentPage !== firstIndex) {
       setCurrentPage(currentPage - 1)
@@ -46,13 +45,13 @@ const ListCity = ({ citynames, setUpdateUI, updateMode }) => {
           <thead>
             <tr>
               <th>
-                {t('citytableno')}
+                {t('no')}
               </th>
               <th>
-                {t('citytablecityname')}
+                {t('city')}
               </th>
               <th>
-                {t('citytablecityline')}
+                {t('line')}
               </th>
               <th>
                 {t('tableaction')}
@@ -72,7 +71,7 @@ const ListCity = ({ citynames, setUpdateUI, updateMode }) => {
                       <td>Line{cityname.citylineno}</td>
                       <td>
                         <BiEditAlt className='icons' onClick={() => updateMode(cityname._id, cityname.cityname, cityname.citylineno)} />
-                        <BsTrash className='icons' onClick={() => removeCity(cityname._id)} />
+                        {/*<BsTrash className='icons' onClick={() => removeCity(cityname._id)} />*/}
                       </td>
                     </tr>
 

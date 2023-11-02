@@ -53,25 +53,25 @@ serialno=(currentPage-1) * recordsPerPage;
           <thead>
             <tr>
               <th>
-                {t('customertableno')}
+                {t('no')}
               </th>
               <th>
-                {t('customertablecustomername')}
+                {t('customer')}
               </th>
               <th>
-                {t('customertablephonelabel')}
+                {t('phoneno')}
               </th>
               <th>
-                {t('customertablecitynamelabel')}
+                {t('city')}
               </th>
               <th colSpan={2}>
                 {t('customertablefathername')}
               </th>
               <th>
-                {t('customertableaddresslabel')}
+                {t('address')}
               </th>
               <th>
-                {t('customertableworklabel')}
+                {t('work')}
               </th>
               <th>
                 {t('tableaction')}
@@ -90,13 +90,13 @@ serialno=(currentPage-1) * recordsPerPage;
                     <td>{customer.customer}</td>
                     <td>{customer.mobileno}</td>
                     <td>{customer.cityname}</td>
-                    <td>{customer.relationtype==0 ? "F" : "H"}</td>
+                    <td>{customer.relationtype==0 ? t('fathershort') :t('husbandshort')}</td>
                     <td >{customer.fathername}</td>
                     <td>{customer.address}</td>
                     <td>{customer.work}</td>
                     <td>
                     <BiEditAlt  className='icons' onClick={()=>updateMode(customer._id,customer.customer,customer.mobileno,customer.city_id,customer.fathername,customer.address,customer.work,customer.relationtype)} />
-                    <BsTrash className='icons' onClick={()=>removeCustomer(customer._id)}  />
+                    {/*<BsTrash className='icons' onClick={()=>removeCustomer(customer._id)}  />*/}
                     </td>
                   </tr>
                   
