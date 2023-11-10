@@ -1,7 +1,7 @@
 import React from "react";
-import { Button, Navbar, Container, Nav, NavLink } from 'react-bootstrap';
+import { Navbar, Container, Nav, NavLink } from 'react-bootstrap';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 import "./i18n";
 
@@ -65,6 +65,7 @@ function NavBar() {
                         <NavDropdown title="Report" id="basic-nav-dropdown">
                             <NavDropdown.Item href="ledger">Ledger</NavDropdown.Item>
                             <NavDropdown.Item href="linechecking">LineChecking</NavDropdown.Item>
+                            <NavDropdown.Item href="totalledger">TotalLedger</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>
