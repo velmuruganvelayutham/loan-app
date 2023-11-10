@@ -1,22 +1,19 @@
-import React,{Fragment,useState,useRef, useEffect} from "react";
+import React,{Fragment,useState, useEffect} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {Table,Pagination, Row } from "react-bootstrap";
-import axios from 'axios'
-import {baseURL} from "../utils/constant";
-//import { type } from "os";
-
+import {Table,Pagination } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 const ListReceipt=({pending,setpendingLoanFun})=>{
 const[currentPage,setCurrentPage]=useState(1);
-const[checked,setChecked]=useState(false);
+//const[checked,setChecked]=useState(false);
 const [receiptref,setReceiptRef]=useState([]);
-
+const { t, i18n } = useTranslation();
 useEffect(()=>{
   setReceiptRef(pending);
 },[pending])
 
-const handleChange=(e)=>{
+/*const handleChange=(e)=>{
   setReceiptRef({...receiptref,[e.target.name]:e.target.value})
-}
+}*/
 //receiptref={loannumber,weekno,customerid,dueamount}
 const recordsPerPage=10;
 const lastIndex=currentPage*recordsPerPage;
@@ -133,16 +130,16 @@ function prevPage(){
               <input type="checkbox" onClick={checkedAll} />
               </th>
               <th className="col-sm-12 col-md-1">
-                Loan
+                {t('loanno')}
               </th>
               <th className="col-sm-12 col-md-2">
-                Week No
+                {t('weekno')}
               </th>
               <th className="col-sm-12 col-md-4">
-                Customer
+                {t('customer')}
               </th>
-              <th className="col-sm-12 col-md-2 text-end">Due</th>
-              <th className="col-sm-12 col-md-2 text-end">Amount</th>
+              <th className="col-sm-12 col-md-2 text-end">{t('due')}</th>
+              <th className="col-sm-12 col-md-2 text-end">{t('amount')}</th>
               
             </tr>
           </thead>
@@ -175,7 +172,7 @@ function prevPage(){
               })
               )
               :
-              "No Data Available"
+              t('nodatas')
             }
           </tbody>
         </Table>
@@ -183,7 +180,7 @@ function prevPage(){
         
           <Pagination>
             <Pagination.Prev >
-            <a href="#" className='page-link' onClick={prevPage}>Prev</a>
+            <a href="#" className='page-link' onClick={prevPage}>{t('pageprev')}</a>
             </Pagination.Prev>
             {
             numbers.map((n,i)=>(
@@ -194,7 +191,7 @@ function prevPage(){
             ))
           }
             <Pagination.Next>
-            <a href="#" className='page-link' onClick={nextPage}>Next</a>
+            <a href="#" className='page-link' onClick={nextPage}>{t('pagenext')}</a>
             </Pagination.Next>
           </Pagination>
         </nav>

@@ -7,5 +7,9 @@
 .icons{
   cursor: pointer;
 }
+.error{
+  background-color:rgba(255, 0, 0, 0.84);
+  color: white;
+}
 
 * {font-size: 14px;}

@@ -47,6 +47,16 @@ function AddCustomer() {
     })
   }, [updateUI]);
 
+  useEffect(() => {
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" && event.target.nodeName === "INPUT") {
+        var form = event.target.form;
+        var index = Array.prototype.indexOf.call(form, event.target);
+        form.elements[index + 1].focus();
+        event.preventDefault();
+      }
+    });
+  }, []);
 
 
   const handleSubmit = (event) => {
@@ -133,6 +143,7 @@ function AddCustomer() {
     addressRef.current.value = "";
     workRef.current.value = "";
     setUpdateId(null);
+    input.current.focus();
   }
   const radios = [
     { name: t('fathershort'), value: '0' },
@@ -140,13 +151,15 @@ function AddCustomer() {
   ];
 
   const renderCustomerList = (
+
     <div className="col-md-12 text-center">
       <List customers={customers} setUpdateUI={setUpdateUI}
         updateMode={updateMode} />
     </div>
+
   )
 
-
+  
   return (
 
     <Container >
@@ -157,7 +170,7 @@ function AddCustomer() {
             <Col xs={12} md={4} className="rounded bg-white">
               <Form.Group className="mb-3" name="customername" border="primary" >
                 <Form.Label>{t('customer')}</Form.Label>
-                <Form.Control type="text" placeholder={t('customerplaceholderlabel')} required value={input} onChange={(e) => setInput(e.target.value)} />
+                <Form.Control  type="text" placeholder={t('customerplaceholderlabel')} required value={input} onChange={(e) => setInput(e.target.value)} autoFocus />
               </Form.Group>
             </Col>
             <Col xs={12} md={4} className="rounded bg-white">

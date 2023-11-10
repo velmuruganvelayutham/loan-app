@@ -2,8 +2,6 @@ import React, { Fragment, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Table, Pagination } from "react-bootstrap";
 import { BiEditAlt } from "react-icons/bi"
-import axios from 'axios'
-import { baseURL } from "../utils/constant";
 import { useTranslation } from "react-i18next";
 const ListCity = ({ citynames, updateMode }) => {
   const { t, i18n } = useTranslation();
@@ -68,7 +66,7 @@ const ListCity = ({ citynames, updateMode }) => {
                     <tr>
                       <td>{serialno}</td>
                       <td>{cityname.cityname}</td>
-                      <td>Line{cityname.citylineno}</td>
+                      <td>{cityname.linename}</td>
                       <td>
                         <BiEditAlt className='icons' onClick={() => updateMode(cityname._id, cityname.cityname, cityname.citylineno)} />
                         {/*<BsTrash className='icons' onClick={() => removeCity(cityname._id)} />*/}

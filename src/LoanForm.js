@@ -183,32 +183,35 @@ function LoanForm() {
     }
 
     const loadOldLoanRef = () => {
-        axios.get(`${baseURL}/loancreate/get/oldLoanRef`,
-            { params: { loanno: Number(oldLoanRef.current.value) } }).then((res) => {
-                const oldReference = res.data;
-                //alert(oldLoanRef);
-                customeroptionRef.current.value = oldReference[0].customer_id;
-                linemanoptionRef.current.value = oldReference[0].lineman_id;
-                setInputMobileno(oldReference[0].mobileno);
-                fathernameRef.current.value = oldReference[0].fathername;
-                citynameRef.current.value = oldReference[0].cityname;
-                cityidRef.current.value = oldReference[0].city;
-                addressRef.current.value = oldReference[0].address;
-                workRef.current.value = oldReference[0].work;
-                lineRef.current.value = oldReference[0].lineno;
-                weekRef.current.value = oldReference[0].weekno;
-                bookRef.current.value = oldReference[0].bookno;
-                documentRef.current.value = oldReference[0].document;
-                chequeRef.current.value = oldReference[0].cheque;
-                setGivenAmt(oldReference[0].givenamount);
-                documentAmt.current.value = oldReference[0].documentamount;
-                interestAmt.current.value = oldReference[0].interestamount;
-                totalAmt.current.value = oldReference[0].totalamount;
-                dueAmt.current.value = oldReference[0].dueamount;
+        if (oldLoanRef.current.value != "") {
+            axios.get(`${baseURL}/loancreate/get/oldLoanRef`,
+                { params: { loanno: Number(oldLoanRef.current.value) } }).then((res) => {
+                    const oldReference = res.data;
+                    //alert(oldLoanRef);
+                    customeroptionRef.current.value = oldReference[0].customer_id;
+                    linemanoptionRef.current.value = oldReference[0].lineman_id;
+                    setInputMobileno(oldReference[0].mobileno);
+                    fathernameRef.current.value = oldReference[0].fathername;
+                    citynameRef.current.value = oldReference[0].cityname;
+                    cityidRef.current.value = oldReference[0].city;
+                    addressRef.current.value = oldReference[0].address;
+                    workRef.current.value = oldReference[0].work;
+                    lineRef.current.value = oldReference[0].lineno;
+                    weekRef.current.value = oldReference[0].weekno;
+                    bookRef.current.value = oldReference[0].bookno;
+                    documentRef.current.value = oldReference[0].document;
+                    chequeRef.current.value = oldReference[0].cheque;
+                    setGivenAmt(oldReference[0].givenamount);
+                    documentAmt.current.value = oldReference[0].documentamount;
+                    interestAmt.current.value = oldReference[0].interestamount;
+                    totalAmt.current.value = oldReference[0].totalamount;
+                    dueAmt.current.value = oldReference[0].dueamount;
 
-                paidAmt.current.value = oldReference[0].paidamount;
+                    paidAmt.current.value = oldReference[0].paidamount;
 
-            })
+                })
+        }
+
     }
     function clearFields() {
         customeroptionRef.current.value = "";
