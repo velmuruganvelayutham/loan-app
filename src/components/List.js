@@ -24,12 +24,12 @@ const nPage=Math.ceil(Object.keys(customers).length/recordsPerPage);
 const numbers=[...Array(nPage+1).keys()].slice(1);
 var serialno=0;
 serialno=(currentPage-1) * recordsPerPage;
-  const removeCustomer=(id)=>{
+ /* const removeCustomer=(id)=>{
     axios.delete(`${baseURL}/delete/${id}`).then((res)=>{
       console.log(res.data);
       setUpdateUI((preveState)=>!preveState)
     })
-  }
+  }*/
   function prevPage(){
     if(currentPage!==firstIndex)
     {
@@ -85,7 +85,7 @@ serialno=(currentPage-1) * recordsPerPage;
               (records.map((customer,i)=>{
                 serialno=serialno+1;
                 return(
-                  <tr>
+                  <tr key={customer.customer}>
                     <td>{serialno}</td>
                     <td>{customer.customer}</td>
                     <td>{customer.mobileno}</td>
@@ -108,25 +108,23 @@ serialno=(currentPage-1) * recordsPerPage;
             }
           </tbody>
         </Table>
-        <nav>
         
           <Pagination>
-            <Pagination.Prev >
-            <a href="#" className='page-link' onClick={prevPage}>{t('pageprev')}</a>
+            <Pagination.Prev onClick={prevPage}>
+            {t('pageprev')}
             </Pagination.Prev>
             {
             numbers.map((n,i)=>(
-              <Pagination.Item>
-                <a href="#" className='page-link'
-            onClick={()=>changeCPage(n)}>{n}</a>
+              <Pagination.Item onClick={()=>changeCPage(n)}>
+              {n}
               </Pagination.Item>
             ))
           }
-            <Pagination.Next>
-            <a href="#" className='page-link' onClick={nextPage}>{t('pagenext')}</a>
+            <Pagination.Next onClick={nextPage}>
+            {t('pagenext')}
             </Pagination.Next>
           </Pagination>
-        </nav>
+        
 
       </div>
     </Fragment>

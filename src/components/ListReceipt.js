@@ -1,21 +1,11 @@
-import React,{Fragment,useState, useEffect} from "react";
+import React,{Fragment,useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Table,Pagination } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 const ListReceipt=({pending,setpendingLoanFun})=>{
 const[currentPage,setCurrentPage]=useState(1);
-//const[checked,setChecked]=useState(false);
-const [receiptref,setReceiptRef]=useState([]);
 const { t, i18n } = useTranslation();
-useEffect(()=>{
-  setReceiptRef(pending);
-},[pending])
-
-/*const handleChange=(e)=>{
-  setReceiptRef({...receiptref,[e.target.name]:e.target.value})
-}*/
-//receiptref={loannumber,weekno,customerid,dueamount}
-const recordsPerPage=10;
+const recordsPerPage=20;
 const lastIndex=currentPage*recordsPerPage;
 const firstIndex=lastIndex-recordsPerPage;
 const records=pending.slice(firstIndex,lastIndex);
@@ -37,13 +27,13 @@ const checkedAll=(e)=>{
       setSelectedItems([]);
     }
 
-    const EditcheckAll=receiptref.map((item)=>
+    const EditcheckAll=pending.map((item)=>
     {
-      return {...item,["check"]:e.target.checked};
+      return {...item,"check":e.target.checked};
         
     });
-    setReceiptRef(EditcheckAll);
-    setpendingLoanFun(receiptref);
+    //setReceiptRef(EditcheckAll);
+    setpendingLoanFun(EditcheckAll);
 
 }
 const[selectedItems,setSelectedItems]=useState([]);
@@ -59,7 +49,7 @@ const checkedSingle=(e,loanno)=>{
     }
     else{
 
-      setReceiptRef({...receiptref,[e.target.name]:false})
+      setpendingLoanFun({...pending,[e.target.name]:false})
 
       setSelectedItems((prevData)=>{
         return prevData.filter((loannumber)=>{
@@ -68,15 +58,15 @@ const checkedSingle=(e,loanno)=>{
     })
     }
     
-    const Editcheck=receiptref.map((item)=>
+    const Editcheck=pending.map((item)=>
     {
-      if(item.loannumber==loanno)
+      if(item.loannumber===loanno)
         return {...item,[e.target.name]:e.target.checked};
       return item
         
     });
-    setReceiptRef(Editcheck)
-    setpendingLoanFun(receiptref)
+    //setReceiptRef(Editcheck)
+    setpendingLoanFun(Editcheck)
 }
 
  const initialvalue={weak:"",amount:0}
@@ -89,16 +79,16 @@ const checkedSingle=(e,loanno)=>{
     )
     setValues(editData);
 
-    const Editval=receiptref.map((item)=>
+    const Editval=pending.map((item)=>
     {
-      if(item.loannumber==loannumber)
+      if(item.loannumber===loannumber)
         return {...item,[name]:value};
       return item
         
     });
 
 
-    setReceiptRef(Editval);
+    //setReceiptRef(Editval);
     setpendingLoanFun(Editval);
   }
 
@@ -119,7 +109,7 @@ function prevPage(){
   function changeCPage(id){
     setCurrentPage(id)
   }
-  console.log(receiptref);
+  //console.log(pending);
   return(
     <Fragment>
       <div  className="container-fluid ">

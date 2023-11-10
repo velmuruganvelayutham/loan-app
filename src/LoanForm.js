@@ -110,6 +110,16 @@ function LoanForm() {
         });
     }, []);
 
+    useEffect(() => {
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Enter" && event.target.nodeName === "INPUT") {
+            var form = event.target.form;
+            var index = Array.prototype.indexOf.call(form, event.target);
+            form.elements[index + 1].focus();
+            event.preventDefault();
+          }
+        });
+      }, []);
 
     function customerSelect(e) {
         const filtered = customers.filter(customer => {
@@ -261,7 +271,7 @@ function LoanForm() {
                         <Col xs={12} md={3} className="rounded bg-white">
                             <Form.Group className="mb-3" name="customername" border="primary" >
                                 <Form.Label>{t('customer')}</Form.Label>{/*customer*/}
-                                <Form.Select aria-label="Default select example" ref={customeroptionRef} onChange={(e) => customerSelect(e)} required>
+                                <Form.Select aria-label="Default select example" ref={customeroptionRef} onChange={(e) => customerSelect(e)} required autoFocus>
                                     <option value="">{t('customerplaceholder')}</option>
                                     {
                                         customers.map((customer, i) => (

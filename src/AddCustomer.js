@@ -34,7 +34,7 @@ function AddCustomer() {
       setIsLoading(false);
     })
 
-  }, []);
+  }, [t]);
   useEffect(() => {
     setIsLoading(true);
     axios.get(`${baseURL}/get/view`).then((res) => {
@@ -45,7 +45,7 @@ function AddCustomer() {
       setErrorMessage(t('errormessagecustomer'));
       setIsLoading(false);
     })
-  }, [updateUI]);
+  }, [updateUI,t]);
 
   useEffect(() => {
     document.addEventListener("keydown", function (event) {
@@ -143,7 +143,7 @@ function AddCustomer() {
     addressRef.current.value = "";
     workRef.current.value = "";
     setUpdateId(null);
-    input.current.focus();
+    
   }
   const radios = [
     { name: t('fathershort'), value: '0' },
@@ -183,13 +183,14 @@ function AddCustomer() {
             <Col xs={12} md={4} className="rounded bg-white">
               <Form.Group className="mb-3" name="cityname" border="primary" >
                 <Form.Label>{t('city')}</Form.Label>
-                <Form.Select aria-label="Default select example" value={city} onChange={(e) => setCity(e.target.value)} required>
+                <Form.Select aria-label="Default select example" 
+                 value={city} onChange={(e) => setCity(e.target.value)} required >
                   <option key={city} value={""} >{t('cityplaceholder')}</option>
 
                   {
                     citynames.map((cityname) => (
                       <option key={cityname._id} value={cityname._id}
-                        selected={city === cityname._id} >{cityname.cityname}</option>
+                        >{cityname.cityname}</option>
                     ))}
 
                 </Form.Select>
@@ -235,10 +236,10 @@ function AddCustomer() {
           <Row className="rounded bg-white text-center">
             <div className="col-md-12 mb-4 " >
               <Button variant="primary" size="lg" type="button" className="text-center" onClick={updateId ? updateCustomer : handleSubmit}>
-                {t('savebutton')}
+              {t('savebutton')}
               </Button>{' '}
               <Button variant="primary" size="lg" type="button" className="text-center" onClick={clearFields}>
-                {t('newbutton')}
+              {t('newbutton')}
               </Button>
             </div>
             {isLoading ? <PlaceHolder /> : renderCustomerList}

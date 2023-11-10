@@ -29,6 +29,17 @@ function AddLineMan() {
       })
   }, [updateUI]);
 
+  useEffect(() => {
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" && event.target.nodeName === "INPUT") {
+        var form = event.target.form;
+        var index = Array.prototype.indexOf.call(form, event.target);
+        form.elements[index + 1].focus();
+        event.preventDefault();
+      }
+    });
+  }, []);
+
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -103,7 +114,7 @@ function AddLineMan() {
             <Col xs={12} md={12} >
               <Form.Group className="mb-3" name="linemanname" border="primary" >
                 <Form.Label>{t('lineman')}</Form.Label>
-                <Form.Control type="text" placeholder={t('linemanplaceholderlabel')} required value={input} onChange={(e) => setInput(e.target.value)} />
+                <Form.Control type="text" placeholder={t('linemanplaceholderlabel')} required value={input} onChange={(e) => setInput(e.target.value)} autoFocus />
               </Form.Group>
             </Col>
 

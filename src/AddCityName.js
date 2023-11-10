@@ -41,6 +41,17 @@ function AddCityName() {
         })
     }, [])
 
+    useEffect(() => {
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Enter" && event.target.nodeName === "INPUT") {
+            var form = event.target.form;
+            var index = Array.prototype.indexOf.call(form, event.target);
+            form.elements[index + 1].focus();
+            event.preventDefault();
+          }
+        });
+      }, []);
+
     const handleSubmit = (event) => {
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
@@ -111,7 +122,7 @@ function AddCityName() {
                     <Form validated={validated}>
                         <Form.Group className="mb-3" name="cityname" border="primary" >
                             <Form.Label>{t('city')}</Form.Label>
-                            <Form.Control type="text" placeholder={t('cityplaceholderlabel')} required value={inputCity} onChange={(e) => setInputCity(e.target.value)} />
+                            <Form.Control type="text" placeholder={t('cityplaceholderlabel')} required value={inputCity} onChange={(e) => setInputCity(e.target.value)} autoFocus />
                         </Form.Group>
                         <Form.Group className="mb-3" name="linenumber" border="primary" >
                             <Form.Label>{t('line')}</Form.Label>

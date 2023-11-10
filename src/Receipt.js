@@ -9,14 +9,11 @@ import PlaceHolder from "./components/spinner/placeholder";
 function AddReceipt() {
   const [linenames, setLineNames] = useState([]);
   const [pendingLoan, setPendingLoan] = useState([]);
-  const [childLoan, setChildLoan] = useState([]);
   const [startdateRef, setStartDateRef] = useState(startOfWeek());
   const [line, setLine] = useState(0);
   const { t, i18n } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  
-  const receipt = useRef(null)
 
 
   useEffect(() => {
@@ -32,13 +29,24 @@ function AddReceipt() {
     })
   }, []);
 
+  useEffect(() => {
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" && event.target.nodeName === "INPUT") {
+        var form = event.target.form;
+        var index = Array.prototype.indexOf.call(form, event.target);
+        form.elements[index + 1].focus();
+        event.preventDefault();
+      }
+    });
+  }, []);
+
   const processList = () => {
     setIsLoading(true);
     return (
       axios.get(`${baseURL}/receipt/get/loanpending`, { params: { cityid: line.toString(), receiptdate: dateFormat(startdateRef).toString() } }).then((res) => {
         setPendingLoan(res.data);
         setIsLoading(false);
-        //console.log(res.data);
+
       }).catch(error => {
         console.log("error=", error);
         setErrorMessage(t('errormessageloan'));
@@ -47,44 +55,60 @@ function AddReceipt() {
     )
   }
 
-  
-    
+
+
 
   const saveReceipt = () => {
-    const isFound = childLoan.find(element => {
-      if(element.check===true)
-      {
-        return true;
+    var noweek = 0;
+    const isFound = pendingLoan.find(element => {
+      console.log(element.check);
+      console.log(element.weak);
+      console.log(element.amount);
+      if (element.check === true) {
+        if (element.weak != "" && element.amount > 0) {
+          noweek = 1;
+          return true;
+        }
+        else {
+          noweek = 0;
+          return true;
+        }
       }
-      else{
+      else {
         return false;
       }
-      
+
     });
 
-    if(isFound){
-      
-      axios.post(`${baseURL}/receipt/save/details`, { receiptdata: childLoan, receiptdate: new Date(startdateRef) }).then((res) => {
-        //console.log(res.data);
-      }).then((res) => {
-        setChildLoan([]);
-        processList()
-        alert(t('savealertmessage'))
-      }).catch(error => {
-        console.log("error=", error);
-        setErrorMessage(t('errormessagesavereceipt'));
-        
-      })
+
+
+    if (isFound) {
+      if (noweek === 1) {
+        axios.post(`${baseURL}/receipt/save/details`, { receiptdata: pendingLoan, receiptdate: new Date(startdateRef) }).then((res) => {
+          //console.log(res.data);
+        }).then((res) => {
+          setPendingLoan([]);
+          processList()
+          alert(t('savealertmessage'))
+        }).catch(error => {
+          console.log("error=", error);
+          setErrorMessage(t('errormessagesavereceipt'));
+
+        })
+      }
+      else {
+        alert("Properly Fill the Details");
+      }
+
     }
-    else{
-      alert(t("selectanyitemfromlist"))
+    else {
+      alert(t("selectanyitemfromlist"));
     }
-    
-    
+
   }
   const renderloanpendingList = (
     <div className="col-md-12 text-center">
-      <ListReceipt pending={pendingLoan} setpendingLoanFun={setChildLoan} />
+      <ListReceipt pending={pendingLoan} setpendingLoanFun={setPendingLoan} />
     </div>
   )
   return (
@@ -119,19 +143,27 @@ function AddReceipt() {
           </Row>
           <Row>
             <div className="col-md-12 text-center " >
-            <Button variant="primary" type="button" className="text-center" onClick={processList}>
+              <Button variant="primary" type="button" className="text-center" onClick={processList}>
                 {t('processbuttonlabel')}
               </Button>{' '}
-              <Button variant="primary" type="button" className="text-center" onClick={saveReceipt}>
-                {t('savebutton')}
-              </Button>
-              
+
             </div>
           </Row>
           <Row>
             {isLoading ? <PlaceHolder /> : renderloanpendingList}
             {errorMessage && <div className="error">{errorMessage}</div>}
 
+          </Row>
+          <Row >
+            <Col>
+            </Col>
+
+            <Col className="col-md-3">
+              <Button variant="primary" type="button" className="text-center" onClick={saveReceipt}>
+                {t('savebutton')}
+              </Button>
+            </Col>
+            <Col></Col>
           </Row>
         </Form>
       </Row>
