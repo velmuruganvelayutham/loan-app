@@ -148,13 +148,44 @@ function LoanForm() {
     {/*console.log("DATE", date);*/ }
     function calculateTotalAmt() {
         let given = Number(givenAmt);
-        let document = ((50 * given) / 1000);
+        let document=0;
+        if(weekscount==25){
+            document = ((50 * given) / 1000);
+        }
+        else if(weekscount==32){
+            document = ((40 * given) / 1000);
+        }
+        else if(weekscount==12){
+            document = ((100 * given) / 1000);
+        }
+        else if(weekscount==42 || weekscount==43){
+            document = ((30 * given) / 1000);
+        }
         documentAmt.current.value = document.toFixed(2);
-        let intrested = ((given * 20) / 100);
+        let intrested=0
+        if(weekscount==25)
+        {
+            intrested = ((given * 20) / 100);
+        }
+        else if(weekscount==32){
+            
+            intrested = ((given * 24) / 100);
+        }
+        else if(weekscount==42){
+            intrested = ((given * 23) / 100);
+        }
+        else if(weekscount==12)
+        {
+            intrested = ((given * 10) / 100);
+        }
+        else if(weekscount==43){
+            intrested = ((given * 26) / 100);
+        }
+         
         interestAmt.current.value = intrested.toFixed(2);
         let total = given + document + intrested;
         totalAmt.current.value = total.toFixed(2);
-        let due = (total / 25)
+        let due = (total / weekscount)
         dueAmt.current.value = due.toFixed(2);
         setGivenAmt(given.toFixed(2));
     }
