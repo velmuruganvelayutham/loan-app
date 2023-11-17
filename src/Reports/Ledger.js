@@ -32,6 +32,22 @@ var arr2 = Array.from({ length: 13 }, (_, i) => i + 12)
         first = records.length > 0 ? ledger[0] : "";
        
         totalamount=first.totalamount;
+        if(first.weekcount===12){
+            arr1=Array.from(Array(12).keys());
+            arr2=[];
+        }
+        else if(first.weekcount===32){
+            arr1=Array.from(Array(16).keys());
+            arr2 = Array.from({ length: 16 }, (_, i) => i + 16)
+        }
+        else if(first.weekcount===42){
+            arr1=Array.from(Array(21).keys());
+            arr2 = Array.from({ length: 21 }, (_, i) => i + 21)
+        }
+        else if(first.weekcount===43){
+            arr1=Array.from(Array(21).keys());
+            arr2 = Array.from({ length: 22 }, (_, i) => i + 21)
+        }
 
     }
     
@@ -201,7 +217,7 @@ var arr2 = Array.from({ length: 13 }, (_, i) => i + 12)
 
                                         ledger && ledger.length > 0
                                             ?
-                                            (ledger.slice(0, 12).map((ledgerr) => {
+                                            (ledger.slice(0, arr1.length).map((ledgerr) => {
                                                 serialno = serialno + 1;
                                                 totalamount = totalamount - parseInt(ledgerr["joined"].collectedamount);
                                                 //totalamount=ledgerr.collectedamount;
@@ -259,8 +275,8 @@ var arr2 = Array.from({ length: 13 }, (_, i) => i + 12)
                                 </thead>
                                 <tbody>
                                     {
-                                        ledger.length > 12 ?
-                                            ledger.slice(12, ledger.length).map((ledg) => {
+                                        ledger.length > (arr1.length) ?
+                                            ledger.slice(arr1.length, ledger.length).map((ledg) => {
                                                 serialno = serialno + 1;
                                                 totalamount = totalamount - parseInt(ledg["joined"].collectedamount);
                                                 return (
@@ -268,7 +284,7 @@ var arr2 = Array.from({ length: 13 }, (_, i) => i + 12)
                                                 )
                                             })
                                             :
-                                            arr2.slice(0, 13).map((i) => {
+                                            arr2.slice(0, (arr1.length+1)).map((i) => {
                                                 serialno = serialno + 1;
                                                 return (
                                                     TablesRows(serialno, "", "", "")
@@ -276,8 +292,8 @@ var arr2 = Array.from({ length: 13 }, (_, i) => i + 12)
                                             })
 
                                     }
-                                    {(ledger.length > 12) ?
-                                        arr2.slice(ledger.length - arr2.length - 1, 13-(ledger.length - arr2.length)).map((i) => {
+                                    {(ledger.length > arr1.length) ?
+                                        arr2.slice(ledger.length - arr2.length - 1, (arr1.length+1)-(ledger.length - arr2.length)).map((i) => {
                                             serialno = serialno + 1;
                                             return (
                                                 TablesRows(serialno, "", "", "")

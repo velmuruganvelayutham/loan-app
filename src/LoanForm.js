@@ -191,14 +191,24 @@ function LoanForm() {
     }
     const handleSubmit = (event) => {
         const form = event.currentTarget;
-        //alert(cityidRef.current.value)
+        
         if (form.checkValidity() === false) {
             event.stopPropagation();
         }
 
         setValidated(true);
+        if(Number(paidAmt.current.value)===0){
+            alert(t('paidamountvaluezeroalert'))
+            return false;
+        }
+        else if(Number(paidAmt.current.value)>Number(dueAmt.current.value)){
+            alert(t('paidamountgreaterthanloanalert'))
+            return false;
+        }
         if (customeroptionRef.current.value !== "" && linemanoptionRef.current.value !== "" && weekRef.current.value !== "" && bookRef.current.value, lineRef.current.value !== ""
-            && lineRef.current.value !== "" & weekscount !== "" && givenAmt !== "" && givenAmt !== 0) {
+            && lineRef.current.value !== "" & weekscount !== "" && givenAmt !== "" && givenAmt !== 0 && 
+            paidAmt.current.value!==0 && paidAmt.current.value!="" && 
+            paidAmt.current.value==dueAmt.current.value) {
             saveLoanDetails();
         }
 

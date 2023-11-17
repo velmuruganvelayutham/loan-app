@@ -36,6 +36,7 @@ function LedgerForm() {
         
         axios.get(`${baseURL}/loancreate/get`, { params: { city_id: lineNo.toString() } }).then((res) => {
             setLoannumbers(res.data);
+            
             setIsLoading(false);
         }).catch(error => {
             console.log("error=", error);
@@ -53,6 +54,7 @@ function LedgerForm() {
 
             axios.get(`${baseURL}/ledger/get`, { params: { loanno: loanno } }).then((res) => {
                 setLoanDetails(res.data);
+                console.log(res.data);
                 setIsLoading(false)
 
 

@@ -101,5 +101,7 @@
 "running":"ரன்னிங்",
 "notrunningdate":"ரன்னிங் ஆகாத தேதி",
 "totalledgername":"முன் பற்று கணக்கு,த.பற்று கணக்கு,ஆவரேஜ் வசூல்,பெண்டிங் மற்றும் ரன்னிங் ஆகாத அக்கவுண்ட்",
-"selectanyitemfromlist":"ஏதாவது ஒரு சீட்டு எண்ணை தேர்ந்தெடுக்கவும்"
+"selectanyitemfromlist":"ஏதாவது ஒரு சீட்டு எண்ணை தேர்ந்தெடுக்கவும்",
+"paidamountvaluezeroalert":"கட்டிய பணம் கொடுக்கப்படவில்லை",
+"paidamountgreaterthanloanalert":"கட்டிய பணம் கடன் தொகையை விட அதிகமாக உள்ளது"
 }

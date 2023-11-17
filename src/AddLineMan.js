@@ -84,8 +84,7 @@ function AddLineMan() {
       setInput("");
       setInputMobileno("");
       setUpdateId(null);
-    })
-      .catch(error => {
+    }).catch(error => {
         setErrorMessage(t('errormessagesavelineman'));
         setIsLoading(false);
         console.log("error=", error);
@@ -129,7 +128,7 @@ function AddLineMan() {
           </Row>
           <Row className="rounded bg-white">
             <div className="col-md-12 text-center ">
-              <Button variant="primary"  type="submit" className="text-center" onClick={updateId ? updateLineMan : handleSubmit}>
+              <Button variant="primary"  type="button" className="text-center" onClick={updateId ? updateLineMan : handleSubmit}>
                 {t('savebutton')}
               </Button>{' '}
               <Button variant="primary"
