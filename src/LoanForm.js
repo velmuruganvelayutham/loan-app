@@ -207,7 +207,8 @@ function LoanForm() {
         if (customeroptionRef.current.value !== "" && linemanoptionRef.current.value !== "" && weekRef.current.value !== "" && bookRef.current.value, lineRef.current.value !== ""
             && lineRef.current.value !== "" & weekscount !== "" && givenAmt !== "" && givenAmt !== 0 && 
             paidAmt.current.value!==0 && paidAmt.current.value!="" && 
-            paidAmt.current.value==dueAmt.current.value) {
+            Number(paidAmt.current.value)==Number(dueAmt.current.value)) {
+            
             saveLoanDetails();
         }
 
