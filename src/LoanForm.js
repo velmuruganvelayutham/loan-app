@@ -191,7 +191,6 @@ function LoanForm() {
     }
     const handleSubmit = (event) => {
         const form = event.currentTarget;
-        
         if (form.checkValidity() === false) {
             event.stopPropagation();
         }
@@ -217,7 +216,7 @@ function LoanForm() {
     const saveLoanDetails = () => {
 
         axios.post(`${baseURL}/loancreate/save`, {
-            loanno: maxLoanNo, customer_id: customeroptionRef.current.value, lineman_id: linemanoptionRef.current.value, city_id: cityidRef.current.value,
+            loanno: Number(loannoRef.current.value), customer_id: customeroptionRef.current.value, lineman_id: linemanoptionRef.current.value, city_id: cityidRef.current.value,
             weekno: weekRef.current.value, bookno: bookRef.current.value, lineno: lineRef.current.value, document: documentRef.current.value, cheque: chequeRef.current.value,
             weekcount: weekscount, startdate: new Date(startDate), givendate: new Date(givenDate.current.value), duedate: new Date(dueDate.current.value), finisheddate: new Date(endDateRef.current.value),
             givenamount: Number(givenAmt), documentamount: Number(documentAmt.current.value), interestamount: Number(interestAmt.current.value),
