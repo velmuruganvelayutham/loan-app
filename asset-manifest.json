@@ -1,11 +1,11 @@
 {
   "files": {
     "main.css": "/loan-app/static/css/main.d924d282.css",
-    "main.js": "/loan-app/static/js/main.904a238c.js",
+    "main.js": "/loan-app/static/js/main.bffc27d3.js",
     "static/js/917.4a720ca4.chunk.js": "/loan-app/static/js/917.4a720ca4.chunk.js",
     "static/js/473.81bc0fbc.chunk.js": "/loan-app/static/js/473.81bc0fbc.chunk.js",
     "static/js/705.2658a895.chunk.js": "/loan-app/static/js/705.2658a895.chunk.js",
-    "static/js/998.7cda16eb.chunk.js": "/loan-app/static/js/998.7cda16eb.chunk.js",
+    "static/js/998.14da2b9f.chunk.js": "/loan-app/static/js/998.14da2b9f.chunk.js",
     "static/js/336.63bda5b8.chunk.js": "/loan-app/static/js/336.63bda5b8.chunk.js",
     "static/js/331.c2a49013.chunk.js": "/loan-app/static/js/331.c2a49013.chunk.js",
     "static/js/175.c318fb0b.chunk.js": "/loan-app/static/js/175.c318fb0b.chunk.js",
@@ -18,11 +18,11 @@
     "static/js/70.f5b2db9c.chunk.js": "/loan-app/static/js/70.f5b2db9c.chunk.js",
     "index.html": "/loan-app/index.html",
     "main.d924d282.css.map": "/loan-app/static/css/main.d924d282.css.map",
-    "main.904a238c.js.map": "/loan-app/static/js/main.904a238c.js.map",
+    "main.bffc27d3.js.map": "/loan-app/static/js/main.bffc27d3.js.map",
     "917.4a720ca4.chunk.js.map": "/loan-app/static/js/917.4a720ca4.chunk.js.map",
     "473.81bc0fbc.chunk.js.map": "/loan-app/static/js/473.81bc0fbc.chunk.js.map",
     "705.2658a895.chunk.js.map": "/loan-app/static/js/705.2658a895.chunk.js.map",
-    "998.7cda16eb.chunk.js.map": "/loan-app/static/js/998.7cda16eb.chunk.js.map",
+    "998.14da2b9f.chunk.js.map": "/loan-app/static/js/998.14da2b9f.chunk.js.map",
     "336.63bda5b8.chunk.js.map": "/loan-app/static/js/336.63bda5b8.chunk.js.map",
     "331.c2a49013.chunk.js.map": "/loan-app/static/js/331.c2a49013.chunk.js.map",
     "175.c318fb0b.chunk.js.map": "/loan-app/static/js/175.c318fb0b.chunk.js.map",
@@ -36,6 +36,6 @@
   },
   "entrypoints": [
     "static/css/main.d924d282.css",
-    "static/js/main.904a238c.js"
+    "static/js/main.bffc27d3.js"
   ]
 }
