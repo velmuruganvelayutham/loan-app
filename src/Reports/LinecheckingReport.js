@@ -46,7 +46,7 @@ function LinecheckingReport() {
     const processList = () => {
         setIsLoading(true);
         
-        if (reportType == 0) {
+        if (Number(reportType)=== 0) {
             linecheckingreport = "checkingdetails"
         }
         else {
@@ -73,14 +73,14 @@ function LinecheckingReport() {
     }
     const renderLineCheckingList = (
         <Row ref={componentRef}>
-            <ListLineChecking pendingLoans={checkingDetails} date={endDateRef.current.value} company={company[0].companyname} />
+            <ListLineChecking pendingLoans={checkingDetails} date={endDateRef.current.value} company={company.length>0?company[0].companyname:""} />
 
         </Row>
 
     )
     const renderpreviousweekList = (
         <Row ref={componentRef}>
-            <PreviousWeekList pendingLoans={checkingDetails} date={endDateRef.current.value} company={company[0].companyname} />
+            <PreviousWeekList pendingLoans={checkingDetails} date={endDateRef.current.value} company={company.length>0?company[0].companyname:""} />
         </Row>
 
     )
@@ -123,7 +123,7 @@ function LinecheckingReport() {
                         <Col md={2} className="rounder bg-white">
                             <Form.Group>
                                 <Form.Label>{t('enddate')}</Form.Label>
-                                <Form.Control type="date" ref={endDateRef} defaultValue={startOfWeek()} disabled={reportType == 0 ? false : true} />
+                                <Form.Control type="date" ref={endDateRef} defaultValue={startOfWeek()} disabled={Number(reportType)=== 0 ? false : true} />
                             </Form.Group>
                         </Col>
                     </Row>
@@ -143,7 +143,7 @@ function LinecheckingReport() {
                                 content={() => componentRef.current} />
                         </div>
                     </Row>
-                    {isLoading ? <PlaceHolder /> : (reportType == 0 ? renderLineCheckingList : renderpreviousweekList)}
+                    {isLoading ? <PlaceHolder /> : (Number(reportType)=== 0 ? renderLineCheckingList : renderpreviousweekList)}
                     {errorMessage && <div className="error">{errorMessage}</div>}
 
 
