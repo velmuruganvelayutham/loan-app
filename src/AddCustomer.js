@@ -175,7 +175,7 @@ function AddCustomer() {
             </Col>
             <Col xs={12} md={4} className="rounded bg-white">
               <Form.Group className="mb-3" name="mobilenumber" border="primary" >
-                <Form.Label>{t('phone')}</Form.Label>
+                <Form.Label>{t('phoneno')}</Form.Label>
                 <Form.Control type="number" placeholder={t('phonenoplaceholder')} required value={inputmobileno}
                   onChange={(e) => setInputMobileno(e.target.value)} />
               </Form.Group>

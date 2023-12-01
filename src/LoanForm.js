@@ -20,6 +20,7 @@ function LoanForm() {
         return dateendformat;
 
     }
+    const[updateUI,setUpdateUI]=useState(false)
     const [errorMessage, setErrorMessage] = useState("");
     const { t, i18n } = useTranslation();
     const [isLoading, setIsLoading] = useState(false);
@@ -208,12 +209,32 @@ function LoanForm() {
             && lineRef.current.value !== "" & weekscount !== "" && givenAmt !== "" && givenAmt !== 0 && 
             paidAmt.current.value!==0 && paidAmt.current.value!="" && 
             Number(paidAmt.current.value)==Number(dueAmt.current.value)) {
+            if(updateUI){
+                if (window.confirm(t('yesornoalertmessage'))) {
+                    updateLoanDetails();
+                  } 
+                  
+            }
+            else{
+                saveLoanDetails();
+            }
             
-            saveLoanDetails();
         }
 
 
     };
+    const updateLoanDetails=()=>{
+        axios.put(`${baseURL}/loancreate/update`,
+        {newloanno:Number(loannoRef.current.value),oldloanno:Number(oldLoanRef.current.value)
+        }).then((res)=>{
+            clearFields();
+        }).catch(error => {
+            console.log("error=", error);
+            setErrorMessage(t('errormessageupdateloan'));
+            setIsLoading(false);
+        });
+        alert(t('updatealertmessage'));
+    }
     const saveLoanDetails = () => {
 
         axios.post(`${baseURL}/loancreate/save`, {
@@ -237,6 +258,7 @@ function LoanForm() {
         if (oldLoanRef.current.value != "") {
             axios.get(`${baseURL}/loancreate/get/oldLoanRef`,
                 { params: { loanno: Number(oldLoanRef.current.value) } }).then((res) => {
+                    
                     const oldReference = res.data;
                     //alert(oldLoanRef);
                     customeroptionRef.current.value = oldReference[0].customer_id;
@@ -257,9 +279,8 @@ function LoanForm() {
                     interestAmt.current.value = oldReference[0].interestamount;
                     totalAmt.current.value = oldReference[0].totalamount;
                     dueAmt.current.value = oldReference[0].dueamount;
-
                     paidAmt.current.value = oldReference[0].paidamount;
-
+                    setUpdateUI(true);
                 })
         }
 
@@ -288,6 +309,7 @@ function LoanForm() {
         dueAmt.current.value = "";
         paidAmt.current.value = "";
         oldLoanRef.current.value = "";
+        setUpdateUI(false);
         setMaxValueShow((prevState) => !prevState)
     }
 
@@ -494,7 +516,7 @@ function LoanForm() {
                     <Row>
                         <div className="col-md-12 text-center mb-2 " >
                             <Button variant="primary" size="lg" type="button" className="text-center" onClick={handleSubmit} >
-                                {t('savebutton')}
+                                {updateUI?t('updatebutton'):t('savebutton')}
                             </Button>{' '}
                             <Button variant="primary" size="lg" type="button" className="text-center" onClick={clearFields}>
                                 {t('newbutton')}

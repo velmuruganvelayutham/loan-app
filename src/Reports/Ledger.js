@@ -48,6 +48,12 @@ var arr2 = Array.from({ length: 13 }, (_, i) => i + 12)
             arr1=Array.from(Array(21).keys());
             arr2 = Array.from({ length: 22 }, (_, i) => i + 21)
         }
+        else if(first.weekcount===25){
+             arr1 = Array.from(Array(12).keys());
+             arr2 = Array.from({ length: 13 }, (_, i) => i + 12)
+
+        }
+        
 
     }
     
@@ -293,8 +299,9 @@ var arr2 = Array.from({ length: 13 }, (_, i) => i + 12)
 
                                     }
                                     {(ledger.length > arr1.length) ?
-                                        arr2.slice(ledger.length - arr2.length - 1, (arr1.length+1)-(ledger.length - arr2.length)).map((i) => {
-                                            serialno = serialno + 1;
+                                        //arr2.slice(ledger.length - arr2.length - 1, (arr1.length+1)-(ledger.length - arr2.length)).map((i) => {
+                                            arr2.slice(ledger.length - (arr2.length - 1), arr2.length).map((i) => {
+                                        serialno = serialno + 1;
                                             return (
                                                 TablesRows(serialno, "", "", "")
                                             )
