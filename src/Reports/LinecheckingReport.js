@@ -8,7 +8,7 @@ import { startOfWeek } from '../FunctionsGlobal/StartDateFn';
 import ListLineChecking from "./ListLineChecking";
 import PreviousWeekList from "./PreviousWeekList"
 import ReactToPrint from 'react-to-print';
-var linecheckingreport = "checkingdetails";
+var linecheckingreportname = "checkingdetails";
 function LinecheckingReport() {
     const [cityNames, setCityNames] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -47,13 +47,13 @@ function LinecheckingReport() {
         setIsLoading(true);
         
         if (Number(reportType)=== 0) {
-            linecheckingreport = "checkingdetails"
+            linecheckingreportname = "checkingdetails"
         }
         else {
-            linecheckingreport = "previousweekdetails";
+            linecheckingreportname = "previousweekdetails";
         }
         return (
-            axios.get(`${baseURL}/loan/${linecheckingreport}`, { params: { city_id: city.toString(), fromdate: startDateRef.current.value, todate: endDateRef.current.value } }).then((res) => {
+            axios.get(`${baseURL}/loan/${linecheckingreportname}`, { params: { city_id: city.toString(), fromdate: startDateRef.current.value, todate: endDateRef.current.value } }).then((res) => {
                 setCheckingDetails(res.data)
                 console.log(res.data)
                 setIsLoading(false);
