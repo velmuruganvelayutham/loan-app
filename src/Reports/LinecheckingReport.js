@@ -96,7 +96,7 @@ function LinecheckingReport() {
                     <Row >
                         <Col xs={12} md={5} className="rounder bg-white">
                             <Form.Group className="mb-3" name="linenumber" border="primary" >
-                                <Form.Label>{t('report')}</Form.Label>
+                                <Form.Label>{t('city')}</Form.Label>
                                 <Form.Select aria-label="Default select example" value={city} 
                                 onChange={(e) => setCity(e.target.value)} required>
                                     <option key={""} value={""} >{t('cityplaceholder')}</option>
@@ -112,7 +112,7 @@ function LinecheckingReport() {
                         </Col>
                         <Col md={3} className="rounder bg-white">
                             <Form.Group className="mb-3" name="cityname" border="primary" >
-                                <Form.Label>{t('city')}</Form.Label>
+                                <Form.Label>{t('report')}</Form.Label>
                                 <Form.Select aria-label="Default select example"
                                      ref={reportType} defaultValue={0}>
                                     <option value={0} >{t('linechecking')}</option>
