@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkmy_app=self.webpackChunkmy_app||[]).push([[705],{705:function(t,e,o){o.r(e);o(2791);var r=o(184);e.default=function(){return(0,r.jsx)("footer",{className:"page-footer font-small blue pt-4",children:(0,r.jsxs)("div",{className:"footer-copyright text-center py-3",children:["\xa9 2023 Copyright:",(0,r.jsx)("a",{href:"https://mdbootstrap.com/",children:" MDBootstrap.com"})]})})}}}]);
-//# sourceMappingURL=705.2658a895.chunk.js.map

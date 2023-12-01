@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkmy_app=self.webpackChunkmy_app||[]).push([[705],{705:function(e,a,t){t.r(a);t(2791);var p=t(184);a.default=function(){return(0,p.jsx)("footer",{className:"page-footer font-small blue pt-4"})}}}]);
+//# sourceMappingURL=705.e34f12b1.chunk.js.map
