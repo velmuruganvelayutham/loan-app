@@ -7,7 +7,7 @@ import { dateFormatdd } from "../FunctionsGlobal/StartDateFn"
 var first = [];
 
 
-const PreviousWeekList = ({ pendingLoans, date,company }) => {
+const PreviousWeekList = ({ pendingLoans, date,company}) => {
     var totaldue = 0;
     var totalcredit = 0;
     const { t, i18n } = useTranslation();
@@ -23,7 +23,7 @@ const PreviousWeekList = ({ pendingLoans, date,company }) => {
     serialno = (currentPage - 1) * recordsPerPage;
     var pagetotaldue = 0;
     var pagetotalcredit = 0;
-
+    
     function prevPage() {
         if (currentPage !== firstIndex) {
             setCurrentPage(currentPage - 1)

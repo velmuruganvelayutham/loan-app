@@ -103,7 +103,7 @@ var pendingweektotal=0;
                 pending=customer.totalamount-customer.collectedtotal;
                 pagetotal=pagetotal+pending;
                 
-                console.log(pending+"muru");
+                //console.log(pending+"muru");
                 if(customer.collectedamountdate>0){
                   duepending=0
                 }

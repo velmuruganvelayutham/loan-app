@@ -13,9 +13,9 @@ function LinecheckingReport() {
     const [cityNames, setCityNames] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    const [checkingDetails, setCheckingDetails] = useState([]);
+    const [checkingDetailsLine, setCheckingDetailsLine] = useState([]);
     const [company, setCompany] = useState([]);
-    const [reportType, setReportType] = useState(0);
+    const reportType=useRef(0);
     const { t, i18n } = useTranslation();
     const [city, setCity] = useState("");
     const startDateRef = useRef(null);
@@ -24,7 +24,6 @@ function LinecheckingReport() {
         setIsLoading(true);
         axios.get(`${baseURL}/company/get`).then((res) => {
             setCompany(res.data);
-            console.log(res.data)
             setIsLoading(false);
         }).catch(error => {
             console.log("error=", error);
@@ -46,17 +45,20 @@ function LinecheckingReport() {
     const processList = () => {
         setIsLoading(true);
         
-        if (Number(reportType)=== 0) {
+        if (Number(reportType.current.value)=== 0) {
+            
             linecheckingreportname = "checkingdetails"
         }
         else {
             linecheckingreportname = "previousweekdetails";
         }
+        
         return (
             axios.get(`${baseURL}/loan/${linecheckingreportname}`, { params: { city_id: city.toString(), fromdate: startDateRef.current.value, todate: endDateRef.current.value } }).then((res) => {
-                setCheckingDetails(res.data)
-                console.log(res.data)
+                setCheckingDetailsLine(res.data)
                 setIsLoading(false);
+                
+                
             })
                 .catch(error => {
                     console.log("error=", error);
@@ -73,17 +75,20 @@ function LinecheckingReport() {
     }
     const renderLineCheckingList = (
         <Row ref={componentRef}>
-            <ListLineChecking pendingLoans={checkingDetails} date={endDateRef.current.value} company={company.length>0?company[0].companyname:""} />
+            <ListLineChecking pendingLoans={checkingDetailsLine} date={endDateRef.current.value} 
+            company={company.length>0?company[0].companyname:""}/>
 
         </Row>
 
     )
     const renderpreviousweekList = (
         <Row ref={componentRef}>
-            <PreviousWeekList pendingLoans={checkingDetails} date={endDateRef.current.value} company={company.length>0?company[0].companyname:""} />
+            <PreviousWeekList pendingLoans={checkingDetailsLine} date={endDateRef.current.value} 
+            company={company.length>0?company[0].companyname:""}/>
         </Row>
 
     )
+    
     return (
         <Container>
             <Row>
@@ -92,7 +97,8 @@ function LinecheckingReport() {
                         <Col xs={12} md={5} className="rounder bg-white">
                             <Form.Group className="mb-3" name="linenumber" border="primary" >
                                 <Form.Label>{t('city')}</Form.Label>
-                                <Form.Select aria-label="Default select example" value={city} onChange={(e) => setCity(e.target.value)} required>
+                                <Form.Select aria-label="Default select example" value={city} 
+                                onChange={(e) => setCity(e.target.value)} required>
                                     <option key={""} value={""} >{t('cityplaceholder')}</option>
 
                                     {
@@ -108,7 +114,7 @@ function LinecheckingReport() {
                             <Form.Group className="mb-3" name="cityname" border="primary" >
                                 <Form.Label>{t('city')}</Form.Label>
                                 <Form.Select aria-label="Default select example"
-                                    onChange={(e) => setReportType(e.target.value)} value={reportType} >
+                                     ref={reportType} defaultValue={0}>
                                     <option value={0} >{t('linechecking')}</option>
                                     <option value={1}>{t('previousweekreport')}</option>
                                 </Form.Select>
@@ -123,7 +129,7 @@ function LinecheckingReport() {
                         <Col md={2} className="rounder bg-white">
                             <Form.Group>
                                 <Form.Label>{t('enddate')}</Form.Label>
-                                <Form.Control type="date" ref={endDateRef} defaultValue={startOfWeek()} disabled={Number(reportType)=== 0 ? false : true} />
+                                <Form.Control type="date" ref={endDateRef} defaultValue={startOfWeek()} />
                             </Form.Group>
                         </Col>
                     </Row>
@@ -143,9 +149,9 @@ function LinecheckingReport() {
                                 content={() => componentRef.current} />
                         </div>
                     </Row>
-                    {isLoading ? <PlaceHolder /> : (Number(reportType)=== 0 ? renderLineCheckingList : renderpreviousweekList)}
+                    {isLoading ? <PlaceHolder /> : (Number(reportType.current.value)===0?renderLineCheckingList : renderpreviousweekList)}
                     {errorMessage && <div className="error">{errorMessage}</div>}
-
+                    
 
                 </Form>
             </Row>
