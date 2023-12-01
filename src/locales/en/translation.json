@@ -111,5 +111,6 @@
 "totalledgername":"Before Debt,Current Debt,Average Collection,Pending And Not Running Account",
 "selectanyitemfromlist":"Select Any one From List",
 "paidamountvaluezeroalert":"Paid Amount Should Not be Zero",
-"paidamountgreaterthanloanalert":"Paid Amount Greater than Loan Amount"
+"paidamountgreaterthanloanalert":"Paid Amount Greater than Loan Amount",
+"report":"Select Report"
 }
