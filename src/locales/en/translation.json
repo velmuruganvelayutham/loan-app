@@ -112,5 +112,10 @@
 "selectanyitemfromlist":"Select Any one From List",
 "paidamountvaluezeroalert":"Paid Amount Should Not be Zero",
 "paidamountgreaterthanloanalert":"Paid Amount Greater than Loan Amount",
-"report":"Select Report"
+"report":"Select Report",
+"newaccountaddress":"New Account Address",
+"weekendaccounts":"Week End Accounts",
+"doc":"Doc",
+"lineincentive":"Line.Inc",
+"currentweekamountgiven":"Current Week Money Given"
 }

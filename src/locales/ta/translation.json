@@ -113,5 +113,10 @@
 "selectanyitemfromlist":"ஏதாவது ஒரு சீட்டு எண்ணை தேர்ந்தெடுக்கவும்",
 "paidamountvaluezeroalert":"கட்டிய பணம் கொடுக்கப்படவில்லை",
 "paidamountgreaterthanloanalert":"கட்டிய பணம் கடன் தொகையை விட அதிகமாக உள்ளது",
-"report":"ரிபோர்டை தேர்ந்தெடு"
+"report":"ரிபோர்டை தேர்ந்தெடு",
+"newaccountaddress":"புது அக்கவுண்ட் அட்ரஸ்",
+"weekendaccounts":"வார முடிவு அக்கவுண்ட்ஸ்",
+"doc":"டாக்",
+"lineincentive":"ல.இன்ஸ்",
+"currentweekamountgiven":"அந்த வார பணம் கொடுத்தது"
 }
