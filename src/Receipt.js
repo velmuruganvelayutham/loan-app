@@ -14,7 +14,7 @@ function AddReceipt() {
   const { t, i18n } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
+  const [isButtonDisabled, setButtonDisabled] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -84,16 +84,18 @@ function AddReceipt() {
 
     if (isFound) {
       if (noweek === 1) {
+        setButtonDisabled(true);
         axios.post(`${baseURL}/receipt/save/details`, { receiptdata: pendingLoan, receiptdate: new Date(startdateRef) }).then((res) => {
           //console.log(res.data);
         }).then((res) => {
           setPendingLoan([]);
+          setButtonDisabled(false);
           processList()
           alert(t('savealertmessage'))
         }).catch(error => {
           console.log("error=", error);
           setErrorMessage(t('errormessagesavereceipt'));
-
+          setButtonDisabled(false);
         })
       }
       else {
@@ -159,7 +161,7 @@ function AddReceipt() {
             </Col>
 
             <Col className="col-md-3">
-              <Button variant="primary" type="button" className="text-center" onClick={saveReceipt}>
+              <Button variant="primary" type="button" className="text-center" onClick={saveReceipt} disabled={isButtonDisabled}>
                 {t('savebutton')}
               </Button>
             </Col>

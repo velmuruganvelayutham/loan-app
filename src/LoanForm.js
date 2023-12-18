@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Container, Row, Col, Form, Button } from 'react-bootstrap'
+import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap'
+import Select from 'react-select'
 import axios from "axios";
 import { baseURL } from './utils/constant';
 import { startOfWeek } from './FunctionsGlobal/StartDateFn';
@@ -20,7 +21,7 @@ function LoanForm() {
         return dateendformat;
 
     }
-    const[updateUI,setUpdateUI]=useState(false)
+    const [updateUI, setUpdateUI] = useState(false)
     const [errorMessage, setErrorMessage] = useState("");
     const { t, i18n } = useTranslation();
     const [isLoading, setIsLoading] = useState(false);
@@ -44,7 +45,8 @@ function LoanForm() {
     const cityidRef = useRef(null);
     const addressRef = useRef(null);
     const workRef = useRef(null);
-    const customeroptionRef = useRef(null);
+    const initialFormState = { mySelectKey: null };
+    const [myForm, setMyForm] = useState(initialFormState);
     const linemanoptionRef = useRef(null);
     const weekRef = useRef(null);
     const lineRef = useRef(null);
@@ -55,7 +57,7 @@ function LoanForm() {
     const oldLoanRef = useRef(null);
     const [validated, setValidated] = useState(false);
     const [maxValueShow, setMaxValueShow] = useState(false);
-
+    const [isButtonDisabled, setButtonDisabled] = useState(false);
     useEffect(() => {
         setIsLoading(true);
         axios.get(`${baseURL}/get/view`).then((res) => {
@@ -113,20 +115,25 @@ function LoanForm() {
 
     useEffect(() => {
         document.addEventListener("keydown", function (event) {
-          if (event.key === "Enter" && event.target.nodeName === "INPUT") {
-            var form = event.target.form;
-            var index = Array.prototype.indexOf.call(form, event.target);
-            form.elements[index + 1].focus();
-            event.preventDefault();
-          }
+            if (event.key === "Enter" && event.target.nodeName === "INPUT") {
+                var form = event.target.form;
+                var index = Array.prototype.indexOf.call(form, event.target);
+                form.elements[index + 1].focus();
+                event.preventDefault();
+            }
         });
-      }, []);
+    }, []);
 
-    function customerSelect(e) {
+    function customerSelect(value) {
+
+
+        setMyForm({ ...myForm, mySelectKey: value });
+
         const filtered = customers.filter(customer => {
-            return customer._id === e.target.value
+            return customer._id === value
         })
-        if (customeroptionRef.current.value == 0) {
+        
+        if (myForm.mySelectKey== 0) {
             setInputMobileno("");
             fathernameRef.current.value = "";
             citynameRef.current.value = "";
@@ -136,6 +143,7 @@ function LoanForm() {
             lineRef.current.value = 0;
         }
         else {
+            
             setInputMobileno(filtered[0].mobileno);
             fathernameRef.current.value = filtered[0].fathername;
             citynameRef.current.value = filtered[0].cityname;
@@ -149,40 +157,38 @@ function LoanForm() {
     {/*console.log("DATE", date);*/ }
     function calculateTotalAmt() {
         let given = Number(givenAmt);
-        let document=0;
-        if(weekscount==25){
+        let document = 0;
+        if (weekscount == 25) {
             document = ((50 * given) / 1000);
         }
-        else if(weekscount==32){
+        else if (weekscount == 32) {
             document = ((40 * given) / 1000);
         }
-        else if(weekscount==12){
+        else if (weekscount == 12) {
             document = ((100 * given) / 1000);
         }
-        else if(weekscount==42 || weekscount==43){
+        else if (weekscount == 42 || weekscount == 43) {
             document = ((30 * given) / 1000);
         }
         documentAmt.current.value = document.toFixed(2);
-        let intrested=0
-        if(weekscount==25)
-        {
+        let intrested = 0
+        if (weekscount == 25) {
             intrested = ((given * 20) / 100);
         }
-        else if(weekscount==32){
-            
+        else if (weekscount == 32) {
+
             intrested = ((given * 24) / 100);
         }
-        else if(weekscount==42){
+        else if (weekscount == 42) {
             intrested = ((given * 23) / 100);
         }
-        else if(weekscount==12)
-        {
+        else if (weekscount == 12) {
             intrested = ((given * 10) / 100);
         }
-        else if(weekscount==43){
+        else if (weekscount == 43) {
             intrested = ((given * 26) / 100);
         }
-         
+
         interestAmt.current.value = intrested.toFixed(2);
         let total = given + document + intrested;
         totalAmt.current.value = total.toFixed(2);
@@ -197,59 +203,65 @@ function LoanForm() {
         }
 
         setValidated(true);
-        if(Number(paidAmt.current.value)===0){
+        if (Number(paidAmt.current.value) === 0) {
             alert(t('paidamountvaluezeroalert'))
             return false;
         }
-        else if(Number(paidAmt.current.value)>Number(dueAmt.current.value)){
+        else if (Number(paidAmt.current.value) > Number(dueAmt.current.value)) {
             alert(t('paidamountgreaterthanloanalert'))
             return false;
         }
-        if (customeroptionRef.current.value !== "" && linemanoptionRef.current.value !== "" && weekRef.current.value !== "" && bookRef.current.value, lineRef.current.value !== ""
-            && lineRef.current.value !== "" & weekscount !== "" && givenAmt !== "" && givenAmt !== 0 && 
-            paidAmt.current.value!==0 && paidAmt.current.value!="" && 
-            Number(paidAmt.current.value)==Number(dueAmt.current.value)) {
-            if(updateUI){
+        if (myForm.mySelectKey !== "" && linemanoptionRef.current.value !== "" && weekRef.current.value !== "" && bookRef.current.value, lineRef.current.value !== ""
+            && lineRef.current.value !== "" & weekscount !== "" && givenAmt !== "" && givenAmt !== 0 &&
+            paidAmt.current.value !== 0 && paidAmt.current.value != "" &&
+            Number(paidAmt.current.value) == Number(dueAmt.current.value)) {
+            if (updateUI) {
                 if (window.confirm(t('yesornoalertmessage'))) {
                     updateLoanDetails();
-                  } 
-                  
+                }
+
             }
-            else{
+            else {
                 saveLoanDetails();
             }
-            
+
         }
 
 
     };
-    const updateLoanDetails=()=>{
+    const updateLoanDetails = () => {
+        setButtonDisabled(true);
         axios.put(`${baseURL}/loancreate/update`,
-        {newloanno:Number(loannoRef.current.value),oldloanno:Number(oldLoanRef.current.value)
-        }).then((res)=>{
-            clearFields();
-        }).catch(error => {
-            console.log("error=", error);
-            setErrorMessage(t('errormessageupdateloan'));
-            setIsLoading(false);
-        });
+            {
+                newloanno: Number(loannoRef.current.value), oldloanno: Number(oldLoanRef.current.value)
+            }).then((res) => {
+                setButtonDisabled(false);
+                clearFields();
+            }).catch(error => {
+                console.log("error=", error);
+                setErrorMessage(t('errormessageupdateloan'));
+                setIsLoading(false);
+                setButtonDisabled(false);
+            });
         alert(t('updatealertmessage'));
     }
     const saveLoanDetails = () => {
-
+        setButtonDisabled(true);
         axios.post(`${baseURL}/loancreate/save`, {
-            loanno: Number(loannoRef.current.value), customer_id: customeroptionRef.current.value, lineman_id: linemanoptionRef.current.value, city_id: cityidRef.current.value,
+            loanno: Number(loannoRef.current.value), customer_id: myForm.mySelectKey, lineman_id: linemanoptionRef.current.value, city_id: cityidRef.current.value,
             weekno: weekRef.current.value, bookno: bookRef.current.value, lineno: lineRef.current.value, document: documentRef.current.value, cheque: chequeRef.current.value,
             weekcount: weekscount, startdate: new Date(startDate), givendate: new Date(givenDate.current.value), duedate: new Date(dueDate.current.value), finisheddate: new Date(endDateRef.current.value),
             givenamount: Number(givenAmt), documentamount: Number(documentAmt.current.value), interestamount: Number(interestAmt.current.value),
             totalamount: Number(totalAmt.current.value), dueamount: Number(dueAmt.current.value), paidamount: Number(paidAmt.current.value)
         })
             .then((res) => {
+                setButtonDisabled(false);
                 clearFields();
             }).catch(error => {
                 console.log("error=", error);
                 setErrorMessage(t('errormessagesaveloan'));
                 setIsLoading(false);
+                setButtonDisabled(false);
             });
         alert(t('savealertmessage'));
     }
@@ -258,10 +270,11 @@ function LoanForm() {
         if (oldLoanRef.current.value != "") {
             axios.get(`${baseURL}/loancreate/get/oldLoanRef`,
                 { params: { loanno: Number(oldLoanRef.current.value) } }).then((res) => {
-                    
+
                     const oldReference = res.data;
                     //alert(oldLoanRef);
-                    customeroptionRef.current.value = oldReference[0].customer_id;
+                    setMyForm({ ...myForm, mySelectKey: oldReference[0].customer_id });
+                    //customeroptionRef.current.value = oldReference[0].customer_id;
                     linemanoptionRef.current.value = oldReference[0].lineman_id;
                     setInputMobileno(oldReference[0].mobileno);
                     fathernameRef.current.value = oldReference[0].fathername;
@@ -286,7 +299,9 @@ function LoanForm() {
 
     }
     function clearFields() {
-        customeroptionRef.current.value = "";
+       
+        setMyForm(initialFormState);
+        
         linemanoptionRef.current.value = "";
         setInputMobileno("");
         fathernameRef.current.value = "";
@@ -312,7 +327,13 @@ function LoanForm() {
         setUpdateUI(false);
         setMaxValueShow((prevState) => !prevState)
     }
-
+    const options = customers.map((customer, i) => {
+        return {
+            label: customer.customer+'-'+customer.fathername,
+            value: customer._id,
+            key: i
+        }
+    })
     return (
         <Container className="rounded bg-white mt-5">
             <Row className="justify-content-md-center mt-5 ">
@@ -332,15 +353,19 @@ function LoanForm() {
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={3} className="rounded bg-white">
+
                             <Form.Group className="mb-3" name="customername" border="primary" >
                                 <Form.Label>{t('customer')}</Form.Label>{/*customer*/}
-                                <Form.Select aria-label="Default select example" ref={customeroptionRef} onChange={(e) => customerSelect(e)} required autoFocus>
-                                    <option value="">{t('customerplaceholder')}</option>
-                                    {
-                                        customers.map((customer, i) => (
-                                            <option value={customer._id}>{customer.customer}</option>
-                                        ))}
-                                </Form.Select>
+
+                                <Select aria-label="Default select example"
+                                    required autoFocus
+                                    value={options.filter(({ value }) => value === myForm.mySelectKey)}
+                                    getOptionLabel={({ label }) => label}
+                                    getOptionValue={({ value }) => value}
+                                    onChange={({ value }) => customerSelect(value)}
+                                    options={options}
+                                    placeholder={t('customer')}
+                                />
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={3} className="rounded bg-white">
@@ -515,8 +540,9 @@ function LoanForm() {
 
                     <Row>
                         <div className="col-md-12 text-center mb-2 " >
-                            <Button variant="primary" size="lg" type="button" className="text-center" onClick={handleSubmit} >
-                                {updateUI?t('updatebutton'):t('savebutton')}
+                            <Button variant="primary" size="lg" type="button" className="text-center" 
+                            onClick={handleSubmit} disabled={isButtonDisabled}>
+                                {updateUI ? t('updatebutton') : t('savebutton')}
                             </Button>{' '}
                             <Button variant="primary" size="lg" type="button" className="text-center" onClick={clearFields}>
                                 {t('newbutton')}
