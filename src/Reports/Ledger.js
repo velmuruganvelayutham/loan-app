@@ -59,11 +59,11 @@ function Ledger({ loanno, ledger, company, date }) {
     return (
 
         
-                <Container className="rounded bg-white no-gutters">
-
-                    <Row className="justify-content-md-center  ">
+                <Container className="rounded bg-white">
+                    <Row className="justify-content-sm-center">
                         <Form>
-                            <Row>
+                            
+                            <Row className='mt-5'>
                                 <Col className="rounded bg-white col-sm-3 fixed fw-bold">
                                     {t('ledger')}
                                 </Col>
@@ -82,7 +82,7 @@ function Ledger({ loanno, ledger, company, date }) {
                                     borderColor: '#000000'
                                 }} />
                             </Row>
-                            <Row>
+                            <Row className='p-3'>
                                 <Col className='col-sm-3 fixed' style={{ outline: '1px solid orange', borderRadius: ' 30px 30px 30px 30px' }}>
                                     <Form.Group border="primary" >
                                         <Form.Label>{t('customer')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
@@ -194,7 +194,7 @@ function Ledger({ loanno, ledger, company, date }) {
                     </Row>
 
                     <Row>
-                        <Container className='col-sm-6 col-md-6 fixed'>
+                        <Container className='col-sm-6 col-md-6 fixed p-3'>
                             
                                 
                                     <Table className="table text-center fs-6 table-bordered border-dark  " >
@@ -254,7 +254,6 @@ function Ledger({ loanno, ledger, company, date }) {
                         </Container>
 
                         <Container className='col-sm-6 col-md-6 fixed'>
-                            
                                     <Table className="table  text-center fs-6 table-bordered border-dark  " >
                                         <thead>
                                             <tr >

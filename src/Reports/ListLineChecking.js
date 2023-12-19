@@ -43,11 +43,11 @@ var pendingweektotal=0;
     setCurrentPage(id)
   }
   return (
-    <Fragment>
-      <div className='col-sm-6 fixed'>
+    <Fragment >
+      <div className='col-sm-6 fixed mt-5 '>
         <h3>{(company)}</h3>
       </div>
-      <div className='col-sm-6 fixed'><h3>{t('linechecking')}</h3></div>
+      <div className='col-sm-6 fixed mt-5'><h3>{t('linechecking')}</h3></div>
 
       <div className='col-sm-3 fixed'>{t('city')+" : "+first.city}</div>
       <div className='col-sm-3 fixed'>{t('customer')+" : "+first.linemanname}</div>
@@ -55,7 +55,7 @@ var pendingweektotal=0;
       <div className='col-sm-2 fixed'>{t("bookno")+" : "+(pendingLoans.length>0?first.bookno:"")}</div>
       <div className='col-sm-2 fixed'>{t("date")+" : "+dateFormatdd(date)}</div>
       <div >
-        <Table  className='table text-center fs-6 table-bordered border-dark'  >
+        <Table  className='table  text-center table-bordered border-dark'  >
           <thead>
             <tr>
             <th style={{fontSize:"12px"}}>
