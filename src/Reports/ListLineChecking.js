@@ -110,6 +110,7 @@ var pendingweektotal=0;
                 else{
                   duepending=customer.dueamount
                 }
+                
                 pendingtotal=pendingtotal+duepending;
                 if(customer['addFields'].receiptpendingweek>0 && customer['addFields'].receiptpendingweek<8){
                   pendingweek=(customer['addFields'].receiptpendingweek * customer.dueamount);
@@ -121,7 +122,9 @@ var pendingweektotal=0;
                 else {
                   pendingweek=0;
                 }
-                pendingweektotal=pendingweektotal+pendingweek;
+                pendingweek=parseFloat(pendingweek.toFixed(2));
+                pendingweektotal=pendingweektotal+parseFloat(pendingweek);
+                
                 //console.log("enddatediff"+customer['addFields'].daysCountloan);
                 //console.log("weekdiff"+customer['addFields'].daysCount);
                 return(
