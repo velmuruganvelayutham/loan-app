@@ -1,11 +1,11 @@
 {
   "files": {
     "main.css": "/loan-app/static/css/main.d924d282.css",
-    "main.js": "/loan-app/static/js/main.227d1a2e.js",
+    "main.js": "/loan-app/static/js/main.2a0c0dda.js",
     "static/js/917.f6e81a7b.chunk.js": "/loan-app/static/js/917.f6e81a7b.chunk.js",
     "static/js/473.ca00a057.chunk.js": "/loan-app/static/js/473.ca00a057.chunk.js",
     "static/js/705.e34f12b1.chunk.js": "/loan-app/static/js/705.e34f12b1.chunk.js",
-    "static/js/998.6085eebc.chunk.js": "/loan-app/static/js/998.6085eebc.chunk.js",
+    "static/js/998.33e33dff.chunk.js": "/loan-app/static/js/998.33e33dff.chunk.js",
     "static/js/336.63bda5b8.chunk.js": "/loan-app/static/js/336.63bda5b8.chunk.js",
     "static/js/331.c2a49013.chunk.js": "/loan-app/static/js/331.c2a49013.chunk.js",
     "static/js/175.397edd9e.chunk.js": "/loan-app/static/js/175.397edd9e.chunk.js",
@@ -19,11 +19,11 @@
     "static/js/427.16d8ffca.chunk.js": "/loan-app/static/js/427.16d8ffca.chunk.js",
     "index.html": "/loan-app/index.html",
     "main.d924d282.css.map": "/loan-app/static/css/main.d924d282.css.map",
-    "main.227d1a2e.js.map": "/loan-app/static/js/main.227d1a2e.js.map",
+    "main.2a0c0dda.js.map": "/loan-app/static/js/main.2a0c0dda.js.map",
     "917.f6e81a7b.chunk.js.map": "/loan-app/static/js/917.f6e81a7b.chunk.js.map",
     "473.ca00a057.chunk.js.map": "/loan-app/static/js/473.ca00a057.chunk.js.map",
     "705.e34f12b1.chunk.js.map": "/loan-app/static/js/705.e34f12b1.chunk.js.map",
-    "998.6085eebc.chunk.js.map": "/loan-app/static/js/998.6085eebc.chunk.js.map",
+    "998.33e33dff.chunk.js.map": "/loan-app/static/js/998.33e33dff.chunk.js.map",
     "336.63bda5b8.chunk.js.map": "/loan-app/static/js/336.63bda5b8.chunk.js.map",
     "331.c2a49013.chunk.js.map": "/loan-app/static/js/331.c2a49013.chunk.js.map",
     "175.397edd9e.chunk.js.map": "/loan-app/static/js/175.397edd9e.chunk.js.map",
@@ -38,6 +38,6 @@
   },
   "entrypoints": [
     "static/css/main.d924d282.css",
-    "static/js/main.227d1a2e.js"
+    "static/js/main.2a0c0dda.js"
   ]
 }
