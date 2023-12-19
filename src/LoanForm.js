@@ -132,8 +132,8 @@ function LoanForm() {
         const filtered = customers.filter(customer => {
             return customer._id === value
         })
-        
-        if (myForm.mySelectKey== 0) {
+
+        if (myForm.mySelectKey == 0) {
             setInputMobileno("");
             fathernameRef.current.value = "";
             citynameRef.current.value = "";
@@ -143,7 +143,7 @@ function LoanForm() {
             lineRef.current.value = 0;
         }
         else {
-            
+
             setInputMobileno(filtered[0].mobileno);
             fathernameRef.current.value = filtered[0].fathername;
             citynameRef.current.value = filtered[0].cityname;
@@ -211,6 +211,15 @@ function LoanForm() {
             alert(t('paidamountgreaterthanloanalert'))
             return false;
         }
+
+        /*if (updateUI) {
+
+            if (checkLoanInvolvedTrans() == true) {
+                return false;
+            }
+
+        }*/
+
         if (myForm.mySelectKey !== "" && linemanoptionRef.current.value !== "" && weekRef.current.value !== "" && bookRef.current.value, lineRef.current.value !== ""
             && lineRef.current.value !== "" & weekscount !== "" && givenAmt !== "" && givenAmt !== 0 &&
             paidAmt.current.value !== 0 && paidAmt.current.value != "" &&
@@ -229,11 +238,34 @@ function LoanForm() {
 
 
     };
+    /*const checkLoanInvolvedTrans = async () => {
+        
+        await axios.get(`${baseURL}/receipt/get`, { params: { loannumber: Number(oldLoanRef.current.value) } }).then((res) => {
+            console.log(res.data);
+            if (res.data.length == 1) {
+                alert("This Loan Entry Involved More than one Transaction")
+                return true;
+            }
+            else {
+                if (window.confirm(t('yesornoalertmessage'))) {
+                    updateLoanDetails();
+                }
+            }
+        }).catch(error => {
+            console.log("error=", error);
+            setErrorMessage(t('errormessagereceiptdetails'));
+        })
+    }*/
     const updateLoanDetails = () => {
         setButtonDisabled(true);
         axios.put(`${baseURL}/loancreate/update`,
             {
-                newloanno: Number(loannoRef.current.value), oldloanno: Number(oldLoanRef.current.value)
+                newloanno: Number(loannoRef.current.value),
+                oldloanno: Number(oldLoanRef.current.value), customer_id: myForm.mySelectKey, lineman_id: linemanoptionRef.current.value, city_id: cityidRef.current.value,
+                weekno: weekRef.current.value, bookno: bookRef.current.value, lineno: lineRef.current.value, document: documentRef.current.value, cheque: chequeRef.current.value,
+                weekcount: weekscount, startdate: new Date(startDate), givendate: new Date(givenDate.current.value), duedate: new Date(dueDate.current.value), finisheddate: new Date(endDateRef.current.value),
+                givenamount: Number(givenAmt), documentamount: Number(documentAmt.current.value), interestamount: Number(interestAmt.current.value),
+                totalamount: Number(totalAmt.current.value), dueamount: Number(dueAmt.current.value), paidamount: Number(paidAmt.current.value)
             }).then((res) => {
                 setButtonDisabled(false);
                 clearFields();
@@ -299,9 +331,9 @@ function LoanForm() {
 
     }
     function clearFields() {
-       
+
         setMyForm(initialFormState);
-        
+
         linemanoptionRef.current.value = "";
         setInputMobileno("");
         fathernameRef.current.value = "";
@@ -329,7 +361,7 @@ function LoanForm() {
     }
     const options = customers.map((customer, i) => {
         return {
-            label: customer.customer+'-'+customer.fathername,
+            label: customer.customer + '-' + customer.fathername,
             value: customer._id,
             key: i
         }
@@ -540,8 +572,8 @@ function LoanForm() {
 
                     <Row>
                         <div className="col-md-12 text-center mb-2 " >
-                            <Button variant="primary" size="lg" type="button" className="text-center" 
-                            onClick={handleSubmit} disabled={isButtonDisabled}>
+                            <Button variant="primary" size="lg" type="button" className="text-center"
+                                onClick={handleSubmit} disabled={isButtonDisabled}>
                                 {updateUI ? t('updatebutton') : t('savebutton')}
                             </Button>{' '}
                             <Button variant="primary" size="lg" type="button" className="text-center" onClick={clearFields}>

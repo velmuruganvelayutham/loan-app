@@ -17,8 +17,19 @@ function LedgerForm() {
     const [loanno, setLoanno] = useState("");
     const { t, i18n } = useTranslation();
     const [lineNo, setLineNo] = useState("");
-    
+    const [company, setCompany] = useState([]);
     const componentRef = useRef();
+    useEffect(() => {
+        setIsLoading(true);
+        axios.get(`${baseURL}/company/get`).then((res) => {
+            setCompany(res.data);
+            setIsLoading(false);
+        }).catch(error => {
+            console.log("error=", error);
+            setErrorMessage(t('errorcompany'));
+            setIsLoading(false);
+        })
+    }, [])
     useEffect(() => {
         setIsLoading(true);
         axios.get(`${baseURL}/citycreate/get`).then((res) => {
@@ -69,7 +80,8 @@ function LedgerForm() {
     }
     const renderLedgerList = (
         <Row ref={componentRef}>
-            <Ledger loanno={loannumberprocess} ledger={loanDetails} />
+            <Ledger loanno={loannumberprocess} ledger={loanDetails} 
+            company={company.length > 0 ? company[0].companyname : ""} date={new Date()}/>
         </Row>
     )
     return (
