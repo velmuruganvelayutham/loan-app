@@ -25,7 +25,9 @@ var pending=0;
 var duepending=0;
 var pendingweek=0;
 var pendingweektotal=0;
-
+var total=0;
+var totalduepending=0;
+var totalpendingweek=0;
   function prevPage(){
     if(currentPage!==firstIndex)
     {
@@ -42,6 +44,34 @@ var pendingweektotal=0;
   function changeCPage(id){
     setCurrentPage(id)
   }
+  if(currentPage===nPage){
+    total = pendingLoans.reduce((previousValue, currentValue) => {
+      return previousValue + (currentValue.totalamount-currentValue.collectedtotal)
+    }, 0);
+
+    totalduepending=pendingLoans.reduce((previous,current)=>{
+      if(current.collectedamountdate>0){
+        return previous+0;
+      }
+      else{
+        return previous+current.dueamount
+      }
+    },0);
+
+    totalpendingweek=pendingLoans.reduce((previousval,currentval)=>{
+      if(currentval['addFields'].receiptpendingweek>0 && currentval['addFields'].receiptpendingweek<8){
+        return previousval+ (currentval['addFields'].receiptpendingweek * currentval.dueamount);
+      }
+      else if(currentval['addFields'].receiptpendingweek>=8)
+      {
+        return previousval+(currentval.totalamount-currentval.collectedtotal);
+      }
+      else {
+        return previousval+0;
+      }
+    },0);
+  }
+  
   return (
     <Fragment >
       <div className='col-sm-6 fixed mt-5 '>
@@ -54,7 +84,7 @@ var pendingweektotal=0;
       <div className='col-sm-2 fixed'>{t('line')+" : "+(pendingLoans.length>0?first.lineno:"")}</div>
       <div className='col-sm-2 fixed'>{t("bookno")+" : "+(pendingLoans.length>0?first.bookno:"")}</div>
       <div className='col-sm-2 fixed'>{t("date")+" : "+dateFormatdd(date)}</div>
-      <div >
+      
         <Table  className='table  text-center table-bordered border-dark'  >
           <thead>
             <tr>
@@ -128,8 +158,8 @@ var pendingweektotal=0;
                 //console.log("enddatediff"+customer['addFields'].daysCountloan);
                 //console.log("weekdiff"+customer['addFields'].daysCount);
                 return(
-                  <tr>
-                    <td style={{fontSize:"12px"}}>{serialno}</td>
+                  <tr style={{height:"20px"}}>
+                    <td style={{fontSize:"12px"}} >{serialno}</td>
                     <td style={{fontSize:"12px"}}>{dateFormatdd(customer.startdate)}</td>
                     <td style={{fontSize:"12px"}}>{customer.loannumber}</td>
                     <td style={{fontSize:"12px"}}>{customer.customer}</td>
@@ -160,7 +190,25 @@ var pendingweektotal=0;
               :
               t('tabledata')
             }
-            <tr>
+            <tr className='borderless'>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td className='fw-bold borderless' style={{fontSize:"12px"}}>{t('pagetotal')}</td>
+            <td className='fw-bold' style={{fontSize:"12px"}}>{pagetotal}</td>
+            <td className='fw-bold' style={{fontSize:"12px"}}>{pendingtotal}</td>
+            <td className='fw-bold' style={{fontSize:"12px"}}>{pendingweektotal}</td>
+            </tr>
+          </tbody>
+          
+          {
+            
+            currentPage===nPage?<tr className="rounded bg-white ">
             <td></td>
             <td></td>
             <td></td>
@@ -170,11 +218,12 @@ var pendingweektotal=0;
             <td></td>
             <td></td>
             <td className='fw-bold' style={{fontSize:"12px"}}>{t('total')}</td>
-            <td className='fw-bold' style={{fontSize:"12px"}}>{pagetotal}</td>
-            <td className='fw-bold' style={{fontSize:"12px"}}>{pendingtotal}</td>
-            <td className='fw-bold' style={{fontSize:"12px"}}>{pendingweektotal}</td>
-            </tr>
-          </tbody>
+            <td className='fw-bold' style={{fontSize:"12px"}}>{total}</td>
+            <td className='fw-bold' style={{fontSize:"12px"}}>{totalduepending}</td>
+            <td className='fw-bold' style={{fontSize:"12px"}}>{totalpendingweek.toFixed(2)}</td>
+          </tr>:null
+          }
+         
         </Table>
         <nav>
         
@@ -196,7 +245,7 @@ var pendingweektotal=0;
           </Pagination>
         </nav>
 
-      </div>
+      
       
     </Fragment>
     

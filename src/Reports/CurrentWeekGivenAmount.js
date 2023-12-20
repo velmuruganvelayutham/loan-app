@@ -18,6 +18,10 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto }) => {
     const nPage = Math.ceil(Object.keys(pendingLoans).length / recordsPerPage);
     const numbers = [...Array(nPage + 1).keys()].slice(1);
     var serialno = 0;
+    var pagetotalgiven = 0;
+    var pagetotalamount = 0;
+    var pagetotaldocument = 0;
+    var pagetotalinterest = 0;
     var totalgiven = 0;
     var totalamount = 0;
     var totaldocument = 0;
@@ -40,9 +44,25 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto }) => {
     function changeCPage(id) {
         setCurrentPage(id)
     }
+    if (currentPage === nPage) {
+        totalgiven = pendingLoans.reduce((previous, current) => {
+            return previous + current.givenamount;
+        }, 0);
+        totaldocument = pendingLoans.reduce((previous, current) => {
+            return previous + current.documentamount;
+        }, 0);
+        totalinterest = pendingLoans.reduce((previous, current) => {
+            return previous + current.interestamount;
+        }, 0);
+        totalamount = pendingLoans.reduce((previous, current) => {
+            return previous + current.totalamount;
+        }, 0);
+    }
+
+
     return (
         <Fragment>
-            <div className='col-sm-12 fixed text-center'><h3>{t('currentweekamountgiven')}</h3></div>
+            <div className='col-sm-12 fixed text-center mt-5'><h3>{t('currentweekamountgiven')}</h3></div>
             <div className='col-sm-4 fixed'>{t('line') + " : " + (pendingLoans.length > 0 ? first.lineno : "")}</div>
             <div className='col-sm-4 fixed'>{t("lineman") + " : " + (pendingLoans.length > 0 ? first.linemanname : "")}</div>
             <div className='col-sm-4 fixed fw-bold'>{t("date") + " : " + dateFormatdd(datefrom) + " - " + dateFormatdd(dateto)}</div>
@@ -64,7 +84,7 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto }) => {
                                 {t('customer')}
                             </th>
                             <th style={{ fontSize: "12px" }}>{t('city')}</th>
-                            <th style={{ fontSize: "12px",width: "60px" }} className='w-5'>
+                            <th style={{ fontSize: "12px", width: "60px" }} className='w-5'>
                                 {t('bookno')}
                             </th>
                             <th style={{ fontSize: "12px" }}>
@@ -84,10 +104,10 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto }) => {
                                 ?
                                 (records.map((customer, i) => {
                                     serialno = serialno + 1;
-                                    totalgiven =totalgiven+customer.givenamount;
-                                    totaldocument = totaldocument + customer.documentamount;
-                                    totalinterest = totalinterest + customer.interestamount;
-                                    totalamount = totalamount + customer.totalamount;
+                                    pagetotalgiven = pagetotalgiven + customer.givenamount;
+                                    pagetotaldocument = pagetotaldocument + customer.documentamount;
+                                    pagetotalinterest = pagetotalinterest + customer.interestamount;
+                                    pagetotalamount = pagetotalamount + customer.totalamount;
                                     return (
                                         <tr>
                                             <td style={{ fontSize: "12px" }}>{serialno}</td>
@@ -121,6 +141,24 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto }) => {
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td className='fw-bold' style={{ fontSize: "12px" }}>{t('pagetotal')}</td>
+                            <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotalgiven}</td>
+                            <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotaldocument}</td>
+                            <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotalinterest}</td>
+                            <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotalamount}</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                    {
+                        currentPage === nPage ? <tr className="rounded bg-white ">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td className='fw-bold' style={{ fontSize: "12px" }}>{t('total')}</td>
                             <td className='fw-bold' style={{ fontSize: "12px" }}>{totalgiven}</td>
                             <td className='fw-bold' style={{ fontSize: "12px" }}>{totaldocument}</td>
@@ -128,9 +166,8 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto }) => {
                             <td className='fw-bold' style={{ fontSize: "12px" }}>{totalamount}</td>
                             <td></td>
                             <td></td>
-                        </tr>
-                    </tbody>
-
+                        </tr> : null
+                    }
                 </Table>
                 <nav>
 

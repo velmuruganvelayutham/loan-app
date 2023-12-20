@@ -38,7 +38,7 @@ const NewAccountDetails = ({ pendingLoans, datefrom,dateto }) => {
     }
     return (
         <Fragment>
-            <div className='col-sm-12 fixed text-center'><h3>{t('newaccountaddress')}</h3></div>
+            <div className='col-sm-12 fixed text-center mt-5'><h3>{t('newaccountaddress')}</h3></div>
             <div className='col-sm-4 fixed'>{t('line') + " : " + (pendingLoans.length > 0 ? first.lineno : "")}</div>
             <div className='col-sm-4 fixed'>{t("lineman") + " : " + (pendingLoans.length > 0 ? first.linemanname : "")}</div>
             <div className='col-sm-4 fixed fw-bold'>{t("date") + " : " + dateFormatdd(datefrom)+" - "+dateFormatdd(dateto)}</div>
@@ -75,7 +75,7 @@ const NewAccountDetails = ({ pendingLoans, datefrom,dateto }) => {
                                 (records.map((customer, i) => {
                                     serialno = serialno + 1;
                                     return (
-                                        <tr>
+                                        <tr className='newaccountaddress'>
                                             <td style={{ fontSize: "12px" }}>{serialno}</td>
                                             <td className="fw-bold" style={{ fontSize: "12px" }}>{customer.loannumber}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.customer}</td>
