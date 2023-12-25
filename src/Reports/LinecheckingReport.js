@@ -28,6 +28,7 @@ function LinecheckingReport() {
     const endDateRef = useRef(startOfWeek());
     const linemanoptionRef = useRef("");
     const [show, setShow] = useState(false);
+    
     useEffect(() => {
         setIsLoading(true);
         axios.get(`${baseURL}/company/get`).then((res) => {
@@ -72,7 +73,7 @@ function LinecheckingReport() {
         else if (Number(reportType.current.value) === 1) {
             setCheckingData([]);
             linecheckingreportname = "previousweekdetails";
-            passingargument = linemanoptionRef.current.value;
+            passingargument = city;
             //alert(passingargument);
         }
         else if (Number(reportType.current.value) === 2) {
@@ -91,9 +92,9 @@ function LinecheckingReport() {
             linecheckingreportname = "currentweekgivenamount";
             passingargument = linemanoptionRef.current.value;
         }
-
+        
         return (
-            axios.get(`${baseURL}/loan/${linecheckingreportname}`, { params: { city_id: passingargument.toString(), fromdate: startDateRef.current.value, todate: endDateRef.current.value } }).then((res) => {
+            axios.get(`${baseURL}/loan/${linecheckingreportname}`, { params: { city_id: passingargument.toString(), fromdate: startDateRef.current.value, todate: endDateRef.current.value} }).then((res) => {
                 Number(reportType.current.value) === 0?setCheckingData(res.data):setCheckingDetailsLine(res.data)
                 
                 console.log(res.data);
@@ -164,7 +165,7 @@ function LinecheckingReport() {
 
     )
     const citynameshow = (
-        <Col xs={12} md={5} className="rounder bg-white">
+        <Col xs={12} md={4} className="rounder bg-white">
             <Form.Group className="mb-3" name="linenumber" border="primary" >
                 <Form.Label>{t('city')}</Form.Label>
                 <Form.Select aria-label="Default select example" value={city}
@@ -183,7 +184,7 @@ function LinecheckingReport() {
     )
     const handleClick = () => {
 
-        if (Number(reportType.current.value) === 0) {
+        if (Number(reportType.current.value) === 0 || Number(reportType.current.value) === 1) {
             setShow(false);
         }
         else {
@@ -197,7 +198,7 @@ function LinecheckingReport() {
                 <Form>
                     <Row >
                         {show == true ? linemanshow : citynameshow}
-
+                        
                         <Col md={3} className="rounder bg-white">
                             <Form.Group className="mb-3" name="cityname" border="primary" >
                                 <Form.Label>{t('report')}</Form.Label>
