@@ -15,7 +15,6 @@ function AddReceipt() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isButtonDisabled, setButtonDisabled] = useState(false);
-
   useEffect(() => {
     setIsLoading(true);
     axios.get(`${baseURL}/citycreate/get`).then((res) => {
@@ -135,13 +134,15 @@ function AddReceipt() {
 
             </Col>
             <Col xs={12} md={1}></Col>
-            <Col xs={12} md={4} className="rounded bg-white">
+            <Col xs={12} md={3} className="rounded bg-white">
               <Form.Group className="mb-3" name="startdate" border="primary" >
                 <Form.Label>{t('date')}</Form.Label>
                 <Form.Control type="date" placeholder="loan start date" value={startdateRef}
                   onChange={(e) => setStartDateRef(e.target.value)} />
               </Form.Group>
             </Col>
+            <Col xs={12} md={1}></Col>
+            
           </Row>
           <Row>
             <div className="col-md-12 text-center " >
@@ -164,6 +165,7 @@ function AddReceipt() {
               <Button variant="primary" type="button" className="text-center" onClick={saveReceipt} disabled={isButtonDisabled}>
                 {t('savebutton')}
               </Button>
+              
             </Col>
             <Col></Col>
           </Row>

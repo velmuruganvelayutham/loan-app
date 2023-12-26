@@ -32,6 +32,9 @@ var notrunningcountdates=0;
 var notrunningpendingdates=0;
 var runningcountdates=0;
 var runningpendingdates=0;
+var totalcount=0;
+var countfinishedtotal=0;
+var totalcounttotal=0;
 first = records.length > 0 ? totalledger[0] : "";
 serialno=(currentPage-1) * recordsPerPage;
   
@@ -68,7 +71,7 @@ serialno=(currentPage-1) * recordsPerPage;
               <div style={{fontSize:"12px"}}>{t('beforedebt')}</div>
               <div style={{fontSize:"12px"}}>{dateFormatddmmyyyy(datefrom)}</div>
             </th>
-            <th  colSpan={3} style={{fontSize:"12px"}}>
+            <th  colSpan={5} style={{fontSize:"12px"}}>
               <div style={{fontSize:"12px"}}>{t('currentdebt')}</div>
               <div style={{fontSize:"12px"}}>{dateFormatddmmyyyy(dateto)}</div>
             </th>
@@ -94,9 +97,11 @@ serialno=(currentPage-1) * recordsPerPage;
                 <th style={{fontSize:"12px"}}>{t('beforeloancount')}</th>
                 <th style={{fontSize:"12px"}}>{t('beforetotalamount')}</th>
                 <th style={{fontSize:"12px"}}>{t('beforependingamount')}</th>
-                <th style={{fontSize:"12px"}}>{t('currentloancount')}</th>
                 <th style={{fontSize:"12px"}}>{t('currenttotalamount')}</th>
                 <th style={{fontSize:"12px"}}>{t('currentpendingamount')}</th>
+                <th style={{fontSize:"12px"}}>{t('currentloancount')}</th>
+                <th style={{fontSize:"12px"}}>{t('countfinished')}</th>
+                <th style={{fontSize:"12px"}}>{t('totalcount')}</th>
                 <th style={{fontSize:"12px"}}>{t('collection')}</th>
                 <th style={{fontSize:"12px"}}>{t('average')}</th>
                 <th style={{fontSize:"12px"}}>{t('more')}</th>
@@ -132,6 +137,9 @@ serialno=(currentPage-1) * recordsPerPage;
                 notrunningpendingdates=notrunningpendingdates+customer.notrunningloanpendingdates;
                 runningcountdates=runningcountdates+customer.runningcountdates;
                 runningpendingdates=runningpendingdates+customer.runningloanpendingdates;
+                totalcount=totalcount+customer.countafter+customer.countfinished;
+                countfinishedtotal=countfinishedtotal+customer.countfinished;
+                totalcounttotal=totalcounttotal+totalcount;
                 return(
                   <tr >
                     <td style={{fontSize:"12px"}}>{customer.linename}</td>
@@ -140,10 +148,13 @@ serialno=(currentPage-1) * recordsPerPage;
                     <td style={{fontSize:"12px"}}>{customer.countbefore}</td>
                     <td style={{fontSize:"12px"}}>{customer.totalamountbefore}</td> 
                     <td style={{fontSize:"12px"}}>{customer.pendingbefore}</td>
-                    <td style={{fontSize:"12px"}}>{customer.countafter}</td>
+                    
 
                     <td style={{fontSize:"12px"}}>{customer.totalafter}</td>
                     <td style={{fontSize:"12px"}}>{customer.pendingafter}</td>
+                    <td style={{fontSize:"12px"}}>{customer.countafter}</td>
+                    <td style={{fontSize:"12px"}}>{customer.countfinished}</td>
+                    <td style={{fontSize:"12px"}}>{totalcount}</td>
                     <td style={{fontSize:"12px"}}>{customer.collectedbetween}</td>
                     <td style={{fontSize:"12px"}}>{((customer.collectedbetween/customer.totalafter)*100).toFixed(2)}</td>
                     <td style={{fontSize:"12px"}}>{customer.collectedmore}</td>
@@ -168,9 +179,11 @@ serialno=(currentPage-1) * recordsPerPage;
             <td style={{fontSize:"12px"}} className='fw-bold'>{countbefore}</td>
             <td style={{fontSize:"12px"}} className='fw-bold'>{totalbefore}</td>
             <td style={{fontSize:"12px"}} className='fw-bold'>{pendingbefore}</td>
-            <td style={{fontSize:"12px"}} className='fw-bold'>{countcurrent}</td>
             <td style={{fontSize:"12px"}} className='fw-bold'>{totalcurrent}</td>
             <td style={{fontSize:"12px"}} className='fw-bold'>{pendingcurrent}</td>
+            <td style={{fontSize:"12px"}} className='fw-bold'>{countcurrent}</td>
+            <td style={{fontSize:"12px"}} className='fw-bold'>{countfinishedtotal}</td>
+            <td style={{fontSize:"12px"}} className='fw-bold'>{totalcounttotal}</td>
             <td style={{fontSize:"12px"}} className='fw-bold'>{collectiontotal}</td>
             <td style={{fontSize:"12px"}} className='fw-bold'>{(avg/serialno).toFixed(2)}</td>
             <td style={{fontSize:"12px"}} className='fw-bold'>{pendingmore}</td>

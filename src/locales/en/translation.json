@@ -38,6 +38,7 @@
   "savebutton": "Save",
   "newbutton": "New",
   "updatebutton":"Update",
+  "deletebutton":"Delete",
   "date": "Date",
   "linechecking": "Line Checking List",
   "previousweekdetails":"Previous Week Collection List",
@@ -54,6 +55,7 @@
   "erroressagelinechecking": "Unable to Fetch LineChecking List",
   "errormessageloannumber": "Unable to Fetch Loan No",
   "errormessagesaveloan": "Unable to Save Loan No",
+  "errormessagedeleteloan": "Unable to Delete Loan No",
   "errormessageupdateloan": "Unable to Update Loan No",
   "errormessagesavecustomer": "Unable to Save Customer",
   "errormessagesavecity": "Unable to Save City",
@@ -87,8 +89,10 @@
   "booknoplaceholder": "Enter Book No",
   "oldno": "Old No",
   "savealertmessage": "Saved Successfully",
+  "deletemessage": "Deleted Successfully",
   "updatealertmessage":"Updated Sucessfully",
-  "yesornoalertmessage":"Are you sure you want to Update Loan Number?",
+  "yesornoalertmessage":"Are you sure you want to Update Loan ?",
+  "deletealertmessage":"Are you sure want to Remove this loan?",
   "fathershort": "F",
   "husbandshort": "H",
   "beforedebt":"Pre Debit Account",
@@ -118,5 +122,9 @@
 "weekendaccounts":"Week End Accounts",
 "doc":"Doc",
 "lineincentive":"Line.Inc",
-"currentweekamountgiven":"Current Week Money Given"
+"currentweekamountgiven":"Current Week Money Given",
+"loanupdatealert":"This Loan Entry Involved More than one Transaction",
+"countaccount":"Account",
+"countfinished":"Closed",
+"totalcount":"Total"
 }

@@ -113,7 +113,7 @@ function prevPage(){
   return(
     <Fragment>
       <div  className="container-fluid ">
-      <Table    className="table table-striped table-primary table-hover text-center fs-6 table-bordered border-dark  " size="sm">
+      <Table    className="table table-striped table-primary table-hover text-center  table-bordered border-dark" size="sm">
           <thead>
             <tr >
             <th scope="col" lg={1} className="col-sm-12 col-md-1">
@@ -122,14 +122,15 @@ function prevPage(){
               <th className="col-sm-12 col-md-1">
                 {t('loanno')}
               </th>
-              <th className="col-sm-12 col-md-2">
+              <th className="col-sm-12 col-md-1">
                 {t('weekno')}
               </th>
               <th className="col-sm-12 col-md-4">
                 {t('customer')}
               </th>
-              <th className="col-sm-12 col-md-2 text-end">{t('due')}</th>
-              <th className="col-sm-12 col-md-2 text-end">{t('amount')}</th>
+              <th className="col-sm-12 col-md-1">{t('loanamount')}</th>
+              <th className="col-sm-12 col-md-1">{t('due')}</th>
+              <th className="col-sm-12 col-md-1 text-end">{t('amount')}</th>
               
             </tr>
           </thead>
@@ -150,6 +151,7 @@ function prevPage(){
                      onChange={(e)=>onChangeInput(e,receiptlist.loannumber)} disabled={!selectedItems.includes(receiptlist.loannumber)} />
                     </td>
                     <td >{receiptlist["_id"].customer}</td>
+                    <td className="text-end">{receiptlist.pending}</td>
                     <td className="text-end">{receiptlist["_id"].dueamount}</td>
                     <td >
                     <input className="form-control text-end" name="amount" value={values.amount} 
