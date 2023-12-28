@@ -62,7 +62,8 @@ const ListLineChecking = ({ pendingLoans, date, company }) => {
         return previousval + (currentval['addFields'].receiptpendingweek * currentval.dueamount);
       }
       else if (currentval['addFields'].receiptpendingweek >= 8) {
-        return previousval + (currentval.totalamount - currentval.collectedtotal);
+        return previousval + (currentval['addFields'].receiptpendingweek * currentval.dueamount);
+        //return previousval + (currentval.totalamount - currentval.collectedtotal);
       }
       else {
         return previousval + 0;
@@ -146,7 +147,8 @@ const ListLineChecking = ({ pendingLoans, date, company }) => {
                   pendingweek = (customer['addFields'].receiptpendingweek * customer.dueamount);
                 }
                 else if (customer['addFields'].receiptpendingweek >= 8) {
-                  pendingweek = customer.totalamount - customer.collectedtotal;
+                  pendingweek=(customer['addFields'].receiptpendingweek * customer.dueamount);
+                  //pendingweek = customer.totalamount - customer.collectedtotal;
                 }
                 else {
                   pendingweek = 0;
