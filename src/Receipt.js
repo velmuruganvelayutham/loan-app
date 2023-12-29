@@ -6,7 +6,7 @@ import ListReceipt from "./components/ListReceipt";
 import { startOfWeek, dateFormat } from './FunctionsGlobal/StartDateFn';
 import { useTranslation } from "react-i18next";
 import PlaceHolder from "./components/spinner/placeholder";
-function AddReceipt() {
+function AddReceipt1() {
   const [linenames, setLineNames] = useState([]);
   const [pendingLoan, setPendingLoan] = useState([]);
   const [startdateRef, setStartDateRef] = useState(startOfWeek());
@@ -174,4 +174,4 @@ function AddReceipt() {
     </Container>
   )
 }
-export default AddReceipt;
+export default AddReceipt1;
