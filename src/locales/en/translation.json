@@ -117,6 +117,7 @@
 "selectanyitemfromlist":"Select Any one From List",
 "paidamountvaluezeroalert":"Paid Amount Should Not be Zero",
 "paidamountgreaterthanloanalert":"Paid Amount Greater than Loan Amount",
+"paidamountgreaterthanloanalertyesno":"Paid Amount Greater than Loan Amount,Do You Want To Change? ",
 "report":"Select Report",
 "newaccountaddress":"New Account Address",
 "weekendaccounts":"Week End Accounts",

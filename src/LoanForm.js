@@ -58,6 +58,7 @@ function LoanForm() {
     const [validated, setValidated] = useState(false);
     const [maxValueShow, setMaxValueShow] = useState(false);
     const [isButtonDisabled, setButtonDisabled] = useState(false);
+    const[isDelete,setIsDelete]=useState(false);
     useEffect(() => {
         setIsLoading(true);
         axios.get(`${baseURL}/get/view`).then((res) => {
@@ -209,26 +210,31 @@ function LoanForm() {
         }
         else if (Number(paidAmt.current.value) > Number(dueAmt.current.value)) {
             alert(t('paidamountgreaterthanloanalert'))
-            return false;
+            if (window.confirm(t('paidamountgreaterthanloanalertyesno'))) {
+                return false;
+            }
+            else
+            {
+                
+            }
+            
         }
 
         /*if (updateUI) {
 
-            if (checkLoanInvolvedTrans() == true) {
-                return false;
-            }
+            
 
         }*/
 
         if (myForm.mySelectKey !== "" && linemanoptionRef.current.value !== "" && weekRef.current.value !== "" && bookRef.current.value, lineRef.current.value !== ""
             && lineRef.current.value !== "" & weekscount !== "" && givenAmt !== "" && givenAmt !== 0 &&
             paidAmt.current.value !== 0 && paidAmt.current.value != "" &&
-            Number(paidAmt.current.value) == Number(dueAmt.current.value)) {
+            Number(paidAmt.current.value) >0) {
             if (updateUI) {
-                if (window.confirm(t('yesornoalertmessage'))) {
-                    updateLoanDetails();
+                if (checkLoanInvolvedTrans() == true) {
+                    return false;
                 }
-
+                
             }
             else {
                 saveLoanDetails();
@@ -238,24 +244,36 @@ function LoanForm() {
 
 
     };
-    /*const checkLoanInvolvedTrans = async () => {
+    const checkLoanInvolvedTrans = async () => {
         
         await axios.get(`${baseURL}/receipt/get`, { params: { loannumber: Number(oldLoanRef.current.value) } }).then((res) => {
-            console.log(res.data);
-            if (res.data.length == 1) {
-                alert("This Loan Entry Involved More than one Transaction")
+            
+            if (res.data.length > 1) {
+                alert(t('loanupdatealert'))
                 return true;
             }
             else {
-                if (window.confirm(t('yesornoalertmessage'))) {
-                    updateLoanDetails();
+                if(isDelete===true)
+                {
+                    if (window.confirm(t('deletealertmessage'))) {
+                        deleteLoanDetails();
+                        return false;
+                    }
                 }
+                else
+                {
+                    if (window.confirm(t('yesornoalertmessage'))) {
+                        updateLoanDetails();
+                        return false;
+                    }
+                }
+                
             }
         }).catch(error => {
             console.log("error=", error);
             setErrorMessage(t('errormessagereceiptdetails'));
         })
-    }*/
+    }
     const updateLoanDetails = () => {
         setButtonDisabled(true);
         axios.put(`${baseURL}/loancreate/update`,
@@ -297,7 +315,19 @@ function LoanForm() {
             });
         alert(t('savealertmessage'));
     }
-
+    const deleteLoanDetails=()=>{
+        axios.delete(`${baseURL}/loancreate/delete/${Number(oldLoanRef.current.value)}`).then((res)=>{
+            alert(t('deletemessage'))
+            setIsDelete(false);
+            clearFields();
+          }).catch(error => {
+            console.log("error=", error);
+            setErrorMessage(t('errormessagedeleteloan'));
+            setIsDelete(false);
+            setIsLoading(false);
+            setButtonDisabled(false);
+        });
+    }
     const loadOldLoanRef = () => {
         if (oldLoanRef.current.value != "") {
             axios.get(`${baseURL}/loancreate/get/oldLoanRef`,
@@ -366,6 +396,12 @@ function LoanForm() {
             key: i
         }
     })
+    const deleteLoan=()=>{
+        setIsDelete(true);
+        if (checkLoanInvolvedTrans() == true) {
+            return false;
+        }
+    }
     return (
         <Container className="rounded bg-white mt-5">
             <Row className="justify-content-md-center mt-5 ">
@@ -576,9 +612,14 @@ function LoanForm() {
                                 onClick={handleSubmit} disabled={isButtonDisabled}>
                                 {updateUI ? t('updatebutton') : t('savebutton')}
                             </Button>{' '}
+                            <Button variant="primary" size="lg" type="button" className="text-center" 
+                            onClick={deleteLoan} disabled={updateUI?false:true}>
+                                {t('deletebutton')}
+                            </Button>{' '}
                             <Button variant="primary" size="lg" type="button" className="text-center" onClick={clearFields}>
                                 {t('newbutton')}
                             </Button>
+                            
                         </div>
                     </Row>
                     <Row>
