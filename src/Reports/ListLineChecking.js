@@ -135,7 +135,7 @@ const ListLineChecking = ({ pendingLoans, date, company }) => {
                 pagetotal = pagetotal + pending;
 
                 //console.log(pending+"muru");
-                if (customer.collectedamountdate > 0 || customer['addFields'].receiptpendingweek<0 ||customer.finisheddatepending==1) {
+                if (customer.collectedamountdate > 0 || customer['addFields'].receiptpendingweekafter<0 ||customer.finisheddatepending==1) {
                   duepending = 0
                 }
                 else {
