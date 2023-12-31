@@ -97,11 +97,11 @@ const ListLineChecking = ({ pendingLoans, date, company }) => {
             <th style={{ fontSize: "12px", width: "10%" }}>
               {t('loanno')}
             </th>
-            <th style={{ fontSize: "12px", width: "10%" }}>
+            <th style={{ fontSize: "12px", width: "13%" }}>
               {t('customer')}
             </th>
 
-            <th colSpan={2} style={{ fontSize: "12px", width: "10%" }}>
+            <th colSpan={2} style={{ fontSize: "12px", width: "13%" }}>
               {t('fathername')}
             </th>
             <th style={{ fontSize: "12px", width: "15%" }}>
@@ -113,10 +113,10 @@ const ListLineChecking = ({ pendingLoans, date, company }) => {
             <th style={{ fontSize: "12px", width: "5%" }}>
               {t('enddate')}
             </th>
-            <th style={{ fontSize: "12px", width: "10%" }}>
+            <th style={{ fontSize: "12px", width: "7%" }}>
               {t('loanamount')}
             </th>
-            <th style={{ fontSize: "12px", width: "10%" }}>
+            <th style={{ fontSize: "12px", width: "7%" }}>
               {t('pay')}
             </th>
             <th style={{ fontSize: "12px", width: "10%" }}>
@@ -134,7 +134,7 @@ const ListLineChecking = ({ pendingLoans, date, company }) => {
                 pending = customer.totalamount - customer.collectedtotal;
                 pagetotal = pagetotal + pending;
 
-                //console.log(pending+"muru");
+                
                 if (customer.collectedamountdate > 0 || customer['addFields'].receiptpendingweekafter<0 ||customer.finisheddatepending==1) {
                   duepending = 0
                 }
@@ -142,7 +142,7 @@ const ListLineChecking = ({ pendingLoans, date, company }) => {
                   duepending = customer.dueamount
                 }
 
-                pendingtotal = pendingtotal + duepending;
+                
                 if (customer['addFields'].receiptpendingweek > 0 && customer['addFields'].receiptpendingweek < 8) {
                   pendingweek = (customer['addFields'].receiptpendingweek * customer.dueamount);
                 }
@@ -153,9 +153,14 @@ const ListLineChecking = ({ pendingLoans, date, company }) => {
                 else {
                   pendingweek = 0;
                 }
-                pendingweek = parseFloat(pendingweek.toFixed(2));
+                if(pendingweek<duepending && duepending!=0){
+                  duepending=pendingweek
+                }
+                duepending=parseFloat(duepending.toFixed(2));
+                pendingtotal = pendingtotal + duepending;
+                pendingweek = parseFloat(pendingweek.toFixed(2))-duepending;
                 pendingweektotal = pendingweektotal + parseFloat(pendingweek);
-
+                
                 //console.log("enddatediff"+customer['addFields'].daysCountloan);
                 //console.log("weekdiff"+customer['addFields'].daysCount);
                 return (
@@ -171,15 +176,15 @@ const ListLineChecking = ({ pendingLoans, date, company }) => {
                     <td style={{ fontSize: "12px" }}>{customer.mobileno}</td>
                     <td style={{ fontSize: "12px" }}>{dateFormatdd(customer.finisheddate)}</td>
                     <td style={{ fontSize: "12px" }}>{pending}</td>
-                    <td style={{ fontSize: "12px" }}>{duepending}</td>
+                    <td style={{ fontSize: "12px" }}>{duepending>0?duepending:""}</td>
                     {
                       customer['addFields'].receiptpendingweek > 2
                         ?
-                        <td style={{ backgroundColor: "black", color: "white", fontSize: "12px" }}>{pendingweek}</td>
+                        <td style={{ backgroundColor: "black", color: "white", fontSize: "12px" }}>{pendingweek>0?pendingweek:""}</td>
                         :
                         customer['addFields'].receiptpendingweek <= 2 && customer['addFields'].receiptpendingweek > 0
                           ?
-                          <td style={{ fontSize: "12px" }}>{pendingweek}</td>
+                          <td style={{ fontSize: "12px" }}>{pendingweek>0?pendingweek:""}</td>
                           :
                           <td style={{ fontSize: "12px" }}></td>
                     }
