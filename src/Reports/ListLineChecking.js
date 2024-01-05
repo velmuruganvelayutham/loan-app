@@ -28,6 +28,10 @@ const ListLineChecking = ({ pendingLoans, date, company }) => {
   var total = 0;
   var totalduepending = 0;
   var totalpendingweek = 0;
+  var duependingcheck=0;
+  var duependingweekcheck=0;
+  var duependingcheckval=0;
+  var pendingweekcheck=0;
   function prevPage() {
     if (currentPage !== firstIndex) {
       setCurrentPage(currentPage - 1)
@@ -53,17 +57,42 @@ const ListLineChecking = ({ pendingLoans, date, company }) => {
         return previous + 0;
       }
       else {
-        return previous + current.dueamount
+        duependingcheck=((current['addFields'].receiptpendingweek * current.dueamount)<current.dueamount && current.dueamount!=0?current['addFields'].receiptpendingweek * current.dueamount:current.dueamount)
+        duependingcheck=parseFloat(duependingcheck.toFixed(2))
+        return previous + duependingcheck
       }
     }, 0);
 
     totalpendingweek = pendingLoans.reduce((previousval, currentval) => {
+  
       if (currentval['addFields'].receiptpendingweek > 0 && currentval['addFields'].receiptpendingweek < 8) {
-        return previousval + (currentval['addFields'].receiptpendingweek * currentval.dueamount);
+        if (currentval.collectedamountdate > 0 || currentval['addFields'].receiptpendingweek<0 ||currentval.finisheddatepending==1) {
+          duependingcheck = 0;
+        }
+        else{
+          duependingcheck = currentval.dueamount
+        }
+        pendingweekcheck=(currentval['addFields'].receiptpendingweek * currentval.dueamount);
+        duependingcheckval=((pendingweekcheck)<duependingcheck && duependingcheck!=0?(pendingweekcheck):duependingcheck)
+        duependingweekcheck=pendingweekcheck-duependingcheckval;
+        
+        duependingweekcheck=parseFloat(duependingweekcheck.toFixed(2))
+        return previousval + duependingweekcheck;
       }
       else if (currentval['addFields'].receiptpendingweek >= 8) {
-        return previousval + (currentval['addFields'].receiptpendingweek * currentval.dueamount);
-        //return previousval + (currentval.totalamount - currentval.collectedtotal);
+        if (currentval.collectedamountdate > 0 || currentval['addFields'].receiptpendingweek<0 ||currentval.finisheddatepending==1) {
+          duependingcheck = 0;
+        }
+        else{
+          duependingcheck = currentval.dueamount
+        }
+        pendingweekcheck=(currentval['addFields'].receiptpendingweek * currentval.dueamount);
+        duependingcheckval=((pendingweekcheck)<duependingcheck && duependingcheck!=0?(pendingweekcheck):duependingcheck)
+        duependingweekcheck=pendingweekcheck;
+        
+        duependingweekcheck=parseFloat(duependingweekcheck.toFixed(2))
+        return previousval + duependingweekcheck-duependingcheckval;
+        
       }
       else {
         return previousval + 0;
