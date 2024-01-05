@@ -97,7 +97,7 @@ function LinecheckingReport() {
             axios.get(`${baseURL}/loan/${linecheckingreportname}`, { params: { city_id: passingargument.toString(), fromdate: startDateRef.current.value, todate: endDateRef.current.value} }).then((res) => {
                 Number(reportType.current.value) === 0?setCheckingData(res.data):setCheckingDetailsLine(res.data)
                 
-                console.log(res.data);
+                //console.log(res.data);
                 setIsLoading(false);
 
 

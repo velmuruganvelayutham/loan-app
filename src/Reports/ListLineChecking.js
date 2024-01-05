@@ -53,8 +53,12 @@ const ListLineChecking = ({ pendingLoans, date, company }) => {
     }, 0);
 
     totalduepending = pendingLoans.reduce((previous, current) => {
-      if (current.collectedamountdate > 0 || current['addFields'].receiptpendingweek<0 ||current.finisheddatepending==1) {
+      if (current.collectedamountdate > 0 || current['addFields'].receiptpendingweek<=-1 ||current.finisheddatepending==1) {
         return previous + 0;
+      }
+      else if(current.collectedamountdate ==0 && current['addFields'].receiptpendingweekafter<0){
+                  
+        return previous +(-1*(current['addFields'].receiptpendingweekafter) * current.dueamount)
       }
       else {
         duependingcheck=((current['addFields'].receiptpendingweek * current.dueamount)<current.dueamount && current.dueamount!=0?current['addFields'].receiptpendingweek * current.dueamount:current.dueamount)
@@ -164,8 +168,12 @@ const ListLineChecking = ({ pendingLoans, date, company }) => {
                 pagetotal = pagetotal + pending;
 
                 
-                if (customer.collectedamountdate > 0 || customer['addFields'].receiptpendingweekafter<0 ||customer.finisheddatepending==1) {
+                if (customer.collectedamountdate > 0 || customer['addFields'].receiptpendingweekafter<=-1 ||customer.finisheddatepending==1) {
                   duepending = 0
+                }
+                else if(customer.collectedamountdate ==0 && customer['addFields'].receiptpendingweekafter<0){
+                  
+                  duepending=-1*(customer['addFields'].receiptpendingweekafter) * customer.dueamount
                 }
                 else {
                   duepending = customer.dueamount
@@ -182,7 +190,7 @@ const ListLineChecking = ({ pendingLoans, date, company }) => {
                 else {
                   pendingweek = 0;
                 }
-                if(pendingweek<duepending && duepending!=0){
+                if(pendingweek<duepending && duepending!=0 && pendingweek!=0){
                   duepending=pendingweek
                 }
                 duepending=parseFloat(duepending.toFixed(2));
@@ -190,8 +198,7 @@ const ListLineChecking = ({ pendingLoans, date, company }) => {
                 pendingweek = parseFloat(pendingweek.toFixed(2))-duepending;
                 pendingweektotal = pendingweektotal + parseFloat(pendingweek);
                 
-                //console.log("enddatediff"+customer['addFields'].daysCountloan);
-                //console.log("weekdiff"+customer['addFields'].daysCount);
+                
                 return (
                   <tr className='newaccountaddress'>
                     <td></td>
