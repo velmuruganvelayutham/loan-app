@@ -4,7 +4,7 @@ import { Button, Container, Form, Row, Col } from 'react-bootstrap';
 import { baseURL } from "../utils/constant";
 import { useTranslation } from "react-i18next";
 import PlaceHolder from "../components/spinner/placeholder";
-import { startOfWeek } from '../FunctionsGlobal/StartDateFn';
+import { startOfWeek,endOfWeek,notRunningOfWeek } from '../FunctionsGlobal/StartDateFn';
 import ReactToPrint from 'react-to-print';
 import ListTotalLedger from "./ListTotalLedger";
 function TotalLedger(){
@@ -13,15 +13,16 @@ function TotalLedger(){
     const[ledger,setLedger]=useState([]);
     const { t, i18n } = useTranslation();
     const startDateRef = useRef(startOfWeek());
-    const endDateRef = useRef(startOfWeek());
+    const endDateRef = useRef(endOfWeek());
     const componentRef = useRef();
-    const notrunningDateRef=useRef(startOfWeek());
+    const notrunningDateRef=useRef(notRunningOfWeek());
+    
     const processList = () => {
         
         setIsLoading(true);
 
         return (
-            axios.get(`${baseURL}/city/totalledger`, { params: {fromdate: startDateRef.current.value, todate: endDateRef.current.value,notrundate:notrunningDateRef.current.value } }).then((res) => {
+            axios.get(`${baseURL}/city/totalledger`, { params: {fromdate: startDateRef.current.value, todate: endDateRef.current.value,notrundate:notrunningDateRef.current.value} }).then((res) => {
                 setLedger(res.data)
                 console.log(res.data)
                 setIsLoading(false);
@@ -55,13 +56,13 @@ function TotalLedger(){
                         <Col md={3} className="rounder bg-white">
                             <Form.Group>
                                 <Form.Label>{t('enddate')}</Form.Label>
-                                <Form.Control type="date" ref={endDateRef}  defaultValue={startOfWeek()} />
+                                <Form.Control type="date" ref={endDateRef}  defaultValue={endOfWeek()} />
                             </Form.Group>
                         </Col>
                         <Col md={3} className="rounder bg-white">
                             <Form.Group>
                                 <Form.Label>{t('notrunningdate')}</Form.Label>
-                                <Form.Control type="date" ref={notrunningDateRef}  defaultValue={startOfWeek()} />
+                                <Form.Control type="date" ref={notrunningDateRef}  defaultValue={notRunningOfWeek()} />
                             </Form.Group>
                         </Col>
                         <Col md={3} className="rounder bg-white">

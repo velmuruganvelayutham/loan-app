@@ -138,8 +138,10 @@ serialno=(currentPage-1) * recordsPerPage;
                 totalcount=totalcount+customer.countafter+customer.countfinished;
                 countfinishedtotal=countfinishedtotal+customer.countfinished;
                 totalcounttotal=totalcounttotal+totalcount;
+                //console.log(customer.collectedmore)
                 return(
                   <tr >
+                    
                     <td style={{fontSize:"12px"}}>{customer.linename}</td>
                     <td style={{fontSize:"12px"}}>{customer.linemanname}</td>
                     
