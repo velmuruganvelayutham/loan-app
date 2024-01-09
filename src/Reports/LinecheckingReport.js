@@ -4,7 +4,7 @@ import { Button, Container, Form, Row, Col } from 'react-bootstrap';
 import { baseURL } from "../utils/constant";
 import { useTranslation } from "react-i18next";
 import PlaceHolder from "../components/spinner/placeholder";
-import { startOfWeek } from '../FunctionsGlobal/StartDateFn';
+import { startOfWeek,endOfWeek } from '../FunctionsGlobal/StartDateFn';
 import ListLineChecking from "./ListLineChecking";
 import PreviousWeekList from "./PreviousWeekList"
 import ReactToPrint from 'react-to-print';
@@ -25,7 +25,7 @@ function LinecheckingReport() {
     const { t, i18n } = useTranslation();
     const [city, setCity] = useState("");
     const startDateRef = useRef(startOfWeek());
-    const endDateRef = useRef(startOfWeek());
+    const endDateRef = useRef(endOfWeek());
     const linemanoptionRef = useRef("");
     const [show, setShow] = useState(false);
     
@@ -221,7 +221,7 @@ function LinecheckingReport() {
                         <Col md={2} className="rounder bg-white">
                             <Form.Group>
                                 <Form.Label>{t('enddate')}</Form.Label>
-                                <Form.Control type="date" ref={endDateRef} defaultValue={startOfWeek()} />
+                                <Form.Control type="date" ref={endDateRef} defaultValue={endOfWeek()} />
                             </Form.Group>
                         </Col>
                     </Row>
