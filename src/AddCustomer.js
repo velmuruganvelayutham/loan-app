@@ -23,6 +23,7 @@ function AddCustomer() {
   const fathernameref = useRef(null);
   const addressRef = useRef(null);
   const workRef = useRef(null);
+  const cityRef = useRef(null);
   useEffect(() => {
     setIsLoading(true);
     axios.get(`${baseURL}/citycreate/get`).then((res) => {
@@ -39,6 +40,7 @@ function AddCustomer() {
     setIsLoading(true);
     axios.get(`${baseURL}/get/view`).then((res) => {
       setCustomer(res.data);
+      console.log(res.data);
       setIsLoading(false);
     }).catch(error => {
       console.log("error=", error);
@@ -67,7 +69,7 @@ function AddCustomer() {
     setValidated(true);
 
     if (input !== "" && inputmobileno != "" && city !== "" && fathernameref.current.value !== ""
-      && addressRef.current.value !== "" && workRef.current.value !== "") {
+      && addressRef.current.value !== "" && workRef.current.value !== "" && cityRef.current.value!="") {
       addCustomer();
     }
 
@@ -78,7 +80,7 @@ function AddCustomer() {
     setIsLoading(true);
     axios.post(`${baseURL}/save`, {
       customer: input, mobileno: inputmobileno, cityid: city, fathername: fathernameref.current.value,
-      address: addressRef.current.value, work: workRef.current.value, relationtype: Number(radioValue)
+      address: addressRef.current.value, work: workRef.current.value, relationtype: Number(radioValue),referencecity:cityRef.current.value
     }).then((res) => {
       setIsLoading(false);
       setInput("")
@@ -88,6 +90,7 @@ function AddCustomer() {
       fathernameref.current.value = "";
       addressRef.current.value = "";
       workRef.current.value = "";
+      cityRef.current.value="";
       setUpdateUI((prevState) => !prevState)
     }).catch(error => {
       console.log("error=", error);
@@ -97,7 +100,7 @@ function AddCustomer() {
     alert(t('savealertmessage'));
   }
 
-  const updateMode = (id, text, mobilenum, cityid, father, addr, wrk, relation) => {
+  const updateMode = (id, text, mobilenum, cityid, father, addr, wrk, relation,referencecityname) => {
     //console.log(mobilenum);
     setInput(text);
     setInputMobileno(mobilenum);
@@ -106,6 +109,7 @@ function AddCustomer() {
     fathernameref.current.value = father;
     addressRef.current.value = addr;
     workRef.current.value = wrk;
+    cityRef.current.value=referencecityname
     setUpdateId(id);
 
   }
@@ -114,7 +118,7 @@ function AddCustomer() {
     setIsLoading(true);
     axios.put(`${baseURL}/update/${updateId}`, {
       customer: input, mobileno: inputmobileno, cityid: city, fathername: fathernameref.current.value,
-      address: addressRef.current.value, work: workRef.current.value, relationtype: Number(radioValue)
+      address: addressRef.current.value, work: workRef.current.value, relationtype: Number(radioValue),referencecity:cityRef.current.value
     }).then((res) => {
       setIsLoading(false);
       setUpdateUI((prevState) => !prevState)
@@ -125,6 +129,7 @@ function AddCustomer() {
       fathernameref.current.value = "";
       addressRef.current.value = "";
       workRef.current.value = "";
+      cityRef.current.value="";
       setUpdateId(null);
 
     }).catch(error => {
@@ -142,6 +147,7 @@ function AddCustomer() {
     fathernameref.current.value = "";
     addressRef.current.value = "";
     workRef.current.value = "";
+    cityRef.current.value="";
     setUpdateId(null);
     
   }
@@ -158,10 +164,17 @@ function AddCustomer() {
     </div>
 
   )
-
+  const restoreCityName=(e)=>{
+    const filtered = citynames.filter(city => {
+      return city._id === e.target.value;
+  })
+  if(filtered.length>0){
+    cityRef.current.value=filtered[0].cityname;
+  }
+    
+  }
   
   return (
-
     <Container >
       <h2 className="text-center">{t('customerheadername')}</h2>
       <Row className="justify-content-md-center mt-5 ">
@@ -173,18 +186,18 @@ function AddCustomer() {
                 <Form.Control  type="text" placeholder={t('customerplaceholderlabel')} required value={input} onChange={(e) => setInput(e.target.value)} autoFocus />
               </Form.Group>
             </Col>
-            <Col xs={12} md={4} className="rounded bg-white">
+            <Col xs={12} md={3} className="rounded bg-white">
               <Form.Group className="mb-3" name="mobilenumber" border="primary" >
                 <Form.Label>{t('phoneno')}</Form.Label>
                 <Form.Control type="number" placeholder={t('phonenoplaceholder')} required value={inputmobileno}
                   onChange={(e) => setInputMobileno(e.target.value)} />
               </Form.Group>
             </Col>
-            <Col xs={12} md={4} className="rounded bg-white">
+            <Col xs={12} md={3} className="rounded bg-white">
               <Form.Group className="mb-3" name="cityname" border="primary" >
                 <Form.Label>{t('city')}</Form.Label>
                 <Form.Select aria-label="Default select example" 
-                 value={city} onChange={(e) => setCity(e.target.value)} required >
+                 value={city} onChange={(e) => setCity(e.target.value)} onClick={restoreCityName} required >
                   <option key={city} value={""} >{t('cityplaceholder')}</option>
 
                   {
@@ -194,6 +207,12 @@ function AddCustomer() {
                     ))}
 
                 </Form.Select>
+              </Form.Group>
+            </Col>
+            <Col xs={12} md={2} className="rounded bg-white">
+              <Form.Group className="mb-3" name="work" border="primary" >
+                <Form.Label>{t('city')}</Form.Label>
+                <Form.Control type="text" placeholder={t('city')} ref={cityRef} required />
               </Form.Group>
             </Col>
           </Row>
@@ -226,6 +245,7 @@ function AddCustomer() {
                 <Form.Control type="text" placeholder={t('addressplaceholder')} ref={addressRef} required />
               </Form.Group>
             </Col>
+           
             <Col xs={12} md={4} className="rounded bg-white">
               <Form.Group className="mb-3" name="work" border="primary" >
                 <Form.Label>{t('work')}</Form.Label>

@@ -98,7 +98,7 @@ function Ledger({ loanno, ledger, company, date }) {
                                     </Form.Group>
                                     <Form.Group border="primary" >
                                         <Form.Label>{t('city')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
-                                        <Form.Label>&nbsp;{ledger.length > 0 ? first.cityname : ""}</Form.Label>
+                                        <Form.Label>&nbsp;{ledger.length > 0 ? first.referencecity : ""}</Form.Label>
                                     </Form.Group>
                                     <Form.Group border="primary" >
                                         <Form.Label>{t('work')}&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>

@@ -116,7 +116,7 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto }) => {
                                             <td style={{ fontSize: "12px" }}>{customer.document}</td>
 
                                             <td style={{ fontSize: "12px" }}>{customer.customer}</td>
-                                            <td style={{ fontSize: "12px" }}>{customer.city}</td>
+                                            <td style={{ fontSize: "12px" }}>{customer.referencecity}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.bookno}</td>
                                             <td style={{ fontSize: "12px" }}>{dateFormatdd(customer.finisheddate)}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.givenamount}</td>

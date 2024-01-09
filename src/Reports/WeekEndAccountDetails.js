@@ -107,7 +107,7 @@ const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto }) => {
                                             <td style={{ fontSize: "12px" }}>{customer.document}</td>
 
                                             <td style={{ fontSize: "12px" }}>{customer.customer}</td>
-                                            <td style={{ fontSize: "12px" }}>{customer.city}</td>
+                                            <td style={{ fontSize: "12px" }}>{customer.referencecity}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.bookno}</td>
                                             <td style={{ fontSize: "12px" }}>{dateFormatdd(customer.lastreceipt)}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.totalamount}</td>

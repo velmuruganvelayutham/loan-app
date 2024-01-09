@@ -67,9 +67,11 @@ const List = ({ customers, setUpdateUI, updateMode }) => {
               <th>
                 {t('work')}
               </th>
+              <th style={{display:"none"}}>{t('city')}</th>
               <th>
                 {t('tableaction')}
               </th>
+              
             </tr>
           </thead>
           <tbody>
@@ -88,8 +90,9 @@ const List = ({ customers, setUpdateUI, updateMode }) => {
                       <td >{customer.fathername}</td>
                       <td>{customer.address}</td>
                       <td>{customer.work}</td>
+                      <td style={{display:"none"}}>{customer.referencecity}</td>
                       <td>
-                        <BiEditAlt className='icons' onClick={() => updateMode(customer._id, customer.customer, customer.mobileno, customer.city_id, customer.fathername, customer.address, customer.work, customer.relationtype)} />
+                        <BiEditAlt className='icons' onClick={() => updateMode(customer._id, customer.customer, customer.mobileno, customer.city_id, customer.fathername, customer.address, customer.work, customer.relationtype,customer.referencecity)} />
                         {/*<BsTrash className='icons' onClick={()=>removeCustomer(customer._id)}  />*/}
                       </td>
                     </tr>

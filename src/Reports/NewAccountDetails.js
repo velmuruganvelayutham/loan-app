@@ -83,7 +83,7 @@ const NewAccountDetails = ({ pendingLoans, datefrom,dateto }) => {
                                             <td style={{ fontSize: "12px" }}>{customer.fathername}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.address}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.mobileno}</td>
-                                            <td style={{ fontSize: "12px" }}>{customer.city}</td>
+                                            <td style={{ fontSize: "12px" }}>{customer.referencecity}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.totalamount}</td>
                                         </tr>
 
