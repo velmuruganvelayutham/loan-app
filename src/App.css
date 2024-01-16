@@ -25,9 +25,9 @@
   height: 15px;
 }
 .dailyrecords{
-  line-height: 12px;
-  min-height: 12px;
-  height: 12px;
+  line-height: 10px;
+  min-height: 10px;
+  height: 10px;
 }
 .dailyrecordsfinshed{
   line-height: 10px;
@@ -38,7 +38,7 @@
   border-left: 1px solid black;
   height: 26px;
   left: 13%;
-  top:680px;
+  top:642px;
   position: absolute;
   
 }
@@ -46,14 +46,14 @@
   border-left: 1px solid black;
   height: 26px;
   left: 22%;
-  top:680px;
+  top:642px;
   position: absolute;
 }
 .v3 {
   border-left: 1px solid black;
   height: 26px;
   left: 35%;
-  top:680px;
+  top:642px;
   position:absolute;
   
 }
@@ -61,7 +61,7 @@
   border-left: 1px solid black;
   height: 26px;
   left: 36%;
-  top:1096px;
+  top:1055px;
   position:absolute;
   
 }
@@ -69,7 +69,7 @@
   border-left: 1px solid black;
   height: 26px;
   left: 43%;
-  top:1096px;
+  top:1055px;
   position:absolute;
   
 }
