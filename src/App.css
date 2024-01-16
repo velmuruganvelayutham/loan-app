@@ -24,5 +24,54 @@
   min-height: 15px;
   height: 15px;
 }
-
+.dailyrecords{
+  line-height: 12px;
+  min-height: 12px;
+  height: 12px;
+}
+.dailyrecordsfinshed{
+  line-height: 10px;
+  min-height: 10px;
+  height: 10px;
+}
+.vl {
+  border-left: 1px solid black;
+  height: 26px;
+  left: 13%;
+  top:680px;
+  position: absolute;
+  
+}
+.v2 {
+  border-left: 1px solid black;
+  height: 26px;
+  left: 22%;
+  top:680px;
+  position: absolute;
+}
+.v3 {
+  border-left: 1px solid black;
+  height: 26px;
+  left: 35%;
+  top:680px;
+  position:absolute;
+  
+}
+.v4 {
+  border-left: 1px solid black;
+  height: 26px;
+  left: 36%;
+  top:1096px;
+  position:absolute;
+  
+}
+.v5 {
+  border-left: 1px solid black;
+  height: 26px;
+  left: 43%;
+  top:1096px;
+  position:absolute;
+  
+}
 * {font-size: 14px;}
+

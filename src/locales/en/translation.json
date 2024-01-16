@@ -127,5 +127,11 @@
 "loanupdatealert":"This Loan Entry Involved More than one Transaction",
 "countaccount":"Account",
 "countfinished":"Closed",
-"totalcount":"Total"
+"totalcount":"Total",
+"weekshort":"Wk",
+"money":"Rs",
+"bill":"B",
+"loannoshort":"LNo",
+"weekdate":"WeekDate",
+"collectiondate":"Collect.Date"
 }

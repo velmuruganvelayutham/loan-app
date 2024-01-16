@@ -171,7 +171,8 @@ const ListLineChecking = ({ pendingLoans, date, company }) => {
                 if (customer.collectedamountdate > 0 || customer['addFields'].receiptpendingweekafter<=-1 ||customer.finisheddatepending==1) {
                   duepending = 0
                 }
-                else if(customer.collectedamountdate ==0 && customer['addFields'].receiptpendingweekafter<0){
+                
+                else if(customer.collectedamountdate ==0 && customer['addFields'].receiptpendingweekafter<=0){
                   
                   duepending=-1*(customer['addFields'].receiptpendingweekafter) * customer.dueamount
                 }

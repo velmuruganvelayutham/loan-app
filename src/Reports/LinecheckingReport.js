@@ -4,21 +4,23 @@ import { Button, Container, Form, Row, Col } from 'react-bootstrap';
 import { baseURL } from "../utils/constant";
 import { useTranslation } from "react-i18next";
 import PlaceHolder from "../components/spinner/placeholder";
-import { startOfWeek,endOfWeek } from '../FunctionsGlobal/StartDateFn';
+import { startOfWeek, endOfWeek } from '../FunctionsGlobal/StartDateFn';
 import ListLineChecking from "./ListLineChecking";
 import PreviousWeekList from "./PreviousWeekList"
 import ReactToPrint from 'react-to-print';
 import NewAccountDetails from "./NewAccountDetails";
 import WeekEndAccountDetails from "./WeekEndAccountDetails";
 import CurrentWeekGivenAmount from "./CurrentWeekGivenAmount";
+import DailyRecords from "./DailyRecords";
 var linecheckingreportname = "checkingdetails";
+
 var passingargument = "";
 function LinecheckingReport() {
     const [cityNames, setCityNames] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [checkingDetailsLine, setCheckingDetailsLine] = useState([]);
-    const[checkingData,setCheckingData]=useState([]);
+    const [checkingData, setCheckingData] = useState([]);
     const [company, setCompany] = useState([]);
     const [linemannames, setLinemanNames] = useState([]);
     const reportType = useRef(0);
@@ -29,6 +31,9 @@ function LinecheckingReport() {
     const linemanoptionRef = useRef("");
     const [show, setShow] = useState(false);
     
+    const [linemannameday,setLineManNameDay]=useState("");
+    const[linemanlineno,setLineManLineno]=useState("");
+
     useEffect(() => {
         setIsLoading(true);
         axios.get(`${baseURL}/company/get`).then((res) => {
@@ -63,56 +68,59 @@ function LinecheckingReport() {
         })
     }, [])
     const processList = () => {
-        setIsLoading(true);
-        //alert(linemanoptionRef.current.value);
-        if (Number(reportType.current.value) === 0) {
+        if (Number(reportType.current.value) !== 5) {
+            setIsLoading(true);
+            //alert(linemanoptionRef.current.value);
+            if (Number(reportType.current.value) === 0) {
 
-            linecheckingreportname = "checkingdetails";
-            passingargument = city;
-        }
-        else if (Number(reportType.current.value) === 1) {
-            setCheckingData([]);
-            linecheckingreportname = "previousweekdetails";
-            passingargument = city;
-            //alert(passingargument);
-        }
-        else if (Number(reportType.current.value) === 2) {
-            setCheckingData([]);
-            linecheckingreportname = "newaccountdetails";
-            passingargument = linemanoptionRef.current.value;
-            //alert(passingargument);
-        }
-        else if (Number(reportType.current.value) === 4) {
-            setCheckingData([]);
-            linecheckingreportname = "weekendaccountdetails";
-            passingargument = linemanoptionRef.current.value;
-        }
-        else if (Number(reportType.current.value) === 3) {
-            setCheckingData([]);
-            linecheckingreportname = "currentweekgivenamount";
-            passingargument = linemanoptionRef.current.value;
+                linecheckingreportname = "checkingdetails";
+                passingargument = city;
+            }
+            else if (Number(reportType.current.value) === 1) {
+                setCheckingData([]);
+                linecheckingreportname = "previousweekdetails";
+                passingargument = city;
+                //alert(passingargument);
+            }
+            else if (Number(reportType.current.value) === 2) {
+                setCheckingData([]);
+                linecheckingreportname = "newaccountdetails";
+                passingargument = linemanoptionRef.current.value;
+                //alert(passingargument);
+            }
+            else if (Number(reportType.current.value) === 4) {
+                setCheckingData([]);
+                linecheckingreportname = "weekendaccountdetails";
+                passingargument = linemanoptionRef.current.value;
+            }
+            else if (Number(reportType.current.value) === 3) {
+                setCheckingData([]);
+                linecheckingreportname = "currentweekgivenamount";
+                passingargument = linemanoptionRef.current.value;
+            }
+
+            return (
+                axios.get(`${baseURL}/loan/${linecheckingreportname}`, { params: { city_id: passingargument.toString(), fromdate: startDateRef.current.value, todate: endDateRef.current.value } }).then((res) => {
+                    Number(reportType.current.value) === 0 ? setCheckingData(res.data) : setCheckingDetailsLine(res.data)
+
+                    //console.log(res.data);
+                    setIsLoading(false);
+
+
+                })
+                    .catch(error => {
+                        console.log("error=", error);
+                        setErrorMessage(t('erroressagelinechecking'));
+                        setIsLoading(false);
+                    })
+            )
+
         }
         
-        return (
-            axios.get(`${baseURL}/loan/${linecheckingreportname}`, { params: { city_id: passingargument.toString(), fromdate: startDateRef.current.value, todate: endDateRef.current.value} }).then((res) => {
-                Number(reportType.current.value) === 0?setCheckingData(res.data):setCheckingDetailsLine(res.data)
-                
-                //console.log(res.data);
-                setIsLoading(false);
-
-
-            })
-                .catch(error => {
-                    console.log("error=", error);
-                    setErrorMessage(t('erroressagelinechecking'));
-                    setIsLoading(false);
-                })
-        )
-
-
     }
-    const componentRef = useRef();
+    const componentRef = useRef([]);
     const handlePrint = () => {
+        
         window.print()
     }
     const renderLineCheckingList = (
@@ -145,12 +153,26 @@ function LinecheckingReport() {
             <CurrentWeekGivenAmount pendingLoans={checkingDetailsLine} datefrom={startDateRef.current.value} dateto={endDateRef.current.value} />
         </Row>
     )
+    const renderdailyrecords = (
+        <Row ref={componentRef}>
+            <DailyRecords  datefrom={startDateRef.current.value} dateto={endDateRef.current.value} linemanname={linemannameday} linamnline={linemanlineno}/>
+        </Row>
+    )
+    const restoreLineman=(e)=>{
+        const filtered = linemannames.filter(lineman => {
+            return lineman._id === e.target.value;
+        })
+        if(filtered.length>0){
+          setLineManNameDay(filtered[0].linemanname);
+          setLineManLineno(filtered[0].lineno);
+        }
+    }
     const linemanshow = (
         <Col xs={12} md={5} className="rounder bg-white " >
             <Form.Group className="mb-3" name="linenumber" border="primary" >
                 <Form.Label>{t('lineman')}</Form.Label>
                 <Form.Select aria-label="Default select example" value={city}
-                    onChange={(e) => setCity(e.target.value)} ref={linemanoptionRef}>
+                    onChange={(e) => setCity(e.target.value)} ref={linemanoptionRef} onClick={restoreLineman}>
                     <option key={""} value={""} >{t('linemanplaceholder')}</option>
 
                     {
@@ -198,7 +220,7 @@ function LinecheckingReport() {
                 <Form>
                     <Row >
                         {show == true ? linemanshow : citynameshow}
-                        
+
                         <Col md={3} className="rounder bg-white">
                             <Form.Group className="mb-3" name="cityname" border="primary" >
                                 <Form.Label>{t('report')}</Form.Label>
@@ -209,6 +231,7 @@ function LinecheckingReport() {
                                     <option value={2}>{t('newaccountaddress')}</option>
                                     <option value={3}>{t('currentweekamountgiven')}</option>
                                     <option value={4}>{t('weekendaccounts')}</option>
+                                    <option value={5}>{t('dailylist')}</option>
                                 </Form.Select>
                             </Form.Group>
                         </Col>
@@ -246,7 +269,7 @@ function LinecheckingReport() {
                         renderLineCheckingList : Number(reportType.current.value) === 1 ?
                             renderpreviousweekList : Number(reportType.current.value) === 2 ?
                                 rendernewaccountList : Number(reportType.current.value) === 3 ?
-                                    rendercurrentweekgivenaccountList : renderweekendaccountList}
+                                    rendercurrentweekgivenaccountList : Number(reportType.current.value) === 4 ? renderweekendaccountList : renderdailyrecords}
                     {errorMessage && <div className="error">{errorMessage}</div>}
 
 
