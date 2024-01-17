@@ -76,7 +76,7 @@ const DailyRecords = ({datefrom,dateto,linemanname,linamnline}) => {
                                     content = t('othersincome')
                                 }
                                 return (
-                                    <tr className='dailyrecords'>
+                                    <tr className='dailyrecordsfinshedtotal'>
                                         <td></td>
                                         <td>{content}</td>
                                         <td></td>
@@ -97,7 +97,7 @@ const DailyRecords = ({datefrom,dateto,linemanname,linamnline}) => {
                             :
                             t('tabledata')
                     }
-                    <tr className='dailyrecords'>
+                    <tr className='dailyrecordsfinshedtotal'>
                         <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
                         <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
                         <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}>{(t('total'))}</td>
@@ -349,10 +349,10 @@ const DailyRecords = ({datefrom,dateto,linemanname,linamnline}) => {
                 </tbody>  
             </Table>
             
-            <div className='col-sm-3 p-3 fw-bold'>{t('customer') + " : "+linemanname}</div>
-            <div className='col-sm-2 p-3 fw-bold'>{t('line') + " : "+linamnline}</div>
-            <div className='col-sm-4 p-3 fw-bold'>{t("weekdate") + " : "+dateFormatdd(datefrom)+"-"+dateFormatdd(dateto)}</div>
-            <div className='col-sm-3 p-3 fw-bold'>{t("collectiondate") + " : "}</div>
+            <div className='col-sm-3 pt-5 fw-bold'>{t('customer') + " : "+linemanname}</div>
+            <div className='col-sm-2 pt-5 fw-bold'>{t('line') + " : "+linamnline}</div>
+            <div className='col-sm-4 pt-5 fw-bold'>{t("weekdate") + " : "+dateFormatdd(datefrom)+"-"+dateFormatdd(dateto)}</div>
+            <div className='col-sm-3 pt-5 fw-bold'>{t("collectiondate") + " : "}</div>
             <Table className='table  text-center table-bordered border-dark'>
                 <thead >
                     <tr>
@@ -406,7 +406,7 @@ const DailyRecords = ({datefrom,dateto,linemanname,linamnline}) => {
                                 serialno = i + 1;
 
                                 return (
-                                    <tr className='dailyrecords'>
+                                    <tr className='dailyrecordsrough'>
                                         <td></td>
                                         <td>{serialno}</td>
                                         <td></td>
@@ -434,7 +434,7 @@ const DailyRecords = ({datefrom,dateto,linemanname,linamnline}) => {
                             t('tabledata')
                     }
 
-                    <tr className='dailyrecords'>
+                    <tr className='dailyrecordsrough'>
                         <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
                         <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
                         <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
