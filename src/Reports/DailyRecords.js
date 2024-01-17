@@ -18,10 +18,10 @@ const DailyRecords = ({datefrom,dateto,linemanname,linamnline}) => {
 
     return (
         <Fragment >
-            <div className='col-sm-3 fixed mt-5 fw-bold'>{t('customer') + " : "+linemanname}</div>
-            <div className='col-sm-2 fixed mt-5 fw-bold'>{t('line') + " : "+linamnline}</div>
-            <div className='col-sm-4 fixed mt-5 fw-bold'>{t("weekdate") + " : "+dateFormatdd(datefrom)+"-"+dateFormatdd(dateto)}</div>
-            <div className='col-sm-3 fixed mt-5 fw-bold'>{t("collectiondate") + " : "}</div>
+            <div className='col-sm-3 fixed mt-3 fw-bold'>{t('customer') + " : "+linemanname}</div>
+            <div className='col-sm-2 fixed mt-3 fw-bold'>{t('line') + " : "+linamnline}</div>
+            <div className='col-sm-4 fixed mt-3 fw-bold'>{t("weekdate") + " : "+dateFormatdd(datefrom)+"-"+dateFormatdd(dateto)}</div>
+            <div className='col-sm-3 fixed mt-3 fw-bold'>{t("collectiondate") + " : "}</div>
             <Table className='table  text-center table-bordered border-dark' style={{ overflow: "auto" }}>
                 <thead >
                     <tr>

@@ -38,7 +38,7 @@
   border-left: 1px solid black;
   height: 26px;
   left: 13%;
-  top:642px;
+  top:615px;
   position: absolute;
   
 }
@@ -46,14 +46,14 @@
   border-left: 1px solid black;
   height: 26px;
   left: 22%;
-  top:642px;
+  top:615px;
   position: absolute;
 }
 .v3 {
   border-left: 1px solid black;
   height: 26px;
   left: 35%;
-  top:642px;
+  top:615px;
   position:absolute;
   
 }
@@ -61,7 +61,7 @@
   border-left: 1px solid black;
   height: 26px;
   left: 36%;
-  top:1055px;
+  top:1028px;
   position:absolute;
   
 }
@@ -69,9 +69,11 @@
   border-left: 1px solid black;
   height: 26px;
   left: 43%;
-  top:1055px;
+  top:1028px;
   position:absolute;
   
 }
 * {font-size: 14px;}
+@page { size: A4;margin:0; }
+@page { size:8.5in 11.00in ;margin:0; }
 
