@@ -11,9 +11,7 @@
   background-color:rgba(255, 0, 0, 0.84);
   color: white;
 }
-.borderless{
-    border: 0;
-}
+
 .previousweek{
   line-height: 10px;
   min-height: 10px;
@@ -23,6 +21,11 @@
   line-height: 15px;
   min-height: 15px;
   height: 15px;
+}
+.linechecking{
+  line-height: 11px;
+  min-height: 11px;
+  height: 11px;
 }
 .dailyrecords{
   line-height: 10px;
@@ -85,5 +88,8 @@
 }
 * {font-size: 14px;}
 
-
+Table.linecheckingtable {
+  table-layout: fixed;
+  word-wrap: break-word;
+}
 
