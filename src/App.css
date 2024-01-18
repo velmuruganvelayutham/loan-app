@@ -23,8 +23,8 @@
   height: 15px;
 }
 .linechecking{
-  line-height: 11px;
-  min-height: 11px;
+  line-height: 10px;
+  min-height: 10px;
   height: 11px;
 }
 .dailyrecords{
@@ -92,4 +92,3 @@ Table.linecheckingtable {
   table-layout: fixed;
   word-wrap: break-word;
 }
-
