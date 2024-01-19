@@ -99,11 +99,11 @@ const PreviousWeekList = ({ pendingLoans, date, company }) => {
                                     <tr className='previousweek'>
                                         <td style={{ fontSize: "12px" }}>{serialno}</td>
                                         <td style={{ fontSize: "12px" }}>{dateFormatdd(customer.startdate)}</td>
-                                        <td style={{ fontSize: "12px" }}>{customer.weekno}</td>
+                                        <td style={{ fontSize: "12px" }}>{customer.weeknoreceipt}</td>
                                         <td style={{ fontSize: "12px" }}>{customer.loannumber}</td>
                                         <td style={{ fontSize: "12px" }}>{customer.customer}</td>
                                         <td style={{ fontSize: "12px" }}>{customer.dueamount}</td>
-                                        <td style={{ fontSize: "12px" }}>{customer.weeknoreceipt}</td>
+                                        <td style={{ fontSize: "12px" }}></td>
                                         <td style={{ fontSize: "12px" }}>{customer.collectedamount}</td>
                                         <td style={{ fontSize: "12px" }}>{customer.collectedamount}</td>
                                         <td style={{ fontSize: "12px" }}>{customer.referencecity}</td>
