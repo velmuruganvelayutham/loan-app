@@ -352,7 +352,7 @@ const DailyRecords = ({datefrom,dateto,linemanname,linamnline}) => {
             <div className='col-sm-3 pt-5 fw-bold'>{t('customer') + " : "+linemanname}</div>
             <div className='col-sm-2 pt-5 fw-bold'>{t('line') + " : "+linamnline}</div>
             <div className='col-sm-4 pt-5 fw-bold'>{t("weekdate") + " : "+dateFormatdd(datefrom)+"-"+dateFormatdd(dateto)}</div>
-            <div className='col-sm-3 pt-5 fw-bold'>{t("collectiondate") + " : "+dateFormatdd(new Date())}</div>
+            <div className='col-sm-3 pt-5 fw-bold'>{t("collectiondate") + " : "}</div>
             <Table className='table  text-center table-bordered border-dark'>
                 <thead >
                     <tr>
