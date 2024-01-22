@@ -47,6 +47,11 @@
   min-height: 12px;
   height: 10px;
 }
+.dailyrecordtotalheight{
+  line-height: 23px;
+  min-height: 23px;
+  height: 23px;
+}
 .vl {
   border-left: 1px solid black;
   height: 26px;
