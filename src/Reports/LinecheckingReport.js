@@ -28,6 +28,7 @@ function LinecheckingReport() {
     const [city, setCity] = useState("");
     const startDateRef = useRef(startOfWeek());
     const endDateRef = useRef(endOfWeek());
+    const [printDateRef,setPrintDateRef]=useState(startOfWeek())
     const linemanoptionRef = useRef("");
     const [show, setShow] = useState(false);
     
@@ -155,7 +156,7 @@ function LinecheckingReport() {
     )
     const renderdailyrecords = (
         <Row ref={componentRef}>
-            <DailyRecords  datefrom={startDateRef.current.value} dateto={endDateRef.current.value} linemanname={linemannameday} linamnline={linemanlineno}/>
+            <DailyRecords  datefrom={startDateRef.current.value} dateto={endDateRef.current.value} linemanname={linemannameday} linamnline={linemanlineno} collectiondate={printDateRef}/>
         </Row>
     )
     const restoreLineman=(e)=>{
@@ -168,7 +169,7 @@ function LinecheckingReport() {
         }
     }
     const linemanshow = (
-        <Col xs={12} md={5} className="rounder bg-white " >
+        <Col xs={12} md={3} className="rounder bg-white " >
             <Form.Group className="mb-3" name="linenumber" border="primary" >
                 <Form.Label>{t('lineman')}</Form.Label>
                 <Form.Select aria-label="Default select example" value={city}
@@ -187,7 +188,7 @@ function LinecheckingReport() {
 
     )
     const citynameshow = (
-        <Col xs={12} md={4} className="rounder bg-white">
+        <Col xs={12} md={3} className="rounder bg-white">
             <Form.Group className="mb-3" name="linenumber" border="primary" >
                 <Form.Label>{t('city')}</Form.Label>
                 <Form.Select aria-label="Default select example" value={city}
@@ -245,6 +246,12 @@ function LinecheckingReport() {
                             <Form.Group>
                                 <Form.Label>{t('enddate')}</Form.Label>
                                 <Form.Control type="date" ref={endDateRef} defaultValue={endOfWeek()} />
+                            </Form.Group>
+                        </Col>
+                        <Col md={2} className="rounder bg-white">
+                            <Form.Group>
+                                <Form.Label>{t('printdate')}</Form.Label>
+                                <Form.Control type="date" value={printDateRef} onChange={(e) => setPrintDateRef(e.target.value)} defaultValue={startOfWeek()} />
                             </Form.Group>
                         </Col>
                     </Row>

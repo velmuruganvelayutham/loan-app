@@ -6,6 +6,7 @@ import { baseURL } from "./utils/constant";
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import { useTranslation } from "react-i18next";
+import Select from 'react-select'
 import PlaceHolder from "./components/spinner/placeholder";
 function AddCustomer() {
   const [input, setInput] = useState("");
@@ -24,6 +25,8 @@ function AddCustomer() {
   const addressRef = useRef(null);
   const workRef = useRef(null);
   const cityRef = useRef(null);
+  const initialFormState = { mySelectKey: null };
+    const [myForm, setMyForm] = useState(initialFormState);
   useEffect(() => {
     setIsLoading(true);
     axios.get(`${baseURL}/citycreate/get`).then((res) => {
@@ -47,7 +50,7 @@ function AddCustomer() {
       setErrorMessage(t('errormessagecustomer'));
       setIsLoading(false);
     })
-  }, [updateUI,t]);
+  }, [updateUI, t]);
 
   useEffect(() => {
     document.addEventListener("keydown", function (event) {
@@ -69,7 +72,7 @@ function AddCustomer() {
     setValidated(true);
 
     if (input !== "" && inputmobileno != "" && city !== "" && fathernameref.current.value !== ""
-      && addressRef.current.value !== "" && workRef.current.value !== "" && cityRef.current.value!="") {
+      && addressRef.current.value !== "" && workRef.current.value !== "" && cityRef.current.value != "") {
       addCustomer();
     }
 
@@ -80,7 +83,7 @@ function AddCustomer() {
     setIsLoading(true);
     axios.post(`${baseURL}/save`, {
       customer: input, mobileno: inputmobileno, cityid: city, fathername: fathernameref.current.value,
-      address: addressRef.current.value, work: workRef.current.value, relationtype: Number(radioValue),referencecity:cityRef.current.value
+      address: addressRef.current.value, work: workRef.current.value, relationtype: Number(radioValue), referencecity: cityRef.current.value
     }).then((res) => {
       setIsLoading(false);
       setInput("")
@@ -90,7 +93,7 @@ function AddCustomer() {
       fathernameref.current.value = "";
       addressRef.current.value = "";
       workRef.current.value = "";
-      cityRef.current.value="";
+      cityRef.current.value = "";
       setUpdateUI((prevState) => !prevState)
     }).catch(error => {
       console.log("error=", error);
@@ -100,7 +103,7 @@ function AddCustomer() {
     alert(t('savealertmessage'));
   }
 
-  const updateMode = (id, text, mobilenum, cityid, father, addr, wrk, relation,referencecityname) => {
+  const updateMode = (id, text, mobilenum, cityid, father, addr, wrk, relation, referencecityname) => {
     //console.log(mobilenum);
     setInput(text);
     setInputMobileno(mobilenum);
@@ -109,7 +112,7 @@ function AddCustomer() {
     fathernameref.current.value = father;
     addressRef.current.value = addr;
     workRef.current.value = wrk;
-    cityRef.current.value=referencecityname
+    cityRef.current.value = referencecityname
     setUpdateId(id);
 
   }
@@ -118,7 +121,7 @@ function AddCustomer() {
     setIsLoading(true);
     axios.put(`${baseURL}/update/${updateId}`, {
       customer: input, mobileno: inputmobileno, cityid: city, fathername: fathernameref.current.value,
-      address: addressRef.current.value, work: workRef.current.value, relationtype: Number(radioValue),referencecity:cityRef.current.value
+      address: addressRef.current.value, work: workRef.current.value, relationtype: Number(radioValue), referencecity: cityRef.current.value
     }).then((res) => {
       setIsLoading(false);
       setUpdateUI((prevState) => !prevState)
@@ -129,8 +132,9 @@ function AddCustomer() {
       fathernameref.current.value = "";
       addressRef.current.value = "";
       workRef.current.value = "";
-      cityRef.current.value="";
+      cityRef.current.value = "";
       setUpdateId(null);
+      setMyForm(initialFormState);
 
     }).catch(error => {
       console.log("error=", error);
@@ -147,33 +151,68 @@ function AddCustomer() {
     fathernameref.current.value = "";
     addressRef.current.value = "";
     workRef.current.value = "";
-    cityRef.current.value="";
+    cityRef.current.value = "";
     setUpdateId(null);
-    
+    setMyForm(initialFormState);
+
   }
   const radios = [
     { name: t('fathershort'), value: '0' },
     { name: t('husbandshort'), value: '1' }
   ];
 
-  const renderCustomerList = (
-
-    <div className="col-md-12 text-center">
-      <List customers={customers} setUpdateUI={setUpdateUI}
-        updateMode={updateMode} />
-    </div>
-
-  )
-  const restoreCityName=(e)=>{
+  const restoreCityName = (e) => {
     const filtered = citynames.filter(city => {
       return city._id === e.target.value;
+    })
+    if (filtered.length > 0) {
+      cityRef.current.value = filtered[0].cityname;
+    }
+
+  }
+  const options = customers.map((customer, i) => {
+    return {
+        label: customer.customer + '-' + customer.fathername,
+        value: customer._id,
+        key: i
+    }
+})
+function customerSelect(value) {
+
+
+  setMyForm({ ...myForm, mySelectKey: value });
+
+  const filtered = customers.filter(customer => {
+      return customer._id === value
   })
-  if(filtered.length>0){
-    cityRef.current.value=filtered[0].cityname;
+
+  if (myForm.mySelectKey == 0) {
+
+      setInput("");
+      setInputMobileno("");
+      setCity("");
+      setRadioValue("0");
+      fathernameref.current.value = "";
+      addressRef.current.value = "";
+      workRef.current.value = "";
+      cityRef.current.value = ""
+      setUpdateId(null);
   }
-    
+  else {
+      setInput(filtered[0].customer);
+      setInputMobileno(filtered[0].mobileno);
+      setCity(filtered[0].city_id);
+      setRadioValue(filtered[0].relationtype == 1 ? "1" : "0");
+      fathernameref.current.value = filtered[0].fathername;
+      addressRef.current.value = filtered[0].address;
+      workRef.current.value = filtered[0].work;
+      cityRef.current.value = filtered[0].referencecity;
+      setUpdateId(filtered[0]._id);
   }
-  
+
+}
+
+
   return (
     <Container >
       <h2 className="text-center">{t('customerheadername')}</h2>
@@ -181,9 +220,27 @@ function AddCustomer() {
         <Form validated={validated}>
           <Row >
             <Col xs={12} md={4} className="rounded bg-white">
+
+              <Form.Group className="mb-3" name="customername" border="primary" >
+                <Form.Label>{t('customer')}</Form.Label>{/*customer*/}
+
+                <Select aria-label="Default select example"
+                  required autoFocus
+                  value={options.filter(({ value }) => value === myForm.mySelectKey)}
+                  getOptionLabel={({ label }) => label}
+                  getOptionValue={({ value }) => value}
+                  onChange={({ value }) => customerSelect(value)}
+                  options={options}
+                  placeholder={t('customer')}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row >
+            <Col xs={12} md={4} className="rounded bg-white">
               <Form.Group className="mb-3" name="customername" border="primary" >
                 <Form.Label>{t('customer')}</Form.Label>
-                <Form.Control  type="text" placeholder={t('customerplaceholderlabel')} required value={input} onChange={(e) => setInput(e.target.value)} autoFocus />
+                <Form.Control type="text" placeholder={t('customerplaceholderlabel')} required value={input} onChange={(e) => setInput(e.target.value)} autoFocus />
               </Form.Group>
             </Col>
             <Col xs={12} md={3} className="rounded bg-white">
@@ -196,14 +253,14 @@ function AddCustomer() {
             <Col xs={12} md={3} className="rounded bg-white">
               <Form.Group className="mb-3" name="cityname" border="primary" >
                 <Form.Label>{t('city')}</Form.Label>
-                <Form.Select aria-label="Default select example" 
-                 value={city} onChange={(e) => setCity(e.target.value)} onClick={restoreCityName} required >
+                <Form.Select aria-label="Default select example"
+                  value={city} onChange={(e) => setCity(e.target.value)} onClick={restoreCityName} required >
                   <option key={city} value={""} >{t('cityplaceholder')}</option>
 
                   {
                     citynames.map((cityname) => (
                       <option key={cityname._id} value={cityname._id}
-                        >{cityname.cityname}</option>
+                      >{cityname.cityname}</option>
                     ))}
 
                 </Form.Select>
@@ -245,7 +302,7 @@ function AddCustomer() {
                 <Form.Control type="text" placeholder={t('addressplaceholder')} ref={addressRef} required />
               </Form.Group>
             </Col>
-           
+
             <Col xs={12} md={4} className="rounded bg-white">
               <Form.Group className="mb-3" name="work" border="primary" >
                 <Form.Label>{t('work')}</Form.Label>
@@ -256,13 +313,13 @@ function AddCustomer() {
           <Row className="rounded bg-white text-center">
             <div className="col-md-12 mb-4 " >
               <Button variant="primary" size="lg" type="button" className="text-center" onClick={updateId ? updateCustomer : handleSubmit}>
-              {t('savebutton')}
+                {t('savebutton')}
               </Button>{' '}
               <Button variant="primary" size="lg" type="button" className="text-center" onClick={clearFields}>
-              {t('newbutton')}
+                {t('newbutton')}
               </Button>
             </div>
-            {isLoading ? <PlaceHolder /> : renderCustomerList}
+
             {errorMessage && <div className="error">{errorMessage}</div>}
 
 

@@ -133,5 +133,6 @@
 "bill":"B",
 "loannoshort":"LNo",
 "weekdate":"WeekDate",
-"collectiondate":"Collect.Date"
+"collectiondate":"Collect.Date",
+"printdate":"PrintDate"
 }
