@@ -31,6 +31,9 @@ function NavBar() {
         else if (languageValue === "Receipt") {
             navigate("/receipt");
         }
+        else if (languageValue === "Receipt By No") {
+            navigate("/receipt1");
+        }
         else if (languageValue === "Ledger") {
             navigate("/ledger");
         }
@@ -61,6 +64,7 @@ function NavBar() {
                         <NavDropdown title="Entry" id="basic-nav-dropdown">
                             <NavDropdown.Item href="loan">Loan</NavDropdown.Item>
                             <NavDropdown.Item href="receipt">Receipt</NavDropdown.Item>
+                            <NavDropdown.Item href="receipt1">Receipt By No</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title="Report" id="basic-nav-dropdown">
                             <NavDropdown.Item href="ledger">Ledger</NavDropdown.Item>

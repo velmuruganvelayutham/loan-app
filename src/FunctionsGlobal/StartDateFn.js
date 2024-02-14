@@ -16,6 +16,19 @@ export function startOfWeek()
         }).split("/").reverse().join("-");
         return datestartyearformat;
     }
+   /* export function changeGivenDate(date){
+        var curr=new Date(date);
+        var currday=curr.getDay();
+        if(currday==0){
+            currday=7;
+        }
+       const datestartyearformat=new Date(curr).toLocaleDateString('en-GB',{
+            year:'numeric',
+            month:'2-digit',
+            day:'2-digit',
+        }).split("/").reverse().join("-");
+        return datestartyearformat;  
+    }*/
     export function endOfWeek()
     {
         var curr=new Date();

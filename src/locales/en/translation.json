@@ -55,7 +55,9 @@
   "erroressagelinechecking": "Unable to Fetch LineChecking List",
   "errormessageloannumber": "Unable to Fetch Loan No",
   "errormessagesaveloan": "Unable to Save Loan No",
+  "errormessagesavereceipt":"Unable to Save Receipt",
   "errormessagedeleteloan": "Unable to Delete Loan No",
+  "errormessagedeletereceipt":"Unable to Delete Receipt",
   "errormessageupdateloan": "Unable to Update Loan No",
   "errormessagesavecustomer": "Unable to Save Customer",
   "errormessagesavecity": "Unable to Save City",
@@ -134,5 +136,9 @@
 "loannoshort":"LNo",
 "weekdate":"WeekDate",
 "collectiondate":"Collect.Date",
-"printdate":"PrintDate"
+"printdate":"PrintDate",
+"greateramountthanloan":"Not Allowed More than LoanAmount",
+"loanentryexist":"This Loan No Already Entered",
+"loanentrynotexist":"This Loan Not Exist",
+"receiptno":"Receipt No"
 }
