@@ -47,7 +47,7 @@ function AddReceipt1() {
   const addTableRows = () => {
     setIsRestore(false);
     const rowsInput = {
-      serialno:rowsData.length+1,
+      serialno: rowsData.length + 1,
       loanno: '',
       customer_id: '',
       customername: '',
@@ -88,11 +88,11 @@ function AddReceipt1() {
   function RestoreLoan(e, index) {
 
     if (e.target.value !== "") {
-      ProcessList(e,e.target.value, index);
+      ProcessList(e, e.target.value, index);
 
     }
   }
-  function ProcessList(e,loanno, index) {
+  function ProcessList(e, loanno, index) {
     setIsLoading(true);
     return (
 
@@ -134,11 +134,11 @@ function AddReceipt1() {
 
           setIsLoading(false);
         }
-        else{
+        else {
           alert(t('loanentrynotexist'));
           var formloan = e.target.form;
           var indexloan = Array.prototype.indexOf.call(formloan, e.target);
-          e.target.value="";
+          e.target.value = "";
           formloan.elements[indexloan].focus();
           //rowsData[index]["loanno"]="";
           setIsLoading(false);
@@ -224,9 +224,9 @@ function AddReceipt1() {
           if (oldReference.length > 0) {
             const parsedDate = dateFormat(oldReference[0].receiptdate);
             startdateRef.current.value = parsedDate;
-            const rowsInput = oldReference.map((item,i) => {
+            const rowsInput = oldReference.map((item, i) => {
               return {
-                serialno:i+1,
+                serialno: i + 1,
                 loanno: item.loannumber,
                 customer_id: item.customer_id,
                 customername: item.customer,
@@ -249,15 +249,18 @@ function AddReceipt1() {
     setIsRestore(false);
   }
   const deleteReceipt = () => {
-    axios.delete(`${baseURL}/receipt1/delete/${(receiptRef.current.value).toString()}`).then((res) => {
-      alert(t('deletemessage'))
-      ClearDetails();
-    }).catch(error => {
-      console.log("error=", error);
-      setErrorMessage(t('errormessagedeletereceipt'));
-      setIsLoading(false);
-      setButtonDisabled(false);
-    });
+
+    if (window.confirm(t('deleteyesnoalert'))) {
+      axios.delete(`${baseURL}/receipt1/delete/${(receiptRef.current.value).toString()}`).then((res) => {
+        alert(t('deletemessage'))
+        ClearDetails();
+      }).catch(error => {
+        console.log("error=", error);
+        setErrorMessage(t('errormessagedeletereceipt'));
+        setIsLoading(false);
+        setButtonDisabled(false);
+      });
+    }
   }
   const handleSubmit = () => {
     if (updateUI) {
@@ -339,7 +342,7 @@ function AddReceipt1() {
 function TableRows({ rowsData, deleteTableRows, handleChange, RestoreLoan, isRestore }) {
   return (
     rowsData.map((data, index) => {
-      const { serialno,loanno, customer_id, customername, loanamount, dueamount, weekno, amount } = data;
+      const { serialno, loanno, customer_id, customername, loanamount, dueamount, weekno, amount } = data;
       return (
         <tr key={index}>
           <td><input type="text" value={serialno} name="serialno" className="form-control" disabled /></td>
