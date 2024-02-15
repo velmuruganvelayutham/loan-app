@@ -15,6 +15,9 @@ function AddReceipt1() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isButtonDisabled, setButtonDisabled] = useState(false);
+  const [reference, setReference] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+  const receiptRef = useRef("");
   useEffect(() => {
     setIsLoading(true);
     axios.get(`${baseURL}/citycreate/get`).then((res) => {
@@ -27,6 +30,20 @@ function AddReceipt1() {
       setIsLoading(false);
     })
   }, []);
+  //Reference Number
+  useEffect(() => {
+    setIsLoading(true);
+    axios.get(`${baseURL}/receipt1/get/reference`).then((res) => {
+      receiptRef.current.value = res.data[0].receiptreference + (res.data[0].receiptcode + 1);
+      setReference(res.data)
+      setIsLoading(false);
+    }).catch(error => {
+      console.log("error=", error);
+      setErrorMessage(t('errormessagecustomer'));
+      setIsLoading(false);
+    })
+  }, [refresh]);
+
 
   useEffect(() => {
     document.addEventListener("keydown", function (event) {
@@ -80,16 +97,36 @@ function AddReceipt1() {
     });
 
 
-
+    //alert((receiptRef.current.value).toString());
     if (isFound) {
       if (noweek === 1) {
+
+        let items = pendingLoan.map((item) => {
+          if (item.check) {
+            return {  
+              receiptnumber: (receiptRef.current.value).toString(),
+              loannumber: item.loannumber,
+              receiptdate: new Date(startdateRef),
+              customer_id: item["_id"].customer_id,
+              weekno: item.weak,
+              collectedamount: item.amount
+            }
+          }
+        });
+        
         setButtonDisabled(true);
-        axios.post(`${baseURL}/receipt/save/details`, { receiptdata: pendingLoan, receiptdate: new Date(startdateRef) }).then((res) => {
+        axios.post(`${baseURL}/receipt/save/details`, {
+          items: items,
+          receiptnumber: (receiptRef.current.value).toString(),
+          receiptcode: (Number(reference[0].receiptcode) + 1),
+          receiptdate: new Date(startdateRef)
+        }).then((res) => {
           //console.log(res.data);
         }).then((res) => {
           setPendingLoan([]);
           setButtonDisabled(false);
           processList()
+          setRefresh((prevState) => !prevState)
           alert(t('savealertmessage'))
         }).catch(error => {
           console.log("error=", error);
@@ -130,10 +167,13 @@ function AddReceipt1() {
                     ))}
                 </Form.Select>
               </Form.Group>
-
-
             </Col>
-            <Col xs={12} md={1}></Col>
+            <Col xs={12} md={3} className="rounded bg-white">
+              <Form.Group className="mb-3" name="startdate" border="primary" >
+                <Form.Label>{t('receiptno')}</Form.Label>
+                <Form.Control type="text" ref={receiptRef} defaultValue={""} />
+              </Form.Group>
+            </Col>
             <Col xs={12} md={3} className="rounded bg-white">
               <Form.Group className="mb-3" name="startdate" border="primary" >
                 <Form.Label>{t('date')}</Form.Label>
@@ -142,7 +182,7 @@ function AddReceipt1() {
               </Form.Group>
             </Col>
             <Col xs={12} md={1}></Col>
-            
+
           </Row>
           <Row>
             <div className="col-md-12 text-center " >
@@ -165,7 +205,7 @@ function AddReceipt1() {
               <Button variant="primary" type="button" className="text-center" onClick={saveReceipt} disabled={isButtonDisabled}>
                 {t('savebutton')}
               </Button>
-              
+
             </Col>
             <Col></Col>
           </Row>

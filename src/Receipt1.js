@@ -22,7 +22,6 @@ function AddReceipt1() {
   useEffect(() => {
     setIsLoading(true);
     axios.get(`${baseURL}/receipt1/get/reference`).then((res) => {
-      console.log(res.data);
       receiptRef.current.value = res.data[0].receiptreference + (res.data[0].receiptcode + 1);
       setReference(res.data)
       setIsLoading(false);
@@ -155,14 +154,17 @@ function AddReceipt1() {
   }
   const saveReceipt = () => {
     let items = rowsData.map((item) => {
-      return {
-        receiptnumber: (receiptRef.current.value).toString(),
-        loannumber: item.loanno,
-        receiptdate: new Date(startdateRef.current.value),
-        customer_id: item.customer_id,
-        weekno: item.weekno,
-        collectedamount: item.amount
+      if (item.amount > 0) {
+        return {
+          receiptnumber: (receiptRef.current.value).toString(),
+          loannumber: item.loanno,
+          receiptdate: new Date(startdateRef.current.value),
+          customer_id: item.customer_id,
+          weekno: item.weekno,
+          collectedamount: item.amount
+        }
       }
+
     });
     setButtonDisabled(true);
     axios.post(`${baseURL}/receipt1/save/details`, {
