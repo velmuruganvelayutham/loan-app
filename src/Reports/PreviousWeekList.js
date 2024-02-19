@@ -23,6 +23,7 @@ const PreviousWeekList = ({ pendingLoans, date, company }) => {
     serialno = (currentPage - 1) * recordsPerPage;
     var pagetotaldue = 0;
     var pagetotalcredit = 0;
+    var totalinstallment=0;
     function prevPage() {
         if (currentPage !== firstIndex) {
             setCurrentPage(currentPage - 1)
@@ -94,7 +95,7 @@ const PreviousWeekList = ({ pendingLoans, date, company }) => {
                                 serialno = serialno + 1;
                                 pagetotaldue = pagetotaldue + customer.dueamount;
                                 pagetotalcredit = pagetotalcredit + customer.collectedamount;
-
+                                totalinstallment=parseInt((customer.totalcollected)/customer.dueamount);
                                 return (
                                     <tr className='previousweek'>
                                         <td style={{ fontSize: "12px" }}>{serialno}</td>
@@ -103,7 +104,7 @@ const PreviousWeekList = ({ pendingLoans, date, company }) => {
                                         <td style={{ fontSize: "12px" }}>{customer.loannumber}</td>
                                         <td style={{ fontSize: "12px" }}>{customer.customer}</td>
                                         <td style={{ fontSize: "12px" }}>{customer.dueamount}</td>
-                                        <td style={{ fontSize: "12px" }}></td>
+                                        <td style={{ fontSize: "12px" }}>{totalinstallment}</td>
                                         <td style={{ fontSize: "12px" }}>{customer.collectedamount}</td>
                                         <td style={{ fontSize: "12px" }}>{customer.collectedamount}</td>
                                         <td style={{ fontSize: "12px" }}>{customer.referencecity}</td>
