@@ -246,7 +246,7 @@ function customerSelect(value) {
             <Col xs={12} md={3} className="rounded bg-white">
               <Form.Group className="mb-3" name="mobilenumber" border="primary" >
                 <Form.Label>{t('phoneno')}</Form.Label>
-                <Form.Control type="number" placeholder={t('phonenoplaceholder')} required value={inputmobileno}
+                <Form.Control type="text" placeholder={t('phonenoplaceholder')} required value={inputmobileno}
                   onChange={(e) => setInputMobileno(e.target.value)} />
               </Form.Group>
             </Col>
