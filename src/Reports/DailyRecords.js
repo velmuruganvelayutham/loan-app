@@ -226,7 +226,7 @@ const DailyRecords = ({datefrom,dateto,linemanname,linamnline,collectiondate}) =
                 </tbody>
             </Table>
             {/*finished account*/}
-            <div className='col-sm-12 text-center fixed'></div>
+            <div className='col-sm-12 text-center fixed' ></div>
             <Table className='table  text-center table-bordered border-dark'>
             <thead >
                     <tr>
@@ -359,14 +359,15 @@ const DailyRecords = ({datefrom,dateto,linemanname,linamnline,collectiondate}) =
                         <td style={{ borderLeft: "0", borderRight: "1px solid black", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
                         <td style={{ borderLeft: "0", borderRight: "1px solid black", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
                     </tr>
-                </tbody>  
+                </tbody>
+                <div style={{marginTop:"85px" }}></div>  
             </Table>
             {/* daily collection list*/}
             
-            <div className='fixed fw-bold' style={{width: "20%",paddingTop:"85px" }}>{t('customer') + " : "+linemanname}</div>
-            <div className='fixed  fw-bold'style={{width: "15%",paddingTop:"85px" }}>{t('line') + " : "+linamnline}</div>
-            <div className='fixed  fw-bold'style={{width: "30%",paddingTop:"85px" }}>{t("weekdate") + " : "+dateFormatdd(datefrom)+"-"+dateFormatdd(dateto)}</div>
-            <div className='fixed  fw-bold'style={{width: "35%" ,paddingTop:"85px"}}>{t("collectiondate") + " : "+dateFormatdd(collectiondate)+d}</div>
+            <div className='fixed fw-bold pt-5' style={{width: "23%"}}>{t('customer') + " : "+linemanname}</div>
+            <div className='fixed fw-bold pt-5'style={{width: "12%"}}>{t('line') + " : "+linamnline}</div>
+            <div className='fixed fw-bold pt-5'style={{width: "30%"}}>{t("weekdate") + " : "+dateFormatdd(datefrom)+"-"+dateFormatdd(dateto)}</div>
+            <div className='fixed fw-bold pt-5'style={{width: "35%"}}>{t("collectiondate") + " : "+dateFormatdd(collectiondate)+d}</div>
             
             <Table className='table  text-center table-bordered border-dark'>
                 <thead >
@@ -474,10 +475,10 @@ const DailyRecords = ({datefrom,dateto,linemanname,linamnline,collectiondate}) =
             </Table>
                    { /*kodutha ruppai and selavu 35*/}
             
-            <div className='fixed fw-bold' style={{width: "20%",paddingTop:"75px" }}>{t('customer') + " : "}</div>
-            <div className='fixed  fw-bold'style={{width: "15%",paddingTop:"75px" }}>{t('line') + " : "}</div>
-            <div className='fixed  fw-bold'style={{width: "30%",paddingTop:"75px" }}>{t("weekdate") + " : "}</div>
-            <div className='fixed  fw-bold'style={{width: "35%" ,paddingTop:"75px"}}>{t("collectiondate") + " : "}</div>
+            <div className='fixed fw-bold pt-5' style={{width: "20%"}}>{t('customer') + " : "}</div>
+            <div className='fixed fw-bold pt-5'style={{width: "15%"}}>{t('line') + " : "}</div>
+            <div className='fixed fw-bold pt-5'style={{width: "30%"}}>{t("weekdate") + " : "}</div>
+            <div className='fixed fw-bold pt-5'style={{width: "35%"}}>{t("collectiondate") + " : "}</div>
 
             <Table className='table  text-center table-bordered border-dark'  >
             <thead >
@@ -588,12 +589,13 @@ const DailyRecords = ({datefrom,dateto,linemanname,linamnline,collectiondate}) =
                 
                 </tbody>
             </Table>
-
-            <div className='col-sm-3 fw-bold' style={{paddingTop:"75px"}}>{t('customer') + " : "}</div>
-            <div className='col-sm-2  fw-bold' style={{paddingTop:"75px"}}>{t('line') + " : "}</div>
-            <div className='col-sm-4 fw-bold' style={{paddingTop:"75px"}}>{t("weekdate") + " : "}</div>
-            <div className='col-sm-3 fw-bold' style={{paddingTop:"75px"}}>{t("collectiondate") + " : "}</div>
-            <Table className='table  text-center table-bordered border-dark'>
+            <div style={{paddingTop:"65px"}}></div>
+            <div className='fw-bold pt-5'  style={{width: "20%"}}>{t('customer') + " : "}</div>
+            <div className='fw-bold pt-5' style={{width: "15%"}}>{t('line') + " : "}</div>
+            <div className='fw-bold pt-5' style={{width: "35%"}}>{t("weekdate") + " : "}</div>
+            <div className='fw-bold pt-5' style={{width: "30%"}}>{t("collectiondate") + " : "}</div>
+            
+            <Table className='table  text-center table-bordered border-dark' >
                 <thead >
                     <tr>
                         <th></th>
