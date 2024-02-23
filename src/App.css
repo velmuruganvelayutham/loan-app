@@ -75,11 +75,13 @@
   position:absolute;
   
 }
+
+
 .v4 {
   border-left: 1px solid black;
   height: 26px;
   left: 36%;
-  top:1042px;
+  top:990px;
   position:absolute;
   
 }
@@ -87,7 +89,39 @@
   border-left: 1px solid black;
   height: 26px;
   left: 43%;
-  top:1042px;
+  top:990px;
+  position:absolute;
+  
+}
+.dailyrecordsadditional{
+  line-height: 10px;
+  min-height: 10px;
+  height: 10px;
+  position: relative;
+}
+.v6position{
+  position: relative;
+}
+.v6 {
+  border-left: 1px solid black;
+  height: 26px;
+  left: 13%;
+  top:0px;
+  position: absolute;
+  
+}
+.v7 {
+  border-left: 1px solid black;
+  height: 26px;
+  left: 22%;
+  top:0px;
+  position: absolute;
+}
+.v8 {
+  border-left: 1px solid black;
+  height: 26px;
+  left: 35%;
+  top:0px;
   position:absolute;
   
 }
