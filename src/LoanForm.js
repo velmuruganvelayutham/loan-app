@@ -278,7 +278,6 @@ function LoanForm() {
         setButtonDisabled(true);
         axios.put(`${baseURL}/loancreate/update`,
             {
-                newloanno: Number(loannoRef.current.value),
                 oldloanno: Number(oldLoanRef.current.value), customer_id: myForm.mySelectKey, lineman_id: linemanoptionRef.current.value, city_id: cityidRef.current.value,
                 weekno: weekRef.current.value, bookno: bookRef.current.value, lineno: lineRef.current.value, document: documentRef.current.value, cheque: chequeRef.current.value,
                 weekcount: weekscount, startdate: new Date(startDate), givendate: new Date(givenDate.current.value), duedate: new Date(dueDate.current.value), finisheddate: new Date(endDateRef.current.value),

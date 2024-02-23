@@ -7,6 +7,7 @@
   "tableaction": "செயல்",
   "customerheadername": "வாடிக்கையாளர் விபரம்",
   "fatherhusbandnameplaceholder": "தகப்பனார்/கணவர் பெயர்",
+  "husbandname":"கணவர்",
   "customertablefathername": "தகப்பனார்",
   "tabledata": "தரவு இல்லை",
   "processbuttonlabel": "காட்டு",
@@ -168,7 +169,8 @@
 "greateramountthanloan":"பற்று தொகையை விட அதிகம் கொடுக்க முடியாது",
 "loanentryexist":"இந்த சீட்டு எண் முன்னதாக கொடுக்கப்பட்டுள்ளது",
 "loanentrynotexist":"இந்த சீட்டு எண் இல்லை",
-"receiptno":"ரசீது எண்"
+"receiptno":"ரசீது எண்",
+"chart":"சாட்"
 
 
 

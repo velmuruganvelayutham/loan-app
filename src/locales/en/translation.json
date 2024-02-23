@@ -7,6 +7,7 @@
   "tableaction": "Action",
   "customerheadername": "CUSTOMER MASTER",
   "fatherhusbandnameplaceholder": "Enter Husband/Father",
+  "husbandname":"Husband",
   "customertablefathername": "Father Name",
   "tabledata": "No Data Available",
   "processbuttonlabel": "Process",
@@ -141,5 +142,6 @@
 "greateramountthanloan":"Not Allowed More than LoanAmount",
 "loanentryexist":"This Loan No Already Entered",
 "loanentrynotexist":"This Loan Not Exist",
-"receiptno":"Receipt No"
+"receiptno":"Receipt No",
+"chart":"Chart"
 }

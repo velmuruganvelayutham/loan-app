@@ -90,3 +90,16 @@ export function dateFormatddmmyyyy(datevalue)
     }).split("/").join("-");
     return datesformat;
 }
+export function dateFormatoneweek(datevalue)
+{
+    var curr=new Date(datevalue);
+        
+    var start=new Date(new Date(curr).setDate(curr.getDate()+7));
+
+    /*const datesformat=new Date(start).toLocaleDateString('en-GB',{
+        year:'2-digit',
+        month:'2-digit',
+        day:'2-digit',
+    }).split("/").join("-");*/
+    return start;
+}

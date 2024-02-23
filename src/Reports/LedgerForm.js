@@ -6,7 +6,8 @@ import { useTranslation } from "react-i18next";
 import ReactToPrint from 'react-to-print';
 import PlaceHolder from "../components/spinner/placeholder";
 import Ledger from '../Reports/Ledger';
-var loannumberprocess="";
+import Chart from "../Reports/Chart";
+var loannumberprocess = "";
 
 function LedgerForm() {
     const [lineNames, setLineNames] = useState([]);
@@ -19,6 +20,7 @@ function LedgerForm() {
     const [lineNo, setLineNo] = useState("");
     const [company, setCompany] = useState([]);
     const componentRef = useRef();
+    const reportType = useRef(0);
     useEffect(() => {
         setIsLoading(true);
         axios.get(`${baseURL}/company/get`).then((res) => {
@@ -44,10 +46,10 @@ function LedgerForm() {
 
     useEffect(() => {
         setIsLoading(true);
-        
+
         axios.get(`${baseURL}/loancreate/get`, { params: { city_id: lineNo.toString() } }).then((res) => {
             setLoannumbers(res.data);
-            
+
             setIsLoading(false);
         }).catch(error => {
             console.log("error=", error);
@@ -60,7 +62,7 @@ function LedgerForm() {
     }
     const processList = () => {
         setIsLoading(true);
-        loannumberprocess=loanno;
+        loannumberprocess = loanno;
         return (
 
             axios.get(`${baseURL}/ledger/get`, { params: { loanno: loanno } }).then((res) => {
@@ -80,8 +82,14 @@ function LedgerForm() {
     }
     const renderLedgerList = (
         <Row ref={componentRef}>
-            <Ledger loanno={loannumberprocess} ledger={loanDetails} 
-            company={company.length > 0 ? company[0].companyname : ""} date={new Date()}/>
+            <Ledger loanno={loannumberprocess} ledger={loanDetails}
+                company={company.length > 0 ? company[0].companyname : ""} date={new Date()} />
+        </Row>
+    )
+    const renderChart=(
+        <Row ref={componentRef}>
+            <Chart loanno={loannumberprocess} ledger={loanDetails}
+                company={company.length > 0 ? company[0].companyname : ""} date={new Date()} />
         </Row>
     )
     return (
@@ -89,24 +97,34 @@ function LedgerForm() {
             <Row>
                 <Form>
                     <Row>
-                        <Col xs={12} md={6} className="rounder bg-white">
+                        <Col sm={4} md={4} className="rounder bg-white">
                             <Form.Group className="mb-3" name="linenumber" border="primary" >
                                 <Form.Label>{t('citylinelabel')}</Form.Label>
-                                <Form.Select aria-label="Default select example" value={lineNo} 
-                                onChange={(e) => setLineNo(e.target.value)}  >
+                                <Form.Select aria-label="Default select example" value={lineNo}
+                                    onChange={(e) => setLineNo(e.target.value)}  >
                                     <option key={"0"} value={""} >{t('citylineplaceholder')}</option>
 
                                     {
                                         lineNames.map((lines) => (
                                             <option key={lines._id} value={lines._id}
-                                                 >{lines.cityname}</option>
+                                            >{lines.cityname}</option>
                                         ))}
 
                                 </Form.Select>
                             </Form.Group>
 
                         </Col>
-                        <Col s={12} md={6} className="rounder bg-white">
+                        <Col sm={4} md={4} className="rounder bg-white">
+                            <Form.Group className="mb-3" name="cityname" border="primary" >
+                                <Form.Label>{t('report')}</Form.Label>
+                                <Form.Select aria-label="Default select example"
+                                    ref={reportType} defaultValue={0}>
+                                    <option value={0} >{t('ledger')}</option>
+                                    <option value={1}>{t('chart')}</option>
+                                </Form.Select>
+                            </Form.Group>
+                        </Col>
+                        <Col sm={4} md={4} className="rounder bg-white">
 
                             <Form.Group className="mb-3" name="linenumber" border="primary" >
                                 <Form.Label>{t('loanno')}</Form.Label>
@@ -116,7 +134,7 @@ function LedgerForm() {
                                     {
                                         loannumbers.map((loans) => (
                                             <option key={loans.loannumber} value={loans.loannumber}
-                                                >{loans.loannumber}</option>
+                                            >{loans.loannumber}</option>
                                         ))}
 
                                 </Form.Select>
@@ -141,7 +159,7 @@ function LedgerForm() {
 
                         </div>
                     </Row>
-                    {isLoading ? <PlaceHolder /> : renderLedgerList}
+                    {isLoading ? <PlaceHolder /> :  Number(reportType.current.value) === 0 ?renderLedgerList:renderChart}
                     {errorMessage && <div className="error">{errorMessage}</div>}
 
                 </Form>
