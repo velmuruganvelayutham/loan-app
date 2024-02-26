@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Container, Form, Row, Col } from 'react-bootstrap';
+import axios from "axios";
 import { baseURL } from "../utils/constant";
 import { useTranslation } from "react-i18next";
 import ReactToPrint from 'react-to-print';
@@ -8,7 +9,6 @@ import PlaceHolder from "../components/spinner/placeholder";
 import Ledger from '../Reports/Ledger';
 import Chart from "../Reports/Chart";
 var loannumberprocess = "";
-
 function LedgerForm() {
     const [lineNames, setLineNames] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -94,10 +94,10 @@ function LedgerForm() {
     )
     return (
         <Container>
-            <Row>
+            <Row className="justify-content-md-center mt-5 ">
                 <Form>
                     <Row>
-                        <Col sm={4} md={4} className="rounder bg-white">
+                        <Col  xs={6} md={4} className="rounded bg-white">
                             <Form.Group className="mb-3" name="linenumber" border="primary" >
                                 <Form.Label>{t('citylinelabel')}</Form.Label>
                                 <Form.Select aria-label="Default select example" value={lineNo}
@@ -114,7 +114,7 @@ function LedgerForm() {
                             </Form.Group>
 
                         </Col>
-                        <Col sm={4} md={4} className="rounder bg-white">
+                        <Col  xs={6} md={4} className="rounded bg-white">
                             <Form.Group className="mb-3" name="cityname" border="primary" >
                                 <Form.Label>{t('report')}</Form.Label>
                                 <Form.Select aria-label="Default select example"
@@ -124,7 +124,7 @@ function LedgerForm() {
                                 </Form.Select>
                             </Form.Group>
                         </Col>
-                        <Col sm={4} md={4} className="rounder bg-white">
+                        <Col  xs={6} md={4} className="rounded bg-white">
 
                             <Form.Group className="mb-3" name="linenumber" border="primary" >
                                 <Form.Label>{t('loanno')}</Form.Label>
@@ -159,9 +159,11 @@ function LedgerForm() {
 
                         </div>
                     </Row>
-                    {isLoading ? <PlaceHolder /> :  Number(reportType.current.value) === 0 ?renderLedgerList:renderChart}
-                    {errorMessage && <div className="error">{errorMessage}</div>}
-
+                    <Row>
+                        {isLoading ? <PlaceHolder /> :  Number(reportType.current.value) === 0 ?renderLedgerList:renderChart}
+                        {errorMessage && <div className="error">{errorMessage}</div>}
+                    </Row>
+                    
                 </Form>
             </Row>
         </Container>

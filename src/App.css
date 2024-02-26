@@ -125,7 +125,16 @@
   position:absolute;
   
 }
+.chartheight{
+  line-height: 14px;
+  min-height: 14px;
+  height: 14px;
+}
 * {font-size: 14px;}
+Table.chart {
+  table-layout: fixed;
+  word-wrap: break-word;
+}
 
 Table.linecheckingtable {
   table-layout: fixed;

@@ -16,11 +16,11 @@ function Chart({ loanno, ledger, company, date }) {
     function TablesRows(no, date, income, balance) {
 
         return (
-            <tr>
-                <td style={{fontSize:"12px"}}>{no}</td>
-                <td style={{fontSize:"12px"}}>{date !== "" ? dateFormatdd(date) : ""}</td>
-                <td style={{fontSize:"12px"}}>{income}</td>
-                <td style={{fontSize:"12px"}}>{balance}</td>
+            <tr className='chartheight'>
+                <td style={{ fontSize: "11px",textAlign:"center",padding:"0",margin:"0" }} className='text-nowrap overflow-hidden'>{no}</td>
+                <td style={{ fontSize: "11px",textAlign:"center",padding:"0",margin:"0" }} className='text-nowrap overflow-hidden'>{date !== "" ? dateFormatdd(date) : ""}</td>
+                <td style={{ fontSize: "11px",textAlign:"center",padding:"0",margin:"0" }} className='text-nowrap overflow-hidden'>{income}</td>
+                <td style={{ fontSize: "11px",textAlign:"center",padding:"0",margin:"0" }} className='text-nowrap overflow-hidden'>{balance}</td>
             </tr>
         )
     }
@@ -61,17 +61,17 @@ function Chart({ loanno, ledger, company, date }) {
 
 
         <Container className="rounded bg-white">
-            <Row >
+            <Row style={{paddingLeft:"10px"}}>
                 <Form>
 
-                    <Row className='col-sm-10 col-md-8 p-4'>
-                        <Col className='rounded bg-white col-sm-4 fixed fw-bold'>
+                    <Row className='col-sm-8 col-md-10 pt-4' >
+                        <Col className='rounded bg-white col-sm-2 fixed fw-bold' style={{fontSize:"11px"}}>
                             {t('line') + " : " + (ledger.length > 0 ? first.lineno : "")}
                         </Col>
-                        <Col className="rounded bg-white col-sm-4 fixed fw-bold">
+                        <Col className="rounded bg-white col-sm-4 fixed fw-bold" style={{fontSize:"11px"}}>
                             {company}
                         </Col>
-                        <Col className="rounded bg-white col-sm-2 fixed fw-bold">
+                        <Col className="rounded bg-white col-sm-2 fixed fw-bold" style={{fontSize:"11px"}}>
                             {t('bookno') + ':' + (ledger.length > 0 ? first.bookno : "")}
                         </Col>
                     </Row>
@@ -80,36 +80,36 @@ function Chart({ loanno, ledger, company, date }) {
                             color: '#000000',
                             backgroundColor: '#000000',
                             height: .1,
-                            width:"70%",
+                            width:"42%",
                             borderColor: '#000000'
                         }} />
                     </Row>
-                    <Row className='p-4'>
-                        <Col className='col-sm-4 fixed' >
+                    <Row className='col-sm-8 col-md-8'>
+                        <Col className='col-sm-4 col-md-4' >
                             <Form.Group  >
-                                <Form.Label>{t('customer')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
-                                <Form.Label>&nbsp;{ledger.length > 0 ? first.customer : ""}</Form.Label>
+                                <Form.Label style={{fontSize:"12px"}}>{t('customer')}&nbsp;:</Form.Label>
+                                <Form.Label style={{fontSize:"12px"}}>&nbsp;{ledger.length > 0 ? first.customer : ""}</Form.Label>
+                            </Form.Group>
+                            <Form.Group >
+                                <Form.Label style={{fontSize:"12px"}}>{t('address')}&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label style={{fontSize:"12px"}}>&nbsp;{ledger.length > 0 ? first.address : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group  >
-                                <Form.Label>{t('address')}&nbsp;&nbsp;&nbsp;:</Form.Label>
-                                <Form.Label>&nbsp;{ledger.length > 0 ? first.address : ""}</Form.Label>
-                            </Form.Group>
-                            <Form.Group  >
-                                <Form.Label>{t('loanno')}&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label style={{fontSize:"12px"}}>{t('loanno')}&nbsp;:</Form.Label>
                                 <Form.Label style={{"fontWeight":"bold"}}>&nbsp;{ledger.length > 0 ? first.loannumber : ""}</Form.Label>
                             </Form.Group>
                         </Col>
-                        <Col className='col-sm-4 fixed'>
+                        <Col className='col-sm-4 col-md-4'>
                             <Form.Group  >
-                                <Form.Label>{relationtype==0?t('fathername'):t('husbandname')}&nbsp;:</Form.Label>
-                                <Form.Label>&nbsp;{ledger.length > 0 ? first.fathername : ""}</Form.Label>
+                                <Form.Label style={{fontSize:"12px"}}>{relationtype==0?t('fathername'):t('husbandname')}&nbsp;:</Form.Label>
+                                <Form.Label style={{fontSize:"12px"}}>&nbsp;{ledger.length > 0 ? first.fathername : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group  >
-                                <Form.Label>{t('city')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
-                                <Form.Label>&nbsp;{ledger.length > 0 ? first.referencecity : ""}</Form.Label>
+                                <Form.Label style={{fontSize:"12px"}}>{t('city')}&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label style={{fontSize:"12px"}}>&nbsp;{ledger.length > 0 ? first.referencecity : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group  >
-                                <Form.Label>{t('total')}&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label style={{fontSize:"12px"}}>{t('total')}&nbsp;&nbsp;:</Form.Label>
                                 <Form.Label style={{"fontWeight":"bold"}}>&nbsp;{ledger.length > 0 ? first.totalamount : ""}</Form.Label>
                             </Form.Group>
                         </Col>
@@ -117,22 +117,22 @@ function Chart({ loanno, ledger, company, date }) {
                 </Form>
             </Row>
 
-            <Row className='col-sm-10 col-md-8 p-4'>
-                <Col className='col-sm-5 col-md-4 p-0 ' >
-                    <Table className="table text-center table-bordered border-dark  col-sm-3 col-md-3" >
+            <Row className='col-sm-8 col-md-8 p-4'>
+                <Col className='col-sm-4 col-md-4 p-0' >
+                    <Table className="table text-center table-bordered border-dark chart" >
                         <thead>
                             <tr >
 
-                                <th className="col-sm-1 col-md-1">
+                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"60%"}}>
                                     {t('no')}
                                 </th>
-                                <th className="col-sm-2 col-md-3">
+                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"100%"}}>
                                     {t('date')}
                                 </th>
-                                <th className="col-sm-2 col-md-3">
+                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"60%"}}>
                                     {t('pay')}
                                 </th>
-                                <th className="col-sm-2 col-md-3">
+                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"100%"}}>
                                     {ledger.length > 0 ? first.totalamount : ""}
                                 </th>
                             </tr>
@@ -169,20 +169,20 @@ function Chart({ loanno, ledger, company, date }) {
                         </tbody>
                     </Table>
                 </Col>
-                <Col className='col-sm-5 col-md- p-0' >
-                    <Table className="table  text-center fs-6 table-bordered border-dark  " >
+                <Col className='col-sm-4 col-md-4 p-0'  >
+                    <Table className="table  text-center table-bordered border-dark chart " >
                         <thead>
                             <tr >
-                                <th className="col-sm-1 col-md-1">
+                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"60%"}}>
                                     {t('no')}
-                                </th>
-                                <th className="col-sm-2 col-md-3">
+                                </th >
+                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"100%"}}>
                                     {t('date')}
                                 </th>
-                                <th className="col-sm-2 col-md-3">
+                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"60%"}}>
                                     {t('pay')}
                                 </th>
-                                <th className="col-sm-2 col-md-3">
+                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"100%"}}>
                                     {totalamount}
                                 </th>
                             </tr>
@@ -203,7 +203,7 @@ function Chart({ loanno, ledger, company, date }) {
                         </tbody>
                     </Table>
                 </Col>
-
+                
             </Row>
         </Container>
 
