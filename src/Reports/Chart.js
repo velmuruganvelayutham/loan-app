@@ -3,8 +3,8 @@ import { Container, Row, Col, Form, Table } from 'react-bootstrap'
 import { useTranslation } from "react-i18next";
 import { dateFormatdd,dateFormatoneweek } from '../FunctionsGlobal/StartDateFn'
 var first = [];
-var arr1 = Array.from(Array(13).keys());
-var arr2 = Array.from({ length: 12 }, (_, i) => i + 12)
+var arr1 = Array.from(Array(16).keys());
+var arr2 = Array.from({ length: 9 }, (_, i) => i + 12)
 function Chart({ loanno, ledger, company, date }) {
     let totalamount = 0;
     const { t, i18n } = useTranslation();
@@ -49,8 +49,8 @@ function Chart({ loanno, ledger, company, date }) {
             arr2 = Array.from({ length: 22 }, (_, i) => i + 21)
         }
         else if (first.weekcount === 25) {
-            arr1 = Array.from(Array(13).keys());
-            arr2 = Array.from({ length: 12 }, (_, i) => i + 12)
+            arr1 = Array.from(Array(16).keys());
+            arr2 = Array.from({ length: 9 }, (_, i) => i + 12)
 
         }
 
@@ -61,17 +61,17 @@ function Chart({ loanno, ledger, company, date }) {
 
 
         <Container className="rounded bg-white">
-            <Row style={{paddingLeft:"10px"}}>
+            <Row style={{paddingLeft:"13px"}}>
                 <Form>
 
-                    <Row className='col-sm-8 col-md-10 pt-4' >
+                    <Row className='col-sm-8 col-md-10 pt-5' >
                         <Col className='rounded bg-white col-sm-2 fixed fw-bold' style={{fontSize:"11px"}}>
                             {t('line') + " : " + (ledger.length > 0 ? first.lineno : "")}
                         </Col>
                         <Col className="rounded bg-white col-sm-4 fixed fw-bold" style={{fontSize:"11px"}}>
                             {company}
                         </Col>
-                        <Col className="rounded bg-white col-sm-2 fixed fw-bold" style={{fontSize:"11px"}}>
+                        <Col className="rounded bg-white col-sm-2 fixed fw-bold" style={{fontSize:"11px",position:"fixed",left:"32%"}}>
                             {t('bookno') + ':' + (ledger.length > 0 ? first.bookno : "")}
                         </Col>
                     </Row>
@@ -87,37 +87,37 @@ function Chart({ loanno, ledger, company, date }) {
                     <Row className='col-sm-8 col-md-8'>
                         <Col className='col-sm-4 col-md-4' >
                             <Form.Group  >
-                                <Form.Label style={{fontSize:"12px"}}>{t('customer')}&nbsp;:</Form.Label>
-                                <Form.Label style={{fontSize:"12px"}}>&nbsp;{ledger.length > 0 ? first.customer : ""}</Form.Label>
+                                <Form.Label className='text-nowrap overflow-hidden' style={{fontSize:"12px"}}>{t('customer')}&nbsp;:</Form.Label>
+                                <Form.Label className='text-nowrap overflow-hidden' style={{fontSize:"12px"}}>&nbsp;{ledger.length > 0 ? first.customer : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group >
-                                <Form.Label style={{fontSize:"12px"}}>{t('address')}&nbsp;&nbsp;&nbsp;:</Form.Label>
-                                <Form.Label style={{fontSize:"12px"}}>&nbsp;{ledger.length > 0 ? first.address : ""}</Form.Label>
+                                <Form.Label className='text-nowrap overflow-hidden' style={{fontSize:"12px"}}>{t('address')}&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label className='text-nowrap overflow-hidden' style={{fontSize:"12px"}}>&nbsp;{ledger.length > 0 ? first.address : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group  >
-                                <Form.Label style={{fontSize:"12px"}}>{t('loanno')}&nbsp;:</Form.Label>
-                                <Form.Label style={{"fontWeight":"bold"}}>&nbsp;{ledger.length > 0 ? first.loannumber : ""}</Form.Label>
+                                <Form.Label className='text-nowrap overflow-hidden' style={{fontSize:"12px"}}>{t('loanno')}&nbsp;:</Form.Label>
+                                <Form.Label className='text-nowrap overflow-hidden' style={{"fontWeight":"bold"}}>&nbsp;{ledger.length > 0 ? first.loannumber : ""}</Form.Label>
                             </Form.Group>
                         </Col>
                         <Col className='col-sm-4 col-md-4'>
                             <Form.Group  >
-                                <Form.Label style={{fontSize:"12px"}}>{relationtype==0?t('fathername'):t('husbandname')}&nbsp;:</Form.Label>
-                                <Form.Label style={{fontSize:"12px"}}>&nbsp;{ledger.length > 0 ? first.fathername : ""}</Form.Label>
+                                <Form.Label className='text-nowrap overflow-hidden' style={{fontSize:"12px"}}>{relationtype==0?t('fathername'):t('husbandname')}&nbsp;:</Form.Label>
+                                <Form.Label className='text-nowrap overflow-hidden' style={{fontSize:"12px"}}>&nbsp;{ledger.length > 0 ? first.fathername : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group  >
-                                <Form.Label style={{fontSize:"12px"}}>{t('city')}&nbsp;&nbsp;:</Form.Label>
-                                <Form.Label style={{fontSize:"12px"}}>&nbsp;{ledger.length > 0 ? first.referencecity : ""}</Form.Label>
+                                <Form.Label className='text-nowrap overflow-hidden' style={{fontSize:"12px"}}>{t('city')}&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label  className='text-nowrap overflow-hidden'style={{fontSize:"12px"}}>&nbsp;{ledger.length > 0 ? first.referencecity : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group  >
-                                <Form.Label style={{fontSize:"12px"}}>{t('total')}&nbsp;&nbsp;:</Form.Label>
-                                <Form.Label style={{"fontWeight":"bold"}}>&nbsp;{ledger.length > 0 ? first.totalamount : ""}</Form.Label>
+                                <Form.Label className='text-nowrap overflow-hidden' style={{fontSize:"12px"}}>{t('total')}&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label className='text-nowrap overflow-hidden' style={{"fontWeight":"bold"}}>&nbsp;{ledger.length > 0 ? first.totalamount : ""}</Form.Label>
                             </Form.Group>
                         </Col>
                     </Row>
                 </Form>
             </Row>
 
-            <Row className='col-sm-8 col-md-8 p-4'>
+            <Row className='col-sm-8 col-md-8' style={{paddingLeft:"20px"}}>
                 <Col className='col-sm-4 col-md-4 p-0' >
                     <Table className="table text-center table-bordered border-dark chart" >
                         <thead>
