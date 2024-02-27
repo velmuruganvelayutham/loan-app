@@ -126,9 +126,14 @@
   
 }
 .chartheight{
-  line-height: 14px;
-  min-height: 14px;
-  height: 14px;
+  line-height: 23px;
+  min-height: 23px;
+  height: 23px;
+}
+.chartheight42{
+  line-height: 17px;
+  min-height: 17px;
+  height: 17px;
 }
 * {font-size: 14px;}
 Table.chart {

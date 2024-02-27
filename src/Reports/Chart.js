@@ -13,10 +13,11 @@ function Chart({ loanno, ledger, company, date }) {
     var records = ledger
     let startdateadd;
     let relationtype=0;
+
     function TablesRows(no, date, income, balance) {
 
         return (
-            <tr className='chartheight'>
+            <tr className={(records.length > 0 && first.weekcount<40) ?'chartheight':'chartheight42'}>
                 <td style={{ fontSize: "11px",textAlign:"center",padding:"0",margin:"0" }} className='text-nowrap overflow-hidden'>{no}</td>
                 <td style={{ fontSize: "11px",textAlign:"center",padding:"0",margin:"0" }} className='text-nowrap overflow-hidden'>{date !== "" ? dateFormatdd(date) : ""}</td>
                 <td style={{ fontSize: "11px",textAlign:"center",padding:"0",margin:"0" }} className='text-nowrap overflow-hidden'>{income}</td>
