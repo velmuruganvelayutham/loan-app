@@ -203,7 +203,10 @@ function Chart({ loanno, ledger, company, date }) {
                         </tbody>
                     </Table>
                 </Col>
-                
+            </Row>
+            <Row className='col-sm-8 col-md-8 p-0 m-0' style={{paddingLeft:"10px"}}>
+                <Col className='col-sm-4 col-md-4  text-nowrap overflow-hidden' style={{ fontSize: "11px",textAlign:"center",padding:"0",margin:"0" }}>{t('forcontanct')+":"+first.linemanname}</Col>
+                <Col className='col-sm-4 col-md-4 text-nowrap overflow-hidden' style={{textAlign:"right"}}>{first.linemanmobile}</Col>
             </Row>
         </Container>
 
