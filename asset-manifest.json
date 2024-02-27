@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/loan-app/static/css/main.9c56257c.css",
-    "main.js": "/loan-app/static/js/main.6b0f2a7b.js",
+    "main.js": "/loan-app/static/js/main.c9c9ddf3.js",
     "static/js/917.22b3d120.chunk.js": "/loan-app/static/js/917.22b3d120.chunk.js",
-    "static/js/473.ff45b74d.chunk.js": "/loan-app/static/js/473.ff45b74d.chunk.js",
+    "static/js/473.a4b7c46a.chunk.js": "/loan-app/static/js/473.a4b7c46a.chunk.js",
     "static/js/705.e34f12b1.chunk.js": "/loan-app/static/js/705.e34f12b1.chunk.js",
     "static/js/998.ed52176a.chunk.js": "/loan-app/static/js/998.ed52176a.chunk.js",
     "static/js/336.63bda5b8.chunk.js": "/loan-app/static/js/336.63bda5b8.chunk.js",
     "static/js/331.c2a49013.chunk.js": "/loan-app/static/js/331.c2a49013.chunk.js",
     "static/js/175.fda300f3.chunk.js": "/loan-app/static/js/175.fda300f3.chunk.js",
-    "static/js/773.7c387066.chunk.js": "/loan-app/static/js/773.7c387066.chunk.js",
+    "static/js/773.5f8370c2.chunk.js": "/loan-app/static/js/773.5f8370c2.chunk.js",
     "static/js/999.24d81ca1.chunk.js": "/loan-app/static/js/999.24d81ca1.chunk.js",
     "static/js/182.0dc85452.chunk.js": "/loan-app/static/js/182.0dc85452.chunk.js",
     "static/js/787.28cb0dcd.chunk.js": "/loan-app/static/js/787.28cb0dcd.chunk.js",
@@ -19,15 +19,15 @@
     "static/js/70.c86569f5.chunk.js": "/loan-app/static/js/70.c86569f5.chunk.js",
     "index.html": "/loan-app/index.html",
     "main.9c56257c.css.map": "/loan-app/static/css/main.9c56257c.css.map",
-    "main.6b0f2a7b.js.map": "/loan-app/static/js/main.6b0f2a7b.js.map",
+    "main.c9c9ddf3.js.map": "/loan-app/static/js/main.c9c9ddf3.js.map",
     "917.22b3d120.chunk.js.map": "/loan-app/static/js/917.22b3d120.chunk.js.map",
-    "473.ff45b74d.chunk.js.map": "/loan-app/static/js/473.ff45b74d.chunk.js.map",
+    "473.a4b7c46a.chunk.js.map": "/loan-app/static/js/473.a4b7c46a.chunk.js.map",
     "705.e34f12b1.chunk.js.map": "/loan-app/static/js/705.e34f12b1.chunk.js.map",
     "998.ed52176a.chunk.js.map": "/loan-app/static/js/998.ed52176a.chunk.js.map",
     "336.63bda5b8.chunk.js.map": "/loan-app/static/js/336.63bda5b8.chunk.js.map",
     "331.c2a49013.chunk.js.map": "/loan-app/static/js/331.c2a49013.chunk.js.map",
     "175.fda300f3.chunk.js.map": "/loan-app/static/js/175.fda300f3.chunk.js.map",
-    "773.7c387066.chunk.js.map": "/loan-app/static/js/773.7c387066.chunk.js.map",
+    "773.5f8370c2.chunk.js.map": "/loan-app/static/js/773.5f8370c2.chunk.js.map",
     "999.24d81ca1.chunk.js.map": "/loan-app/static/js/999.24d81ca1.chunk.js.map",
     "182.0dc85452.chunk.js.map": "/loan-app/static/js/182.0dc85452.chunk.js.map",
     "787.28cb0dcd.chunk.js.map": "/loan-app/static/js/787.28cb0dcd.chunk.js.map",
@@ -38,6 +38,6 @@
   },
   "entrypoints": [
     "static/css/main.9c56257c.css",
-    "static/js/main.6b0f2a7b.js"
+    "static/js/main.c9c9ddf3.js"
   ]
 }
