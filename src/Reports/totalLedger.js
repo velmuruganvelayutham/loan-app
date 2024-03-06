@@ -24,7 +24,7 @@ function TotalLedger(){
         return (
             axios.get(`${baseURL}/city/totalledger`, { params: {fromdate: startDateRef.current.value, todate: endDateRef.current.value,notrundate:notrunningDateRef.current.value} }).then((res) => {
                 setLedger(res.data)
-                console.log(res.data)
+                //console.log(res.data)
                 setIsLoading(false);
             })
                 .catch(error => {
