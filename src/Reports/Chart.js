@@ -62,7 +62,7 @@ function Chart({ loanno, ledger, company, date }) {
 
 
         <Container className="rounded bg-white">
-            <Row style={{paddingLeft:"13px"}}>
+            <Row style={{paddingLeft:"5px"}}>
                 <Form>
 
                     <Row className='col-sm-8 col-md-10 pt-5' >
@@ -118,12 +118,12 @@ function Chart({ loanno, ledger, company, date }) {
                 </Form>
             </Row>
 
-            <Row className='col-sm-8 col-md-8' style={{paddingLeft:"20px"}}>
+            <Row className='col-sm-8 col-md-8'style={{paddingLeft:"9px"}} >
                 <Col className='col-sm-4 col-md-4 p-0' >
                     <Table className="table text-center table-bordered border-dark chart" >
                         <thead>
                             <tr >
-
+                                
                                 <th style={{fontSize:"11px",padding:"0",margin:"0",width:"60%"}}>
                                     {t('no')}
                                 </th>
