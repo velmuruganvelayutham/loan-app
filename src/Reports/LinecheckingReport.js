@@ -34,7 +34,7 @@ function LinecheckingReport() {
     
     const [linemannameday,setLineManNameDay]=useState("");
     const[linemanlineno,setLineManLineno]=useState("");
-
+    const bookRef = useRef(null);
     useEffect(() => {
         setIsLoading(true);
         axios.get(`${baseURL}/company/get`).then((res) => {
@@ -99,9 +99,10 @@ function LinecheckingReport() {
                 linecheckingreportname = "currentweekgivenamount";
                 passingargument = linemanoptionRef.current.value;
             }
-
+            
             return (
-                axios.get(`${baseURL}/loan/${linecheckingreportname}`, { params: { city_id: passingargument.toString(), fromdate: startDateRef.current.value, todate: endDateRef.current.value } }).then((res) => {
+                axios.get(`${baseURL}/loan/${linecheckingreportname}`, { params: { city_id: passingargument.toString(), 
+                    fromdate: startDateRef.current.value, todate: endDateRef.current.value,bookno:Number(bookRef.current.value) } }).then((res) => {
                     Number(reportType.current.value) === 0 ? setCheckingData(res.data) : setCheckingDetailsLine(res.data)
 
                     //console.log(res.data);
@@ -169,7 +170,7 @@ function LinecheckingReport() {
         }
     }
     const linemanshow = (
-        <Col xs={12} md={3} className="rounder bg-white " >
+        <Col xs={12} md={2} className="rounder bg-white " >
             <Form.Group className="mb-3" name="linenumber" border="primary" >
                 <Form.Label>{t('lineman')}</Form.Label>
                 <Form.Select aria-label="Default select example" value={city}
@@ -188,7 +189,7 @@ function LinecheckingReport() {
 
     )
     const citynameshow = (
-        <Col xs={12} md={3} className="rounder bg-white">
+        <Col xs={12} md={2} className="rounder bg-white">
             <Form.Group className="mb-3" name="linenumber" border="primary" >
                 <Form.Label>{t('city')}</Form.Label>
                 <Form.Select aria-label="Default select example" value={city}
@@ -221,7 +222,12 @@ function LinecheckingReport() {
                 <Form>
                     <Row >
                         {show == true ? linemanshow : citynameshow}
-
+                        <Col xs={12} md={1} className="rounded bg-white">
+                            <Form.Group className="mb-3" name="bookno" border="primary" >
+                                <Form.Label>{t('bookno')}</Form.Label>{/*book no*/}
+                                <Form.Control type="number" required ref={bookRef} />
+                            </Form.Group>
+                        </Col>
                         <Col md={3} className="rounder bg-white">
                             <Form.Group className="mb-3" name="cityname" border="primary" >
                                 <Form.Label>{t('report')}</Form.Label>
