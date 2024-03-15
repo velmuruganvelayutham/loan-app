@@ -20,6 +20,7 @@ const Ledger = lazy(() => import('./Reports/LedgerForm'));
 const LinecheckingReport = lazy(() => import('./Reports/LinecheckingReport'))
 const TotalLedger = lazy(() => import('./Reports/totalLedger'));
 const Receipt1 = lazy(() => import('./Receipt1'));
+const Line=lazy(()=>import('./AddLine'));
 if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key")
 }
@@ -69,6 +70,19 @@ function ClerkProviderWithRoutes() {
             <>
               <SignedIn>
                 <AddLineMan />
+              </SignedIn>
+              <SignedOut>
+                <RedirectToSignIn />
+              </SignedOut>
+            </>
+          }
+        />
+        <Route
+          path="/line"
+          element={
+            <>
+              <SignedIn>
+                <Line />
               </SignedIn>
               <SignedOut>
                 <RedirectToSignIn />

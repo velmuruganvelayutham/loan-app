@@ -43,6 +43,9 @@ function NavBar() {
         else if (languageValue === "TotalLedger") {
             navigate("/totalledger");
         }
+        else if(languageValue==="Line"){
+            navigate("/line")
+        }
     }
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" onSelect={handleSelect} >
@@ -60,6 +63,7 @@ function NavBar() {
                             <NavDropdown.Item href="create">Borrower</NavDropdown.Item>
                             <NavDropdown.Item href="citycreate">City</NavDropdown.Item>
                             <NavDropdown.Item href="linemancreate">LineMan</NavDropdown.Item>
+                            <NavDropdown.Item href="linemancreate">Line</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title="Entry" id="basic-nav-dropdown">
                             <NavDropdown.Item href="loan">Loan</NavDropdown.Item>
