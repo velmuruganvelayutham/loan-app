@@ -1,56 +1,53 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Button, Container, Form, Row, Col } from 'react-bootstrap';
-import List from "./components/List"
 import axios from "axios"
 import { baseURL } from "./utils/constant";
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import { useTranslation } from "react-i18next";
 import Select from 'react-select'
-import PlaceHolder from "./components/spinner/placeholder";
+import useJWTToken from "./utils/useJWTToken";
 function AddCustomer() {
+  const token = useJWTToken();
   const [input, setInput] = useState("");
   const [inputmobileno, setInputMobileno] = useState("")
   const [customers, setCustomer] = useState([]);
-  const [updateUI, setUpdateUI] = useState(false);
+
   const [updateId, setUpdateId] = useState(null);
   const [radioValue, setRadioValue] = useState("0");
   const [citynames, setCitynames] = useState([]);
   const [validated, setValidated] = useState(false);
   const [city, setCity] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const[showError,setShowError]=useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const fathernameref = useRef(null);
   const addressRef = useRef(null);
   const workRef = useRef(null);
   const cityRef = useRef(null);
   const initialFormState = { mySelectKey: null };
-    const [myForm, setMyForm] = useState(initialFormState);
+  const [myForm, setMyForm] = useState(initialFormState);
+
   useEffect(() => {
-    setIsLoading(true);
     axios.get(`${baseURL}/citycreate/get`).then((res) => {
       setCitynames(res.data)
-      setIsLoading(false);
+      setErrorMessage(t(''));
     }).catch(error => {
       console.log("error=", error);
       setErrorMessage(t('errormessagecity'));
-      setIsLoading(false);
     })
-
-  }, [t]);
+  }, [token, t]);
   useEffect(() => {
-    setIsLoading(true);
     axios.get(`${baseURL}/get/view`).then((res) => {
       setCustomer(res.data);
+      setErrorMessage(t(''));
       console.log(res.data);
-      setIsLoading(false);
     }).catch(error => {
+      
       console.log("error=", error);
       setErrorMessage(t('errormessagecustomer'));
-      setIsLoading(false);
     })
-  }, [updateUI, t]);
+  }, [token, t]);
 
   useEffect(() => {
     document.addEventListener("keydown", function (event) {
@@ -71,8 +68,8 @@ function AddCustomer() {
     }
     setValidated(true);
 
-    if (input !== "" && inputmobileno != "" && city !== "" && fathernameref.current.value !== ""
-      && addressRef.current.value !== "" && workRef.current.value !== "" && cityRef.current.value != "") {
+    if (input !== "" && inputmobileno !== "" && city !== "" && fathernameref.current.value !== ""
+      && addressRef.current.value !== "" && workRef.current.value !== "" && cityRef.current.value !== "") {
       addCustomer();
     }
 
@@ -80,12 +77,12 @@ function AddCustomer() {
 
 
   const addCustomer = () => {
-    setIsLoading(true);
+
     axios.post(`${baseURL}/save`, {
       customer: input, mobileno: inputmobileno, cityid: city, fathername: fathernameref.current.value,
       address: addressRef.current.value, work: workRef.current.value, relationtype: Number(radioValue), referencecity: cityRef.current.value
     }).then((res) => {
-      setIsLoading(false);
+
       setInput("")
       setInputMobileno("");
       setCity("");
@@ -94,37 +91,20 @@ function AddCustomer() {
       addressRef.current.value = "";
       workRef.current.value = "";
       cityRef.current.value = "";
-      setUpdateUI((prevState) => !prevState)
     }).catch(error => {
       console.log("error=", error);
       setErrorMessage(t('errormessagesavecustomer'));
-      setIsLoading(false);
+
     })
     alert(t('savealertmessage'));
   }
 
-  const updateMode = (id, text, mobilenum, cityid, father, addr, wrk, relation, referencecityname) => {
-    //console.log(mobilenum);
-    setInput(text);
-    setInputMobileno(mobilenum);
-    setCity(cityid);
-    setRadioValue(relation == 1 ? "1" : "0");
-    fathernameref.current.value = father;
-    addressRef.current.value = addr;
-    workRef.current.value = wrk;
-    cityRef.current.value = referencecityname
-    setUpdateId(id);
-
-  }
-
   const updateCustomer = () => {
-    setIsLoading(true);
+
     axios.put(`${baseURL}/update/${updateId}`, {
       customer: input, mobileno: inputmobileno, cityid: city, fathername: fathernameref.current.value,
       address: addressRef.current.value, work: workRef.current.value, relationtype: Number(radioValue), referencecity: cityRef.current.value
     }).then((res) => {
-      setIsLoading(false);
-      setUpdateUI((prevState) => !prevState)
       setInput("");
       setInputMobileno("");
       setCity("");
@@ -139,7 +119,7 @@ function AddCustomer() {
     }).catch(error => {
       console.log("error=", error);
       setErrorMessage(t('errormessagesavecustomer'));
-      setIsLoading(false);
+
     })
     alert(t('savealertmessage'));
   }
@@ -172,21 +152,21 @@ function AddCustomer() {
   }
   const options = customers.map((customer, i) => {
     return {
-        label: customer.customer + '-' + customer.fathername,
-        value: customer._id,
-        key: i
+      label: customer.customer + '-' + customer.fathername,
+      value: customer._id,
+      key: i
     }
-})
-function customerSelect(value) {
-
-
-  setMyForm({ ...myForm, mySelectKey: value });
-
-  const filtered = customers.filter(customer => {
-      return customer._id === value
   })
+  function customerSelect(value) {
 
-  if (myForm.mySelectKey == 0) {
+
+    setMyForm({ ...myForm, mySelectKey: value });
+
+    const filtered = customers.filter(customer => {
+      return customer._id === value
+    })
+
+    if (myForm.mySelectKey === 0) {
 
       setInput("");
       setInputMobileno("");
@@ -197,20 +177,20 @@ function customerSelect(value) {
       workRef.current.value = "";
       cityRef.current.value = ""
       setUpdateId(null);
-  }
-  else {
+    }
+    else {
       setInput(filtered[0].customer);
       setInputMobileno(filtered[0].mobileno);
       setCity(filtered[0].city_id);
-      setRadioValue(filtered[0].relationtype == 1 ? "1" : "0");
+      setRadioValue(filtered[0].relationtype === 1 ? "1" : "0");
       fathernameref.current.value = filtered[0].fathername;
       addressRef.current.value = filtered[0].address;
       workRef.current.value = filtered[0].work;
       cityRef.current.value = filtered[0].referencecity;
       setUpdateId(filtered[0]._id);
-  }
+    }
 
-}
+  }
 
 
   return (

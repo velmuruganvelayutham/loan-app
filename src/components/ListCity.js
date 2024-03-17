@@ -38,7 +38,7 @@ const ListCity = ({ citynames, updateMode }) => {
   }
   return (
     <Fragment>
-      <div style={{ margin: "5rem" }}>
+      <div style={{ margin: "5rem" }} className="m-sm-0">
         <Table striped bordered hover size="sm"  >
           <thead>
             <tr>
@@ -83,7 +83,7 @@ const ListCity = ({ citynames, updateMode }) => {
         </Table>
         <nav>
 
-          <Pagination>
+          <Pagination className="flex-wrap">
             <Pagination.Prev >
               <a href="#" className='page-link' onClick={prevPage}>{t('pageprev')}</a>
             </Pagination.Prev>

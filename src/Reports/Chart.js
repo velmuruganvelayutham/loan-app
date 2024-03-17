@@ -118,22 +118,22 @@ function Chart({ loanno, ledger, company, date }) {
                 </Form>
             </Row>
 
-            <Row className='col-sm-8 col-md-8'style={{paddingLeft:"9px"}} >
+            <Row className='col-sm-8 col-md-8'style={{paddingLeft:"5px"}} >
                 <Col className='col-sm-4 col-md-4 p-0' >
                     <Table className="table text-center table-bordered border-dark chart" >
                         <thead>
                             <tr >
                                 
-                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"60%"}}>
+                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"13%"}}>
                                     {t('no')}
                                 </th>
-                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"100%"}}>
+                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"16%"}}>
                                     {t('date')}
                                 </th>
-                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"60%"}}>
+                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"15%"}}>
                                     {t('pay')}
                                 </th>
-                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"100%"}}>
+                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"17%"}}>
                                     {ledger.length > 0 ? first.totalamount : ""}
                                 </th>
                             </tr>
@@ -174,16 +174,16 @@ function Chart({ loanno, ledger, company, date }) {
                     <Table className="table  text-center table-bordered border-dark chart " >
                         <thead>
                             <tr >
-                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"60%"}}>
+                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"13%"}}>
                                     {t('no')}
                                 </th >
-                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"100%"}}>
+                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"16%"}}>
                                     {t('date')}
                                 </th>
-                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"60%"}}>
+                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"15%"}}>
                                     {t('pay')}
                                 </th>
-                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"100%"}}>
+                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"17%"}}>
                                     {totalamount}
                                 </th>
                             </tr>
@@ -196,7 +196,7 @@ function Chart({ loanno, ledger, company, date }) {
                                         totalamount = totalamount -first.dueamount ;
                                         startdateadd=new Date(dateFormatoneweek(startdateadd));
                                         return (
-                                            TablesRows(serialno, startdateadd, first.dueamount, totalamount)
+                                           TablesRows(serialno, startdateadd, first.dueamount, totalamount)
                                         )
                                     })
 

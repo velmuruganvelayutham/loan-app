@@ -38,8 +38,8 @@ const ListLineMan = ({ linemannames, updateMode }) => {
   }
   return (
     <Fragment>
-      <div style={{ margin: "5rem" }}>
-        <Table striped bordered hover size="sm"  >
+      <div style={{ margin: "5rem" }} className="m-sm-0">
+        <Table striped bordered hover size="sm" className="table-sm-responsive"  >
           <thead>
             <tr>
               <th>

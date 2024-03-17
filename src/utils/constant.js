@@ -1,2 +1,1 @@
-//export const baseURL="http://localhost:1300"
-export const baseURL="https://loan-app-backend-77d2e30338cf.herokuapp.com"
+export const baseURL = process.env.REACT_APP_LOAN_APP_BACKEND_API

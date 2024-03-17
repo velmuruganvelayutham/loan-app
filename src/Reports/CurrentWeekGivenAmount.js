@@ -63,13 +63,14 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto }) => {
     return (
         <Fragment>
             <div className='col-sm-12 fixed text-center mt-5'><h3>{t('currentweekamountgiven')}</h3></div>
-            <div className='col-sm-4 fixed'>{t('line') + " : " + (pendingLoans.length > 0 ? first.lineno : "")}</div>
+            <div className='col-sm-4 fixed' style={{paddingLeft:"20px"}}>{t('line') + " : " + (pendingLoans.length > 0 ? first.lineno : "")}</div>
             <div className='col-sm-4 fixed'>{t("lineman") + " : " + (pendingLoans.length > 0 ? first.linemanname : "")}</div>
             <div className='col-sm-4 fixed fw-bold'>{t("date") + " : " + dateFormatdd(datefrom) + " - " + dateFormatdd(dateto)}</div>
             <div >
                 <Table className='table text-center fs-6 table-bordered border-dark'  >
                     <thead>
                         <tr>
+                            <th></th>
                             <th style={{ fontSize: "12px" }}>
                                 {t('no')}
                             </th>
@@ -96,6 +97,7 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto }) => {
                             <th style={{ fontSize: "12px" }}>{t('total')}</th>
                             <th style={{ fontSize: "12px" }}>{t('week')}</th>
                             <th style={{ fontSize: "12px" }}>{t('pay')}</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -110,6 +112,7 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto }) => {
                                     pagetotalamount = pagetotalamount + customer.totalamount;
                                     return (
                                         <tr>
+                                            <td></td>
                                             <td style={{ fontSize: "12px" }}>{serialno}</td>
                                             <td style={{ fontSize: "12px" }}>{dateFormatdd(customer.givendate)}</td>
                                             <td className="fw-bold" style={{ fontSize: "12px" }}>{customer.loannumber}</td>
@@ -125,6 +128,7 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto }) => {
                                             <td style={{ fontSize: "12px" }}>{customer.totalamount}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.weekcount}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.dueamount}</td>
+                                            <td></td>
                                         </tr>
 
                                     )
@@ -141,11 +145,13 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto }) => {
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td></td>
                             <td className='fw-bold' style={{ fontSize: "12px" }}>{t('pagetotal')}</td>
                             <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotalgiven}</td>
                             <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotaldocument}</td>
                             <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotalinterest}</td>
                             <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotalamount}</td>
+                            <td></td>
                             <td></td>
                             <td></td>
                         </tr>
@@ -159,11 +165,13 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto }) => {
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td></td>
                             <td className='fw-bold' style={{ fontSize: "12px" }}>{t('total')}</td>
                             <td className='fw-bold' style={{ fontSize: "12px" }}>{totalgiven}</td>
                             <td className='fw-bold' style={{ fontSize: "12px" }}>{totaldocument}</td>
                             <td className='fw-bold' style={{ fontSize: "12px" }}>{totalinterest}</td>
                             <td className='fw-bold' style={{ fontSize: "12px" }}>{totalamount}</td>
+                            <td></td>
                             <td></td>
                             <td></td>
                         </tr> : null

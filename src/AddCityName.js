@@ -5,9 +5,11 @@ import { baseURL } from "./utils/constant";
 import ListCity from "./components/ListCity";
 import PlaceHolder from "./components/spinner/placeholder";
 import { useTranslation } from "react-i18next";
+import useJWTToken from "./utils/useJWTToken";
+
 //var maxCitycode=0;
 function AddCityName() {
-
+    const token = useJWTToken();
     const [inputCity, setInputCity] = useState("");
     const [lineNo, setLineNo] = useState("");
     const [cityNames, setCityNames] = useState([]);
@@ -19,38 +21,41 @@ function AddCityName() {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     useEffect(() => {
+        console.log(`ADDCITY_token:${token}`);
         setIsLoading(true);
         axios.get(`${baseURL}/citycreate/get`).then((res) => {
             setCityNames(res.data);
             setIsLoading(false);
+            setErrorMessage('');
         }).catch(error => {
             console.log("error=", error);
             setErrorMessage(t('errormessagecity'));
             setIsLoading(false);
         })
-    }, [updateUI]);
+    }, [updateUI,token]);
     useEffect(() => {
         setIsLoading(true);
         axios.get(`${baseURL}/linemancreate/get/lines`).then((res) => {
             setLineNames(res.data);
             setIsLoading(false);
+            setErrorMessage('');
         }).catch(error => {
             console.log("error=", error);
             setErrorMessage(t('errormessageline'));
             setIsLoading(false);
         })
-    }, [])
+    }, [token])
 
     useEffect(() => {
         document.addEventListener("keydown", function (event) {
-          if (event.key === "Enter" && event.target.nodeName === "INPUT") {
-            var form = event.target.form;
-            var index = Array.prototype.indexOf.call(form, event.target);
-            form.elements[index + 1].focus();
-            event.preventDefault();
-          }
+            if (event.key === "Enter" && event.target.nodeName === "INPUT") {
+                var form = event.target.form;
+                var index = Array.prototype.indexOf.call(form, event.target);
+                form.elements[index + 1].focus();
+                event.preventDefault();
+            }
         });
-      }, []);
+    }, [token]);
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -110,7 +115,7 @@ function AddCityName() {
     }
     const renderCityNameList = (
         <ul>
-            <ListCity citynames={cityNames}  updateMode={updateMode} />
+            <ListCity citynames={cityNames} updateMode={updateMode} />
         </ul>
     );
 
@@ -120,23 +125,34 @@ function AddCityName() {
             <Row className="justify-content-md-center mt-5 ">
                 <Col xs={6} lg={6} className="rounded bg-white">
                     <Form validated={validated}>
-                        <Form.Group className="mb-3" name="cityname" border="primary" >
-                            <Form.Label>{t('city')}</Form.Label>
-                            <Form.Control type="text" placeholder={t('cityplaceholderlabel')} required value={inputCity} onChange={(e) => setInputCity(e.target.value)} autoFocus />
-                        </Form.Group>
-                        <Form.Group className="mb-3" name="linenumber" border="primary" >
-                            <Form.Label>{t('line')}</Form.Label>
-                            <Form.Select aria-label="Default select example" value={lineNo} onChange={(e) => setLineNo(e.target.value)} required>
-                                <option key={lineNo} value={""} >{t('lineplaceholder')}</option>
+                        <Row className="rounded bg-white">
+                            <Col xs={12} md={12} >
+                                <Form.Group className="mb-3" name="cityname" border="primary" >
+                                    <Form.Label>{t('city')}</Form.Label>
+                                    <Form.Control type="text" placeholder={t('cityplaceholderlabel')} required value={inputCity} onChange={(e) => setInputCity(e.target.value)} autoFocus />
+                                </Form.Group>
+                            </Col>
 
-                                {
-                                    lineNames.map((lines) => (
-                                        <option key={lines.lineno} value={lines.lineno}
-                                            selected={lines.lineno} >{lines.linename}</option>
-                                    ))}
+                        </Row>
+                        <Row className="rounded bg-white">
+                            <Col xs={12} md={12} >
+                            <Form.Group className="mb-3" name="linenumber" border="primary" >
+                                <Form.Label>{t('line')}</Form.Label>
+                                <Form.Select aria-label="Default select example" value={lineNo} onChange={(e) => setLineNo(e.target.value)} required>
+                                    <option key={lineNo} value={""} >{t('lineplaceholder')}</option>
 
-                            </Form.Select>
-                        </Form.Group>
+                                    {
+                                        lineNames.map((lines) => (
+                                            <option key={lines.lineno} value={lines.lineno}
+                                                selected={lines.lineno} >{lines.linename}</option>
+                                        ))}
+
+                                </Form.Select>
+                            </Form.Group>
+                        </Col>
+
+                    </Row>
+                    <Row className="rounded bg-white">
                         <div className="col-md-12 text-center " >
                             <Button variant="primary" type="button" className="text-center" onClick={updateId ? updateCity : handleSubmit}>
                                 {t('savebutton')}
@@ -147,11 +163,11 @@ function AddCityName() {
                         {isLoading ? <PlaceHolder /> : renderCityNameList}
                         {errorMessage && <div className="error">{errorMessage}</div>}
 
-
-                    </Form>
-                </Col>
-            </Row>
-        </Container>
+                    </Row>
+                </Form>
+            </Col>
+        </Row>
+        </Container >
     )
 }
 export default AddCityName;

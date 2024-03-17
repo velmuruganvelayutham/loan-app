@@ -6,6 +6,7 @@ import { baseURL } from './utils/constant';
 import { startOfWeek } from './FunctionsGlobal/StartDateFn';
 import { useTranslation } from "react-i18next";
 import PlaceHolder from "./components/spinner/placeholder";
+import useJWTToken from "./utils/useJWTToken";
 var maxLoanNo = 0;
 function LoanForm() {
 
@@ -21,6 +22,7 @@ function LoanForm() {
         return dateendformat;
 
     }
+    const token = useJWTToken();
     const [updateUI, setUpdateUI] = useState(false)
     const [errorMessage, setErrorMessage] = useState("");
     const { t, i18n } = useTranslation();
@@ -58,7 +60,7 @@ function LoanForm() {
     const [validated, setValidated] = useState(false);
     const [maxValueShow, setMaxValueShow] = useState(false);
     const [isButtonDisabled, setButtonDisabled] = useState(false);
-    const[isDelete,setIsDelete]=useState(false);
+    const [isDelete, setIsDelete] = useState(false);
     useEffect(() => {
         setIsLoading(true);
         axios.get(`${baseURL}/get/view`).then((res) => {
@@ -69,7 +71,7 @@ function LoanForm() {
             setErrorMessage(t('errormessagecustomer'));
             setIsLoading(false);
         })
-    }, []);
+    }, [token]);
 
     useEffect(() => {
         setIsLoading(true);
@@ -81,7 +83,7 @@ function LoanForm() {
             setErrorMessage(t('errormessagelineman'));
             setIsLoading(false);
         })
-    }, []);
+    }, [token]);
 
     useEffect(() => {
         setIsLoading(true);
@@ -100,7 +102,7 @@ function LoanForm() {
             setErrorMessage(t('errormessageloannumber'));
             setIsLoading(false);
         })
-    }, [maxValueShow])
+    }, [maxValueShow, token])
 
     useEffect(() => {
         setIsLoading(true);
@@ -112,7 +114,7 @@ function LoanForm() {
             setErrorMessage(t('errormessageline'));
             setIsLoading(false);
         });
-    }, []);
+    }, [token]);
 
     useEffect(() => {
         document.addEventListener("keydown", function (event) {
@@ -123,7 +125,7 @@ function LoanForm() {
                 event.preventDefault();
             }
         });
-    }, []);
+    }, [token]);
 
     function customerSelect(value) {
 
@@ -213,11 +215,10 @@ function LoanForm() {
             if (window.confirm(t('paidamountgreaterthanloanalertyesno'))) {
                 return false;
             }
-            else
-            {
-                
+            else {
+
             }
-            
+
         }
 
         /*if (updateUI) {
@@ -229,12 +230,12 @@ function LoanForm() {
         if (myForm.mySelectKey !== "" && linemanoptionRef.current.value !== "" && weekRef.current.value !== "" && bookRef.current.value, lineRef.current.value !== ""
             && lineRef.current.value !== "" & weekscount !== "" && givenAmt !== "" && givenAmt !== 0 &&
             paidAmt.current.value !== 0 && paidAmt.current.value != "" &&
-            Number(paidAmt.current.value) >0) {
+            Number(paidAmt.current.value) > 0) {
             if (updateUI) {
                 if (checkLoanInvolvedTrans() == true) {
                     return false;
                 }
-                
+
             }
             else {
                 saveLoanDetails();
@@ -245,29 +246,27 @@ function LoanForm() {
 
     };
     const checkLoanInvolvedTrans = async () => {
-        
+
         await axios.get(`${baseURL}/receipt/get`, { params: { loannumber: Number(oldLoanRef.current.value) } }).then((res) => {
-            
+
             if (res.data.length > 1) {
                 alert(t('loanupdatealert'))
                 return true;
             }
             else {
-                if(isDelete===true)
-                {
+                if (isDelete === true) {
                     if (window.confirm(t('deletealertmessage'))) {
                         deleteLoanDetails();
                         return false;
                     }
                 }
-                else
-                {
+                else {
                     if (window.confirm(t('yesornoalertmessage'))) {
                         updateLoanDetails();
                         return false;
                     }
                 }
-                
+
             }
         }).catch(error => {
             console.log("error=", error);
@@ -314,12 +313,12 @@ function LoanForm() {
             });
         alert(t('savealertmessage'));
     }
-    const deleteLoanDetails=()=>{
-        axios.delete(`${baseURL}/loancreate/delete/${Number(oldLoanRef.current.value)}`).then((res)=>{
+    const deleteLoanDetails = () => {
+        axios.delete(`${baseURL}/loancreate/delete/${Number(oldLoanRef.current.value)}`).then((res) => {
             alert(t('deletemessage'))
             setIsDelete(false);
             clearFields();
-          }).catch(error => {
+        }).catch(error => {
             console.log("error=", error);
             setErrorMessage(t('errormessagedeleteloan'));
             setIsDelete(false);
@@ -395,7 +394,7 @@ function LoanForm() {
             key: i
         }
     })
-    const deleteLoan=()=>{
+    const deleteLoan = () => {
         setIsDelete(true);
         if (checkLoanInvolvedTrans() == true) {
             return false;
@@ -410,7 +409,7 @@ function LoanForm() {
                         <Col xs={12} md={4} className="rounded bg-white">
                             <Form.Group className="mb-3" border="primary" >
                                 <Form.Label>{t('loanno')}</Form.Label> {/*loan no*/}
-                                <Form.Control ref={loannoRef} type="number" required readonly="readonly"/>
+                                <Form.Control ref={loannoRef} type="number" required readonly="readonly" />
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={2} className="rounded bg-white">
@@ -611,14 +610,14 @@ function LoanForm() {
                                 onClick={handleSubmit} disabled={isButtonDisabled}>
                                 {updateUI ? t('updatebutton') : t('savebutton')}
                             </Button>{' '}
-                            <Button variant="primary" size="lg" type="button" className="text-center" 
-                            onClick={deleteLoan} disabled={updateUI?false:true}>
+                            <Button variant="primary" size="lg" type="button" className="text-center"
+                                onClick={deleteLoan} disabled={updateUI ? false : true}>
                                 {t('deletebutton')}
                             </Button>{' '}
                             <Button variant="primary" size="lg" type="button" className="text-center" onClick={clearFields}>
                                 {t('newbutton')}
                             </Button>
-                            
+
                         </div>
                     </Row>
                     <Row>

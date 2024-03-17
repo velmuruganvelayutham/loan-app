@@ -145,3 +145,7 @@ Table.linecheckingtable {
   table-layout: fixed;
   word-wrap: break-word;
 }
+Table.totalledgertable {
+  table-layout: fixed;
+  word-wrap: break-word;
+}

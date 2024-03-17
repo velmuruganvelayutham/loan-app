@@ -1,10 +1,7 @@
 import React, { Fragment,useState,useRef } from 'react'
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Table,Pagination } from "react-bootstrap";
-import {BiEditAlt,BiPrinter} from "react-icons/bi"
-import {BsTrash} from "react-icons/bs"
-import axios from 'axios'
-import {baseURL} from "../utils/constant";
+import {BiPrinter} from "react-icons/bi"
 import { useTranslation } from "react-i18next";
 import { dateFormatdd } from '../FunctionsGlobal/StartDateFn';
 import ReactToPrint from 'react-to-print';

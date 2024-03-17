@@ -12,10 +12,11 @@ import NewAccountDetails from "./NewAccountDetails";
 import WeekEndAccountDetails from "./WeekEndAccountDetails";
 import CurrentWeekGivenAmount from "./CurrentWeekGivenAmount";
 import DailyRecords from "./DailyRecords";
+import useJWTToken from "../utils/useJWTToken";
 var linecheckingreportname = "checkingdetails";
-
 var passingargument = "";
 function LinecheckingReport() {
+    const token = useJWTToken();
     const [cityNames, setCityNames] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
@@ -45,7 +46,7 @@ function LinecheckingReport() {
             setErrorMessage(t('errorcompany'));
             setIsLoading(false);
         })
-    }, [])
+    }, [token])
     useEffect(() => {
         setIsLoading(true);
         axios.get(`${baseURL}/linemancreate/get`).then((res) => {
@@ -56,7 +57,7 @@ function LinecheckingReport() {
             setErrorMessage(t('errormessagelineman'));
             setIsLoading(false)
         })
-    }, [])
+    }, [token])
     useEffect(() => {
         setIsLoading(true);
         axios.get(`${baseURL}/citycreate/get`).then((res) => {
@@ -67,7 +68,7 @@ function LinecheckingReport() {
             setErrorMessage(t('errormessagecity'));
             setIsLoading(false);
         })
-    }, [])
+    }, [token])
     const processList = () => {
         if (Number(reportType.current.value) !== 5) {
             setIsLoading(true);

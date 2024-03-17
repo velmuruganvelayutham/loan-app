@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes, useNavigate, Navigate } from "react-router-dom";
 import {
@@ -6,7 +6,7 @@ import {
   SignedIn,
   SignedOut,
   ClerkLoading,
-  RedirectToSignIn,
+  RedirectToSignIn
 } from "@clerk/clerk-react";
 import LedgerForm from './Reports/LedgerForm';
 const AddCustomer = lazy(() => import('./AddCustomer'));
@@ -20,7 +20,8 @@ const Ledger = lazy(() => import('./Reports/LedgerForm'));
 const LinecheckingReport = lazy(() => import('./Reports/LinecheckingReport'))
 const TotalLedger = lazy(() => import('./Reports/totalLedger'));
 const Receipt1 = lazy(() => import('./Receipt1'));
-const Line=lazy(()=>import('./AddLine'));
+const Line = lazy(() => import('./AddLine'));
+
 if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key")
 }
@@ -28,7 +29,6 @@ const clerkPubKey = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
 
 function ClerkProviderWithRoutes() {
   const navigate = useNavigate();
-
   return (
     <ClerkProvider
       publishableKey={clerkPubKey}
@@ -43,6 +43,7 @@ function ClerkProviderWithRoutes() {
                 <div>Clerk is loading</div>
               </ClerkLoading>
               <SignedIn>
+                <NavBar />
                 <AddCustomer />
               </SignedIn>
               <SignedOut>
@@ -56,6 +57,7 @@ function ClerkProviderWithRoutes() {
           element={
             <>
               <SignedIn>
+                <NavBar />
                 <AddCityName />
               </SignedIn>
               <SignedOut>
@@ -69,6 +71,7 @@ function ClerkProviderWithRoutes() {
           element={
             <>
               <SignedIn>
+                <NavBar />
                 <AddLineMan />
               </SignedIn>
               <SignedOut>
@@ -82,6 +85,7 @@ function ClerkProviderWithRoutes() {
           element={
             <>
               <SignedIn>
+                <NavBar />
                 <Line />
               </SignedIn>
               <SignedOut>
@@ -95,6 +99,7 @@ function ClerkProviderWithRoutes() {
           element={
             <>
               <SignedIn>
+                <NavBar />
                 <LoanForm />
               </SignedIn>
               <SignedOut>
@@ -108,6 +113,7 @@ function ClerkProviderWithRoutes() {
           element={
             <>
               <SignedIn>
+                <NavBar />
                 <AddReceipt />
               </SignedIn>
               <SignedOut>
@@ -120,6 +126,7 @@ function ClerkProviderWithRoutes() {
           element={
             <>
               <SignedIn>
+                <NavBar />
                 <Receipt1 />
               </SignedIn>
               <SignedOut>
@@ -131,7 +138,9 @@ function ClerkProviderWithRoutes() {
           path="/ledger"
           element={
             <>
+
               <SignedIn>
+                <NavBar />
                 <LedgerForm />
               </SignedIn>
               <SignedOut>
@@ -145,6 +154,7 @@ function ClerkProviderWithRoutes() {
           element={
             <>
               <SignedIn>
+                <NavBar />
                 <LinecheckingReport />
               </SignedIn>
               <SignedOut>
@@ -158,6 +168,7 @@ function ClerkProviderWithRoutes() {
           element={
             <>
               <SignedIn>
+                <NavBar />
                 <TotalLedger />
               </SignedIn>
               <SignedOut>
@@ -182,7 +193,6 @@ function App() {
       <React.Fragment >
 
         <Router basename="/loan-app" >
-          <NavBar />
           <Suspense fallback={<Loading />}>
             <ClerkProviderWithRoutes />
           </Suspense>

@@ -5,7 +5,9 @@ import axios from "axios"
 import { baseURL } from "./utils/constant";
 import PlaceHolder from "./components/spinner/placeholder";
 import { useTranslation } from "react-i18next";
+import useJWTToken from "./utils/useJWTToken";
 function AddLineMan() {
+  const token = useJWTToken();
   const [input, setInput] = useState("");
   const [inputmobileno, setInputMobileno] = useState("")
   const [lineMans, setLineMans] = useState([]);
@@ -27,7 +29,7 @@ function AddLineMan() {
         setErrorMessage(t('errormessagelineman'));
         setIsLoading(false);
       })
-  }, [updateUI]);
+  }, [updateUI,token]);
 
   useEffect(() => {
     document.addEventListener("keydown", function (event) {
@@ -38,7 +40,7 @@ function AddLineMan() {
         event.preventDefault();
       }
     });
-  }, []);
+  }, [token]);
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;

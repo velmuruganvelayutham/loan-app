@@ -124,7 +124,7 @@ const ListLineChecking = ({ pendingLoans, date, company }) => {
       <div className='col-sm-2 fixed mt-3'>{t("bookno") + " : " + (pendingLoans.length > 0 ? first.bookno : "")}</div>
       <div className='col-sm-2 fixed mt-3'>{t("date") + " : " + dateFormatdd(date)}</div>
 
-      <Table className=' table table-bordered border-dark linecheckingtable'  >
+      <Table className=' table table-bordered border-dark linecheckingtable '   >
         <thead >
           <tr>
             <th style={{ fontSize: "11px", width: "1.5%" }}></th>

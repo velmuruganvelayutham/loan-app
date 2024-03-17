@@ -4,7 +4,10 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 import "./i18n";
-
+import {
+    SignedIn,
+    UserButton
+} from "@clerk/clerk-react";
 function NavBar() {
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
@@ -43,18 +46,17 @@ function NavBar() {
         else if (languageValue === "TotalLedger") {
             navigate("/totalledger");
         }
-        else if(languageValue==="Line"){
+        else if (languageValue === "Line") {
             navigate("/line")
         }
     }
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" onSelect={handleSelect} >
             <Container>
-                <Navbar.Brand href="#home">Loan App</Navbar.Brand>
+                <Navbar.Brand href="#home">{process.env.REACT_APP_LOAN_APP_CUSTOMER}</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ms-auto" as="ul" >
-                        <Nav.Item><Nav.Link as={NavLink} to="/create">Home</Nav.Link></Nav.Item>
                         <NavDropdown title="Language" id="basic-nav-dropdown">
                             <NavDropdown.Item href="#">English</NavDropdown.Item>
                             <NavDropdown.Item href="#">Tamil</NavDropdown.Item>
@@ -75,6 +77,11 @@ function NavBar() {
                             <NavDropdown.Item href="linechecking">LineChecking</NavDropdown.Item>
                             <NavDropdown.Item href="totalledger">TotalLedger</NavDropdown.Item>
                         </NavDropdown>
+                        <Nav.Item>
+                            <SignedIn>
+                                <UserButton />
+                            </SignedIn>
+                        </Nav.Item>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

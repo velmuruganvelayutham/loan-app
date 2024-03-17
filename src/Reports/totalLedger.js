@@ -7,7 +7,9 @@ import PlaceHolder from "../components/spinner/placeholder";
 import { startOfWeek,endOfWeek,notRunningOfWeek } from '../FunctionsGlobal/StartDateFn';
 import ReactToPrint from 'react-to-print';
 import ListTotalLedger from "./ListTotalLedger";
+import useJWTToken from "../utils/useJWTToken";
 function TotalLedger(){
+    const token = useJWTToken();
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const[ledger,setLedger]=useState([]);
@@ -16,15 +18,24 @@ function TotalLedger(){
     const endDateRef = useRef(endOfWeek());
     const componentRef = useRef();
     const notrunningDateRef=useRef(notRunningOfWeek());
-    
+    const reportType = useRef(0);
     const processList = () => {
-        
+        //alert(reportType.current.value);
+        var reporttypename=""
         setIsLoading(true);
-
+        if(reportType.current.value==1){
+            reporttypename="totalledgercity"
+        }
+        else{
+            reporttypename="totalledger"
+        }
         return (
-            axios.get(`${baseURL}/city/totalledger`, { params: {fromdate: startDateRef.current.value, todate: endDateRef.current.value,notrundate:notrunningDateRef.current.value} }).then((res) => {
+            
+            axios.get(`${baseURL}/city/${reporttypename}`, { params: {fromdate: startDateRef.current.value, 
+                todate: endDateRef.current.value,notrundate:notrunningDateRef.current.value,
+                reporttype:reportType.current.value} }).then((res) => {
                 setLedger(res.data)
-                //console.log(res.data)
+                console.log(res.data)
                 setIsLoading(false);
             })
                 .catch(error => {
@@ -39,7 +50,8 @@ function TotalLedger(){
     }
     const renderTotalLedgerList=(
         <Row ref={componentRef}>
-            <ListTotalLedger totalledger={ledger} datefrom={startDateRef.current.value} dateto={endDateRef.current.value} notrunningdate={notrunningDateRef.current.value} />
+            <ListTotalLedger totalledger={ledger} datefrom={startDateRef.current.value} 
+            dateto={endDateRef.current.value} notrunningdate={notrunningDateRef.current.value} reportypeval={reportType.current.value} />
         </Row>
     )
     return (
@@ -66,6 +78,15 @@ function TotalLedger(){
                             </Form.Group>
                         </Col>
                         <Col md={3} className="rounder bg-white">
+                            <Form.Group className="mb-3" name="cityname" border="primary" >
+                                <Form.Label>{t('report')}</Form.Label>
+                                <Form.Select aria-label="Default select example"
+                                    ref={reportType} defaultValue={0} >
+                                    <option value={0} >{t('linewise')}</option>
+                                    <option value={1}>{t('citywise')}</option>
+                                    
+                                </Form.Select>
+                            </Form.Group>
                         </Col>
                     </Row>
                     <Row className="rounded bg-white text-center">

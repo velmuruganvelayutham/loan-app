@@ -8,8 +8,10 @@ import ReactToPrint from 'react-to-print';
 import PlaceHolder from "../components/spinner/placeholder";
 import Ledger from '../Reports/Ledger';
 import Chart from "../Reports/Chart";
+import useJWTToken from "../utils/useJWTToken";
 var loannumberprocess = "";
 function LedgerForm() {
+    const token = useJWTToken();
     const [lineNames, setLineNames] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
@@ -31,7 +33,7 @@ function LedgerForm() {
             setErrorMessage(t('errorcompany'));
             setIsLoading(false);
         })
-    }, [])
+    }, [token])
     useEffect(() => {
         setIsLoading(true);
         axios.get(`${baseURL}/citycreate/get`).then((res) => {
@@ -42,7 +44,7 @@ function LedgerForm() {
             setErrorMessage(t('errormessagecity'));
             setIsLoading(false);
         })
-    }, [])
+    }, [token])
 
     useEffect(() => {
         setIsLoading(true);
@@ -56,7 +58,7 @@ function LedgerForm() {
             setErrorMessage(t('errormessageloan'));
             setIsLoading(false);
         })
-    }, [lineNo])
+    }, [lineNo,token])
     const handlePrint = () => {
         window.print()
     }
