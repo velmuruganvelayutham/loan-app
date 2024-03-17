@@ -26,7 +26,7 @@ if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key")
 }
 const clerkPubKey = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
-
+const baseName = process.env.REACT_APP_LOAN_APP_BASE_NAME;
 function ClerkProviderWithRoutes() {
   const navigate = useNavigate();
   return (
@@ -192,7 +192,7 @@ function App() {
     <div className="app">
       <React.Fragment >
 
-        <Router basename="/loan-app" >
+        <Router basename={baseName} >
           <Suspense fallback={<Loading />}>
             <ClerkProviderWithRoutes />
           </Suspense>

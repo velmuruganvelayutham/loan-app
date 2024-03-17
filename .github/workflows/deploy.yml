@@ -19,7 +19,8 @@ jobs:
       REACT_APP_LOAN_APP_BACKEND_API: ${{ secrets.REACT_APP_LOAN_APP_BACKEND_API }}
       REACT_APP_LOAN_APP_CUSTOMER: ${{ secrets.REACT_APP_LOAN_APP_CUSTOMER }}
       REACT_APP_LOAN_APP_STARTDATE: ${{ secrets.REACT_APP_LOAN_APP_STARTDATE }}
-
+      REACT_APP_LOAN_APP_BASE_NAME: ${{ secrets.REACT_APP_LOAN_APP_BASE_NAME }}
+  
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
