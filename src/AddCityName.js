@@ -5,11 +5,12 @@ import { baseURL } from "./utils/constant";
 import ListCity from "./components/ListCity";
 import PlaceHolder from "./components/spinner/placeholder";
 import { useTranslation } from "react-i18next";
-import useJWTToken from "./utils/useJWTToken";
-
+import {
+    useAuth
+} from "@clerk/clerk-react";
 //var maxCitycode=0;
 function AddCityName() {
-    const token = useJWTToken();
+    const { getToken } = useAuth();
     const [inputCity, setInputCity] = useState("");
     const [lineNo, setLineNo] = useState("");
     const [cityNames, setCityNames] = useState([]);
@@ -17,34 +18,44 @@ function AddCityName() {
     const [updateUI, setUpdateUI] = useState(false);
     const [updateId, setUpdateId] = useState(null);
     const [validated, setValidated] = useState(false);
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     useEffect(() => {
-        console.log(`ADDCITY_token:${token}`);
-        setIsLoading(true);
-        axios.get(`${baseURL}/citycreate/get`).then((res) => {
-            setCityNames(res.data);
-            setIsLoading(false);
-            setErrorMessage('');
-        }).catch(error => {
-            console.log("error=", error);
-            setErrorMessage(t('errormessagecity'));
-            setIsLoading(false);
-        })
-    }, [updateUI,token]);
+        async function fetchData() {
+            setIsLoading(true);
+            const token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            axios.get(`${baseURL}/citycreate/get`).then((res) => {
+                setCityNames(res.data);
+                setIsLoading(false);
+                setErrorMessage('');
+            }).catch(error => {
+                console.log("error=", error);
+                setErrorMessage(t('errormessagecity'));
+                setIsLoading(false);
+            })
+        }
+        fetchData();
+    }, [updateUI, t,getToken]);
     useEffect(() => {
-        setIsLoading(true);
-        axios.get(`${baseURL}/linemancreate/get/lines`).then((res) => {
-            setLineNames(res.data);
-            setIsLoading(false);
-            setErrorMessage('');
-        }).catch(error => {
-            console.log("error=", error);
-            setErrorMessage(t('errormessageline'));
-            setIsLoading(false);
-        })
-    }, [token])
+        async function fetchData() {
+            setIsLoading(true);
+            const token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            axios.get(`${baseURL}/linemancreate/get/lines`).then((res) => {
+                setLineNames(res.data);
+                setIsLoading(false);
+                setErrorMessage('');
+            }).catch(error => {
+                console.log("error=", error);
+                setErrorMessage(t('errormessageline'));
+                setIsLoading(false);
+            })
+        }
+        fetchData();
+
+    }, [t,getToken])
 
     useEffect(() => {
         document.addEventListener("keydown", function (event) {
@@ -55,7 +66,7 @@ function AddCityName() {
                 event.preventDefault();
             }
         });
-    }, [token]);
+    }, [t,getToken]);
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -69,8 +80,10 @@ function AddCityName() {
         }
 
     };
-    const addCityName = () => {
+    const addCityName = async () => {
         setIsLoading(true);
+        const token = await getToken();
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         axios.post(`${baseURL}/citycreate/save`, { cityname: inputCity, citylineno: lineNo })
             .then((res) => {
                 setIsLoading(false);
@@ -98,8 +111,10 @@ function AddCityName() {
 
     }
 
-    const updateCity = () => {
+    const updateCity = async () => {
         setIsLoading(true);
+        const token = await getToken();
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         axios.put(`${baseURL}/citycreate/update/${updateId}`, { cityname: inputCity, citylineno: lineNo }).then((res) => {
             setIsLoading(false);
             setUpdateUI((prevState) => !prevState)
@@ -136,37 +151,37 @@ function AddCityName() {
                         </Row>
                         <Row className="rounded bg-white">
                             <Col xs={12} md={12} >
-                            <Form.Group className="mb-3" name="linenumber" border="primary" >
-                                <Form.Label>{t('line')}</Form.Label>
-                                <Form.Select aria-label="Default select example" value={lineNo} onChange={(e) => setLineNo(e.target.value)} required>
-                                    <option key={lineNo} value={""} >{t('lineplaceholder')}</option>
+                                <Form.Group className="mb-3" name="linenumber" border="primary" >
+                                    <Form.Label>{t('line')}</Form.Label>
+                                    <Form.Select aria-label="Default select example" value={lineNo} onChange={(e) => setLineNo(e.target.value)} required>
+                                        <option key={lineNo} value={""} >{t('lineplaceholder')}</option>
 
-                                    {
-                                        lineNames.map((lines) => (
-                                            <option key={lines.lineno} value={lines.lineno}
-                                                selected={lines.lineno} >{lines.linename}</option>
-                                        ))}
+                                        {
+                                            lineNames.map((lines) => (
+                                                <option key={lines.lineno} value={lines.lineno}
+                                                    selected={lines.lineno} >{lines.linename}</option>
+                                            ))}
 
-                                </Form.Select>
-                            </Form.Group>
-                        </Col>
+                                    </Form.Select>
+                                </Form.Group>
+                            </Col>
 
-                    </Row>
-                    <Row className="rounded bg-white">
-                        <div className="col-md-12 text-center " >
-                            <Button variant="primary" type="button" className="text-center" onClick={updateId ? updateCity : handleSubmit}>
-                                {t('savebutton')}
-                            </Button>{' '}
-                            <Button variant="primary"
-                                type="button" className="text-center" onClick={clearFields}>{t('newbutton')}</Button>
-                        </div>
-                        {isLoading ? <PlaceHolder /> : renderCityNameList}
-                        {errorMessage && <div className="error">{errorMessage}</div>}
+                        </Row>
+                        <Row className="rounded bg-white">
+                            <div className="col-md-12 text-center " >
+                                <Button variant="primary" type="button" className="text-center" onClick={updateId ? updateCity : handleSubmit}>
+                                    {t('savebutton')}
+                                </Button>{' '}
+                                <Button variant="primary"
+                                    type="button" className="text-center" onClick={clearFields}>{t('newbutton')}</Button>
+                            </div>
+                            {isLoading ? <PlaceHolder /> : renderCityNameList}
+                            {errorMessage && <div className="error">{errorMessage}</div>}
 
-                    </Row>
-                </Form>
-            </Col>
-        </Row>
+                        </Row>
+                    </Form>
+                </Col>
+            </Row>
         </Container >
     )
 }

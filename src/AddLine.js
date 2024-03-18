@@ -5,9 +5,11 @@ import axios from "axios"
 import { baseURL } from "./utils/constant";
 import PlaceHolder from "./components/spinner/placeholder";
 import { useTranslation } from "react-i18next";
-import useJWTToken from "./utils/useJWTToken";
+import {
+    useAuth
+} from "@clerk/clerk-react";
 function AddLine() {
-    const token = useJWTToken();
+    const { getToken } = useAuth();
     const [input, setInput] = useState("");
     const [inputlineno, setInputLineno] = useState("")
     const [linenames, setLinenames] = useState([]);
@@ -15,22 +17,27 @@ function AddLine() {
     const [updateId, setUpdateId] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const [validated, setValidated] = useState(false);
 
     useEffect(() => {
-        setIsLoading(true);
-        axios.get(`${baseURL}/linemancreate/get/lines`).then((res) => {
-            setLinenames(res.data)
-            console.log(res.data);
-            setIsLoading(false)
-        })
-            .catch(error => {
-                console.log("error=", error);
-                setErrorMessage(t('errormessageline'));
-                setIsLoading(false);
+        async function fetchData() {
+            setIsLoading(true);
+            const token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            axios.get(`${baseURL}/linemancreate/get/lines`).then((res) => {
+                setLinenames(res.data)
+                console.log(res.data);
+                setIsLoading(false)
             })
-    }, [updateUI,token]);
+                .catch(error => {
+                    console.log("error=", error);
+                    setErrorMessage(t('errormessageline'));
+                    setIsLoading(false);
+                })
+        }
+        fetchData();
+    }, [updateUI, t, getToken]);
 
     useEffect(() => {
         document.addEventListener("keydown", function (event) {
@@ -41,7 +48,7 @@ function AddLine() {
                 event.preventDefault();
             }
         });
-    }, [token]);
+    }, []);
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -56,11 +63,11 @@ function AddLine() {
 
     };
 
-    const addLine = () => {
-        
+    const addLine = async () => {
         setIsLoading(true);
-
-        axios.post(`${baseURL}/line/save`,{ linename: input, lineno: Number(inputlineno) }).then((res) => {
+        const token = await getToken();
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        axios.post(`${baseURL}/line/save`, { linename: input, lineno: Number(inputlineno) }).then((res) => {
             setIsLoading(false)
             setInput("")
             setInputLineno("");
@@ -72,7 +79,7 @@ function AddLine() {
                 setIsLoading(false);
                 console.log("error=", error);
             })
-        
+
     }
 
     const updateMode = (id, text, lineno) => {
@@ -81,8 +88,10 @@ function AddLine() {
         setUpdateId(id);
     }
 
-    const updateLine = () => {
+    const updateLine = async () => {
         setIsLoading(true);
+        const token = await getToken();
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         axios.put(`${baseURL}/line/update/${updateId}`, { linename: input, lineno: inputlineno }).then((res) => {
             setIsLoading(false)
             setUpdateUI((prevState) => !prevState)

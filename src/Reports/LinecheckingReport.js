@@ -12,11 +12,13 @@ import NewAccountDetails from "./NewAccountDetails";
 import WeekEndAccountDetails from "./WeekEndAccountDetails";
 import CurrentWeekGivenAmount from "./CurrentWeekGivenAmount";
 import DailyRecords from "./DailyRecords";
-import useJWTToken from "../utils/useJWTToken";
+import {
+    useAuth
+} from "@clerk/clerk-react";
 var linecheckingreportname = "checkingdetails";
 var passingargument = "";
 function LinecheckingReport() {
-    const token = useJWTToken();
+    const { getToken } = useAuth();
     const [cityNames, setCityNames] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
@@ -29,47 +31,64 @@ function LinecheckingReport() {
     const [city, setCity] = useState("");
     const startDateRef = useRef(startOfWeek());
     const endDateRef = useRef(endOfWeek());
-    const [printDateRef,setPrintDateRef]=useState(startOfWeek())
+    const [printDateRef, setPrintDateRef] = useState(startOfWeek())
     const linemanoptionRef = useRef("");
     const [show, setShow] = useState(false);
-    
-    const [linemannameday,setLineManNameDay]=useState("");
-    const[linemanlineno,setLineManLineno]=useState("");
+
+    const [linemannameday, setLineManNameDay] = useState("");
+    const [linemanlineno, setLineManLineno] = useState("");
     const bookRef = useRef(null);
     useEffect(() => {
-        setIsLoading(true);
-        axios.get(`${baseURL}/company/get`).then((res) => {
-            setCompany(res.data);
-            setIsLoading(false);
-        }).catch(error => {
-            console.log("error=", error);
-            setErrorMessage(t('errorcompany'));
-            setIsLoading(false);
-        })
-    }, [token])
+        async function fetchData() {
+            setIsLoading(true);
+            const token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+            axios.get(`${baseURL}/company/get`).then((res) => {
+                setCompany(res.data);
+                setIsLoading(false);
+            }).catch(error => {
+                console.log("error=", error);
+                setErrorMessage(t('errorcompany'));
+                setIsLoading(false);
+            })
+        }
+        fetchData();
+    }, [getToken])
     useEffect(() => {
-        setIsLoading(true);
-        axios.get(`${baseURL}/linemancreate/get`).then((res) => {
-            setLinemanNames(res.data);
-            setIsLoading(false);
-        }).catch(error => {
-            console.log("error=", error);
-            setErrorMessage(t('errormessagelineman'));
-            setIsLoading(false)
-        })
-    }, [token])
+        async function fetchData() {
+            setIsLoading(true);
+            const token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            axios.get(`${baseURL}/linemancreate/get`).then((res) => {
+                setLinemanNames(res.data);
+                setIsLoading(false);
+            }).catch(error => {
+                console.log("error=", error);
+                setErrorMessage(t('errormessagelineman'));
+                setIsLoading(false)
+            })
+        }
+        fetchData();
+    }, [getToken])
     useEffect(() => {
-        setIsLoading(true);
-        axios.get(`${baseURL}/citycreate/get`).then((res) => {
-            setCityNames(res.data);
-            setIsLoading(false);
-        }).catch(error => {
-            console.log("error=", error);
-            setErrorMessage(t('errormessagecity'));
-            setIsLoading(false);
-        })
-    }, [token])
-    const processList = () => {
+
+        async function fetchData() {
+            setIsLoading(true);
+            const token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            axios.get(`${baseURL}/citycreate/get`).then((res) => {
+                setCityNames(res.data);
+                setIsLoading(false);
+            }).catch(error => {
+                console.log("error=", error);
+                setErrorMessage(t('errormessagecity'));
+                setIsLoading(false);
+            })
+        }
+        fetchData();
+    }, [getToken])
+    const processList = async () => {
         if (Number(reportType.current.value) !== 5) {
             setIsLoading(true);
             //alert(linemanoptionRef.current.value);
@@ -100,10 +119,16 @@ function LinecheckingReport() {
                 linecheckingreportname = "currentweekgivenamount";
                 passingargument = linemanoptionRef.current.value;
             }
-            
+
+            const token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             return (
-                axios.get(`${baseURL}/loan/${linecheckingreportname}`, { params: { city_id: passingargument.toString(), 
-                    fromdate: startDateRef.current.value, todate: endDateRef.current.value,bookno:Number(bookRef.current.value) } }).then((res) => {
+                axios.get(`${baseURL}/loan/${linecheckingreportname}`, {
+                    params: {
+                        city_id: passingargument.toString(),
+                        fromdate: startDateRef.current.value, todate: endDateRef.current.value, bookno: Number(bookRef.current.value)
+                    }
+                }).then((res) => {
                     Number(reportType.current.value) === 0 ? setCheckingData(res.data) : setCheckingDetailsLine(res.data)
 
                     //console.log(res.data);
@@ -119,11 +144,11 @@ function LinecheckingReport() {
             )
 
         }
-        
+
     }
     const componentRef = useRef([]);
     const handlePrint = () => {
-        
+
         window.print()
     }
     const renderLineCheckingList = (
@@ -158,16 +183,16 @@ function LinecheckingReport() {
     )
     const renderdailyrecords = (
         <Row ref={componentRef}>
-            <DailyRecords  datefrom={startDateRef.current.value} dateto={endDateRef.current.value} linemanname={linemannameday} linamnline={linemanlineno} collectiondate={printDateRef}/>
+            <DailyRecords datefrom={startDateRef.current.value} dateto={endDateRef.current.value} linemanname={linemannameday} linamnline={linemanlineno} collectiondate={printDateRef} />
         </Row>
     )
-    const restoreLineman=(e)=>{
+    const restoreLineman = (e) => {
         const filtered = linemannames.filter(lineman => {
             return lineman._id === e.target.value;
         })
-        if(filtered.length>0){
-          setLineManNameDay(filtered[0].linemanname);
-          setLineManLineno(filtered[0].lineno);
+        if (filtered.length > 0) {
+            setLineManNameDay(filtered[0].linemanname);
+            setLineManLineno(filtered[0].lineno);
         }
     }
     const linemanshow = (

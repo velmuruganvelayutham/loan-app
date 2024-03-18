@@ -8,10 +8,12 @@ import ReactToPrint from 'react-to-print';
 import PlaceHolder from "../components/spinner/placeholder";
 import Ledger from '../Reports/Ledger';
 import Chart from "../Reports/Chart";
-import useJWTToken from "../utils/useJWTToken";
+import {
+    useAuth
+} from "@clerk/clerk-react";
 var loannumberprocess = "";
 function LedgerForm() {
-    const token = useJWTToken();
+    const { getToken } = useAuth();
     const [lineNames, setLineNames] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
@@ -24,55 +26,71 @@ function LedgerForm() {
     const componentRef = useRef();
     const reportType = useRef(0);
     useEffect(() => {
-        setIsLoading(true);
-        axios.get(`${baseURL}/company/get`).then((res) => {
-            setCompany(res.data);
-            setIsLoading(false);
-        }).catch(error => {
-            console.log("error=", error);
-            setErrorMessage(t('errorcompany'));
-            setIsLoading(false);
-        })
-    }, [token])
+        async function fetchData() {
+            setIsLoading(true);
+            const token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            axios.get(`${baseURL}/company/get`).then((res) => {
+                setCompany(res.data);
+                setIsLoading(false);
+            }).catch(error => {
+                console.log("error=", error);
+                setErrorMessage(t('errorcompany'));
+                setIsLoading(false);
+            })
+        }
+        fetchData();
+    }, [getToken])
     useEffect(() => {
-        setIsLoading(true);
-        axios.get(`${baseURL}/citycreate/get`).then((res) => {
-            setLineNames(res.data);
-            setIsLoading(false);
-        }).catch(error => {
-            console.log("error=", error);
-            setErrorMessage(t('errormessagecity'));
-            setIsLoading(false);
-        })
-    }, [token])
+        async function fetchData() {
+            setIsLoading(true);
+            const token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            axios.get(`${baseURL}/citycreate/get`).then((res) => {
+                setLineNames(res.data);
+                setIsLoading(false);
+            }).catch(error => {
+                console.log("error=", error);
+                setErrorMessage(t('errormessagecity'));
+                setIsLoading(false);
+            })
+        }
+        fetchData();
+
+    }, [getToken])
 
     useEffect(() => {
-        setIsLoading(true);
 
-        axios.get(`${baseURL}/loancreate/get`, { params: { city_id: lineNo.toString() } }).then((res) => {
-            setLoannumbers(res.data);
+        async function fetchData() {
+            setIsLoading(true);
+            const token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            axios.get(`${baseURL}/loancreate/get`, { params: { city_id: lineNo.toString() } }).then((res) => {
+                setLoannumbers(res.data);
 
-            setIsLoading(false);
-        }).catch(error => {
-            console.log("error=", error);
-            setErrorMessage(t('errormessageloan'));
-            setIsLoading(false);
-        })
-    }, [lineNo,token])
+                setIsLoading(false);
+            }).catch(error => {
+                console.log("error=", error);
+                setErrorMessage(t('errormessageloan'));
+                setIsLoading(false);
+            })
+        }
+        fetchData();
+
+    }, [lineNo, getToken])
     const handlePrint = () => {
         window.print()
     }
-    const processList = () => {
+    const processList = async () => {
         setIsLoading(true);
+        const token = await getToken();
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         loannumberprocess = loanno;
         return (
-
             axios.get(`${baseURL}/ledger/get`, { params: { loanno: loanno } }).then((res) => {
                 setLoanDetails(res.data);
                 console.log(res.data);
-                setIsLoading(false)
-
-
+                setIsLoading(false);
             })
                 .catch(error => {
                     console.log("error=", error);
@@ -80,7 +98,6 @@ function LedgerForm() {
                     setIsLoading(false);
                 })
         )
-
     }
     const renderLedgerList = (
         <Row ref={componentRef}>
@@ -88,7 +105,7 @@ function LedgerForm() {
                 company={company.length > 0 ? company[0].companyname : ""} date={new Date()} />
         </Row>
     )
-    const renderChart=(
+    const renderChart = (
         <Row ref={componentRef}>
             <Chart loanno={loannumberprocess} ledger={loanDetails}
                 company={company.length > 0 ? company[0].companyname : ""} date={new Date()} />
@@ -99,7 +116,7 @@ function LedgerForm() {
             <Row className="justify-content-md-center mt-5 ">
                 <Form>
                     <Row>
-                        <Col  xs={6} md={4} className="rounded bg-white">
+                        <Col xs={6} md={4} className="rounded bg-white">
                             <Form.Group className="mb-3" name="linenumber" border="primary" >
                                 <Form.Label>{t('citylinelabel')}</Form.Label>
                                 <Form.Select aria-label="Default select example" value={lineNo}
@@ -116,7 +133,7 @@ function LedgerForm() {
                             </Form.Group>
 
                         </Col>
-                        <Col  xs={6} md={4} className="rounded bg-white">
+                        <Col xs={6} md={4} className="rounded bg-white">
                             <Form.Group className="mb-3" name="cityname" border="primary" >
                                 <Form.Label>{t('report')}</Form.Label>
                                 <Form.Select aria-label="Default select example"
@@ -126,7 +143,7 @@ function LedgerForm() {
                                 </Form.Select>
                             </Form.Group>
                         </Col>
-                        <Col  xs={6} md={4} className="rounded bg-white">
+                        <Col xs={6} md={4} className="rounded bg-white">
 
                             <Form.Group className="mb-3" name="linenumber" border="primary" >
                                 <Form.Label>{t('loanno')}</Form.Label>
@@ -162,10 +179,10 @@ function LedgerForm() {
                         </div>
                     </Row>
                     <Row>
-                        {isLoading ? <PlaceHolder /> :  Number(reportType.current.value) === 0 ?renderLedgerList:renderChart}
+                        {isLoading ? <PlaceHolder /> : Number(reportType.current.value) === 0 ? renderLedgerList : renderChart}
                         {errorMessage && <div className="error">{errorMessage}</div>}
                     </Row>
-                    
+
                 </Form>
             </Row>
         </Container>

@@ -5,9 +5,11 @@ import axios from "axios"
 import { baseURL } from "./utils/constant";
 import PlaceHolder from "./components/spinner/placeholder";
 import { useTranslation } from "react-i18next";
-import useJWTToken from "./utils/useJWTToken";
+import {
+  useAuth
+} from "@clerk/clerk-react";
 function AddLineMan() {
-  const token = useJWTToken();
+  const { getToken } = useAuth();
   const [input, setInput] = useState("");
   const [inputmobileno, setInputMobileno] = useState("")
   const [lineMans, setLineMans] = useState([]);
@@ -15,21 +17,25 @@ function AddLineMan() {
   const [updateId, setUpdateId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const { t,i18n } = useTranslation();
+  const { t } = useTranslation();
   const [validated, setValidated] = useState(false);
-
   useEffect(() => {
-    setIsLoading(true);
-    axios.get(`${baseURL}/linemancreate/get`).then((res) => {
-      setLineMans(res.data)
-      setIsLoading(false)
-    })
-      .catch(error => {
-        console.log("error=", error);
-        setErrorMessage(t('errormessagelineman'));
-        setIsLoading(false);
+    async function fetchData() {
+      setIsLoading(true);
+      const token = await getToken();
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      axios.get(`${baseURL}/linemancreate/get`).then((res) => {
+        setLineMans(res.data)
+        setIsLoading(false)
       })
-  }, [updateUI,token]);
+        .catch(error => {
+          console.log("error=", error);
+          setErrorMessage(t('errormessagelineman'));
+          setIsLoading(false);
+        })
+    }
+    fetchData();
+  }, [updateUI, t, getToken]);
 
   useEffect(() => {
     document.addEventListener("keydown", function (event) {
@@ -40,24 +46,23 @@ function AddLineMan() {
         event.preventDefault();
       }
     });
-  }, [token]);
-
+  }, []);
+  
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
-        event.preventDefault();
+      event.preventDefault();
     }
     setValidated(true);
-
     if (input !== "" && inputmobileno !== "") {
       addLineMan();
     }
+  };
 
-};
-
-  const addLineMan = () => {
+  const addLineMan = async () => {
+    const token = await getToken();
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     setIsLoading(true);
-    
     axios.post(`${baseURL}/linemancreate/save`, { linemanname: input, mobileno: inputmobileno }).then((res) => {
       setIsLoading(false)
       setInput("")
@@ -69,7 +74,7 @@ function AddLineMan() {
         setIsLoading(false);
         console.log("error=", error);
       })
-      alert(t('savealertmessage'));
+    alert(t('savealertmessage'));
   }
 
   const updateMode = (id, text, mobilenum) => {
@@ -87,11 +92,11 @@ function AddLineMan() {
       setInputMobileno("");
       setUpdateId(null);
     }).catch(error => {
-        setErrorMessage(t('errormessagesavelineman'));
-        setIsLoading(false);
-        console.log("error=", error);
-      })
-      alert(t('savealertmessage'));
+      setErrorMessage(t('errormessagesavelineman'));
+      setIsLoading(false);
+      console.log("error=", error);
+    })
+    alert(t('savealertmessage'));
   }
   const clearFields = () => {
     setInput("");
@@ -101,7 +106,7 @@ function AddLineMan() {
 
   const renderLineManList = (
     <div className="text-center">
-      <ListLineMan linemannames={lineMans}  updateMode={updateMode}/>
+      <ListLineMan linemannames={lineMans} updateMode={updateMode} />
     </div>);
 
   return (
@@ -109,39 +114,39 @@ function AddLineMan() {
     <Container >
       <h2 className="text-center">{t('linemanheader')}</h2>
       <Row className="justify-content-md-center mt-5 ">
-      <Col xs={6} lg={6} className="rounded bg-white">
-        <Form validated={validated}>
-          <Row className="rounded bg-white">
-            <Col xs={12} md={12} >
-              <Form.Group className="mb-3" name="linemanname" border="primary" >
-                <Form.Label>{t('lineman')}</Form.Label>
-                <Form.Control type="text" placeholder={t('linemanplaceholderlabel')} required value={input} onChange={(e) => setInput(e.target.value)} autoFocus />
-              </Form.Group>
-            </Col>
+        <Col xs={6} lg={6} className="rounded bg-white">
+          <Form validated={validated}>
+            <Row className="rounded bg-white">
+              <Col xs={12} md={12} >
+                <Form.Group className="mb-3" name="linemanname" border="primary" >
+                  <Form.Label>{t('lineman')}</Form.Label>
+                  <Form.Control type="text" placeholder={t('linemanplaceholderlabel')} required value={input} onChange={(e) => setInput(e.target.value)} autoFocus />
+                </Form.Group>
+              </Col>
 
-          </Row>
-          <Row className="rounded bg-white">
-            <Col xs={12} md={12} >
-              <Form.Group className="mb-3" name="mobilenumber" border="primary" >
-                <Form.Label>{t('phoneno')}</Form.Label>
-                <Form.Control type="number" placeholder={t('phonenoplaceholder')} required value={inputmobileno} onChange={(e) => setInputMobileno(e.target.value)} />
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row className="rounded bg-white">
-            <div className="col-md-12 text-center ">
-              <Button variant="primary"  type="button" className="text-center" onClick={updateId ? updateLineMan : handleSubmit}>
-                {t('savebutton')}
-              </Button>{' '}
-              <Button variant="primary"
-                type="button" className="text-center" onClick={clearFields}>{t('newbutton')}
-              </Button>
-            </div>
-            {isLoading ? <PlaceHolder /> : renderLineManList}
-            {errorMessage && <div className="error">{errorMessage}</div>}
+            </Row>
+            <Row className="rounded bg-white">
+              <Col xs={12} md={12} >
+                <Form.Group className="mb-3" name="mobilenumber" border="primary" >
+                  <Form.Label>{t('phoneno')}</Form.Label>
+                  <Form.Control type="number" placeholder={t('phonenoplaceholder')} required value={inputmobileno} onChange={(e) => setInputMobileno(e.target.value)} />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="rounded bg-white">
+              <div className="col-md-12 text-center ">
+                <Button variant="primary" type="button" className="text-center" onClick={updateId ? updateLineMan : handleSubmit}>
+                  {t('savebutton')}
+                </Button>{' '}
+                <Button variant="primary"
+                  type="button" className="text-center" onClick={clearFields}>{t('newbutton')}
+                </Button>
+              </div>
+              {isLoading ? <PlaceHolder /> : renderLineManList}
+              {errorMessage && <div className="error">{errorMessage}</div>}
 
-          </Row>
-        </Form>
+            </Row>
+          </Form>
         </Col>
       </Row>
     </Container>

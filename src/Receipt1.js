@@ -1,13 +1,17 @@
-import React, { useEffect, useState, useRef, Fragment } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Button, Container, Form, Row, Col } from 'react-bootstrap';
 import axios from "axios";
 import { baseURL } from "./utils/constant";
-import { Table, Pagination } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import { startOfWeek, dateFormat } from './FunctionsGlobal/StartDateFn';
 import { useTranslation } from "react-i18next";
 import PlaceHolder from "./components/spinner/placeholder";
+import {
+  useAuth
+} from "@clerk/clerk-react";
 function AddReceipt1() {
-  const { t, i18n } = useTranslation();
+  const { getToken } = useAuth();
+  const { t } = useTranslation();
   const [rowsData, setRowsData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -20,17 +24,22 @@ function AddReceipt1() {
   const [updateUI, setUpdateUI] = useState(false);
   const [isRestore, setIsRestore] = useState(false);
   useEffect(() => {
-    setIsLoading(true);
-    axios.get(`${baseURL}/receipt1/get/reference`).then((res) => {
-      receiptRef.current.value = res.data[0].receiptreference + (res.data[0].receiptcode + 1);
-      setReference(res.data)
-      setIsLoading(false);
-    }).catch(error => {
-      console.log("error=", error);
-      setErrorMessage(t('errormessagecustomer'));
-      setIsLoading(false);
-    })
-  }, [refresh]);
+    async function fetchData() {
+      setIsLoading(true);
+      const token = await getToken();
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      axios.get(`${baseURL}/receipt1/get/reference`).then((res) => {
+        receiptRef.current.value = res.data[0].receiptreference + (res.data[0].receiptcode + 1);
+        setReference(res.data)
+        setIsLoading(false);
+      }).catch(error => {
+        console.log("error=", error);
+        setErrorMessage(t('errormessagecustomer'));
+        setIsLoading(false);
+      })
+    }
+    fetchData();
+  }, [refresh, getToken, t]);
 
   useEffect(() => {
     document.addEventListener("keydown", function (event) {
@@ -68,7 +77,7 @@ function AddReceipt1() {
 
     const { name, value } = evnt.target;
     const rowsInput = [...rowsData];
-    if (evnt.target.name == "amount") {
+    if (evnt.target.name === "amount") {
       if (value > rowsInput[index]['loanamount']) {
         alert(t('greateramountthanloan'));
         rowsInput[index][name] = rowsInput[index]['amount'];
@@ -91,10 +100,11 @@ function AddReceipt1() {
 
     }
   }
-  function ProcessList(e, loanno, index) {
+  async function ProcessList(e, loanno, index) {
     setIsLoading(true);
+    const token = await getToken();
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     return (
-
       axios.get(`${baseURL}/receipt1/get/loanpendingduplicate`, {
         params:
           { loanno: loanno, receiptdate: dateFormat(startdateRef.current.value).toString() }
@@ -110,10 +120,8 @@ function AddReceipt1() {
           if (isexist === 0) {
             const Editcheck = rowsData.map((item, i) => {
               if (i === index)
-
                 return { ...item, ["customer_id"]: res.data[0]["_id"].customer_id, ["customername"]: res.data[0]["_id"].customer, ["loanamount"]: res.data[0].pending, ["dueamount"]: res.data[0]["_id"].dueamount };
               return item
-
             });
 
             setRowsData(Editcheck);
@@ -152,7 +160,7 @@ function AddReceipt1() {
       })
     )
   }
-  const saveReceipt = () => {
+  const saveReceipt = async () => {
     let items = rowsData.map((item) => {
       if (item.amount > 0) {
         return {
@@ -167,6 +175,8 @@ function AddReceipt1() {
 
     });
     setButtonDisabled(true);
+    const token = await getToken();
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     axios.post(`${baseURL}/receipt1/save/details`, {
       items: items,
       receiptref: (receiptRef.current.value).toString(),
@@ -183,7 +193,7 @@ function AddReceipt1() {
       setButtonDisabled(false);
     })
   }
-  const updateReceipt = () => {
+  const updateReceipt = async () => {
     let items = rowsData.map((item) => {
       return {
         receiptnumber: (receiptRef.current.value).toString(),
@@ -195,6 +205,8 @@ function AddReceipt1() {
       }
     });
     setButtonDisabled(true);
+    const token = await getToken();
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     axios.post(`${baseURL}/receipt1/update/details`, {
       items: items,
       receiptno: (receiptRef.current.value).toString()
@@ -215,9 +227,10 @@ function AddReceipt1() {
     setRefresh((prevState) => !prevState)
     startdateRef.current.value = startOfWeek();
   }
-  const RestoreReceipt = () => {
-    if (receiptRef.current.value != "") {
-      //alert((receiptRef.current.value).toString());
+  const RestoreReceipt = async () => {
+    if (receiptRef.current.value !== "") {
+      const token = await getToken();
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       axios.get(`${baseURL}/receipt1/get`,
         { params: { receiptno: (receiptRef.current.value).toString() } }).then((res) => {
           setIsRestore(true);
@@ -250,9 +263,11 @@ function AddReceipt1() {
     }
     setIsRestore(false);
   }
-  const deleteReceipt = () => {
+  const deleteReceipt = async () => {
 
     if (window.confirm(t('deleteyesnoalert'))) {
+      const token = await getToken();
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       axios.delete(`${baseURL}/receipt1/delete/${(receiptRef.current.value).toString()}`).then((res) => {
         alert(t('deletemessage'))
         ClearDetails();

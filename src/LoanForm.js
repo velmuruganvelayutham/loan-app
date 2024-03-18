@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Container, Row, Col, Form, Button, InputGroup } from 'react-bootstrap'
+import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import Select from 'react-select'
 import axios from "axios";
 import { baseURL } from './utils/constant';
 import { startOfWeek } from './FunctionsGlobal/StartDateFn';
 import { useTranslation } from "react-i18next";
 import PlaceHolder from "./components/spinner/placeholder";
-import useJWTToken from "./utils/useJWTToken";
+import {
+    useAuth
+} from "@clerk/clerk-react";
 var maxLoanNo = 0;
 function LoanForm() {
 
@@ -18,14 +20,12 @@ function LoanForm() {
             month: '2-digit',
             day: '2-digit',
         }).split("/").reverse().join("-");
-
         return dateendformat;
-
     }
-    const token = useJWTToken();
+    const { getToken } = useAuth();
     const [updateUI, setUpdateUI] = useState(false)
     const [errorMessage, setErrorMessage] = useState("");
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const [isLoading, setIsLoading] = useState(false);
     const [customers, setCustomers] = useState([]);
     const [linemannames, setLinemanNames] = useState([]);
@@ -62,59 +62,79 @@ function LoanForm() {
     const [isButtonDisabled, setButtonDisabled] = useState(false);
     const [isDelete, setIsDelete] = useState(false);
     useEffect(() => {
-        setIsLoading(true);
-        axios.get(`${baseURL}/get/view`).then((res) => {
-            setCustomers(res.data)
-            setIsLoading(false);
-        }).catch(error => {
-            console.log("error=", error);
-            setErrorMessage(t('errormessagecustomer'));
-            setIsLoading(false);
-        })
-    }, [token]);
+        async function fetchData() {
+            setIsLoading(true);
+            const token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            axios.get(`${baseURL}/get/view`).then((res) => {
+                setCustomers(res.data)
+                setIsLoading(false);
+            }).catch(error => {
+                console.log("error=", error);
+                setErrorMessage(t('errormessagecustomer'));
+                setIsLoading(false);
+            })
+        }
+        fetchData();
+    }, [getToken, t]);
 
     useEffect(() => {
-        setIsLoading(true);
-        axios.get(`${baseURL}/linemancreate/get`).then((res) => {
-            setLinemanNames(res.data)
-            setIsLoading(false);
-        }).catch(error => {
-            console.log("error=", error);
-            setErrorMessage(t('errormessagelineman'));
-            setIsLoading(false);
-        })
-    }, [token]);
+        async function fetchData() {
+            setIsLoading(true);
+            const token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            axios.get(`${baseURL}/linemancreate/get`).then((res) => {
+                setLinemanNames(res.data)
+                setIsLoading(false);
+            }).catch(error => {
+                console.log("error=", error);
+                setErrorMessage(t('errormessagelineman'));
+                setIsLoading(false);
+            })
+        }
+        fetchData();
+    }, [getToken, t]);
 
     useEffect(() => {
-        setIsLoading(true);
-        axios.get(`${baseURL}/loancreate/get/max`).then((res) => {
-            const checkstring = (res.data);
-            setIsLoading(false);
-            if (checkstring.length > 0) {
-                maxLoanNo = checkstring[0].maxCode + 1;
-            }
-            else {
-                maxLoanNo = 1;
-            }
-            loannoRef.current.value = maxLoanNo;
-        }).catch(error => {
-            console.log("error=", error);
-            setErrorMessage(t('errormessageloannumber'));
-            setIsLoading(false);
-        })
-    }, [maxValueShow, token])
+        async function fetchData() {
+            setIsLoading(true);
+            const token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            axios.get(`${baseURL}/loancreate/get/max`).then((res) => {
+                const checkstring = (res.data);
+                setIsLoading(false);
+                if (checkstring.length > 0) {
+                    maxLoanNo = checkstring[0].maxCode + 1;
+                }
+                else {
+                    maxLoanNo = 1;
+                }
+                loannoRef.current.value = maxLoanNo;
+            }).catch(error => {
+                console.log("error=", error);
+                setErrorMessage(t('errormessageloannumber'));
+                setIsLoading(false);
+            })
+        }
+        fetchData();
+    }, [maxValueShow, getToken, t])
 
     useEffect(() => {
-        setIsLoading(true);
-        axios.get(`${baseURL}/linemancreate/get/lines`).then((res) => {
-            setLineNames(res.data);
-            setIsLoading(false);
-        }).catch(error => {
-            console.log("error=", error);
-            setErrorMessage(t('errormessageline'));
-            setIsLoading(false);
-        });
-    }, [token]);
+        async function fetchData() {
+            setIsLoading(true);
+            const token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            axios.get(`${baseURL}/linemancreate/get/lines`).then((res) => {
+                setLineNames(res.data);
+                setIsLoading(false);
+            }).catch(error => {
+                console.log("error=", error);
+                setErrorMessage(t('errormessageline'));
+                setIsLoading(false);
+            });
+        }
+        fetchData();
+    }, [getToken, t]);
 
     useEffect(() => {
         document.addEventListener("keydown", function (event) {
@@ -125,7 +145,7 @@ function LoanForm() {
                 event.preventDefault();
             }
         });
-    }, [token]);
+    }, []);
 
     function customerSelect(value) {
 
@@ -157,7 +177,6 @@ function LoanForm() {
         }
 
     }
-    {/*console.log("DATE", date);*/ }
     function calculateTotalAmt() {
         let given = Number(givenAmt);
         let document = 0;
@@ -173,6 +192,16 @@ function LoanForm() {
         else if (weekscount == 42 || weekscount == 43) {
             document = ((30 * given) / 1000);
         }
+        else if (weekscount == 20) {
+            document = ((60 * given) / 1000);
+        }
+        else if (weekscount == 24) {
+            document = ((50 * given) / 1000);
+        }
+        else if (weekscount == 11) {
+            document = ((100 * given) / 1000);
+        }
+
         documentAmt.current.value = document.toFixed(2);
         let intrested = 0
         if (weekscount == 25) {
@@ -190,6 +219,15 @@ function LoanForm() {
         }
         else if (weekscount == 43) {
             intrested = ((given * 26) / 100);
+        }
+        else if (weekscount == 20) {
+            intrested = ((given * 14) / 100);
+        }
+        else if (weekscount == 24) {
+            intrested = ((given * 15) / 100);
+        }
+        else if (weekscount == 11) {
+            intrested = ((given * 0) / 100);
         }
 
         interestAmt.current.value = intrested.toFixed(2);
@@ -216,19 +254,9 @@ function LoanForm() {
                 return false;
             }
             else {
-
             }
-
         }
-
-        /*if (updateUI) {
-
-            
-
-        }*/
-
-        if (myForm.mySelectKey !== "" && linemanoptionRef.current.value !== "" && weekRef.current.value !== "" && bookRef.current.value, lineRef.current.value !== ""
-            && lineRef.current.value !== "" & weekscount !== "" && givenAmt !== "" && givenAmt !== 0 &&
+        if (myForm.mySelectKey !== "" && linemanoptionRef.current.value !== "" && weekRef.current.value !== "" && bookRef.current.value && lineRef.current.value !== "" && lineRef.current.value !== "" && weekscount !== "" && givenAmt !== "" && givenAmt !== 0 &&
             paidAmt.current.value !== 0 && paidAmt.current.value != "" &&
             Number(paidAmt.current.value) > 0) {
             if (updateUI) {
@@ -246,7 +274,8 @@ function LoanForm() {
 
     };
     const checkLoanInvolvedTrans = async () => {
-
+        const token = await getToken();
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         await axios.get(`${baseURL}/receipt/get`, { params: { loannumber: Number(oldLoanRef.current.value) } }).then((res) => {
 
             if (res.data.length > 1) {
@@ -273,8 +302,10 @@ function LoanForm() {
             setErrorMessage(t('errormessagereceiptdetails'));
         })
     }
-    const updateLoanDetails = () => {
+    const updateLoanDetails = async () => {
         setButtonDisabled(true);
+        const token = await getToken();
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         axios.put(`${baseURL}/loancreate/update`,
             {
                 oldloanno: Number(oldLoanRef.current.value), customer_id: myForm.mySelectKey, lineman_id: linemanoptionRef.current.value, city_id: cityidRef.current.value,
@@ -293,8 +324,10 @@ function LoanForm() {
             });
         alert(t('updatealertmessage'));
     }
-    const saveLoanDetails = () => {
+    const saveLoanDetails = async () => {
         setButtonDisabled(true);
+        const token = await getToken();
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         axios.post(`${baseURL}/loancreate/save`, {
             loanno: Number(loannoRef.current.value), customer_id: myForm.mySelectKey, lineman_id: linemanoptionRef.current.value, city_id: cityidRef.current.value,
             weekno: weekRef.current.value, bookno: bookRef.current.value, lineno: lineRef.current.value, document: documentRef.current.value, cheque: chequeRef.current.value,
@@ -313,7 +346,9 @@ function LoanForm() {
             });
         alert(t('savealertmessage'));
     }
-    const deleteLoanDetails = () => {
+    const deleteLoanDetails = async () => {
+        const token = await getToken();
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         axios.delete(`${baseURL}/loancreate/delete/${Number(oldLoanRef.current.value)}`).then((res) => {
             alert(t('deletemessage'))
             setIsDelete(false);
@@ -326,8 +361,10 @@ function LoanForm() {
             setButtonDisabled(false);
         });
     }
-    const loadOldLoanRef = () => {
+    const loadOldLoanRef = async () => {
         if (oldLoanRef.current.value != "") {
+            const token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             axios.get(`${baseURL}/loancreate/get/oldLoanRef`,
                 { params: { loanno: Number(oldLoanRef.current.value) } }).then((res) => {
 
@@ -409,7 +446,7 @@ function LoanForm() {
                         <Col xs={12} md={4} className="rounded bg-white">
                             <Form.Group className="mb-3" border="primary" >
                                 <Form.Label>{t('loanno')}</Form.Label> {/*loan no*/}
-                                <Form.Control ref={loannoRef} type="number" required readonly="readonly" />
+                                <Form.Control ref={loannoRef} type="number" required readOnly={true} />
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={2} className="rounded bg-white">
@@ -441,7 +478,7 @@ function LoanForm() {
                                     <option value="">{t('linemanplaceholder')}</option>
                                     {
                                         linemannames.map((linemanname) => (
-                                            <option value={linemanname._id}>{linemanname.linemanname}</option>
+                                            <option key={linemanname._id} value={linemanname._id}>{linemanname.linemanname}</option>
                                         ))}
                                 </Form.Select>
                             </Form.Group>
@@ -495,7 +532,7 @@ function LoanForm() {
                                     <option value="">{t('citylineplaceholder')}</option>
                                     {
                                         linenames.map((linename) => (
-                                            <option value={linename.lineno}>{linename.linename}</option>
+                                            <option key={linename.lineno} value={linename.lineno}>{linename.linename}</option>
                                         ))}
                                 </Form.Select>
                             </Form.Group>
@@ -558,7 +595,7 @@ function LoanForm() {
                         <Col xs={12} md={3} className="rounded bg-white">
                             <Form.Group className="mb-3" border="primary" >
                                 <Form.Label>{t('enddatedetail')}</Form.Label>{/*finished Date*/}
-                                <Form.Control type="date" ref={endDateRef} required value={endingDate()} />
+                                <Form.Control type="date" ref={endDateRef} required defaultValue={endingDate()} />
                             </Form.Group>
                         </Col>
                     </Row>

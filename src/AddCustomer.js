@@ -6,9 +6,11 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import { useTranslation } from "react-i18next";
 import Select from 'react-select'
-import useJWTToken from "./utils/useJWTToken";
+import {
+  useAuth
+} from "@clerk/clerk-react";
 function AddCustomer() {
-  const token = useJWTToken();
+  const { getToken } = useAuth();
   const [input, setInput] = useState("");
   const [inputmobileno, setInputMobileno] = useState("")
   const [customers, setCustomer] = useState([]);
@@ -18,7 +20,6 @@ function AddCustomer() {
   const [citynames, setCitynames] = useState([]);
   const [validated, setValidated] = useState(false);
   const [city, setCity] = useState("");
-  const[showError,setShowError]=useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const { t } = useTranslation();
   const fathernameref = useRef(null);
@@ -29,25 +30,34 @@ function AddCustomer() {
   const [myForm, setMyForm] = useState(initialFormState);
 
   useEffect(() => {
-    axios.get(`${baseURL}/citycreate/get`).then((res) => {
-      setCitynames(res.data)
-      setErrorMessage(t(''));
-    }).catch(error => {
-      console.log("error=", error);
-      setErrorMessage(t('errormessagecity'));
-    })
-  }, [token, t]);
+    async function fetchData() {
+      const token = await getToken();
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      await axios.get(`${baseURL}/citycreate/get`).then((res) => {
+        setCitynames(res.data)
+        setErrorMessage(t(''));
+      }).catch(error => {
+        console.log("error=", error);
+        setErrorMessage(t('errormessagecity'));
+      })
+    }
+    fetchData();
+  }, [getToken, t]);
   useEffect(() => {
-    axios.get(`${baseURL}/get/view`).then((res) => {
-      setCustomer(res.data);
-      setErrorMessage(t(''));
-      console.log(res.data);
-    }).catch(error => {
-      
-      console.log("error=", error);
-      setErrorMessage(t('errormessagecustomer'));
-    })
-  }, [token, t]);
+    async function fetchData() {
+      const token = await getToken();
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      axios.get(`${baseURL}/get/view`).then((res) => {
+        setCustomer(res.data);
+        setErrorMessage(t(''));
+        console.log(res.data);
+      }).catch(error => {
+        console.log("error=", error);
+        setErrorMessage(t('errormessagecustomer'));
+      })
+    }
+    fetchData();
+  }, [getToken, t]);
 
   useEffect(() => {
     document.addEventListener("keydown", function (event) {
@@ -76,8 +86,9 @@ function AddCustomer() {
   };
 
 
-  const addCustomer = () => {
-
+  const addCustomer = async () => {
+    const token = await getToken();
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     axios.post(`${baseURL}/save`, {
       customer: input, mobileno: inputmobileno, cityid: city, fathername: fathernameref.current.value,
       address: addressRef.current.value, work: workRef.current.value, relationtype: Number(radioValue), referencecity: cityRef.current.value
@@ -99,7 +110,9 @@ function AddCustomer() {
     alert(t('savealertmessage'));
   }
 
-  const updateCustomer = () => {
+  const updateCustomer = async () => {
+    const token = await getToken();
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
     axios.put(`${baseURL}/update/${updateId}`, {
       customer: input, mobileno: inputmobileno, cityid: city, fathername: fathernameref.current.value,

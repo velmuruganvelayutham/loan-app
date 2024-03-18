@@ -4,36 +4,45 @@ import { Button, Container, Form, Row, Col } from 'react-bootstrap';
 import { baseURL } from "../utils/constant";
 import { useTranslation } from "react-i18next";
 import PlaceHolder from "../components/spinner/placeholder";
-import { startOfWeek,endOfWeek,notRunningOfWeek } from '../FunctionsGlobal/StartDateFn';
+import { startOfWeek, endOfWeek, notRunningOfWeek } from '../FunctionsGlobal/StartDateFn';
 import ReactToPrint from 'react-to-print';
 import ListTotalLedger from "./ListTotalLedger";
-import useJWTToken from "../utils/useJWTToken";
-function TotalLedger(){
-    const token = useJWTToken();
+import {
+    useAuth
+} from "@clerk/clerk-react";
+function TotalLedger() {
+    const { getToken } = useAuth();
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    const[ledger,setLedger]=useState([]);
-    const { t, i18n } = useTranslation();
+    const [ledger, setLedger] = useState([]);
+    const { t } = useTranslation();
     const startDateRef = useRef(startOfWeek());
     const endDateRef = useRef(endOfWeek());
     const componentRef = useRef();
-    const notrunningDateRef=useRef(notRunningOfWeek());
+    const notrunningDateRef = useRef(notRunningOfWeek());
     const reportType = useRef(0);
-    const processList = () => {
+    const processList = async () => {
         //alert(reportType.current.value);
-        var reporttypename=""
+        var reporttypename = ""
         setIsLoading(true);
-        if(reportType.current.value==1){
-            reporttypename="totalledgercity"
+        if (reportType.current.value == 1) {
+            reporttypename = "totalledgercity"
         }
-        else{
-            reporttypename="totalledger"
+        else {
+            reporttypename = "totalledger"
         }
+        const token = await getToken();
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
         return (
-            
-            axios.get(`${baseURL}/city/${reporttypename}`, { params: {fromdate: startDateRef.current.value, 
-                todate: endDateRef.current.value,notrundate:notrunningDateRef.current.value,
-                reporttype:reportType.current.value} }).then((res) => {
+
+            axios.get(`${baseURL}/city/${reporttypename}`, {
+                params: {
+                    fromdate: startDateRef.current.value,
+                    todate: endDateRef.current.value, notrundate: notrunningDateRef.current.value,
+                    reporttype: reportType.current.value
+                }
+            }).then((res) => {
                 setLedger(res.data)
                 console.log(res.data)
                 setIsLoading(false);
@@ -48,10 +57,10 @@ function TotalLedger(){
     const handlePrint = () => {
         window.print()
     }
-    const renderTotalLedgerList=(
+    const renderTotalLedgerList = (
         <Row ref={componentRef}>
-            <ListTotalLedger totalledger={ledger} datefrom={startDateRef.current.value} 
-            dateto={endDateRef.current.value} notrunningdate={notrunningDateRef.current.value} reportypeval={reportType.current.value} />
+            <ListTotalLedger totalledger={ledger} datefrom={startDateRef.current.value}
+                dateto={endDateRef.current.value} notrunningdate={notrunningDateRef.current.value} reportypeval={reportType.current.value} />
         </Row>
     )
     return (
@@ -62,19 +71,19 @@ function TotalLedger(){
                         <Col md={3} className="rounder bg-white">
                             <Form.Group>
                                 <Form.Label>{t('startdate')}</Form.Label>
-                                <Form.Control type="date" ref={startDateRef}  defaultValue={startOfWeek()} />
+                                <Form.Control type="date" ref={startDateRef} defaultValue={startOfWeek()} />
                             </Form.Group>
                         </Col>
                         <Col md={3} className="rounder bg-white">
                             <Form.Group>
                                 <Form.Label>{t('enddate')}</Form.Label>
-                                <Form.Control type="date" ref={endDateRef}  defaultValue={endOfWeek()} />
+                                <Form.Control type="date" ref={endDateRef} defaultValue={endOfWeek()} />
                             </Form.Group>
                         </Col>
                         <Col md={3} className="rounder bg-white">
                             <Form.Group>
                                 <Form.Label>{t('notrunningdate')}</Form.Label>
-                                <Form.Control type="date" ref={notrunningDateRef}  defaultValue={notRunningOfWeek()} />
+                                <Form.Control type="date" ref={notrunningDateRef} defaultValue={notRunningOfWeek()} />
                             </Form.Group>
                         </Col>
                         <Col md={3} className="rounder bg-white">
@@ -84,7 +93,7 @@ function TotalLedger(){
                                     ref={reportType} defaultValue={0} >
                                     <option value={0} >{t('linewise')}</option>
                                     <option value={1}>{t('citywise')}</option>
-                                    
+
                                 </Form.Select>
                             </Form.Group>
                         </Col>
