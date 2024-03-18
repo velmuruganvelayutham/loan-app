@@ -2,7 +2,7 @@ import React from "react";
 export function startOfWeek() {
     var curr = new Date();
     var currday = curr.getDay();
-    console.log(process.env.REACT_APP_LOAN_APP_STARTDATE);
+    
     if (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) {
         if (currday == 0) {
             currday = 7;

@@ -8,14 +8,11 @@ var arr2 = Array.from({ length: 9 }, (_, i) => i + 12)
 function Chart({ loanno, ledger, company, date }) {
     let totalamount = 0;
     const { t, i18n } = useTranslation();
-
     var serialno = 0;
     var records = ledger
     let startdateadd;
     let relationtype=0;
-
     function TablesRows(no, date, income, balance) {
-
         return (
             <tr className={(records.length > 0 && first.weekcount<40) ?'chartheight':'chartheight42'}>
                 <td style={{ fontSize: "11px",textAlign:"center",padding:"0",margin:"0" }} className='text-nowrap overflow-hidden'>{no}</td>
@@ -27,9 +24,7 @@ function Chart({ loanno, ledger, company, date }) {
     }
 
     if (loanno !== "") {
-
         first = records.length > 0 ? ledger[0] : "";
-        
         totalamount = first.totalamount;
         startdateadd=new Date(first.startdate);
         relationtype=first.relationtype;
@@ -52,15 +47,22 @@ function Chart({ loanno, ledger, company, date }) {
         else if (first.weekcount === 25) {
             arr1 = Array.from(Array(16).keys());
             arr2 = Array.from({ length: 9 }, (_, i) => i + 12)
-
         }
-
-
+        else if (first.weekcount === 24) {
+            arr1 = Array.from(Array(16).keys());
+            arr2 = Array.from({ length: 8 }, (_, i) => i + 12)
+        }
+        else if (first.weekcount === 20) {
+            arr1 = Array.from(Array(16).keys());
+            arr2 = Array.from({ length: 4 }, (_, i) => i + 12)
+        }
+        else if (first.weekcount === 11) {
+            arr1 = Array.from(Array(11).keys());
+            arr2 = Array.from({ length: 0 }, (_, i) => i + 12)
+        }
     }
 
     return (
-
-
         <Container className="rounded bg-white">
             <Row style={{paddingLeft:"5px"}}>
                 <Form>

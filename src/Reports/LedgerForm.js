@@ -118,10 +118,10 @@ function LedgerForm() {
                     <Row>
                         <Col xs={6} md={4} className="rounded bg-white">
                             <Form.Group className="mb-3" name="linenumber" border="primary" >
-                                <Form.Label>{t('citylinelabel')}</Form.Label>
+                                <Form.Label>{t('city')}</Form.Label>
                                 <Form.Select aria-label="Default select example" value={lineNo}
                                     onChange={(e) => setLineNo(e.target.value)}  >
-                                    <option key={"0"} value={""} >{t('citylineplaceholder')}</option>
+                                    <option key={"0"} value={""} >{t('cityplaceholder')}</option>
 
                                     {
                                         lineNames.map((lines) => (

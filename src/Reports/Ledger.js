@@ -16,12 +16,12 @@ function Ledger({ loanno, ledger, company, date }) {
 
         return (
             <tr>
-                <td>{date !== "" ? dateFormatdd(date) : ""}</td>
-                <td>{no == 1 && weekno == "" ? income : no}</td>
-                <td>{no == 1 && weekno == "" ? "" : income}</td>
-                <td>{no == 1 && weekno != "" ? income : ""}</td>
-                <td>{no == 1 && weekno != "" || date == "" ? "" : totalamount}</td>
-                <td>{weekno}</td>
+                <td style={{fontSize:"11px"}}>{date !== "" ? dateFormatdd(date) : ""}</td>
+                <td style={{fontSize:"11px"}}>{no == 1 && weekno == "" ? income : no}</td>
+                <td style={{fontSize:"11px"}}>{no == 1 && weekno == "" ? "" : income}</td>
+                <td style={{fontSize:"11px"}}>{no == 1 && weekno != "" ? income : ""}</td>
+                <td style={{fontSize:"11px"}}>{no == 1 && weekno != "" || date == "" ? "" : totalamount}</td>
+                <td style={{fontSize:"11px"}}>{weekno}</td>
             </tr>
         )
     }
@@ -52,7 +52,21 @@ function Ledger({ loanno, ledger, company, date }) {
             arr2 = Array.from({ length: 13 }, (_, i) => i + 12)
 
         }
+        else if (first.weekcount === 24) {
+            arr1 = Array.from(Array(12).keys());
+            arr2 = Array.from({ length: 12 }, (_, i) => i + 12)
 
+        }
+        else if (first.weekcount === 20) {
+            arr1 = Array.from(Array(10).keys());
+            arr2 = Array.from({ length: 10 }, (_, i) => i + 12)
+
+        }
+        else if (first.weekcount === 11) {
+            arr1 = Array.from(Array(11).keys());
+            arr2 = Array.from({ length: 0 }, (_, i) => i + 12)
+
+        }
 
     }
 
@@ -153,7 +167,7 @@ function Ledger({ loanno, ledger, company, date }) {
                                         <Form.Label>&nbsp;{ledger.length > 0 ? dateFormatdd(first.finisheddate) : ""}</Form.Label>
                                     </Form.Group>
                                     <Form.Group border="primary" >
-                                        <Form.Label>{t('lineman')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                        <Form.Label>{t('lineman')}&nbsp;:</Form.Label>
                                         <Form.Label>&nbsp;{ledger.length > 0 ? first.linemanname : ""}</Form.Label>
                                     </Form.Group>
 
@@ -193,11 +207,9 @@ function Ledger({ loanno, ledger, company, date }) {
                         }} />
                     </Row>
 
-                    <Row>
-                        <Container className='col-sm-6 col-md-6 fixed p-3'>
-                            
-                                
-                                    <Table className="table text-center fs-6 table-bordered border-dark  " >
+                    <Row style={{paddingLeft:"5px"}}>
+                        <Container className='col-sm-6 col-md-6'>
+                                    <Table className="table text-center table-bordered border-dark  " >
                                         <thead>
                                             <tr >
                                                 <th className="col-sm-3 col-md-3">
@@ -253,8 +265,8 @@ function Ledger({ loanno, ledger, company, date }) {
                                     </Table>
                         </Container>
 
-                        <Container className='col-sm-6 col-md-6 fixed'>
-                                    <Table className="table  text-center fs-6 table-bordered border-dark  " >
+                        <Container className='col-sm-6 col-md-6 p-0'>
+                                    <Table className="table  text-center table-bordered border-dark  " >
                                         <thead>
                                             <tr >
                                                 <th className="col-sm-3 col-md-3">

@@ -10,8 +10,9 @@ import {
     useAuth
 } from "@clerk/clerk-react";
 var maxLoanNo = 0;
+let weekCount = process.env.REACT_APP_DEFAULT_WEEK_COUNT;
 function LoanForm() {
-
+   
     function endingDate() {
         var datestarted = new Date(startDate);
         var enddatecal = new Date(datestarted.setDate(datestarted.getDate() + ((weekscount - 1) * 7)))// weeks * 7days per week
@@ -30,7 +31,8 @@ function LoanForm() {
     const [customers, setCustomers] = useState([]);
     const [linemannames, setLinemanNames] = useState([]);
     const [inputmobileno, setInputMobileno] = useState();
-    const [weekscount, setWeeksCount] = useState(25);
+    const [weekscount, setWeeksCount] = useState(weekCount);
+    
     const [givenAmt, setGivenAmt] = useState("");
     const [linenames, setLineNames] = useState([]);
     const documentAmt = useRef(null);
@@ -60,7 +62,6 @@ function LoanForm() {
     const [validated, setValidated] = useState(false);
     const [maxValueShow, setMaxValueShow] = useState(false);
     const [isButtonDisabled, setButtonDisabled] = useState(false);
-    const [isDelete, setIsDelete] = useState(false);
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true);
@@ -260,7 +261,7 @@ function LoanForm() {
             paidAmt.current.value !== 0 && paidAmt.current.value != "" &&
             Number(paidAmt.current.value) > 0) {
             if (updateUI) {
-                if (checkLoanInvolvedTrans() == true) {
+                if (checkLoanInvolvedTrans("UPDATE") == true) {
                     return false;
                 }
 
@@ -273,7 +274,7 @@ function LoanForm() {
 
 
     };
-    const checkLoanInvolvedTrans = async () => {
+    const checkLoanInvolvedTrans = async (isUpdateOrDelete) => {
         const token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         await axios.get(`${baseURL}/receipt/get`, { params: { loannumber: Number(oldLoanRef.current.value) } }).then((res) => {
@@ -283,13 +284,13 @@ function LoanForm() {
                 return true;
             }
             else {
-                if (isDelete === true) {
+                if (isUpdateOrDelete === "DELETE") {
                     if (window.confirm(t('deletealertmessage'))) {
                         deleteLoanDetails();
                         return false;
                     }
                 }
-                else {
+                else if (isUpdateOrDelete === "UPDATE") {
                     if (window.confirm(t('yesornoalertmessage'))) {
                         updateLoanDetails();
                         return false;
@@ -351,12 +352,12 @@ function LoanForm() {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         axios.delete(`${baseURL}/loancreate/delete/${Number(oldLoanRef.current.value)}`).then((res) => {
             alert(t('deletemessage'))
-            setIsDelete(false);
+
             clearFields();
         }).catch(error => {
             console.log("error=", error);
             setErrorMessage(t('errormessagedeleteloan'));
-            setIsDelete(false);
+
             setIsLoading(false);
             setButtonDisabled(false);
         });
@@ -432,8 +433,7 @@ function LoanForm() {
         }
     })
     const deleteLoan = () => {
-        setIsDelete(true);
-        if (checkLoanInvolvedTrans() == true) {
+        if (checkLoanInvolvedTrans("DELETE") == true) {
             return false;
         }
     }
@@ -595,7 +595,7 @@ function LoanForm() {
                         <Col xs={12} md={3} className="rounded bg-white">
                             <Form.Group className="mb-3" border="primary" >
                                 <Form.Label>{t('enddatedetail')}</Form.Label>{/*finished Date*/}
-                                <Form.Control type="date" ref={endDateRef} required defaultValue={endingDate()} />
+                                <Form.Control type="date" ref={endDateRef} required defaultValue={endingDate()} value={endingDate()} />
                             </Form.Group>
                         </Col>
                     </Row>

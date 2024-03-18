@@ -28,7 +28,7 @@ function AddCustomer() {
   const cityRef = useRef(null);
   const initialFormState = { mySelectKey: null };
   const [myForm, setMyForm] = useState(initialFormState);
-
+  const[updateUI,setUpdateUI]=useState(false);
   useEffect(() => {
     async function fetchData() {
       const token = await getToken();
@@ -57,7 +57,7 @@ function AddCustomer() {
       })
     }
     fetchData();
-  }, [getToken, t]);
+  }, [getToken, t,updateUI]);
 
   useEffect(() => {
     document.addEventListener("keydown", function (event) {
@@ -102,6 +102,7 @@ function AddCustomer() {
       addressRef.current.value = "";
       workRef.current.value = "";
       cityRef.current.value = "";
+      setUpdateUI((prevState) => !prevState);
     }).catch(error => {
       console.log("error=", error);
       setErrorMessage(t('errormessagesavecustomer'));
@@ -128,7 +129,7 @@ function AddCustomer() {
       cityRef.current.value = "";
       setUpdateId(null);
       setMyForm(initialFormState);
-
+      setUpdateUI((prevState) => !prevState);
     }).catch(error => {
       console.log("error=", error);
       setErrorMessage(t('errormessagesavecustomer'));
