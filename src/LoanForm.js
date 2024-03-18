@@ -31,7 +31,7 @@ function LoanForm() {
     const [customers, setCustomers] = useState([]);
     const [linemannames, setLinemanNames] = useState([]);
     const [inputmobileno, setInputMobileno] = useState();
-    const [weekscount, setWeeksCount] = useState(weekCount);
+    const [weekscount, setWeeksCount] = useState(Number(weekCount));
 
     const [givenAmt, setGivenAmt] = useState("");
     const [linenames, setLineNames] = useState([]);
