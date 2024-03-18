@@ -10,7 +10,8 @@ import {
     useAuth
 } from "@clerk/clerk-react";
 var maxLoanNo = 0;
-let weekCount = process.env.REACT_APP_DEFAULT_WEEK_COUNT;
+const weekCount = process.env.REACT_APP_DEFAULT_WEEK_COUNT;
+console.log("weekCountOutside", process.env.REACT_APP_DEFAULT_WEEK_COUNT)
 function LoanForm() {
 
     function endingDate() {
@@ -63,6 +64,7 @@ function LoanForm() {
     const [maxValueShow, setMaxValueShow] = useState(false);
     const [isButtonDisabled, setButtonDisabled] = useState(false);
     useEffect(() => {
+        console.log("weekCount", weekCount)
         async function fetchData() {
             setIsLoading(true);
             const token = await getToken();
