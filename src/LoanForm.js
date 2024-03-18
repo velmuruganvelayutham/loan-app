@@ -32,7 +32,9 @@ function LoanForm() {
     const [customers, setCustomers] = useState([]);
     const [linemannames, setLinemanNames] = useState([]);
     const [inputmobileno, setInputMobileno] = useState();
-    const [weekscount, setWeeksCount] = useState(Number(weekCount));
+    //const [weekscount, setWeeksCount] = useState(Number(weekCount));
+    const [weekscount, setWeeksCount] = useState(25);
+
 
     const [givenAmt, setGivenAmt] = useState("");
     const [linenames, setLineNames] = useState([]);
@@ -575,7 +577,7 @@ function LoanForm() {
                         <Col xs={12} md={2} className="rounded bg-white">
                             <Form.Group className="mb-3" name="bookno" border="primary" >
                                 <Form.Label>{t('week')}</Form.Label>{/*week*/}
-                                <Form.Control className='bg-info text-center' size="lg" type="number" placeholder="How Many Weeks" required defaultValue={ weekCount } value={weekscount} onChange={(e) => setWeeksCount(e.target.value)} />
+                                <Form.Control className='bg-info text-center' size="lg" type="number" placeholder="How Many Weeks" required value={weekscount} onChange={(e) => setWeeksCount(e.target.value)} />
                             </Form.Group>
                         </Col>
                     </Row>
