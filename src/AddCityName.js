@@ -87,6 +87,7 @@ function AddCityName() {
         axios.post(`${baseURL}/citycreate/save`, { cityname: inputCity, citylineno: lineNo })
             .then((res) => {
                 setIsLoading(false);
+                setErrorMessage("");
                 setInputCity("");
                 setLineNo("");
                 setUpdateUI((prevState) => !prevState);
@@ -117,6 +118,7 @@ function AddCityName() {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         axios.put(`${baseURL}/citycreate/update/${updateId}`, { cityname: inputCity, citylineno: lineNo }).then((res) => {
             setIsLoading(false);
+            setErrorMessage("");
             setUpdateUI((prevState) => !prevState)
             setInputCity("");
             setLineNo("");

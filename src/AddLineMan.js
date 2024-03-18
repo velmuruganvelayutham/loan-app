@@ -26,7 +26,8 @@ function AddLineMan() {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       axios.get(`${baseURL}/linemancreate/get`).then((res) => {
         setLineMans(res.data)
-        setIsLoading(false)
+        setIsLoading(false);
+        setErrorMessage("");
       })
         .catch(error => {
           console.log("error=", error);
@@ -67,7 +68,8 @@ function AddLineMan() {
       setIsLoading(false)
       setInput("")
       setInputMobileno("");
-      setUpdateUI((prevState) => !prevState)
+      setUpdateUI((prevState) => !prevState);
+      setErrorMessage("");
     })
       .catch(error => {
         setErrorMessage(t('errormessagesavelineman'));

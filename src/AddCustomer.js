@@ -35,7 +35,7 @@ function AddCustomer() {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       await axios.get(`${baseURL}/citycreate/get`).then((res) => {
         setCitynames(res.data)
-        setErrorMessage(t(''));
+        setErrorMessage("");
       }).catch(error => {
         console.log("error=", error);
         setErrorMessage(t('errormessagecity'));
@@ -49,7 +49,7 @@ function AddCustomer() {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       axios.get(`${baseURL}/get/view`).then((res) => {
         setCustomer(res.data);
-        setErrorMessage(t(''));
+        setErrorMessage("");
         console.log(res.data);
       }).catch(error => {
         console.log("error=", error);
@@ -103,6 +103,7 @@ function AddCustomer() {
       workRef.current.value = "";
       cityRef.current.value = "";
       setUpdateUI((prevState) => !prevState);
+      setErrorMessage("");
     }).catch(error => {
       console.log("error=", error);
       setErrorMessage(t('errormessagesavecustomer'));
@@ -130,6 +131,7 @@ function AddCustomer() {
       setUpdateId(null);
       setMyForm(initialFormState);
       setUpdateUI((prevState) => !prevState);
+      setErrorMessage("");
     }).catch(error => {
       console.log("error=", error);
       setErrorMessage(t('errormessagesavecustomer'));

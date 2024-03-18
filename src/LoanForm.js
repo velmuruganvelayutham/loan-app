@@ -12,7 +12,7 @@ import {
 var maxLoanNo = 0;
 let weekCount = process.env.REACT_APP_DEFAULT_WEEK_COUNT;
 function LoanForm() {
-   
+
     function endingDate() {
         var datestarted = new Date(startDate);
         var enddatecal = new Date(datestarted.setDate(datestarted.getDate() + ((weekscount - 1) * 7)))// weeks * 7days per week
@@ -32,7 +32,7 @@ function LoanForm() {
     const [linemannames, setLinemanNames] = useState([]);
     const [inputmobileno, setInputMobileno] = useState();
     const [weekscount, setWeeksCount] = useState(weekCount);
-    
+
     const [givenAmt, setGivenAmt] = useState("");
     const [linenames, setLineNames] = useState([]);
     const documentAmt = useRef(null);
@@ -70,6 +70,7 @@ function LoanForm() {
             axios.get(`${baseURL}/get/view`).then((res) => {
                 setCustomers(res.data)
                 setIsLoading(false);
+                setErrorMessage("");
             }).catch(error => {
                 console.log("error=", error);
                 setErrorMessage(t('errormessagecustomer'));
@@ -87,6 +88,7 @@ function LoanForm() {
             axios.get(`${baseURL}/linemancreate/get`).then((res) => {
                 setLinemanNames(res.data)
                 setIsLoading(false);
+                setErrorMessage("");
             }).catch(error => {
                 console.log("error=", error);
                 setErrorMessage(t('errormessagelineman'));
@@ -104,6 +106,7 @@ function LoanForm() {
             axios.get(`${baseURL}/loancreate/get/max`).then((res) => {
                 const checkstring = (res.data);
                 setIsLoading(false);
+                setErrorMessage("");
                 if (checkstring.length > 0) {
                     maxLoanNo = checkstring[0].maxCode + 1;
                 }
@@ -128,6 +131,7 @@ function LoanForm() {
             axios.get(`${baseURL}/linemancreate/get/lines`).then((res) => {
                 setLineNames(res.data);
                 setIsLoading(false);
+                setErrorMessage("");
             }).catch(error => {
                 console.log("error=", error);
                 setErrorMessage(t('errormessageline'));
@@ -278,7 +282,7 @@ function LoanForm() {
         const token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         await axios.get(`${baseURL}/receipt/get`, { params: { loannumber: Number(oldLoanRef.current.value) } }).then((res) => {
-
+            setErrorMessage("");
             if (res.data.length > 1) {
                 alert(t('loanupdatealert'))
                 return true;
@@ -316,6 +320,7 @@ function LoanForm() {
                 totalamount: Number(totalAmt.current.value), dueamount: Number(dueAmt.current.value), paidamount: Number(paidAmt.current.value)
             }).then((res) => {
                 setButtonDisabled(false);
+                setErrorMessage("");
                 clearFields();
             }).catch(error => {
                 console.log("error=", error);
@@ -339,6 +344,7 @@ function LoanForm() {
             .then((res) => {
                 setButtonDisabled(false);
                 clearFields();
+                setErrorMessage("");
             }).catch(error => {
                 console.log("error=", error);
                 setErrorMessage(t('errormessagesaveloan'));
@@ -352,12 +358,11 @@ function LoanForm() {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         axios.delete(`${baseURL}/loancreate/delete/${Number(oldLoanRef.current.value)}`).then((res) => {
             alert(t('deletemessage'))
-
+            setErrorMessage("");
             clearFields();
         }).catch(error => {
             console.log("error=", error);
             setErrorMessage(t('errormessagedeleteloan'));
-
             setIsLoading(false);
             setButtonDisabled(false);
         });

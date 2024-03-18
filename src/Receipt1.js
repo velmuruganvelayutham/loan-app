@@ -32,6 +32,7 @@ function AddReceipt1() {
         receiptRef.current.value = res.data[0].receiptreference + (res.data[0].receiptcode + 1);
         setReference(res.data)
         setIsLoading(false);
+        setErrorMessage("");
       }).catch(error => {
         console.log("error=", error);
         setErrorMessage(t('errormessagecustomer'));
@@ -186,6 +187,7 @@ function AddReceipt1() {
       setRowsData([]);
       ClearDetails();
       setButtonDisabled(false);
+      setErrorMessage("");
       alert(t('savealertmessage'))
     }).catch(error => {
       console.log("error=", error);
@@ -214,6 +216,7 @@ function AddReceipt1() {
       setRowsData([]);
       ClearDetails();
       setButtonDisabled(false);
+      setErrorMessage("");
       alert(t('savealertmessage'))
     }).catch(error => {
       console.log("error=", error);
@@ -271,6 +274,7 @@ function AddReceipt1() {
       axios.delete(`${baseURL}/receipt1/delete/${(receiptRef.current.value).toString()}`).then((res) => {
         alert(t('deletemessage'))
         ClearDetails();
+        setErrorMessage("");
       }).catch(error => {
         console.log("error=", error);
         setErrorMessage(t('errormessagedeletereceipt'));

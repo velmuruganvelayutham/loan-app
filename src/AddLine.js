@@ -28,7 +28,8 @@ function AddLine() {
             axios.get(`${baseURL}/linemancreate/get/lines`).then((res) => {
                 setLinenames(res.data)
                 console.log(res.data);
-                setIsLoading(false)
+                setIsLoading(false);
+                setErrorMessage("");
             })
                 .catch(error => {
                     console.log("error=", error);
@@ -71,8 +72,10 @@ function AddLine() {
             setIsLoading(false)
             setInput("")
             setInputLineno("");
+            setErrorMessage("");
             setUpdateUI((prevState) => !prevState)
             alert(t('savealertmessage'));
+
         })
             .catch(error => {
                 setErrorMessage(t('errormessagesaveline'));
@@ -98,6 +101,7 @@ function AddLine() {
             setInput("");
             setInputLineno("");
             setUpdateId(null);
+            setErrorMessage("");
         }).catch(error => {
             setErrorMessage(t('errormessagesaveline'));
             setIsLoading(false);
