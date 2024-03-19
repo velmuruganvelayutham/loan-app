@@ -46,7 +46,7 @@ jobs:
         uses: jacobtomlinson/gha-find-replace@v3
         with:
           find: "HOMEPAGE_PLACEHOLDER"
-          replace: "https://velmuruganvelayutham.github.io/${{ secrets.REACT_APP_LOAN_APP_BASE_NAME }}"
+          replace: "https://velmuruganvelayutham.github.io${{ secrets.REACT_APP_LOAN_APP_BASE_NAME }}"
           include: "**package.json"
       - name: display package.json 
         run: cat ${{ github.workspace }}/package.json
