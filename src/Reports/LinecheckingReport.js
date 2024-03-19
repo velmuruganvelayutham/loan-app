@@ -19,7 +19,7 @@ var linecheckingreportname = "checkingdetails";
 var passingargument = "";
 function LinecheckingReport() {
     const { getToken } = useAuth();
-    const [cityNames, setCityNames] = useState([]);
+    const [lineNames, setLineNames] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [checkingDetailsLine, setCheckingDetailsLine] = useState([]);
@@ -28,7 +28,7 @@ function LinecheckingReport() {
     const [linemannames, setLinemanNames] = useState([]);
     const reportType = useRef(0);
     const { t, i18n } = useTranslation();
-    const [city, setCity] = useState("");
+    const [line, setLine] = useState("");
     const startDateRef = useRef(startOfWeek());
     const endDateRef = useRef(endOfWeek());
     const [printDateRef, setPrintDateRef] = useState(startOfWeek())
@@ -77,8 +77,8 @@ function LinecheckingReport() {
             setIsLoading(true);
             const token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            axios.get(`${baseURL}/citycreate/get`).then((res) => {
-                setCityNames(res.data);
+            axios.get(`${baseURL}/linemancreate/get/lines`).then((res) => {
+                setLineNames(res.data);
                 setIsLoading(false);
             }).catch(error => {
                 console.log("error=", error);
@@ -95,12 +95,12 @@ function LinecheckingReport() {
             if (Number(reportType.current.value) === 0) {
 
                 linecheckingreportname = "checkingdetails";
-                passingargument = city;
+                passingargument = line;
             }
             else if (Number(reportType.current.value) === 1) {
                 setCheckingData([]);
                 linecheckingreportname = "previousweekdetails";
-                passingargument = city;
+                passingargument = line;
                 //alert(passingargument);
             }
             else if (Number(reportType.current.value) === 2) {
@@ -199,8 +199,8 @@ function LinecheckingReport() {
         <Col xs={12} md={2} className="rounder bg-white " >
             <Form.Group className="mb-3" name="linenumber" border="primary" >
                 <Form.Label>{t('lineman')}</Form.Label>
-                <Form.Select aria-label="Default select example" value={city}
-                    onChange={(e) => setCity(e.target.value)} ref={linemanoptionRef} onClick={restoreLineman}>
+                <Form.Select aria-label="Default select example" value={line}
+                    onChange={(e) => setLine(e.target.value)} ref={linemanoptionRef} onClick={restoreLineman}>
                     <option key={""} value={""} >{t('linemanplaceholder')}</option>
 
                     {
@@ -216,16 +216,16 @@ function LinecheckingReport() {
     )
     const citynameshow = (
         <Col xs={12} md={2} className="rounder bg-white">
-            <Form.Group className="mb-3" name="linenumber" border="primary" >
-                <Form.Label>{t('city')}</Form.Label>
-                <Form.Select aria-label="Default select example" value={city}
-                    onChange={(e) => setCity(e.target.value)} required>
-                    <option key={""} value={""} >{t('cityplaceholder')}</option>
+            <Form.Group className="mb-3" name="linename" border="primary" >
+                <Form.Label>{t('line')}</Form.Label>
+                <Form.Select aria-label="Default select example" value={line}
+                    onChange={(e) => setLine(e.target.value)} required>
+                    <option key={""} value={""} >{t('lineplaceholder')}</option>
 
                     {
-                        cityNames.map((cities) => (
-                            <option key={cities._id} value={cities._id}
-                                selected={cities._id} >{cities.cityname}</option>
+                        lineNames.map((lines) => (
+                            <option key={lines._id} value={lines.lineno}
+                                selected={lines.lineno} >{lines.linename}</option>
                         ))}
 
                 </Form.Select>
