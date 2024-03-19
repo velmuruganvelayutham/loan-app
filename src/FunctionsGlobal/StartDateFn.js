@@ -1,21 +1,22 @@
-import React from "react";
 export function startOfWeek() {
     var curr = new Date();
     var currday = curr.getDay();
-    
+    var daycalno = 0;
     if (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) {
         if (currday == 0) {
             currday = 7;
         }
-        var daycalno = (7 - currday - 7) + 1;
+        daycalno = (7 - currday - 7) + 1;
     }
-    else {
+
+    if (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 6) {
         if (currday == 6) {
             currday = -1;
         }
 
-        var daycalno = (7 - currday - 7) - 1
+        daycalno = (7 - currday - 7) - 1
     }
+
 
     var start = new Date(curr.setDate(curr.getDate() + daycalno));
 
@@ -26,33 +27,22 @@ export function startOfWeek() {
     }).split("/").reverse().join("-");
     return datestartyearformat;
 }
-/* export function changeGivenDate(date){
-     var curr=new Date(date);
-     var currday=curr.getDay();
-     if(currday==0){
-         currday=7;
-     }
-    const datestartyearformat=new Date(curr).toLocaleDateString('en-GB',{
-         year:'numeric',
-         month:'2-digit',
-         day:'2-digit',
-     }).split("/").reverse().join("-");
-     return datestartyearformat;  
- }*/
+
 export function endOfWeek() {
     var curr = new Date();
     var currday = curr.getDay();
+    var daycalno=0;
     if (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) {
         if (currday == 0) {
             currday = 7;
         }
-        var daycalno = (7 - currday - 7) + 6;
+        daycalno = (7 - currday - 7) + 6;
     }
-    else{
+    if (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 6) {
         if (currday == 6) {
             currday = -1;
         }
-        var daycalno = (7 - currday - 7) + 4;
+        daycalno = (7 - currday - 7) + 4;
     }
 
     var start = new Date(curr.setDate(curr.getDate() + daycalno));
@@ -67,21 +57,22 @@ export function endOfWeek() {
 export function notRunningOfWeek() {
     var curr = new Date();
     var currday = curr.getDay();
-
+    var daycalno=0;
     if (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) {
         if (currday == 0) {
             currday = 7;
         }
-        var daycalno = (7 - currday - 8 - 7 - 7 - 7);
+        daycalno = (7 - currday - 8 - 7 - 7 - 7);
     }
-    else{
+    if (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 6) {
         if (currday == 6) {
             currday = -1;
         }
-        var daycalno = (7 - currday - 10 - 7 - 7 - 7);
+        daycalno = (7 - currday - 10 - 7 - 7 - 7);
     }
     
-    
+
+
     var start = new Date(curr.setDate(curr.getDate() + daycalno));
 
     const datestartyearformat = new Date(start).toLocaleDateString('en-GB', {
