@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import Select from 'react-select'
 import axios from "axios";
-import { baseURL } from './utils/constant';
+import { baseURL, getDefaultWeekCount, isReadOnlyLoanNo } from './utils/constant';
 import { startOfWeek } from './FunctionsGlobal/StartDateFn';
 import { useTranslation } from "react-i18next";
 import PlaceHolder from "./components/spinner/placeholder";
@@ -11,7 +11,6 @@ import {
 } from "@clerk/clerk-react";
 var maxLoanNo = 0;
 const weekCount = process.env.REACT_APP_DEFAULT_WEEK_COUNT;
-console.log("weekCountOutside", process.env.REACT_APP_DEFAULT_WEEK_COUNT)
 function LoanForm() {
 
     function endingDate() {
@@ -33,7 +32,7 @@ function LoanForm() {
     const [linemannames, setLinemanNames] = useState([]);
     const [inputmobileno, setInputMobileno] = useState();
     //const [weekscount, setWeeksCount] = useState(Number(weekCount));
-    const [weekscount, setWeeksCount] = useState(25);
+    const [weekscount, setWeeksCount] = useState(getDefaultWeekCount());
 
 
     const [givenAmt, setGivenAmt] = useState("");
@@ -455,7 +454,7 @@ function LoanForm() {
                         <Col xs={12} md={4} className="rounded bg-white">
                             <Form.Group className="mb-3" border="primary" >
                                 <Form.Label>{t('loanno')}</Form.Label> {/*loan no*/}
-                                <Form.Control ref={loannoRef} type="number" required readOnly={true} />
+                                <Form.Control ref={loannoRef} type="number" required readOnly={isReadOnlyLoanNo()} />
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={2} className="rounded bg-white">
