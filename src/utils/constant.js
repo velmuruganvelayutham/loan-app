@@ -17,13 +17,13 @@ export const getDefaultWeekCount = () => {
 
 export const isReadOnlyLoanNo = () => {
 
-    //console.log("REACT_APP_DEFAULT_IS_LOAN_READONLY", process.env.REACT_APP_DEFAULT_IS_LOAN_READONLY)
+    console.log("REACT_APP_DEFAULT_IS_LOAN_READONLY", process.env.REACT_APP_DEFAULT_IS_LOAN_READONLY)
     if (Boolean(process.env.REACT_APP_DEFAULT_IS_LOAN_READONLY) === true) {
-        //console.log("REACT_APP_DEFAULT_IS_LOAN_READONLY", true)
+        console.log("REACT_APP_DEFAULT_IS_LOAN_READONLY", true)
         return true;
     }
     if (Boolean(process.env.REACT_APP_DEFAULT_IS_LOAN_READONLY) === false) {
-        //console.log("REACT_APP_DEFAULT_IS_LOAN_READONLY", false)
+        console.log("REACT_APP_DEFAULT_IS_LOAN_READONLY", false)
         return false;
     }
 

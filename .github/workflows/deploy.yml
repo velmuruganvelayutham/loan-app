@@ -51,6 +51,8 @@ jobs:
           include: "**package.json"
       - name: display package.json 
         run: cat ${{ github.workspace }}/package.json
+      - name: Print Environment Variables 
+        run: env
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
