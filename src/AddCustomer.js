@@ -96,13 +96,11 @@ function AddCustomer() {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       const response = await axios.get(`${baseURL}/get/view?q=${inputValue}`);
       const data = await response.data;
-      console.log(data);
       // Map the fetched data to the format expected by React Select
       const options = data.map(item => ({
         value: item._id,
         label: item.customer + '-' + item.fathername,
       }));
-      console.log(options);
       setCustomer(data);
       // Call the callback function with the options to update the dropdown
       callback(options);
