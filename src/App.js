@@ -9,6 +9,7 @@ import {
   RedirectToSignIn
 } from "@clerk/clerk-react";
 import LedgerForm from './Reports/LedgerForm';
+const ReceiptByImage = lazy(() => import('./ReceiptByImage'));
 const AddCustomer = lazy(() => import('./AddCustomer'));
 const NavBar = lazy(() => import('./NavBar'));
 const Footer = lazy(() => import('./Footer'));
@@ -128,6 +129,18 @@ function ClerkProviderWithRoutes() {
               <SignedIn>
                 <NavBar />
                 <Receipt1 />
+              </SignedIn>
+              <SignedOut>
+                <RedirectToSignIn />
+              </SignedOut>
+            </>
+          } />
+        <Route path='/receiptByImage'
+          element={
+            <>
+              <SignedIn>
+                <NavBar />
+                <ReceiptByImage />
               </SignedIn>
               <SignedOut>
                 <RedirectToSignIn />

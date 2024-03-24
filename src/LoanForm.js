@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
-import Select from 'react-select'
+import AsyncSelect from 'react-select/async';
 import axios from "axios";
 import { baseURL, getDefaultWeekCount, isReadOnlyLoanNo } from './utils/constant';
-import { startOfWeek } from './FunctionsGlobal/StartDateFn';
+import { startOfWeek,dateFormat } from './FunctionsGlobal/StartDateFn';
 import { useTranslation } from "react-i18next";
 import PlaceHolder from "./components/spinner/placeholder";
 import {
@@ -65,12 +65,12 @@ function LoanForm() {
     const [maxValueShow, setMaxValueShow] = useState(false);
     const [isButtonDisabled, setButtonDisabled] = useState(false);
     useEffect(() => {
-        console.log("weekCount", weekCount)
+        //console.log("weekCount", weekCount)
         async function fetchData() {
             setIsLoading(true);
             const token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            axios.get(`${baseURL}/get/view`).then((res) => {
+            axios.get(`${baseURL}/get/view?q=`).then((res) => {
                 setCustomers(res.data)
                 setIsLoading(false);
                 setErrorMessage("");
@@ -154,7 +154,28 @@ function LoanForm() {
             }
         });
     }, []);
-
+    const loadOptions = async (inputValue, callback) => {
+        try {
+            // Make an API call to fetch options based on the inputValue
+            const token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            const response = await axios.get(`${baseURL}/get/view?q=${inputValue}`);
+            const data = await response.data;
+            console.log(data);
+            // Map the fetched data to the format expected by React Select
+            const options = data.map(item => ({
+                value: item._id,
+                label: item.customer + '-' + item.fathername,
+            }));
+            console.log(options);
+            setCustomers(data);
+            // Call the callback function with the options to update the dropdown
+            callback(options);
+        } catch (error) {
+            console.error('Error fetching options:', error);
+            callback([]);
+        }
+    };
     function customerSelect(value) {
 
 
@@ -399,6 +420,10 @@ function LoanForm() {
                     totalAmt.current.value = oldReference[0].totalamount;
                     dueAmt.current.value = oldReference[0].dueamount;
                     paidAmt.current.value = oldReference[0].paidamount;
+                    setStartDate(dateFormat(oldReference[0].startdate));
+                    givenDate.current.value=dateFormat(oldReference[0].startdate);
+                    dueDate.current.value=dateFormat(oldReference[0].duedate);
+                    endDateRef.current.value=dateFormat(oldReference[0].finisheddate);
                     setUpdateUI(true);
                 })
         }
@@ -467,16 +492,13 @@ function LoanForm() {
 
                             <Form.Group className="mb-3" name="customername" border="primary" >
                                 <Form.Label>{t('customer')}</Form.Label>{/*customer*/}
-
-                                <Select aria-label="Default select example"
-                                    required autoFocus
+                                <AsyncSelect
+                                    id="react-select-3-input"
+                                    isLoading={isLoading}
                                     value={options.filter(({ value }) => value === myForm.mySelectKey)}
-                                    getOptionLabel={({ label }) => label}
-                                    getOptionValue={({ value }) => value}
                                     onChange={({ value }) => customerSelect(value)}
-                                    options={options}
-                                    placeholder={t('customer')}
-                                />
+                                    defaultOptions={options}
+                                    loadOptions={loadOptions} placeholder={t('customer')} />
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={3} className="rounded bg-white">
@@ -497,14 +519,14 @@ function LoanForm() {
                         <Col xs={12} md={4} className="rounded bg-white">
                             <Form.Group className="mb-3" name="mobilenumber" border="primary" >
                                 <Form.Label>{t('phoneno')}</Form.Label> {/*mobile no*/}
-                                <Form.Control type="number" disabled
+                                <Form.Control data-cypress-loan-app-mobilenumber="mobilenumber" type="number" disabled
                                     value={inputmobileno} onChange={(e) => setInputMobileno(e.target.value)} />
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={4} className="rounded bg-white">
                             <Form.Group className="mb-3" name="fathername" border="primary" >
                                 <Form.Label>{t('fathername')}</Form.Label>{/*father name*/}
-                                <Form.Control ref={fathernameRef} type="text" disabled />
+                                <Form.Control data-cypress-loan-app-fathername="fathername" ref={fathernameRef} type="text" disabled />
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={4} className="rounded bg-white">
@@ -524,13 +546,13 @@ function LoanForm() {
                         <Col xs={12} md={4} className="rounded bg-white">
                             <Form.Group className="mb-3" name="address1" border="primary" >
                                 <Form.Label>{t('address')} </Form.Label>{/*address*/}
-                                <Form.Control ref={addressRef} type="text" disabled />
+                                <Form.Control data-cypress-loan-app-address="address" ref={addressRef} type="text" disabled />
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={4} className="rounded bg-white">
                             <Form.Group className="mb-3" name="work" border="primary" >
                                 <Form.Label>{t('work')}</Form.Label>{/*work*/}
-                                <Form.Control ref={workRef} type="text" disabled />
+                                <Form.Control  data-cypress-loan-app-work="work" ref={workRef} type="text" disabled />
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={4} className="rounded bg-white">

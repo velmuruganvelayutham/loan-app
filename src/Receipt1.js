@@ -23,6 +23,8 @@ function AddReceipt1() {
   //const [disabledcolumn, setDisabledColumn] = useState(true);
   const [updateUI, setUpdateUI] = useState(false);
   const [isRestore, setIsRestore] = useState(false);
+  const [total, setTotal] = useState(0);
+
   useEffect(() => {
     async function fetchData() {
       setIsLoading(true);
@@ -66,12 +68,23 @@ function AddReceipt1() {
       amount: ''
     }
     setRowsData([...rowsData, rowsInput])
+    calTotal();
     //setDisabledColumn(true);
+  }
+  const calTotal = () => {
+    let totalValue = rowsData.reduce((previousValue, currentValue) => {
+      return parseFloat(previousValue + Number(currentValue.amount))
+    }, 0);
+    setTotal(totalValue);
   }
   const deleteTableRows = (index) => {
     const rows = [...rowsData];
     rows.splice(index, 1);
     setRowsData(rows);
+    let totalvalue = rows.reduce((previousValue, currentValue) => {
+      return parseFloat(previousValue + Number(currentValue.amount))
+    }, 0);
+    setTotal(totalvalue);
   }
 
   const handleChange = (index, evnt) => {
@@ -87,6 +100,7 @@ function AddReceipt1() {
         rowsInput[index][name] = value;
         setRowsData(rowsInput);
       }
+      calTotal();
     }
     else {
       rowsInput[index][name] = value;
@@ -186,6 +200,7 @@ function AddReceipt1() {
     }).then((res) => {
       setRowsData([]);
       ClearDetails();
+
       setButtonDisabled(false);
       setErrorMessage("");
       alert(t('savealertmessage'))
@@ -227,11 +242,13 @@ function AddReceipt1() {
   const ClearDetails = () => {
     setRowsData([]);
     setUpdateUI(false);
+    setTotal(0);
     setRefresh((prevState) => !prevState)
     startdateRef.current.value = startOfWeek();
   }
   const RestoreReceipt = async () => {
     if (receiptRef.current.value !== "") {
+
       const token = await getToken();
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       axios.get(`${baseURL}/receipt1/get`,
@@ -242,7 +259,9 @@ function AddReceipt1() {
           if (oldReference.length > 0) {
             const parsedDate = dateFormat(oldReference[0].receiptdate);
             startdateRef.current.value = parsedDate;
+            let totalvalue = 0;
             const rowsInput = oldReference.map((item, i) => {
+              totalvalue = totalvalue + Number(item.collectedamount)
               return {
                 serialno: i + 1,
                 loanno: item.loannumber,
@@ -255,16 +274,18 @@ function AddReceipt1() {
               }
             })
             setRowsData(rowsInput);
+            setTotal(totalvalue);
             setIsRestore(true);
             setUpdateUI(true);
           }
           else {
             ClearDetails()
           }
-
         })
     }
     setIsRestore(false);
+
+
   }
   const deleteReceipt = async () => {
 
@@ -329,6 +350,16 @@ function AddReceipt1() {
             <tbody>
               <TableRows rowsData={rowsData} deleteTableRows={deleteTableRows} handleChange={handleChange} RestoreLoan={RestoreLoan} isRestore={isRestore} />
             </tbody>
+            <tr className="dailyrecordtotalheight">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td className='fw-bold' style={{ fontSize: "12px", textAlign: "center" }}>{t('total')}</td>
+              <td className='fw-bold' style={{ fontSize: "12px", textAlign: "center" }}>{total}</td>
+              <td></td>
+            </tr>
           </Table>
         </Row>
         <Row>
@@ -354,6 +385,7 @@ function AddReceipt1() {
 
           <Col></Col>
         </Row>
+
       </Form>
     </Container>
 

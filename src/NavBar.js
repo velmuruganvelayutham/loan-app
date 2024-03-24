@@ -3,6 +3,7 @@ import { Navbar, Container, Nav, NavLink } from 'react-bootstrap';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
+import { isFeatureReceiptByImageEnabled } from "./utils/constant";
 import "./i18n";
 import {
     SignedIn,
@@ -37,6 +38,9 @@ function NavBar() {
         else if (languageValue === "Receipt By No") {
             navigate("/receipt1");
         }
+        else if (languageValue === "Receipt By Image") {
+            navigate("/receiptByImage");
+        }
         else if (languageValue === "Ledger") {
             navigate("/ledger");
         }
@@ -53,7 +57,7 @@ function NavBar() {
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" onSelect={handleSelect} >
             <Container>
-                <Navbar.Brand href="#home">{process.env.REACT_APP_LOAN_APP_CUSTOMER}</Navbar.Brand>
+                <Navbar.Brand href="#home" data-cypress-loan-app-id="app-customer-name">{process.env.REACT_APP_LOAN_APP_CUSTOMER}</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ms-auto" as="ul" >
@@ -67,10 +71,13 @@ function NavBar() {
                             <NavDropdown.Item href="linemancreate">LineMan</NavDropdown.Item>
                             <NavDropdown.Item href="linemancreate">Line</NavDropdown.Item>
                         </NavDropdown>
-                        <NavDropdown title="Entry" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="loan">Loan</NavDropdown.Item>
-                            <NavDropdown.Item href="receipt">Receipt</NavDropdown.Item>
-                            <NavDropdown.Item href="receipt1">Receipt By No</NavDropdown.Item>
+                        <NavDropdown title="Entry" id="loan-app-nav-dropdown-entry">
+                            <NavDropdown.Item id="loan-app-dropdown-item-loan" href="loan">Loan</NavDropdown.Item>
+                            <NavDropdown.Item id="loan-app-dropdown-item-receipt" href="receipt">Receipt</NavDropdown.Item>
+                            <NavDropdown.Item id="loan-app-dropdown-item-receipt-by-no" href="receipt1">Receipt By No</NavDropdown.Item>
+                            {isFeatureReceiptByImageEnabled() && (
+                                <NavDropdown.Item id="loan-app-dropdown-item-receipt-by-image" href="receiptByImage">Receipt By Image</NavDropdown.Item>
+                            )}
                         </NavDropdown>
                         <NavDropdown title="Report" id="basic-nav-dropdown">
                             <NavDropdown.Item href="ledger">Ledger</NavDropdown.Item>

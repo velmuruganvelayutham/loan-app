@@ -5,7 +5,8 @@ import { baseURL } from "./utils/constant";
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import { useTranslation } from "react-i18next";
-import Select from 'react-select'
+import AsyncSelect from 'react-select/async';
+
 import {
   useAuth
 } from "@clerk/clerk-react";
@@ -14,6 +15,7 @@ function AddCustomer() {
   const [input, setInput] = useState("");
   const [inputmobileno, setInputMobileno] = useState("")
   const [customers, setCustomer] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [updateId, setUpdateId] = useState(null);
   const [radioValue, setRadioValue] = useState("0");
@@ -28,7 +30,7 @@ function AddCustomer() {
   const cityRef = useRef(null);
   const initialFormState = { mySelectKey: null };
   const [myForm, setMyForm] = useState(initialFormState);
-  const[updateUI,setUpdateUI]=useState(false);
+  const [updateUI, setUpdateUI] = useState(false);
   useEffect(() => {
     async function fetchData() {
       const token = await getToken();
@@ -45,19 +47,21 @@ function AddCustomer() {
   }, [getToken, t]);
   useEffect(() => {
     async function fetchData() {
+      setIsLoading(true);
       const token = await getToken();
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      axios.get(`${baseURL}/get/view`).then((res) => {
+      axios.get(`${baseURL}/get/view?q=`).then((res) => {
         setCustomer(res.data);
         setErrorMessage("");
-        console.log(res.data);
+        setIsLoading(false);
       }).catch(error => {
         console.log("error=", error);
         setErrorMessage(t('errormessagecustomer'));
+        setIsLoading(false);
       })
     }
     fetchData();
-  }, [getToken, t,updateUI]);
+  }, [getToken, t, updateUI]);
 
   useEffect(() => {
     document.addEventListener("keydown", function (event) {
@@ -85,6 +89,28 @@ function AddCustomer() {
 
   };
 
+  const loadOptions = async (inputValue, callback) => {
+    try {
+      // Make an API call to fetch options based on the inputValue
+      const token = await getToken();
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      const response = await axios.get(`${baseURL}/get/view?q=${inputValue}`);
+      const data = await response.data;
+      console.log(data);
+      // Map the fetched data to the format expected by React Select
+      const options = data.map(item => ({
+        value: item._id,
+        label: item.customer + '-' + item.fathername,
+      }));
+      console.log(options);
+      setCustomer(data);
+      // Call the callback function with the options to update the dropdown
+      callback(options);
+    } catch (error) {
+      console.error('Error fetching options:', error);
+      callback([]);
+    }
+  };
 
   const addCustomer = async () => {
     const token = await getToken();
@@ -194,7 +220,7 @@ function AddCustomer() {
       cityRef.current.value = ""
       setUpdateId(null);
     }
-    else {
+    if (filtered !== undefined && filtered.length > 0) {
       setInput(filtered[0].customer);
       setInputMobileno(filtered[0].mobileno);
       setCity(filtered[0].city_id);
@@ -219,8 +245,18 @@ function AddCustomer() {
 
               <Form.Group className="mb-3" name="customername" border="primary" >
                 <Form.Label>{t('customer')}</Form.Label>{/*customer*/}
+                <AsyncSelect
+                  id="react-select-3-input"
+                  isLoading={isLoading}
+                  value={options.filter(({ value }) => value === myForm.mySelectKey)}
+                  onChange={({ value }) => customerSelect(value)}
+                  defaultOptions={options}
+                  placeholder={t('customer')}
+                  loadOptions={loadOptions} />
 
-                <Select aria-label="Default select example"
+
+
+                {/* <Select data-cypress-loan-app-select-customer="select-customer" aria-label="Default select example"
                   required autoFocus
                   value={options.filter(({ value }) => value === myForm.mySelectKey)}
                   getOptionLabel={({ label }) => label}
@@ -228,7 +264,7 @@ function AddCustomer() {
                   onChange={({ value }) => customerSelect(value)}
                   options={options}
                   placeholder={t('customer')}
-                />
+                /> */}
               </Form.Group>
             </Col>
           </Row>
@@ -236,20 +272,20 @@ function AddCustomer() {
             <Col xs={12} md={4} className="rounded bg-white">
               <Form.Group className="mb-3" name="customername" border="primary" >
                 <Form.Label>{t('customer')}</Form.Label>
-                <Form.Control type="text" placeholder={t('customerplaceholderlabel')} required value={input} onChange={(e) => setInput(e.target.value)} autoFocus />
+                <Form.Control data-cypress-loan-app-customername="customername" type="text" placeholder={t('customerplaceholderlabel')} required value={input} onChange={(e) => setInput(e.target.value)} autoFocus />
               </Form.Group>
             </Col>
             <Col xs={12} md={3} className="rounded bg-white">
               <Form.Group className="mb-3" name="mobilenumber" border="primary" >
                 <Form.Label>{t('phoneno')}</Form.Label>
-                <Form.Control type="text" placeholder={t('phonenoplaceholder')} required value={inputmobileno}
+                <Form.Control type="text" data-cypress-loan-app-mobilenumber="mobilenumber" placeholder={t('phonenoplaceholder')} required value={inputmobileno}
                   onChange={(e) => setInputMobileno(e.target.value)} />
               </Form.Group>
             </Col>
             <Col xs={12} md={3} className="rounded bg-white">
               <Form.Group className="mb-3" name="cityname" border="primary" >
                 <Form.Label>{t('city')}</Form.Label>
-                <Form.Select aria-label="Default select example"
+                <Form.Select data-cypress-loan-app-cityname="cityname" aria-label="Default select example"
                   value={city} onChange={(e) => setCity(e.target.value)} onClick={restoreCityName} required >
                   <option key={city} value={""} >{t('cityplaceholder')}</option>
 
@@ -265,7 +301,7 @@ function AddCustomer() {
             <Col xs={12} md={2} className="rounded bg-white">
               <Form.Group className="mb-3" name="work" border="primary" >
                 <Form.Label>{t('city')}</Form.Label>
-                <Form.Control type="text" placeholder={t('city')} ref={cityRef} required />
+                <Form.Control data-cypress-loan-app-citynametext="citynametext" type="text" placeholder={t('city')} ref={cityRef} required />
               </Form.Group>
             </Col>
           </Row>
@@ -288,27 +324,27 @@ function AddCustomer() {
                     </ToggleButton>
                   ))}
                 </ButtonGroup>
-                <Form.Control type="text" placeholder={t('fatherhusbandnameplaceholder')} ref={fathernameref} required />
+                <Form.Control data-cypress-loan-app-fathername="fathername" type="text" placeholder={t('fatherhusbandnameplaceholder')} ref={fathernameref} required />
 
               </Form.Group>
             </Col>
             <Col xs={12} md={4} className="rounded bg-white">
               <Form.Group className="mb-3" name="address1" border="primary" >
                 <Form.Label>{t('address')}</Form.Label>
-                <Form.Control type="text" placeholder={t('addressplaceholder')} ref={addressRef} required />
+                <Form.Control data-cypress-loan-app-address="address" type="text" placeholder={t('addressplaceholder')} ref={addressRef} required />
               </Form.Group>
             </Col>
 
             <Col xs={12} md={4} className="rounded bg-white">
               <Form.Group className="mb-3" name="work" border="primary" >
                 <Form.Label>{t('work')}</Form.Label>
-                <Form.Control type="text" placeholder={t('workplaceholder')} ref={workRef} required />
+                <Form.Control data-cypress-loan-app-work="work" type="text" placeholder={t('workplaceholder')} ref={workRef} required />
               </Form.Group>
             </Col>
           </Row>
           <Row className="rounded bg-white text-center">
             <div className="col-md-12 mb-4 " >
-              <Button variant="primary" size="lg" type="button" className="text-center" onClick={updateId ? updateCustomer : handleSubmit}>
+              <Button data-cypress-loan-app-save="save" variant="primary" size="lg" type="button" className="text-center" onClick={updateId ? updateCustomer : handleSubmit}>
                 {t('savebutton')}
               </Button>{' '}
               <Button variant="primary" size="lg" type="button" className="text-center" onClick={clearFields}>
