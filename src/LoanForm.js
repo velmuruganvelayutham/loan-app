@@ -65,6 +65,7 @@ function LoanForm() {
     const [maxValueShow, setMaxValueShow] = useState(false);
     const [isButtonDisabled, setButtonDisabled] = useState(false);
     const [savedValue, setSavedValue] = useState(null);
+    const[changeBook,setChangeBook]=useState(false);
     useEffect(() => {
         //console.log("weekCount", weekCount)
         async function fetchData() {
@@ -355,6 +356,26 @@ function LoanForm() {
             });
         alert(t('updatealertmessage'));
     }
+    const updateBook=async()=>{
+        setButtonDisabled(true);
+        const token = await getToken();
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        axios.put(`${baseURL}/loancreate/updatebook`,
+            {
+                oldloanno: Number(oldLoanRef.current.value), customer_id: myForm.mySelectKey, lineman_id: linemanoptionRef.current.value, city_id: cityidRef.current.value,
+                weekno: weekRef.current.value, bookno: bookRef.current.value, lineno: lineRef.current.value, document: documentRef.current.value, cheque: chequeRef.current.value
+            }).then((res) => {
+                setButtonDisabled(false);
+                setErrorMessage("");
+                clearFields();
+            }).catch(error => {
+                console.log("error=", error);
+                setErrorMessage(t('errormessageupdateloan'));
+                setIsLoading(false);
+                setButtonDisabled(false);
+            });
+        alert(t('updatealertmessage'));
+    }
     const saveLoanDetails = async () => {
         setButtonDisabled(true);
         const token = await getToken();
@@ -466,6 +487,7 @@ function LoanForm() {
         paidAmt.current.value = "";
         oldLoanRef.current.value = "";
         setUpdateUI(false);
+        setChangeBook(false);
         setMaxValueShow((prevState) => !prevState)
     }
     const options = customers.map((customer, i) => {
@@ -592,7 +614,7 @@ function LoanForm() {
                         <Col xs={12} md={3} className="rounded bg-white">
                             <Form.Group className="mb-3" name="bookno" border="primary" >
                                 <Form.Label>{t('bookno')}</Form.Label>{/*book no*/}
-                                <Form.Control type="number" data-cypress-loan-app-bookno="bookno" placeholder={t('booknoplaceholder')} required ref={bookRef} />
+                                <Form.Control type="number" data-cypress-loan-app-bookno="bookno" placeholder={t('booknoplaceholder')} required ref={bookRef} onBlur={()=>updateUI?setChangeBook(true):setChangeBook(false)} />
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={2} className="rounded bg-white">
@@ -695,8 +717,10 @@ function LoanForm() {
                             </Button>{' '}
                             <Button variant="primary" size="lg" type="button" className="text-center" onClick={clearFields}>
                                 {t('newbutton')}
+                            </Button>{' '}
+                            <Button variant="primary" size="lg" type="button" className={updateUI && changeBook===true?'visible':'invisible'} onClick={updateBook}  >
+                                {t('updatebuttonbook')}
                             </Button>
-
                         </div>
                     </Row>
                     <Row>

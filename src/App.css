@@ -149,3 +149,9 @@ Table.totalledgertable {
   table-layout: fixed;
   word-wrap: break-word;
 }
+.visible {
+  visibility: visible !important;
+}
+.invisible {
+  visibility: hidden !important;
+}

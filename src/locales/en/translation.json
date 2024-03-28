@@ -39,6 +39,7 @@
   "savebutton": "Save",
   "newbutton": "New",
   "updatebutton":"Update",
+  "updatebuttonbook":"Update Book",
   "deletebutton":"Delete",
   "date": "Date",
   "linechecking": "Line Checking List",
