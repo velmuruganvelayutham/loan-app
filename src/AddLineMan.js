@@ -122,7 +122,7 @@ function AddLineMan() {
               <Col xs={12} md={12} >
                 <Form.Group className="mb-3" name="linemanname" border="primary" >
                   <Form.Label>{t('lineman')}</Form.Label>
-                  <Form.Control type="text" placeholder={t('linemanplaceholderlabel')} required value={input} onChange={(e) => setInput(e.target.value)} autoFocus />
+                  <Form.Control data-cypress-loan-app-linemanname="linemanname" type="text" placeholder={t('linemanplaceholderlabel')} required value={input} onChange={(e) => setInput(e.target.value)} autoFocus />
                 </Form.Group>
               </Col>
 
@@ -131,13 +131,13 @@ function AddLineMan() {
               <Col xs={12} md={12} >
                 <Form.Group className="mb-3" name="mobilenumber" border="primary" >
                   <Form.Label>{t('phoneno')}</Form.Label>
-                  <Form.Control type="number" placeholder={t('phonenoplaceholder')} required value={inputmobileno} onChange={(e) => setInputMobileno(e.target.value)} />
+                  <Form.Control type="number" data-cypress-loan-app-mobilenumber="mobilenumber" placeholder={t('phonenoplaceholder')} required value={inputmobileno} onChange={(e) => setInputMobileno(e.target.value)} />
                 </Form.Group>
               </Col>
             </Row>
             <Row className="rounded bg-white">
               <div className="col-md-12 text-center ">
-                <Button variant="primary" type="button" className="text-center" onClick={updateId ? updateLineMan : handleSubmit}>
+                <Button variant="primary" data-cypress-loan-app-save="save" type="button" className="text-center" onClick={updateId ? updateLineMan : handleSubmit}>
                   {t('savebutton')}
                 </Button>{' '}
                 <Button variant="primary"

@@ -131,7 +131,7 @@ function AddLine() {
                             <Col xs={12} md={12} >
                                 <Form.Group className="mb-3" name="linename" border="primary" >
                                     <Form.Label>{t('line')}</Form.Label>
-                                    <Form.Control type="text" placeholder={t('linename')} required value={input} onChange={(e) => setInput(e.target.value)} autoFocus />
+                                    <Form.Control type="text" data-cypress-loan-app-linename="linename" placeholder={t('linename')} required value={input} onChange={(e) => setInput(e.target.value)} autoFocus />
                                 </Form.Group>
                             </Col>
 
@@ -140,13 +140,13 @@ function AddLine() {
                             <Col xs={12} md={12} >
                                 <Form.Group className="mb-3" name="lineno" border="primary" >
                                     <Form.Label>{t('lineno')}</Form.Label>
-                                    <Form.Control type="number" placeholder={t('lineno')} required value={inputlineno} onChange={(e) => setInputLineno(e.target.value)} />
+                                    <Form.Control type="number" data-cypress-loan-app-lineno="lineno" placeholder={t('lineno')} required value={inputlineno} onChange={(e) => setInputLineno(e.target.value)} />
                                 </Form.Group>
                             </Col>
                         </Row>
                         <Row className="rounded bg-white">
                             <div className="col-md-12 text-center ">
-                                <Button variant="primary" type="button" className="text-center" onClick={updateId ? updateLine : handleSubmit}>
+                                <Button variant="primary" data-cypress-loan-app-save="save" type="button" className="text-center" onClick={updateId ? updateLine : handleSubmit}>
                                     {t('savebutton')}
                                 </Button>{' '}
                                 <Button variant="primary"

@@ -67,8 +67,8 @@ const ListCity = ({ citynames, updateMode }) => {
                       <td>{serialno}</td>
                       <td>{cityname.cityname}</td>
                       <td>{cityname.linename}</td>
-                      <td>
-                        <BiEditAlt className='icons' onClick={() => updateMode(cityname._id, cityname.cityname, cityname.citylineno)} />
+                      <td data-cypress-loan-app-records={citynames.length}>
+                        <BiEditAlt className='icons' data-cypress-loan-app-edit={"edit"+cityname.cityname} onClick={() => updateMode(cityname._id, cityname.cityname, cityname.citylineno)} />
                         {/*<BsTrash className='icons' onClick={() => removeCity(cityname._id)} />*/}
                       </td>
                     </tr>

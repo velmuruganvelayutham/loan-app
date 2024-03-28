@@ -67,8 +67,8 @@ const ListLineMan = ({ linemannames, updateMode }) => {
                       <td>{serialno}</td>
                       <td>{linemanname.linemanname}</td>
                       <td>{linemanname.mobileno}</td>
-                      <td>
-                        <BiEditAlt className='icons' onClick={() => updateMode(linemanname._id, linemanname.linemanname, linemanname.mobileno)} />
+                      <td name="edit">
+                        <BiEditAlt data-cypress-loan-app-edit={"edit" + linemanname.linemanname} className='icons' onClick={() => updateMode(linemanname._id, linemanname.linemanname, linemanname.mobileno)} />
                         {/*<BsTrash className='icons' onClick={()=>removeLineMan(linemanname._id)} />*/}
                       </td>
                     </tr>

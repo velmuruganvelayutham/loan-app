@@ -65,11 +65,11 @@ function NavBar() {
                             <NavDropdown.Item href="#">English</NavDropdown.Item>
                             <NavDropdown.Item href="#">Tamil</NavDropdown.Item>
                         </NavDropdown>
-                        <NavDropdown title="Master" id="basic-nav-dropdown">
+                        <NavDropdown title="Master" id="loan-app-nav-dropdown-master">
                             <NavDropdown.Item href="create">Borrower</NavDropdown.Item>
-                            <NavDropdown.Item href="citycreate">City</NavDropdown.Item>
-                            <NavDropdown.Item href="linemancreate">LineMan</NavDropdown.Item>
-                            <NavDropdown.Item href="linemancreate">Line</NavDropdown.Item>
+                            <NavDropdown.Item href="citycreate" id="loan-app-nav-dropdown-item-city">City</NavDropdown.Item>
+                            <NavDropdown.Item href="linemancreate" id="loan-app-nav-dropdown-item-lineman">LineMan</NavDropdown.Item>
+                            <NavDropdown.Item href="linecreate" id="loan-app-nav-dropdown-item-line">Line</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title="Entry" id="loan-app-nav-dropdown-entry">
                             <NavDropdown.Item id="loan-app-dropdown-item-loan" href="loan">Loan</NavDropdown.Item>

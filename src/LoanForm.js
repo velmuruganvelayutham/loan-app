@@ -64,6 +64,7 @@ function LoanForm() {
     const [validated, setValidated] = useState(false);
     const [maxValueShow, setMaxValueShow] = useState(false);
     const [isButtonDisabled, setButtonDisabled] = useState(false);
+    const [savedValue, setSavedValue] = useState(null);
     useEffect(() => {
         //console.log("weekCount", weekCount)
         async function fetchData() {
@@ -157,17 +158,18 @@ function LoanForm() {
     const loadOptions = async (inputValue, callback) => {
         try {
             // Make an API call to fetch options based on the inputValue
+           
             const token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             const response = await axios.get(`${baseURL}/get/view?q=${inputValue}`);
             const data = await response.data;
-            console.log(data);
             // Map the fetched data to the format expected by React Select
             const options = data.map(item => ({
                 value: item._id,
                 label: item.customer + '-' + item.fathername,
             }));
-            console.log(options);
+            
+            setSavedValue(null);
             setCustomers(data);
             // Call the callback function with the options to update the dropdown
             callback(options);
@@ -194,8 +196,7 @@ function LoanForm() {
             workRef.current.value = "";
             lineRef.current.value = 0;
         }
-        else {
-
+        if (filtered !== undefined && filtered.length > 0 && savedValue===null){ 
             setInputMobileno(filtered[0].mobileno);
             fathernameRef.current.value = filtered[0].fathername;
             citynameRef.current.value = filtered[0].cityname;
@@ -391,6 +392,7 @@ function LoanForm() {
             setButtonDisabled(false);
         });
     }
+    
     const loadOldLoanRef = async () => {
         if (oldLoanRef.current.value != "") {
             const token = await getToken();
@@ -399,7 +401,15 @@ function LoanForm() {
                 { params: { loanno: Number(oldLoanRef.current.value) } }).then((res) => {
 
                     const oldReference = res.data;
-                    //alert(oldLoanRef);
+                    const saveOptions = res.data.map((customer, i) => {
+                        return {
+                            label: customer.customer + '-' + customer.fathername,
+                            value: customer.customer_id,
+                            key: i
+                        }
+                    })
+                    setSavedValue(saveOptions)
+                    
                     setMyForm({ ...myForm, mySelectKey: oldReference[0].customer_id });
                     //customeroptionRef.current.value = oldReference[0].customer_id;
                     linemanoptionRef.current.value = oldReference[0].lineman_id;
@@ -470,6 +480,7 @@ function LoanForm() {
             return false;
         }
     }
+    
     return (
         <Container className="rounded bg-white mt-5">
             <Row className="justify-content-md-center mt-5 ">
@@ -495,16 +506,17 @@ function LoanForm() {
                                 <AsyncSelect
                                     id="react-select-3-input"
                                     isLoading={isLoading}
-                                    value={options.filter(({ value }) => value === myForm.mySelectKey)}
+                                    value={(savedValue!==null)?savedValue.filter(({value}) => value === myForm.mySelectKey):options.filter(({ value }) => value === myForm.mySelectKey)}
                                     onChange={({ value }) => customerSelect(value)}
-                                    defaultOptions={options}
-                                    loadOptions={loadOptions} placeholder={t('customer')} />
+                                    defaultOptions={(savedValue!==null)?savedValue:options}
+                                    loadOptions={loadOptions}
+                                    placeholder={t('customer')} />
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={3} className="rounded bg-white">
                             <Form.Group className="mb-3" name="linemanname" border="primary" >
                                 <Form.Label>{t('lineman')}</Form.Label>{/*lineman name*/}
-                                <Form.Select aria-label="Default select example" ref={linemanoptionRef} required>
+                                <Form.Select data-cypress-loan-app-lineman="lineman" aria-label="Default select example" ref={linemanoptionRef} required>
                                     <option value="">{t('linemanplaceholder')}</option>
                                     {
                                         linemannames.map((linemanname) => (
@@ -532,11 +544,11 @@ function LoanForm() {
                         <Col xs={12} md={4} className="rounded bg-white">
                             <Form.Group className="mb-3" name="cityname" border="primary" >
                                 <Form.Label>{t('city')}</Form.Label> {/*city name*/}
-                                <Form.Control ref={citynameRef} type="text" disabled />
+                                <Form.Control ref={citynameRef} data-cypress-loan-app-cityname="cityname" type="text" disabled />
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={4} className="rounded bg-white">
-                            <Form.Group className="d-none" name="cityname" border="primary" >
+                            <Form.Group className="d-none" name="cityname" data-cypress-loan-app-cityid="cityid" border="primary" >
                                 <Form.Label>{t('city')}</Form.Label> {/*city name*/}
                                 <Form.Control ref={cityidRef} type="text" />
                             </Form.Group>
@@ -558,7 +570,7 @@ function LoanForm() {
                         <Col xs={12} md={4} className="rounded bg-white">
                             <Form.Group className="mb-3" name="lineno" border="primary" >
                                 <Form.Label>{t('line')}</Form.Label>{/*line no*/}
-                                <Form.Select aria-label="Default select example" ref={lineRef} required>
+                                <Form.Select aria-label="Default select example" ref={lineRef} data-cypress-loan-app-lineno="lineno" required>
                                     <option value="">{t('citylineplaceholder')}</option>
                                     {
                                         linenames.map((linename) => (
@@ -574,13 +586,13 @@ function LoanForm() {
                         <Col xs={12} md={3} className="rounded bg-white">
                             <Form.Group className="mb-3" name="weekno" border="primary" >
                                 <Form.Label>{t('weekno')}</Form.Label>{/*week No*/}
-                                <Form.Control type="number" placeholder={t('weeknoplaceholder')} required ref={weekRef} />
+                                <Form.Control type="number" data-cypress-loan-app-weekno="weekno" placeholder={t('weeknoplaceholder')} required ref={weekRef} />
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={3} className="rounded bg-white">
                             <Form.Group className="mb-3" name="bookno" border="primary" >
                                 <Form.Label>{t('bookno')}</Form.Label>{/*book no*/}
-                                <Form.Control type="number" placeholder={t('booknoplaceholder')} required ref={bookRef} />
+                                <Form.Control type="number" data-cypress-loan-app-bookno="bookno" placeholder={t('booknoplaceholder')} required ref={bookRef} />
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={2} className="rounded bg-white">
@@ -598,7 +610,7 @@ function LoanForm() {
                         <Col xs={12} md={2} className="rounded bg-white">
                             <Form.Group className="mb-3" name="bookno" border="primary" >
                                 <Form.Label>{t('week')}</Form.Label>{/*week*/}
-                                <Form.Control className='bg-info text-center' size="lg" type="number" placeholder="How Many Weeks" required value={weekscount} onChange={(e) => setWeeksCount(e.target.value)} />
+                                <Form.Control className='bg-info text-center' data-cypress-loan-app-weekcount="weekcount" size="lg" type="number" placeholder="How Many Weeks" required value={weekscount} onChange={(e) => setWeeksCount(e.target.value)} />
                             </Form.Group>
                         </Col>
                     </Row>
@@ -607,25 +619,25 @@ function LoanForm() {
                         <Col xs={12} md={3} className="rounded bg-white">
                             <Form.Group className="mb-3" name="startdate" border="primary" >
                                 <Form.Label>{t('startdatedetail')}</Form.Label>{/*start Date*/}
-                                <Form.Control type="date" required value={startDate} onChange={(e) => setStartDate(e.target.value)} onBlur={endingDate} />
+                                <Form.Control type="date" data-cypress-loan-app-startdate="startdate" required value={startDate} onChange={(e) => setStartDate(e.target.value)} onBlur={endingDate} />
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={3} className="rounded bg-white">
                             <Form.Group className="mb-3" name="givendate" border="primary" >
                                 <Form.Label>{t('givendatedetail')}</Form.Label>{/*given Date*/}
-                                <Form.Control type="date" ref={givenDate} required defaultValue={startOfWeek()} />
+                                <Form.Control type="date" ref={givenDate} data-cypress-loan-app-givendate="givendate" required defaultValue={startOfWeek()} />
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={3} className="rounded bg-white">
                             <Form.Group className="mb-3" name="givendate" border="primary" >
                                 <Form.Label>{t('payingdate')}</Form.Label>{/*paid date*/}
-                                <Form.Control type="date" ref={dueDate} required defaultValue={startOfWeek()} />
+                                <Form.Control data-cypress-loan-app-payingdate="payingdate" type="date" ref={dueDate} required defaultValue={startOfWeek()} />
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={3} className="rounded bg-white">
                             <Form.Group className="mb-3" border="primary" >
                                 <Form.Label>{t('enddatedetail')}</Form.Label>{/*finished Date*/}
-                                <Form.Control type="date" ref={endDateRef} required defaultValue={endingDate()} value={endingDate()} />
+                                <Form.Control type="date" ref={endDateRef} data-cypress-loan-app-enddate="enddate" required defaultValue={endingDate()} value={endingDate()} />
                             </Form.Group>
                         </Col>
                     </Row>
@@ -633,7 +645,7 @@ function LoanForm() {
                         <Col xs={12} md={2} className="rounded bg-white">
                             <Form.Group className="mb-3" name="givenmoney" border="primary" >
                                 <Form.Label>{t('givenamountdetail')}</Form.Label>{/*given Money*/}
-                                <Form.Control className='text-end' type="number"
+                                <Form.Control className='text-end' type="number" data-cypress-loan-app-givenamount="givenamount"
                                     value={givenAmt} required
                                     onChange={(e) => setGivenAmt(Number(e.target.value))}
                                     onBlur={calculateTotalAmt} />
@@ -642,38 +654,38 @@ function LoanForm() {
                         <Col xs={12} md={2} className="rounded bg-white">
                             <Form.Group className="mb-3" name="documentcharge" border="primary" >
                                 <Form.Label>{t('documentchargedetail')}</Form.Label>{/*document Charge*/}
-                                <Form.Control ref={documentAmt} className='text-end' type="text" required />
+                                <Form.Control ref={documentAmt} data-cypress-loan-app-documentcharge="documentcharge" className='text-end' type="text" required />
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={2} className="rounded bg-white">
                             <Form.Group className="mb-3" name="interest" border="primary" >
                                 <Form.Label>{t('interest')}</Form.Label>{/*interest*/}
-                                <Form.Control className='text-end' type="text" required ref={interestAmt} />
+                                <Form.Control className='text-end' type="text" data-cypress-loan-app-interest="interest" required ref={interestAmt} />
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={2} className="rounded bg-white">
                             <Form.Group className="mb-3" name="totalamount" border="primary" >
                                 <Form.Label>{t('total')}</Form.Label>{/*total*/}
-                                <Form.Control className='text-end' type="text" required ref={totalAmt} />
+                                <Form.Control className='text-end' type="text" data-cypress-loan-app-total="total" required ref={totalAmt} />
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={2} className="rounded bg-white">
                             <Form.Group className="mb-3" name="dueamount" border="primary" >
                                 <Form.Label>{t('due')}</Form.Label>{/*Due Amount*/}
-                                <Form.Control className='text-end' type="text" required ref={dueAmt} />
+                                <Form.Control className='text-end' type="text" required ref={dueAmt} data-cypress-loan-app-dueamount="dueamount" />
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={2} className="rounded bg-white">
                             <Form.Group className="mb-3" name="paidamount" border="primary" >
                                 <Form.Label>{t('paidamountdetail')}</Form.Label>{/*paid Amount*/}
-                                <Form.Control className='text-end' type="text" required ref={paidAmt} />
+                                <Form.Control className='text-end' data-cypress-loan-app-paidamount="paidamount" type="text" required ref={paidAmt} />
                             </Form.Group>
                         </Col>
                     </Row>
 
                     <Row>
                         <div className="col-md-12 text-center mb-2 " >
-                            <Button variant="primary" size="lg" type="button" className="text-center"
+                            <Button variant="primary" data-cypress-loan-app-save="save" size="lg" type="button" className="text-center"
                                 onClick={handleSubmit} disabled={isButtonDisabled}>
                                 {updateUI ? t('updatebutton') : t('savebutton')}
                             </Button>{' '}

@@ -243,7 +243,7 @@ function AddCustomer() {
 
               <Form.Group className="mb-3" name="customername" border="primary" >
                 <Form.Label>{t('customer')}</Form.Label>{/*customer*/}
-                <AsyncSelect
+                <AsyncSelect autoFocus
                   id="react-select-3-input"
                   isLoading={isLoading}
                   value={options.filter(({ value }) => value === myForm.mySelectKey)}

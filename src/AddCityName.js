@@ -37,7 +37,7 @@ function AddCityName() {
             })
         }
         fetchData();
-    }, [updateUI, t,getToken]);
+    }, [updateUI, t, getToken]);
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true);
@@ -55,7 +55,7 @@ function AddCityName() {
         }
         fetchData();
 
-    }, [t,getToken])
+    }, [t, getToken])
 
     useEffect(() => {
         document.addEventListener("keydown", function (event) {
@@ -66,7 +66,7 @@ function AddCityName() {
                 event.preventDefault();
             }
         });
-    }, [t,getToken]);
+    }, [t, getToken]);
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -135,7 +135,11 @@ function AddCityName() {
             <ListCity citynames={cityNames} updateMode={updateMode} />
         </ul>
     );
-
+    function calculatePageNumber(totalRecords, recordsPerPage) {
+        console.log(Math.ceil(totalRecords / recordsPerPage))
+        return Math.ceil(totalRecords / recordsPerPage);
+    }
+    calculatePageNumber(52,10)
     return (
         <Container>
             <h2 className="text-center">{t('cityheadername')}</h2>
@@ -146,7 +150,7 @@ function AddCityName() {
                             <Col xs={12} md={12} >
                                 <Form.Group className="mb-3" name="cityname" border="primary" >
                                     <Form.Label>{t('city')}</Form.Label>
-                                    <Form.Control type="text" placeholder={t('cityplaceholderlabel')} required value={inputCity} onChange={(e) => setInputCity(e.target.value)} autoFocus />
+                                    <Form.Control type="text" data-cypress-loan-app-cityname="cityname" placeholder={t('cityplaceholderlabel')} required value={inputCity} onChange={(e) => setInputCity(e.target.value)} autoFocus />
                                 </Form.Group>
                             </Col>
 
@@ -155,7 +159,7 @@ function AddCityName() {
                             <Col xs={12} md={12} >
                                 <Form.Group className="mb-3" name="linenumber" border="primary" >
                                     <Form.Label>{t('line')}</Form.Label>
-                                    <Form.Select aria-label="Default select example" value={lineNo} onChange={(e) => setLineNo(e.target.value)} required>
+                                    <Form.Select aria-label="Default select example" data-cypress-loan-app-linenumber="linenumber" value={lineNo} onChange={(e) => setLineNo(e.target.value)} required>
                                         <option key={lineNo} value={""} >{t('lineplaceholder')}</option>
 
                                         {
@@ -171,7 +175,7 @@ function AddCityName() {
                         </Row>
                         <Row className="rounded bg-white">
                             <div className="col-md-12 text-center " >
-                                <Button variant="primary" type="button" className="text-center" onClick={updateId ? updateCity : handleSubmit}>
+                                <Button variant="primary" data-cypress-loan-app-save="save" type="button" className="text-center" onClick={updateId ? updateCity : handleSubmit}>
                                     {t('savebutton')}
                                 </Button>{' '}
                                 <Button variant="primary"
