@@ -80,6 +80,7 @@ const PreviousWeekList = ({ pendingLoans, date, company }) => {
                         <th style={{ fontSize: "12px" }}>
                             {t('dueno')}
                         </th>
+                        <th style={{ fontSize: "12px" }}>{t('receiptnoshort')}</th>
                         <th style={{ fontSize: "12px" }}>
                             {t('totalcredit')}
                         </th>
@@ -105,6 +106,7 @@ const PreviousWeekList = ({ pendingLoans, date, company }) => {
                                         <td style={{ fontSize: "12px" }}>{customer.customer}</td>
                                         <td style={{ fontSize: "12px" }}>{customer.dueamount}</td>
                                         <td style={{ fontSize: "12px" }}>{totalinstallment}</td>
+                                        <td style={{ fontSize: "12px" }}>{customer.receiptnumber}</td>
                                         <td style={{ fontSize: "12px" }}>{customer.collectedamount}</td>
                                         <td style={{ fontSize: "12px" }}>{customer.collectedamount}</td>
                                         <td style={{ fontSize: "12px" }}>{customer.referencecity}</td>
@@ -124,9 +126,11 @@ const PreviousWeekList = ({ pendingLoans, date, company }) => {
                         <td className='fw-bold' style={{ fontSize: "12px" }}>{t('pagetotal')}</td>
                         <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotaldue}</td>
                         <td></td>
+                        <td></td>
                         <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotalcredit}</td>
                         <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotalcredit}</td>
                         <td></td>
+                        
                     </tr>
                 </tbody>
                     {
@@ -137,6 +141,7 @@ const PreviousWeekList = ({ pendingLoans, date, company }) => {
                         <td></td>
                         <td className='fw-bold' style={{ fontSize: "12px" }}>{t('total')}</td>
                         <td className='fw-bold' style={{ fontSize: "12px" }}>{totaldue}</td>
+                        <td></td>
                         <td></td>
                         <td className='fw-bold' style={{ fontSize: "12px" }}>{totalcredit}</td>
                         <td className='fw-bold' style={{ fontSize: "12px" }}>{totalcredit}</td>

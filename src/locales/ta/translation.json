@@ -109,6 +109,10 @@
   "beforeloancount":"மு.ஆ",
   "beforetotalamount":"மு.பற்று",
   "beforependingamount":"மு.பெ",
+  "newloancount":"பு.ஆ",
+  "newtotalamount":"பு.பற்று",
+  "totalloancount":"மொ.ஆ",
+  "totaltotalamount":"மொ.பற்று",
   "currentloancount":"த.ஆ",
   "currenttotalamount":"த.பற்று",
   "currentpendingamount":"த.பெ",
@@ -122,6 +126,7 @@
 "running":"ரன்னிங்",
 "notrunningdate":"ரன்னிங் ஆகாத தேதி",
 "totalledgername":"முன் பற்று கணக்கு,த.பற்று கணக்கு,ஆவரேஜ் வசூல்,பெண்டிங் மற்றும் ரன்னிங் ஆகாத அக்கவுண்ட்",
+"totalledgernamecitywise":"வார கணக்கு,வசூல் ருபாய்,முடிவு மற்றும் த.பற்று கணக்கு",
 "selectanyitemfromlist":"ஏதாவது ஒரு சீட்டு எண்ணை தேர்ந்தெடுக்கவும்",
 "paidamountvaluezeroalert":"கட்டிய பணம் கொடுக்கப்படவில்லை",
 "paidamountgreaterthanloanalert":"கட்டிய பணம் கடன் தொகையை விட அதிகமாக உள்ளது",
@@ -174,8 +179,11 @@
 "loanentryexist":"இந்த சீட்டு எண் முன்னதாக கொடுக்கப்பட்டுள்ளது",
 "loanentrynotexist":"இந்த சீட்டு எண் இல்லை",
 "receiptno":"ரசீது எண்",
+"receiptnoshort":"ரசீது",
 "chart":"சாட்",
-"forcontanct":"நேரில் தொடர்பு"
+"forcontanct":"நேரில் தொடர்பு",
+"linewise":"லைன் வாரியாக",
+"citywise":"ஊர் வாரியாக"
 
 
 

@@ -107,6 +107,10 @@
   "averagecollection":"Avg.Collection",
   "beforeloancount":"B.Count",
   "beforetotalamount":"B.Debt",
+  "newloancount":"N.Count",
+  "newtotalamount":"N Debt",
+  "totalloancount":"Tot.Count",
+  "totaltotalamount":"Total",
   "beforependingamount":"B.Pending",
   "currentloancount":"C.Count",
   "currenttotalamount":"C.Debt",
@@ -147,6 +151,9 @@
 "loanentryexist":"This Loan No Already Entered",
 "loanentrynotexist":"This Loan Not Exist",
 "receiptno":"Receipt No",
+"receiptnoshort":"Receipt",
 "chart":"Chart",
-"forcontanct":"For Contact"
+"forcontanct":"For Contact",
+"linewise":"Line Wise",
+"citywise":"City Wise"
 }

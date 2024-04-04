@@ -510,15 +510,15 @@ function LoanForm() {
 
                     <Row >
                         <Col xs={12} md={4} className="rounded bg-white">
-                            <Form.Group className="mb-3" border="primary" >
+                            <Form.Group className="mb-3" border="primary" name ="loanno">
                                 <Form.Label>{t('loanno')}</Form.Label> {/*loan no*/}
-                                <Form.Control ref={loannoRef} type="number" required readOnly={isReadOnlyLoanNo()} />
+                                <Form.Control ref={loannoRef} type="number" data-cypress-loan-app-loanno="loanno" required readOnly={isReadOnlyLoanNo()} />
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={2} className="rounded bg-white">
                             <Form.Group className="mb-3" border="primary" >
                                 <Form.Label>{t('oldno')}</Form.Label>{/*old no*/}
-                                <Form.Control ref={oldLoanRef} type="number" placeholder={t('oldno')} onBlur={loadOldLoanRef} />
+                                <Form.Control ref={oldLoanRef} data-cypress-loan-app-oldloan="oldloan" type="number" placeholder={t('oldno')} onBlur={loadOldLoanRef} />
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={3} className="rounded bg-white">
