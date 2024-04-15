@@ -49,12 +49,12 @@ function Chart({ loanno, ledger, company, date }) {
             arr2 = Array.from({ length: 9 }, (_, i) => i + 12)
         }
         else if (first.weekcount === 24) {
-            arr1 = Array.from(Array(16).keys());
-            arr2 = Array.from({ length: 8 }, (_, i) => i + 12)
+            arr1 = Array.from(Array(12).keys());
+            arr2 = Array.from({ length: 12 }, (_, i) => i + 12)
         }
         else if (first.weekcount === 20) {
-            arr1 = Array.from(Array(16).keys());
-            arr2 = Array.from({ length: 4 }, (_, i) => i + 12)
+            arr1 = Array.from(Array(12).keys());
+            arr2 = Array.from({ length: 8 }, (_, i) => i + 12)
         }
         else if (first.weekcount === 11) {
             arr1 = Array.from(Array(11).keys());
@@ -71,7 +71,7 @@ function Chart({ loanno, ledger, company, date }) {
                         <Col className='rounded bg-white col-sm-2 fixed fw-bold' style={{fontSize:"11px"}}>
                             {t('line') + " : " + (ledger.length > 0 ? first.lineno : "")}
                         </Col>
-                        <Col className="rounded bg-white col-sm-4 fixed fw-bold" style={{fontSize:"11px"}}>
+                        <Col className="rounded bg-white col-sm-4 fixed fw-bold" style={{fontSize:"15px"}}>
                             {company}
                         </Col>
                         <Col className="rounded bg-white col-sm-2 fixed fw-bold" style={{fontSize:"11px",position:"fixed",left:"32%"}}>

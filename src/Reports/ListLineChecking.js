@@ -113,7 +113,7 @@ const ListLineChecking = ({ pendingLoans, date, company }) => {
 
   return (
     <Fragment>
-      <div className='col-sm-6 fixed mt-3' style={{paddingLeft:"15px"}}>
+      <div className='col-sm-6 fixed mt-3' style={{paddingLeft:"21px"}}>
         <h3>{(company)}</h3>
       </div>
       <div className='col-sm-6 fixed mt-3'><h3>{t('linechecking')}</h3></div>

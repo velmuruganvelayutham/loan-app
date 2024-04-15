@@ -473,13 +473,16 @@ const DailyRecords = ({datefrom,dateto,linemanname,linamnline,collectiondate}) =
 
 
             </Table>
-                   { /*kodutha ruppai and selavu 35*/}
-            
+            { /*kodutha ruppai and selavu 35*/}
+            {(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)?
+            <div className='row'>
             <div className='fixed fw-bold pt-5' style={{width: "20%",paddingLeft:"20px"}}>{t('customer') + " : "}</div>
             <div className='fixed fw-bold pt-5'style={{width: "15%"}}>{t('line') + " : "}</div>
             <div className='fixed fw-bold pt-5'style={{width: "30%"}}>{t("weekdate") + " : "}</div>
             <div className='fixed fw-bold pt-5'style={{width: "35%"}}>{t("collectiondate") + " : "}</div>
-
+            </div>
+            :null}
+            {(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)?
             <Table className='table  text-center table-bordered border-dark'  >
             <thead >
                     <tr>
@@ -589,13 +592,21 @@ const DailyRecords = ({datefrom,dateto,linemanname,linamnline,collectiondate}) =
                 
                 </tbody>
             </Table>
+            :null}
+            {(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)?
             <div style={{paddingTop:"65px"}}></div>
+            :<div style={{paddingTop:"0px"}}></div>}
             {/*finished account 35 row*/}
+            {(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)?
+            <div className='row'>
             <div className='fixed fw-bold pt-5' style={{width: "20%",paddingLeft:"20px"}}>{t('customer') + " : "}</div>
             <div className='fixed fw-bold pt-5'style={{width: "15%"}}>{t('line') + " : "}</div>
             <div className='fixed fw-bold pt-5'style={{width: "30%"}}>{t("weekdate") + " : "}</div>
             <div className='fixed fw-bold pt-5'style={{width: "35%"}}>{t("collectiondate") + " : "}</div>
             <div className='col-sm-12 text-center fixed' ></div>
+            </div>
+            :null}
+            {(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)?
             <Table className='table  text-center table-bordered border-dark'>
             <thead >
                     <tr>
@@ -678,7 +689,10 @@ const DailyRecords = ({datefrom,dateto,linemanname,linamnline,collectiondate}) =
                     </tr>
                 </tbody>
             </Table>
+            :null}
+            {(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)?
             <div style={{paddingTop:"65px"}}></div>
+            :null}
             <div className='fw-bold pt-5'  style={{width: "20%",paddingLeft:"20px"}}>{t('customer') + " : "}</div>
             <div className='fw-bold pt-5' style={{width: "15%"}}>{t('line') + " : "}</div>
             <div className='fw-bold pt-5' style={{width: "35%"}}>{t("weekdate") + " : "}</div>
