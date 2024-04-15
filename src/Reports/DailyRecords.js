@@ -29,10 +29,10 @@ const DailyRecords = ({datefrom,dateto,linemanname,linamnline,collectiondate}) =
 
     return (
         <Fragment >
-            <div className='fixed mt-3 fw-bold' style={{width: "20%" }}>{t('customer') + " : "+linemanname}</div>
-            <div className='fixed mt-3 fw-bold'style={{width: "15%" }}>{t('line') + " : "+linamnline}</div>
-            <div className='fixed mt-3 fw-bold'style={{width: "30%" }}>{t("weekdate") + " : "+dateFormatdd(datefrom)+"-"+dateFormatdd(dateto)}</div>
-            <div className='fixed mt-3 fw-bold'style={{width: "35%" }}>{t("collectiondate") + " : "+dateFormatdd(collectiondate)+d}</div>
+            <div className='fixed mt-3 fw-bold' style={{width: "20%" }}>{t('customer') + " :"+linemanname}</div>
+            <div className='fixed mt-3 fw-bold'style={{width: "15%" }}>{t('line') + " :"+linamnline}</div>
+            <div className='fixed mt-3 fw-bold'style={{width: "30%" }}>{t("weekdate") + " :"+dateFormatdd(datefrom)+"-"+dateFormatdd(dateto)}</div>
+            <div className='fixed mt-3 fw-bold'style={{width: "35%" }}>{t("collectiondate") + " :"+dateFormatdd(collectiondate)+d}</div>
 
             <Table className='table  text-center table-bordered border-dark' style={{ overflow: "auto" }}>
                 <thead >
