@@ -155,5 +155,7 @@
 "chart":"Chart",
 "forcontanct":"For Contact",
 "linewise":"Line Wise",
-"citywise":"City Wise"
+"citywise":"City Wise",
+"actualbookno":"Actual BookNo",
+"changebookno":"Change BookNo"
 }
