@@ -14,6 +14,7 @@
   "no": "எண்",
   "loanno": "சீட்டு எண்",
   "customer": "பெயர்",
+  "customershort": "பெ",
   "customerplaceholderlabel": "பெயரை இடவும்",
   "phoneno": "போன்",
   "phonenoplaceholder": "போன் எண்ணை இடவும்",
@@ -185,7 +186,9 @@
 "linewise":"லைன் வாரியாக",
 "citywise":"ஊர் வாரியாக",
 "actualbookno":"ஒரிஜினல் புக் எண்",
-"changebookno":"மாற்ற வேண்டிய எண்"
+"changebookno":"மாற்ற வேண்டிய எண்",
+"lineshort":"ல",
+"booknomedium":"பு.எண்"
 
 
 

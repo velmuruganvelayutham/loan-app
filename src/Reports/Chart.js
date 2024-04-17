@@ -12,13 +12,17 @@ function Chart({ loanno, ledger, company, date }) {
     var records = ledger
     let startdateadd;
     let relationtype=0;
+    let fontsizevar="11px";
+    if (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 6){
+        fontsizevar="10px"
+    }
     function TablesRows(no, date, income, balance) {
         return (
             <tr className={(records.length > 0 && first.weekcount<40) ?'chartheight':'chartheight42'}>
-                <td style={{ fontSize: "11px",textAlign:"center",padding:"0",margin:"0" }} className='text-nowrap overflow-hidden'>{no}</td>
-                <td style={{ fontSize: "11px",textAlign:"center",padding:"0",margin:"0" }} className='text-nowrap overflow-hidden'>{date !== "" ? dateFormatdd(date) : ""}</td>
-                <td style={{ fontSize: "11px",textAlign:"center",padding:"0",margin:"0" }} className='text-nowrap overflow-hidden'>{income}</td>
-                <td style={{ fontSize: "11px",textAlign:"center",padding:"0",margin:"0" }} className='text-nowrap overflow-hidden'>{balance}</td>
+                <td style={{ fontSize:fontsizevar,textAlign:"center",padding:"0",margin:"0" }} className='text-nowrap overflow-hidden'>{no}</td>
+                <td style={{ fontSize:fontsizevar,textAlign:"center",padding:"0",margin:"0" }} className='text-nowrap overflow-hidden'>{date !== "" ? dateFormatdd(date) : ""}</td>
+                <td style={{ fontSize: fontsizevar,textAlign:"center",padding:"0",margin:"0" }} className='text-nowrap overflow-hidden'>{income}</td>
+                <td style={{ fontSize: fontsizevar,textAlign:"center",padding:"0",margin:"0" }} className='text-nowrap overflow-hidden'>{balance}</td>
             </tr>
         )
     }
@@ -63,19 +67,19 @@ function Chart({ loanno, ledger, company, date }) {
     }
 
     return (
-        <Container className="rounded bg-white">
+        <Container className="rounded bg-white" >
             <Row style={{paddingLeft:"5px"}}>
                 <Form>
 
-                    <Row className='col-sm-8 col-md-10 pt-5' >
-                        <Col className='rounded bg-white col-sm-2 fixed fw-bold' style={{fontSize:"11px"}}>
-                            {t('line') + " : " + (ledger.length > 0 ? first.lineno : "")}
+                    <Row className='col-sm-6 col-md-10 pt-5' style={{ whiteSpace: "nowrap",overflow:"hidden" }} >
+                        <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)?'rounded bg-white col-sm-2 fw-bold':'rounded bg-white col-sm-1 fw-bold'} style={{fontSize:fontsizevar}}>
+                            {t('lineshort')+ ":" + (ledger.length > 0 ? first.lineno : "")}
                         </Col>
-                        <Col className="rounded bg-white col-sm-4 fixed fw-bold" style={{fontSize:"15px"}}>
+                        <Col className="rounded bg-white col-sm-4 fw-bold" style={{fontSize:"12px"}}>
                             {company}
                         </Col>
-                        <Col className="rounded bg-white col-sm-2 fixed fw-bold" style={{fontSize:"11px",position:"fixed",left:"32%"}}>
-                            {t('bookno') + ':' + (ledger.length > 0 ? first.bookno : "")}
+                        <Col className="rounded bg-white col-sm-2 fw-bold" style={{fontSize:fontsizevar,position:"fixed",left:(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)?"32%":"25%"}}>
+                            {t('booknomedium') + ':' + (ledger.length > 0 ? first.bookno : "")}
                         </Col>
                     </Row>
                     <Row>
@@ -83,56 +87,56 @@ function Chart({ loanno, ledger, company, date }) {
                             color: '#000000',
                             backgroundColor: '#000000',
                             height: .1,
-                            width:"42%",
+                            width:(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)?"42%":"33%",
                             borderColor: '#000000'
                         }} />
                     </Row>
-                    <Row className='col-sm-8 col-md-8'>
-                        <Col className='col-sm-4 col-md-4' >
+                    <Row className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)?'col-sm-8 col-md-8':'col-sm-8 col-md-8'} style={{ whiteSpace: "nowrap",overflow:"hidden"}}>
+                        <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)?'col-sm-4 col-md-4':'col-sm-3 col-md-4'} >
                             <Form.Group  >
-                                <Form.Label className='text-nowrap overflow-hidden' style={{fontSize:"12px"}}>{t('customer')}&nbsp;:</Form.Label>
-                                <Form.Label className='text-nowrap overflow-hidden' style={{fontSize:"12px"}}>&nbsp;{ledger.length > 0 ? first.customer : ""}</Form.Label>
+                                <Form.Label  style={{fontSize:fontsizevar}}>{(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)?t('customer'):t('customershort')}&nbsp;:</Form.Label>
+                                <Form.Label style={{fontSize:fontsizevar}}>&nbsp;{ledger.length > 0 ? first.customer : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group >
-                                <Form.Label className='text-nowrap overflow-hidden' style={{fontSize:"12px"}}>{t('address')}&nbsp;&nbsp;&nbsp;:</Form.Label>
-                                <Form.Label className='text-nowrap overflow-hidden' style={{fontSize:"12px"}}>&nbsp;{ledger.length > 0 ? first.address : ""}</Form.Label>
+                                <Form.Label style={{fontSize:fontsizevar}}>{t('address')}&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label style={{fontSize:fontsizevar}}>&nbsp;{ledger.length > 0 ? first.address : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group  >
-                                <Form.Label className='text-nowrap overflow-hidden' style={{fontSize:"12px"}}>{t('loanno')}&nbsp;:</Form.Label>
-                                <Form.Label className='text-nowrap overflow-hidden' style={{"fontWeight":"bold"}}>&nbsp;{ledger.length > 0 ? first.loannumber : ""}</Form.Label>
+                                <Form.Label style={{fontSize:fontsizevar}}>{t('loannoshort')}&nbsp;:</Form.Label>
+                                <Form.Label style={{"fontWeight":"bold"}}>&nbsp;{ledger.length > 0 ? first.loannumber : ""}</Form.Label>
                             </Form.Group>
                         </Col>
-                        <Col className='col-sm-4 col-md-4'>
+                        <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)?'col-sm-4 col-md-4':'col-sm-3 col-md-4'} style={{paddingLeft:"2px"}} >
                             <Form.Group  >
-                                <Form.Label className='text-nowrap overflow-hidden' style={{fontSize:"12px"}}>{relationtype==0?t('fathername'):t('husbandname')}&nbsp;:</Form.Label>
-                                <Form.Label className='text-nowrap overflow-hidden' style={{fontSize:"12px"}}>&nbsp;{ledger.length > 0 ? first.fathername : ""}</Form.Label>
+                                <Form.Label  style={{fontSize:fontsizevar}}>{relationtype==0?(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)?t('fathername'):t('fathershort'):(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)?t('husbandname'):t('husbandshort')}&nbsp;:</Form.Label>
+                                <Form.Label style={{fontSize:fontsizevar}}>&nbsp;{ledger.length > 0 ? first.fathername : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group  >
-                                <Form.Label className='text-nowrap overflow-hidden' style={{fontSize:"12px"}}>{t('city')}&nbsp;&nbsp;:</Form.Label>
-                                <Form.Label  className='text-nowrap overflow-hidden'style={{fontSize:"12px"}}>&nbsp;{ledger.length > 0 ? first.referencecity : ""}</Form.Label>
+                                <Form.Label  style={{fontSize:fontsizevar}}>{t('city')}&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label style={{fontSize:fontsizevar}}>&nbsp;{ledger.length > 0 ? first.referencecity : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group  >
-                                <Form.Label className='text-nowrap overflow-hidden' style={{fontSize:"12px"}}>{t('total')}&nbsp;&nbsp;:</Form.Label>
-                                <Form.Label className='text-nowrap overflow-hidden' style={{"fontWeight":"bold"}}>&nbsp;{ledger.length > 0 ? first.totalamount : ""}</Form.Label>
+                                <Form.Label  style={{fontSize:fontsizevar}}>{t('total')}&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label  style={{"fontWeight":"bold"}}>&nbsp;{ledger.length > 0 ? first.totalamount : ""}</Form.Label>
                             </Form.Group>
                         </Col>
                     </Row>
                 </Form>
             </Row>
 
-            <Row className='col-sm-8 col-md-8'style={{paddingLeft:"5px"}} >
-                <Col className='col-sm-4 col-md-4 p-0' >
+            <Row className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)?'col-sm-8 col-md-8':'col-sm-8 col-md-8'}style={{paddingLeft:"5px"}} >
+                <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)?'col-sm-4 col-md-4 p-0':'col-sm-3 col-md-4 p-0'} >
                     <Table className="table text-center table-bordered border-dark chart" >
                         <thead>
                             <tr >
                                 
-                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"13%"}}>
-                                    {t('no')}
+                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"10%"}}>
+                                    {t('countshort')}
                                 </th>
-                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"16%"}}>
+                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"19%"}}>
                                     {t('date')}
                                 </th>
-                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"15%"}}>
+                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"14%"}}>
                                     {t('pay')}
                                 </th>
                                 <th style={{fontSize:"11px",padding:"0",margin:"0",width:"17%"}}>
@@ -172,17 +176,17 @@ function Chart({ loanno, ledger, company, date }) {
                         </tbody>
                     </Table>
                 </Col>
-                <Col className='col-sm-4 col-md-4 p-0'  >
+                <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)?'col-sm-4 col-md-4 p-0':'col-sm-3 col-md-4 p-0'}  >
                     <Table className="table  text-center table-bordered border-dark chart " >
                         <thead>
                             <tr >
-                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"13%"}}>
-                                    {t('no')}
+                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"10%"}}>
+                                    {t('countshort')}
                                 </th >
-                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"16%"}}>
+                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"19%"}}>
                                     {t('date')}
                                 </th>
-                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"15%"}}>
+                                <th style={{fontSize:"11px",padding:"0",margin:"0",width:"14%"}}>
                                     {t('pay')}
                                 </th>
                                 <th style={{fontSize:"11px",padding:"0",margin:"0",width:"17%"}}>
@@ -207,10 +211,12 @@ function Chart({ loanno, ledger, company, date }) {
                     </Table>
                 </Col>
             </Row>
-            <Row className='col-sm-8 col-md-8 p-0 m-0' style={{paddingLeft:"10px"}}>
-                <Col className='col-sm-4 col-md-4  text-nowrap overflow-hidden' style={{ fontSize: "11px",textAlign:"center",padding:"0",margin:"0" }}>{t('forcontanct')+":"+first.linemanname}</Col>
-                <Col className='col-sm-4 col-md-4 text-nowrap overflow-hidden' style={{textAlign:"right"}}>{first.linemanmobile}</Col>
+            {(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)?
+            <Row className='col-sm-8 col-md-8 p-0 m-0' style={{paddingLeft:"10px",whiteSpace: "nowrap",overflow:"hidden"}}>
+                <Col className='col-sm-4 col-md-4' style={{ fontSize: "11px",textAlign:"center",padding:"0",margin:"0" }}>{t('forcontanct')+":"+first.linemanname}</Col>
+                <Col className='col-sm-4 col-md-4' style={{textAlign:"right"}}>{first.linemanmobile}</Col>
             </Row>
+            :null}
         </Container>
 
 

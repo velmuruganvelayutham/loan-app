@@ -83,11 +83,19 @@ function LedgerForm() {
     }
     const processList = async () => {
         setIsLoading(true);
+        var passingreportname="ledger";
         const token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         loannumberprocess = loanno;
+        if((Number(reportType))===1){
+            passingreportname="chart"
+        }
+        else{
+            passingreportname="ledger"
+        }
+        
         return (
-            axios.get(`${baseURL}/ledger/get`, { params: { loanno: loanno } }).then((res) => {
+            axios.get(`${baseURL}/${passingreportname}/get`, { params: { loanno: loanno } }).then((res) => {
                 setLoanDetails(res.data);
                 console.log(res.data);
                 setIsLoading(false);
