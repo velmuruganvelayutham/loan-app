@@ -66,9 +66,6 @@ function UpdateBookCity() {
     }
     const clearFields = () => {
         setState({ ...state, city: '', actualbkno: '', changedbkno: '' });
-        //setState({...state,actualbkno:''});
-        //setState({...state,changedbkno:''});
-
     }
     return (
         <Container>

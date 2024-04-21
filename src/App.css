@@ -1,79 +1,91 @@
-.app{
-  width:100%;
-  height:100%;
+.app {
+  width: 100%;
+  height: 100%;
   background-color: #54B4D3;
-  font-size:14px;
+  font-size: 14px;
 }
-.icons{
+
+.icons {
   cursor: pointer;
 }
-.error{
-  background-color:rgba(255, 0, 0, 0.84);
+
+.error {
+  background-color: rgba(255, 0, 0, 0.84);
   color: white;
 }
 
-.previousweek{
+.previousweek {
   line-height: 10px;
   min-height: 10px;
   height: 10px;
 }
-.newaccountaddress{
+
+.newaccountaddress {
   line-height: 15px;
   min-height: 15px;
   height: 15px;
 }
-.linechecking{
+
+.linechecking {
   line-height: 10px;
   min-height: 10px;
   height: 11px;
 }
-.dailyrecords{
+
+.dailyrecords {
   line-height: 10px;
   min-height: 10px;
   height: 10px;
 }
-.dailyrecordsfinshed{
+
+.dailyrecordsfinshed {
   line-height: 10px;
   min-height: 10px;
   height: 10px;
 }
-.dailyrecordsfinshedtotal{
+
+.dailyrecordsfinshedtotal {
   line-height: 14px;
   min-height: 14px;
   height: 10px;
 }
-.dailyrecordsrough{
+
+.dailyrecordsrough {
   line-height: 12px;
   min-height: 12px;
   height: 10px;
 }
-.dailyrecordtotalheight{
+
+.dailyrecordtotalheight {
   line-height: 23px;
   min-height: 23px;
   height: 23px;
 }
+
 .vl {
   border-left: 1px solid black;
   height: 26px;
   left: 13%;
-  top:633px;
+  top: 633px;
   position: absolute;
-  
+
 }
+
 .v2 {
   border-left: 1px solid black;
   height: 26px;
   left: 22%;
-  top:633px;
+  top: 633px;
   position: absolute;
 }
+
 .v3 {
   border-left: 1px solid black;
   height: 26px;
   left: 35%;
-  top:633px;
-  position:absolute;
-  
+  top: 633px;
+  position: absolute;
+
 }
 
 
@@ -81,77 +93,95 @@
   border-left: 1px solid black;
   height: 26px;
   left: 36%;
-  top:990px;
-  position:absolute;
-  
+  top: 990px;
+  position: absolute;
+
 }
+
 .v5 {
   border-left: 1px solid black;
   height: 26px;
   left: 43%;
-  top:990px;
-  position:absolute;
-  
+  top: 990px;
+  position: absolute;
+
 }
-.dailyrecordsadditional{
+
+.dailyrecordsadditional {
   line-height: 10px;
   min-height: 10px;
   height: 10px;
   position: relative;
 }
-.v6position{
+
+.v6position {
   position: relative;
 }
+
 .v6 {
   border-left: 1px solid black;
   height: 26px;
   left: 13%;
-  top:0px;
+  top: 0px;
   position: absolute;
-  
+
 }
+
 .v7 {
   border-left: 1px solid black;
   height: 26px;
   left: 22%;
-  top:0px;
+  top: 0px;
   position: absolute;
 }
+
 .v8 {
   border-left: 1px solid black;
   height: 26px;
   left: 35%;
-  top:0px;
-  position:absolute;
-  
+  top: 0px;
+  position: absolute;
+
 }
-.chartheight{
+
+.chartheight {
   line-height: 23px;
   min-height: 23px;
   height: 23px;
 }
-.chartheight42{
+
+.chartheight42 {
   line-height: 17px;
   min-height: 17px;
   height: 17px;
 }
-* {font-size: 14px;}
+
+* {
+  font-size: 14px;
+}
+
 Table.chart {
   table-layout: fixed;
   word-wrap: break-word;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 Table.linecheckingtable {
   table-layout: fixed;
   word-wrap: break-word;
+
 }
+
 Table.totalledgertable {
   table-layout: fixed;
   word-wrap: break-word;
 }
+
 .visible {
   visibility: visible !important;
 }
+
 .invisible {
   visibility: hidden !important;
 }
