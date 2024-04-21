@@ -185,3 +185,10 @@ Table.totalledgertable {
 .invisible {
   visibility: hidden !important;
 }
+.page-link {
+  background: none;
+  color: blue; /* or any color you prefer for links */
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+}

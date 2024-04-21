@@ -10,7 +10,7 @@ var first = [];
 const PreviousWeekList = ({ pendingLoans, date, company }) => {
     var totaldue = 0;
     var totalcredit = 0;
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const [currentPage, setCurrentPage] = useState(1);
     const recordsPerPage = 35;
     const lastIndex = currentPage * recordsPerPage;
@@ -23,7 +23,7 @@ const PreviousWeekList = ({ pendingLoans, date, company }) => {
     serialno = (currentPage - 1) * recordsPerPage;
     var pagetotaldue = 0;
     var pagetotalcredit = 0;
-    var totalinstallment=0;
+    var totalinstallment = 0;
     function prevPage() {
         if (currentPage !== firstIndex) {
             setCurrentPage(currentPage - 1)
@@ -42,25 +42,26 @@ const PreviousWeekList = ({ pendingLoans, date, company }) => {
     if (currentPage === nPage) {
         totaldue = pendingLoans.reduce((previous, current) => {
             return (previous + current.dueamount)
-        },0);
+        }, 0);
         totalcredit = pendingLoans.reduce((previous, current) => {
             return (previous + current.collectedamount)
-        },0);
+        }, 0);
     }
 
     return (
         <Fragment>
-            <div className='col-sm-6 fixed mt-5'>
+            <div className='col-sm-6 fixed mt-5' style={{ paddingLeft: "18px" }}>
                 <h4>{(company)}</h4>
             </div>
             <div className='col-sm-6 fixed mt-5'><h4>{t('previousweekdetails')}</h4></div>
-            <div className='col-sm-2 fixed'>{t('line') + " : " + (pendingLoans.length > 0 ? first.lineno : "")}</div>
+            <div className='col-sm-2 fixed' style={{ paddingLeft: "18px" }}>{t('line') + " : " + (pendingLoans.length > 0 ? first.lineno : "")}</div>
             <div className='col-sm-2 fixed'>{t("bookno") + " : " + (pendingLoans.length > 0 ? first.bookno : "")}</div>
             <div className='col-sm-2 fixed'>{t("date") + " : " + dateFormatdd(date)}</div>
 
             <Table className='table text-center table-bordered border-dark'  >
                 <thead>
                     <tr>
+                        <th></th>
                         <th style={{ fontSize: "12px" }}>
                             {t('no')}
                         </th>
@@ -86,6 +87,7 @@ const PreviousWeekList = ({ pendingLoans, date, company }) => {
                         </th>
                         <th style={{ fontSize: "12px" }}>{t('debitcredit')}</th>
                         <th style={{ fontSize: "12px" }}>{t('city')}</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -96,9 +98,10 @@ const PreviousWeekList = ({ pendingLoans, date, company }) => {
                                 serialno = serialno + 1;
                                 pagetotaldue = pagetotaldue + customer.dueamount;
                                 pagetotalcredit = pagetotalcredit + customer.collectedamount;
-                                totalinstallment=parseInt((customer.totalcollected)/customer.dueamount);
+                                totalinstallment = parseInt((customer.totalcollected) / customer.dueamount);
                                 return (
                                     <tr className='previousweek'>
+                                        <td></td>
                                         <td style={{ fontSize: "12px" }}>{serialno}</td>
                                         <td style={{ fontSize: "12px" }}>{dateFormatdd(customer.startdate)}</td>
                                         <td style={{ fontSize: "12px" }}>{customer.weeknoreceipt}</td>
@@ -110,6 +113,7 @@ const PreviousWeekList = ({ pendingLoans, date, company }) => {
                                         <td style={{ fontSize: "12px" }}>{customer.collectedamount}</td>
                                         <td style={{ fontSize: "12px" }}>{customer.collectedamount}</td>
                                         <td style={{ fontSize: "12px" }}>{customer.referencecity}</td>
+                                        <td></td>
                                     </tr>
 
                                 )
@@ -123,6 +127,7 @@ const PreviousWeekList = ({ pendingLoans, date, company }) => {
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
                         <td className='fw-bold' style={{ fontSize: "12px" }}>{t('pagetotal')}</td>
                         <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotaldue}</td>
                         <td></td>
@@ -130,11 +135,12 @@ const PreviousWeekList = ({ pendingLoans, date, company }) => {
                         <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotalcredit}</td>
                         <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotalcredit}</td>
                         <td></td>
-                        
+                        <td></td>
                     </tr>
                 </tbody>
-                    {
-                        currentPage===nPage?<tr className="rounded bg-white ">
+                {
+                    currentPage === nPage ? <tr className="rounded bg-white ">
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -146,25 +152,26 @@ const PreviousWeekList = ({ pendingLoans, date, company }) => {
                         <td className='fw-bold' style={{ fontSize: "12px" }}>{totalcredit}</td>
                         <td className='fw-bold' style={{ fontSize: "12px" }}>{totalcredit}</td>
                         <td></td>
-                    </tr>:null
-                    }
+                        <td></td>
+                    </tr> : null
+                }
             </Table>
             <nav>
 
                 <Pagination>
                     <Pagination.Prev >
-                        <a href="#" className='page-link' onClick={prevPage}>{t('pageprev')}</a>
+                        <button href="#" className='page-link' onClick={() => prevPage()}>{t('pageprev')}</button>
                     </Pagination.Prev>
                     {
                         numbers.map((n, i) => (
                             <Pagination.Item>
-                                <a href="#" className='page-link'
-                                    onClick={() => changeCPage(n)}>{n}</a>
+                                <button href="#" className='page-link'
+                                    onClick={() => changeCPage(n)}>{n}</button>
                             </Pagination.Item>
                         ))
                     }
                     <Pagination.Next>
-                        <a href="#" className='page-link' onClick={nextPage}>{t('pagenext')}</a>
+                        <button href="#" className='page-link' onClick={() => nextPage}>{t('pagenext')}</button>
                     </Pagination.Next>
                 </Pagination>
             </nav>
