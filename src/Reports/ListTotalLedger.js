@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { dateFormatddmmyyyy } from "../FunctionsGlobal/StartDateFn"
 
 var first = [];
-const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, reportypeval, companyname,linemanname,linamnline }) => {
+const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, reportypeval, companyname, linemanname, linamnline }) => {
   const { t, i18n } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 15;
@@ -66,7 +66,7 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
           <div>
             <Row className='col-md-10 mx-auto'>
               <Col className='col-md-4 mx-auto'>{companyname}</Col>
-              <Col className='col-md-3 fw-bold text-center'>{t('line')+" "+linamnline}</Col>
+              <Col className='col-md-3 fw-bold text-center'>{t('line') + " " + linamnline}</Col>
               <Col className='col-md-3 fw-bold text-center'>{linemanname}</Col>
             </Row>
             <Row><Col><div className='col-md-10 fw-bold mx-auto'>{dateFormatddmmyyyy(datefrom)}&nbsp;-&nbsp;{dateFormatddmmyyyy(dateto)}
@@ -210,7 +210,7 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
 
           </Table>
           :
-          <div className="col-md-10 mx-auto">
+          <div className="col-md-12">
             <Table className='table text-center table-bordered border-dark' >
               <thead>
                 <tr>
@@ -224,6 +224,7 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
                   <th style={{ fontSize: "12px" }}>
                     {t('beforetotalamount')}
                   </th>
+                  <th style={{ fontSize: "12px" }}>{t('beforependingamount')}</th>
                   <th style={{ fontSize: "12px" }}>
                     {t('newloancount')}
                   </th>
@@ -238,6 +239,11 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
                   <th style={{ fontSize: "12px" }}>{t('collection')}</th>
                   <th style={{ fontSize: "12px" }}>{t('currentloancount')}</th>
                   <th style={{ fontSize: "12px" }}>{t('currenttotalamount')}</th>
+                  <th style={{ fontSize: "12px" }}>{t('currentpendingamount')}</th>
+                  <th style={{ fontSize: "12px" }}>{t('pendingmore')}</th>
+                  <th style={{ fontSize: "12px" }}>{t('pendingless')}</th>
+                  <th style={{ fontSize: "12px" }}>{t('notrunningcount')}</th>
+                  <th style={{ fontSize: "12px" }}>{t('notrunningpending')}</th>
                 </tr>
               </thead>
 
@@ -255,15 +261,21 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
                       totalcount = totalcount + customer.totalcountcal;
                       countfinishedtotal = countfinishedtotal + customer.countfinished;
                       totalcounttotal = totalcounttotal + customer.totalamountcal;
-                      countnew=countnew+customer.countbetween;
-                      totalnew=totalnew+customer.totalamountbetween;
-
+                      countnew = countnew + customer.countbetween;
+                      totalnew = totalnew + customer.totalamountbetween;
+                      pendingbefore = pendingbefore + customer.pendingbefore;
+                      pendingcurrent = pendingcurrent + customer.pendingafter;
+                      pendingless = pendingless + customer.collectedless;
+                      pendingmore = pendingmore + customer.collectedmore;
+                      notrunningcount = notrunningcount + customer.notrunningloancount;
+                      notrunningpending = notrunningpending + customer.notrunningloanpending;
                       return (
                         <tr >
                           <td>{serialno}</td>
                           <td style={{ fontSize: "12px" }}>{customer.cityname}</td>
                           <td style={{ fontSize: "12px" }}>{(Number(customer.countbefore))}</td>
                           <td style={{ fontSize: "12px" }}>{customer.totalamountbefore}</td>
+                          <td style={{ fontSize: "12px" }}>{customer.pendingbefore}</td>
                           <td style={{ fontSize: "12px" }}>{customer.countbetween}</td>
                           <td style={{ fontSize: "12px" }}>{customer.totalamountbetween}</td>
                           <td style={{ fontSize: "12px" }}>{customer.totalcountcal}</td>
@@ -272,6 +284,11 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
                           <td style={{ fontSize: "12px" }}>{customer.collectedbetween}</td>
                           <td style={{ fontSize: "12px" }}>{customer.currentcountcal}</td>
                           <td style={{ fontSize: "12px" }}>{customer.currentamountcal}</td>
+                          <td style={{ fontSize: "12px" }}>{customer.pendingafter}</td>
+                          <td style={{ fontSize: "12px" }}>{customer.collectedmore}</td>
+                          <td style={{ fontSize: "12px" }}>{customer.collectedless}</td>
+                          <td style={{ fontSize: "12px" }}>{customer.notrunningloancount}</td>
+                          <td style={{ fontSize: "12px" }}>{customer.notrunningloanpending}</td>
                         </tr>
 
                       )
@@ -285,6 +302,7 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
                   <td style={{ fontSize: "12px" }} className='fw-bold'>{t('total')}</td>
                   <td style={{ fontSize: "12px" }} className='fw-bold'>{countbefore}</td>
                   <td style={{ fontSize: "12px" }} className='fw-bold'>{totalbefore}</td>
+                  <td style={{ fontSize: "12px" }} className='fw-bold'>{pendingbefore}</td>
                   <td style={{ fontSize: "12px" }} className='fw-bold'>{countnew}</td>
                   <td style={{ fontSize: "12px" }} className='fw-bold'>{totalnew}</td>
                   <td style={{ fontSize: "12px" }} className='fw-bold'>{totalcount}</td>
@@ -293,6 +311,11 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
                   <td style={{ fontSize: "12px" }} className='fw-bold'>{collectiontotal}</td>
                   <td style={{ fontSize: "12px" }} className='fw-bold'>{countcurrent}</td>
                   <td style={{ fontSize: "12px" }} className='fw-bold'>{totalcurrent}</td>
+                  <td style={{ fontSize: "12px" }} className='fw-bold'>{pendingcurrent}</td>
+                  <td style={{ fontSize: "12px" }} className='fw-bold'>{pendingmore}</td>
+                  <td style={{ fontSize: "12px" }} className='fw-bold'>{pendingless}</td>
+                  <td style={{ fontSize: "12px" }} className='fw-bold'>{notrunningcount}</td>
+                  <td style={{ fontSize: "12px" }} className='fw-bold'>{notrunningpending}</td>
                 </tr>
               </tbody>
 
