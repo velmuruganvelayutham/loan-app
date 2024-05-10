@@ -116,7 +116,7 @@ const NotRunningAccounts = ({ pendingLoans, date, company }) => {
       <div className='col-sm-6 fixed mt-3' style={{paddingLeft:"21px"}}>
         <h3>{(company)}</h3>
       </div>
-      <div className='col-sm-6 fixed mt-3'><h3>{t('notrunningaccounts')}</h3></div>
+      <div className='col-sm-6 fixed mt-3'><h4>{t('notrunningaccounts')}</h4></div>
 
       
       <div className='col-sm-3 fixed mt-3'>{t('customer') + " : " + first.linemanname}</div>
