@@ -11,10 +11,12 @@ import ReactToPrint from 'react-to-print';
 import NewAccountDetails from "./NewAccountDetails";
 import WeekEndAccountDetails from "./WeekEndAccountDetails";
 import CurrentWeekGivenAmount from "./CurrentWeekGivenAmount";
+import NotRunningAccounts from "./NotRunningAccounts";
 import DailyRecords from "./DailyRecords";
 import {
     useAuth
 } from "@clerk/clerk-react";
+
 var linecheckingreportname = "checkingdetails";
 var passingargument = "";
 function LinecheckingReport() {
@@ -119,7 +121,13 @@ function LinecheckingReport() {
                 linecheckingreportname = "currentweekgivenamount";
                 passingargument = linemanoptionRef.current.value;
             }
-
+            else if (Number(reportType.current.value) === 6) {
+                
+                setCheckingData([]);
+                linecheckingreportname = "notrunningaccounts";
+                passingargument = linemanoptionRef.current.value;
+            }
+            
             const token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             return (
@@ -131,7 +139,7 @@ function LinecheckingReport() {
                 }).then((res) => {
                     Number(reportType.current.value) === 0 ? setCheckingData(res.data) : setCheckingDetailsLine(res.data)
 
-                    //console.log(res.data);
+                    console.log(res.data);
                     setIsLoading(false);
 
 
@@ -184,6 +192,12 @@ function LinecheckingReport() {
     const renderdailyrecords = (
         <Row ref={componentRef}>
             <DailyRecords datefrom={startDateRef.current.value} dateto={endDateRef.current.value} linemanname={linemannameday} linamnline={linemanlineno} collectiondate={printDateRef} />
+        </Row>
+    )
+    const rendernotrunningaccounts = (
+        <Row ref={componentRef}>
+            <NotRunningAccounts pendingLoans={checkingDetailsLine} date={endDateRef.current.value}
+                company={company.length > 0 ? company[0].companyname : ""} />
         </Row>
     )
     const restoreLineman = (e) => {
@@ -265,6 +279,7 @@ function LinecheckingReport() {
                                     <option value={3}>{t('currentweekamountgiven')}</option>
                                     <option value={4}>{t('weekendaccounts')}</option>
                                     <option value={5}>{t('dailylist')}</option>
+                                    <option value={6}>{t('notrunningaccounts')}</option>
                                 </Form.Select>
                             </Form.Group>
                         </Col>
@@ -308,7 +323,9 @@ function LinecheckingReport() {
                         renderLineCheckingList : Number(reportType.current.value) === 1 ?
                             renderpreviousweekList : Number(reportType.current.value) === 2 ?
                                 rendernewaccountList : Number(reportType.current.value) === 3 ?
-                                    rendercurrentweekgivenaccountList : Number(reportType.current.value) === 4 ? renderweekendaccountList : renderdailyrecords}
+                                    rendercurrentweekgivenaccountList : Number(reportType.current.value) === 4 ? 
+                                    renderweekendaccountList : Number(reportType.current.value) === 6?
+                                    rendernotrunningaccounts:renderdailyrecords}
                     {errorMessage && <div className="error">{errorMessage}</div>}
 
 

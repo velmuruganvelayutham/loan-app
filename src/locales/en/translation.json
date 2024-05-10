@@ -159,5 +159,6 @@
   "linewise": "Line Wise",
   "citywise": "City Wise",
   "actualbookno": "Actual BookNo",
-  "changebookno": "Change BookNo"
+  "changebookno": "Change BookNo",
+  "notrunningaccounts":"Not Running Accounts List"
 }
