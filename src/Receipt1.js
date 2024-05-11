@@ -24,7 +24,26 @@ function AddReceipt1() {
   const [updateUI, setUpdateUI] = useState(false);
   const [isRestore, setIsRestore] = useState(false);
   const [total, setTotal] = useState(0);
-
+  const lineRef = useRef(null);
+  const [linenames, setLineNames] = useState([]);
+  const [SelectDisabled, setSelectDisabled] = useState(false);
+  useEffect(() => {
+    async function fetchData() {
+      setIsLoading(true);
+      const token = await getToken();
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      axios.get(`${baseURL}/linemancreate/get/lines`).then((res) => {
+        setLineNames(res.data);
+        setIsLoading(false);
+        setErrorMessage("");
+      }).catch(error => {
+        console.log("error=", error);
+        setErrorMessage(t('errormessageline'));
+        setIsLoading(false);
+      });
+    }
+    fetchData();
+  }, [getToken, t]);
   useEffect(() => {
     async function fetchData() {
       setIsLoading(true);
@@ -68,6 +87,14 @@ function AddReceipt1() {
       amount: ''
     }
     setRowsData([...rowsData, rowsInput])
+    if(rowsData.length>0){
+      if(lineRef.current.value!=""){
+        setSelectDisabled(true)
+      }
+    }
+    else{
+      setSelectDisabled(false)
+    }
     calTotal();
     //setDisabledColumn(true);
   }
@@ -85,6 +112,10 @@ function AddReceipt1() {
       return parseFloat(previousValue + Number(currentValue.amount))
     }, 0);
     setTotal(totalvalue);
+    if(Number(rowsData.length)===1){
+      setSelectDisabled(false)
+    }
+    
   }
 
   const handleChange = (index, evnt) => {
@@ -116,13 +147,14 @@ function AddReceipt1() {
     }
   }
   async function ProcessList(e, loanno, index) {
+    
     setIsLoading(true);
     const token = await getToken();
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     return (
       axios.get(`${baseURL}/receipt1/get/loanpendingduplicate`, {
         params:
-          { loanno: loanno, receiptdate: dateFormat(startdateRef.current.value).toString() }
+          { loanno: loanno,lineno:lineRef.current.value, receiptdate: dateFormat(startdateRef.current.value).toString() }
       }).then((res) => {
         if (res.data.length > 0) {
           let isexist = 0;
@@ -157,7 +189,12 @@ function AddReceipt1() {
           setIsLoading(false);
         }
         else {
-          alert(t('loanentrynotexist'));
+          if (Number(lineRef.current.value) !== 0) {
+            alert(t('loanentrynotexistline'));
+          }
+          else {
+            alert(t('loanentrynotexist'));
+          }
           var formloan = e.target.form;
           var indexloan = Array.prototype.indexOf.call(formloan, e.target);
           e.target.value = "";
@@ -245,6 +282,7 @@ function AddReceipt1() {
     setTotal(0);
     setRefresh((prevState) => !prevState)
     startdateRef.current.value = startOfWeek();
+    setSelectDisabled(false)
   }
   const RestoreReceipt = async () => {
     if (receiptRef.current.value !== "") {
@@ -329,7 +367,18 @@ function AddReceipt1() {
               <Form.Control type="date" placeholder="loan start date" ref={startdateRef} defaultValue={startOfWeek()} />
             </Form.Group>
           </Col>
-
+          <Col xs={12} md={4} className="rounded bg-white">
+            <Form.Group className="mb-3" name="lineno" border="primary" >
+              <Form.Label>{t('line')}</Form.Label>{/*line no*/}
+              <Form.Select aria-label="Default select example" ref={lineRef} data-cypress-loan-app-lineno="lineno" required disabled={SelectDisabled}>
+                <option value="">{t('lineplaceholder')}</option>
+                {
+                  linenames.map((linename) => (
+                    <option key={linename.lineno} value={linename.lineno}>{linename.linename}</option>
+                  ))}
+              </Form.Select>
+            </Form.Group>
+          </Col>
         </Row>
         <Row className="justify-content-md-center mt-5 ">
 

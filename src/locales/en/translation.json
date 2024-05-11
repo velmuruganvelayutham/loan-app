@@ -152,6 +152,7 @@
   "greateramountthanloan": "Not Allowed More than LoanAmount",
   "loanentryexist": "This Loan No Already Entered",
   "loanentrynotexist": "This Loan Not Exist",
+  "loanentrynotexistline":"This Loan Not Exist On Selected Line",
   "receiptno": "Receipt No",
   "receiptnoshort": "Receipt",
   "chart": "Chart",

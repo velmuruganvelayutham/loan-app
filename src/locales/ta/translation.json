@@ -181,6 +181,7 @@
 "greateramountthanloan":"பற்று தொகையை விட அதிகம் கொடுக்க முடியாது",
 "loanentryexist":"இந்த சீட்டு எண் முன்னதாக கொடுக்கப்பட்டுள்ளது",
 "loanentrynotexist":"இந்த சீட்டு எண் இல்லை",
+"loanentrynotexistline":"இந்த சீட்டு எண் தேர்ந்தெடுக்கப்பட்ட லைனில் இல்லை",
 "receiptno":"ரசீது எண்",
 "receiptnoshort":"ரசீது",
 "chart":"சாட்",
