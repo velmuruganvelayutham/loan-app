@@ -266,6 +266,7 @@ const NotRunningAccounts = ({ pendingLoans, date, company }) => {
             <td ></td>
             <td ></td>
             <td ></td>
+            <td></td>
             <td className='fw-bold' style={{ fontSize: "10px",textAlign:"center" }}>{t('pagetotal')}</td>
             <td className='fw-bold' style={{ fontSize: "11px",textAlign:"center" }}>{pagetotal}</td>
             <td className='fw-bold' style={{ fontSize: "11px",textAlign:"center" }}>{pendingtotal}</td>
@@ -278,6 +279,7 @@ const NotRunningAccounts = ({ pendingLoans, date, company }) => {
 
           currentPage === nPage ? <tr className="rounded bg-white">
             <td ></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
