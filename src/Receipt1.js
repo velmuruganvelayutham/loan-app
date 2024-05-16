@@ -27,6 +27,7 @@ function AddReceipt1() {
   const lineRef = useRef(null);
   const [linenames, setLineNames] = useState([]);
   const [SelectDisabled, setSelectDisabled] = useState(false);
+  const loannoRef = useRef(null);
   useEffect(() => {
     async function fetchData() {
       setIsLoading(true);
@@ -65,11 +66,16 @@ function AddReceipt1() {
 
   useEffect(() => {
     document.addEventListener("keydown", function (event) {
+
       if (event.key === "Enter" && event.target.nodeName === "INPUT") {
-        //alert("muru");
         var form = event.target.form;
         var index = Array.prototype.indexOf.call(form, event.target);
-        form.elements[index + 1].focus();
+        if (event.target.name === "loanno") {
+          form.elements[index + 5].focus();
+        }
+        else{
+          form.elements[index + 1].focus();
+        }
         event.preventDefault();
       }
     });
@@ -87,12 +93,12 @@ function AddReceipt1() {
       amount: ''
     }
     setRowsData([...rowsData, rowsInput])
-    if(rowsData.length>0){
-      if(lineRef.current.value!=""){
+    if (rowsData.length > 0) {
+      if (lineRef.current.value != "") {
         setSelectDisabled(true)
       }
     }
-    else{
+    else {
       setSelectDisabled(false)
     }
     calTotal();
@@ -112,10 +118,10 @@ function AddReceipt1() {
       return parseFloat(previousValue + Number(currentValue.amount))
     }, 0);
     setTotal(totalvalue);
-    if(Number(rowsData.length)===1){
+    if (Number(rowsData.length) === 1) {
       setSelectDisabled(false)
     }
-    
+
   }
 
   const handleChange = (index, evnt) => {
@@ -147,14 +153,14 @@ function AddReceipt1() {
     }
   }
   async function ProcessList(e, loanno, index) {
-    
+
     setIsLoading(true);
     const token = await getToken();
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     return (
       axios.get(`${baseURL}/receipt1/get/loanpendingduplicate`, {
         params:
-          { loanno: loanno,lineno:lineRef.current.value, receiptdate: dateFormat(startdateRef.current.value).toString() }
+          { loanno: loanno, lineno: lineRef.current.value, receiptdate: dateFormat(startdateRef.current.value).toString() }
       }).then((res) => {
         if (res.data.length > 0) {
           let isexist = 0;
@@ -397,7 +403,7 @@ function AddReceipt1() {
               </tr>
             </thead>
             <tbody>
-              <TableRows rowsData={rowsData} deleteTableRows={deleteTableRows} handleChange={handleChange} RestoreLoan={RestoreLoan} isRestore={isRestore} />
+              <TableRows rowsData={rowsData} deleteTableRows={deleteTableRows} handleChange={handleChange} RestoreLoan={RestoreLoan} isRestore={isRestore} loannoRef={loannoRef} />
             </tbody>
             <tr className="dailyrecordtotalheight">
               <td></td>
@@ -444,13 +450,14 @@ function AddReceipt1() {
 function TableRows({ rowsData, deleteTableRows, handleChange, RestoreLoan, isRestore }) {
   return (
     rowsData.map((data, index) => {
-      const { serialno, loanno, customer_id, customername, loanamount, dueamount, weekno, amount } = data;
+      const { serialno, loanno, customer_id, customername, loanamount, dueamount, weekno, amount, loannoRef } = data;
       return (
         <tr key={index}>
           <td><input type="text" value={serialno} name="serialno" className="form-control" disabled /></td>
           <td>
-            <input type="text" value={loanno} onChange={(evnt) => (handleChange(index, evnt))}
-              name="loanno" className="form-control" onBlur={(e) => RestoreLoan(e, index)} disabled={isRestore} />
+            <input type="text" ref={loannoRef} value={loanno} onChange={(evnt) => (handleChange(index, evnt))}
+              name="loanno" className="form-control"
+              onBlur={(e) => RestoreLoan(e, index)} disabled={isRestore} />
           </td>
           <td style={{ display: "none" }}><input type="text" value={customer_id} name="customer_id" className="form-control" /></td>
           <td><input type="text" value={customername} name="customername" className="form-control" disabled /></td>
