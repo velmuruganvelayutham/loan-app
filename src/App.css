@@ -145,15 +145,15 @@
 }
 
 .chartheight {
-  line-height: 24px;
-  min-height: 24px;
-  height: 24px;
+  line-height: 27px;
+  min-height: 27px;
+  height: 27px;
 }
 
 .chartheight42 {
-  line-height: 17px;
-  min-height: 17px;
-  height: 17px;
+  line-height: 20px;
+  min-height: 20px;
+  height: 20px;
 }
 
 * {

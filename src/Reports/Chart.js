@@ -69,11 +69,11 @@ function Chart({ loanno, ledger, company, date }) {
     }
 
     return (
-        <Container className="rounded bg-white" >
+        <Container className="rounded bg-white" style={{ paddingLeft: "25px" }}>
             <Row style={{ paddingLeft: "5px" }}>
                 <Form>
 
-                    <Row className='col-sm-6 col-md-10 pt-5' style={{ whiteSpace: "nowrap", overflow: "hidden" }} >
+                    <Row className='col-sm-6 col-md-10 pt-3' style={{ whiteSpace: "nowrap", overflow: "hidden" }} >
                         <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'rounded bg-white col-sm-2 fw-bold' : 'rounded bg-white col-sm-1 fw-bold'} style={{ fontSize: fontsizevar }}>
                             {t('lineshort') + ":" + (ledger.length > 0 ? first.lineno : "")}
                         </Col>
