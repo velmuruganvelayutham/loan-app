@@ -151,9 +151,9 @@
 }
 
 .chartheight42 {
-  line-height: 20px;
-  min-height: 20px;
-  height: 20px;
+  line-height: 18px;
+  min-height: 18px;
+  height: 18px;
 }
 
 * {
@@ -191,4 +191,7 @@ Table.totalledgertable {
   border: none;
   text-decoration: underline;
   cursor: pointer;
+}
+.col-sm-custom {
+  width: 40% !important; 
 }
