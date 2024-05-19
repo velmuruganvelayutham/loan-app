@@ -220,7 +220,7 @@ function Chart({ loanno, ledger, company, date }) {
                     <Col className='col-sm-4 col-md-4' style={{ fontSize: "11px", textAlign: "center", padding: "0", margin: "0",width:"30%",textOverflow: "ellipsis" }}>
                         {t('forcontanct') + ":"}<span style={{ fontWeight: "bold",display: "inline-block", width: "50%",textOverflow: "ellipsis" }}>{first.linemanname}</span>
                     </Col>
-                    <Col className='col-sm-4 col-md-4' style={{width:"20%",textOverflow: "ellipsis",textAlign:"right",paddingLeft:"10%"}}>{first.linemanmobile}</Col>
+                    <Col className='col-sm-4 col-md-4' style={{width:"20%",textOverflow: "ellipsis",textAlign:"right",paddingLeft:"12%"}}>{first.linemanmobile}</Col>
                 </Row>
                 : null}
         </Container>
