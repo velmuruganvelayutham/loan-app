@@ -180,20 +180,20 @@ function Chart({ loanno, ledger, company, date }) {
                         </tbody>
                     </Table>
                 </Col>
-                <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-4 col-md-4 p-0' : 'col-sm-3 col-md-4 p-0'}  >
-                    <Table className="table  text-center table-bordered border-dark chart " style={{ marginBottom: "0 !important" }}>
+                <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-custom col-md-4 p-0' : 'col-sm-3 col-md-4 p-0'}  >
+                    <Table className="table  text-center table-bordered border-dark chart col-sm-custom col-md-4" style={{ marginBottom: "0 !important" }}>
                         <thead>
                             <tr >
-                                <th style={{ fontSize: "11px", padding: "0", margin: "0", width: "10%" }}>
+                                <th style={{ fontSize: "11px", padding: "0", margin: "0", width: "7%" }}>
                                     {t('countshort')}
                                 </th >
-                                <th style={{ fontSize: "11px", padding: "0", margin: "0", width: "19%" }}>
+                                <th style={{ fontSize: "11px", padding: "0", margin: "0", width: "16%" }}>
                                     {t('date')}
                                 </th>
-                                <th style={{ fontSize: "11px", padding: "0", margin: "0", width: "14%" }}>
+                                <th style={{ fontSize: "11px", padding: "0", margin: "0", width: "9%" }}>
                                     {t('pay')}
                                 </th>
-                                <th style={{ fontSize: "11px", padding: "0", margin: "0", width: "17%" }}>
+                                <th style={{ fontSize: "11px", padding: "0", margin: "0", width: "11%" }}>
                                     {totalamount}
                                 </th>
                             </tr>
