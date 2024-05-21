@@ -161,5 +161,6 @@
   "citywise": "City Wise",
   "actualbookno": "Actual BookNo",
   "changebookno": "Change BookNo",
-  "notrunningaccounts":"Not Running Accounts List"
+  "notrunningaccounts":"Not Running Accounts List",
+  "linemanbookalert":"This LineMan Has Book No:"
 }

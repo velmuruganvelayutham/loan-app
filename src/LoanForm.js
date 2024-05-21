@@ -413,7 +413,29 @@ function LoanForm() {
             setButtonDisabled(false);
         });
     }
-    
+    const loanBooknoLineman=async()=>{
+        if((linemanoptionRef.current.value!=="") &&(myForm.mySelectKey!=="")){
+            const token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            axios.get(`${baseURL}/loancreate/get/bookNoRef`,{ params: { city_id: cityidRef.current.value, lineman_id: linemanoptionRef.current.value,assigndate:(startDate) } })
+            .then((res)=>{
+                if(res.data.length>0){
+                    if(res.data.length===1){
+                        bookRef.current.value=res.data[0].bookno
+                    }
+                    else{
+                        const concatenatedValues = res.data.map(record => record.bookno).join(',');
+                        alert(`${t('linemanbookalert')} ${concatenatedValues}` )
+                    } 
+                }
+                else{
+                    bookRef.current.value=""
+                }
+                
+            })
+        }
+
+    }
     const loadOldLoanRef = async () => {
         if (oldLoanRef.current.value != "") {
             const token = await getToken();
@@ -538,7 +560,8 @@ function LoanForm() {
                         <Col xs={12} md={3} className="rounded bg-white">
                             <Form.Group className="mb-3" name="linemanname" border="primary" >
                                 <Form.Label>{t('lineman')}</Form.Label>{/*lineman name*/}
-                                <Form.Select data-cypress-loan-app-lineman="lineman" aria-label="Default select example" ref={linemanoptionRef} required>
+                                <Form.Select data-cypress-loan-app-lineman="lineman" 
+                                aria-label="Default select example" ref={linemanoptionRef} required onChange={loanBooknoLineman}>
                                     <option value="">{t('linemanplaceholder')}</option>
                                     {
                                         linemannames.map((linemanname) => (
@@ -593,7 +616,7 @@ function LoanForm() {
                             <Form.Group className="mb-3" name="lineno" border="primary" >
                                 <Form.Label>{t('line')}</Form.Label>{/*line no*/}
                                 <Form.Select aria-label="Default select example" ref={lineRef} data-cypress-loan-app-lineno="lineno" required disabled>
-                                    <option value="">{t('citylineplaceholder')}</option>
+                                    <option value="">{t('lineplaceholder')}</option>
                                     {
                                         linenames.map((linename) => (
                                             <option key={linename.lineno} value={linename.lineno}>{linename.linename}</option>
