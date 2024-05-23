@@ -12,7 +12,7 @@ function Chart({ loanno, ledger, company, date }) {
     var records = ledger
     let startdateadd;
     let relationtype = 0;
-    let fontsizevar = "11px";
+    let fontsizevar = "10px";
     let paddingvar="5px";
     if (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 6) {
         fontsizevar = "10px";
