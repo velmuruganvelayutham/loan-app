@@ -184,16 +184,16 @@ function Chart({ loanno, ledger, company, date }) {
                     <Table className="table  text-center table-bordered border-dark chart col-sm-custom col-md-4" style={{ marginBottom: "0 !important" }}>
                         <thead>
                             <tr >
-                                <th style={{ fontSize: "11px", padding: "0", margin: "0", width: "7%" }}>
+                                <th style={{ fontSize: "11px", padding: "0", margin: "0", width: "6%" }}>
                                     {t('countshort')}
                                 </th >
-                                <th style={{ fontSize: "11px", padding: "0", margin: "0", width: "16%" }}>
+                                <th style={{ fontSize: "11px", padding: "0", margin: "0", width: "15%" }}>
                                     {t('date')}
                                 </th>
                                 <th style={{ fontSize: "11px", padding: "0", margin: "0", width: "9%" }}>
                                     {t('pay')}
                                 </th>
-                                <th style={{ fontSize: "11px", padding: "0", margin: "0", width: "11%" }}>
+                                <th style={{ fontSize: "11px", padding: "0", margin: "0", width: "10%" }}>
                                     {totalamount}
                                 </th>
                             </tr>
