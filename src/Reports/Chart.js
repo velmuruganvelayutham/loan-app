@@ -12,15 +12,15 @@ function Chart({ loanno, ledger, company, date }) {
     var records = ledger
     let startdateadd;
     let relationtype = 0;
-    let fontsizevar = "10px";
-    let paddingvar="5px";
+    let fontsizevar = "9px";
+    let paddingvar = "5px";
     if (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 6) {
         fontsizevar = "10px";
-        paddingvar="12px";
+        paddingvar = "12px";
     }
     function TablesRows(no, date, income, balance) {
         return (
-            <tr className={(records.length > 0 && first.weekcount < 40) ? 'chartheight' : 'chartheight42'}>
+            <tr className={(records.length > 0 && first.weekcount < 40) ? 'chartheight' : (first.weekcount > 42) ? 'chartheight43' : 'chartheight42'}>
                 <td style={{ fontSize: fontsizevar, textAlign: "center", padding: "0", margin: "0" }} className='text-nowrap overflow-hidden'>{no}</td>
                 <td style={{ fontSize: fontsizevar, textAlign: "center", padding: "0", margin: "0" }} className='text-nowrap overflow-hidden'>{date !== "" ? dateFormatdd(date) : ""}</td>
                 <td style={{ fontSize: fontsizevar, textAlign: "center", padding: "0", margin: "0" }} className='text-nowrap overflow-hidden'>{income}</td>
@@ -97,31 +97,31 @@ function Chart({ loanno, ledger, company, date }) {
                     </Row>
                     <Row className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-8 col-md-8' : 'col-sm-8 col-md-8'} >
                         <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-4 col-md-4' : 'col-sm-3 col-md-4'} >
-                            <Form.Group  style={{ overflow: "hidden",whiteSpace: "nowrap" }}>
-                                <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0",display: "inline-block"}}>{(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? t('customer') : t('customershort')}&nbsp;:</Form.Label>
-                                <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0",display: "inline-block"}}>&nbsp;{ledger.length > 0 ? first.customer : ""}</Form.Label>
+                            <Form.Group style={{ overflow: "hidden", whiteSpace: "nowrap" }}>
+                                <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block" }}>{(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? t('customer') : t('customershort')}&nbsp;:</Form.Label>
+                                <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block" }}>&nbsp;{ledger.length > 0 ? first.customer : ""}</Form.Label>
                             </Form.Group>
-                            <Form.Group style={{ overflow: "hidden",whiteSpace: "nowrap" }}>
-                                <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0",display: "inline-block"}}>{t('address')}&nbsp;&nbsp;&nbsp;:</Form.Label>
-                                <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0",display: "inline-block"}}>&nbsp;{ledger.length > 0 ? first.address : ""}</Form.Label>
+                            <Form.Group style={{ overflow: "hidden", whiteSpace: "nowrap" }}>
+                                <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block" }}>{t('address')}&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block" }}>&nbsp;{ledger.length > 0 ? first.address : ""}</Form.Label>
                             </Form.Group>
-                            <Form.Group style={{ overflow: "hidden",whiteSpace: "nowrap" }}>
-                                <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0",display: "inline-block"}}>{t('loannoshort')}&nbsp;:</Form.Label>
-                                <Form.Label style={{ "fontWeight": "bold", marginBottom: "0",display: "inline-block"}}>&nbsp;{ledger.length > 0 ? first.loannumber : ""}</Form.Label>
+                            <Form.Group style={{ overflow: "hidden", whiteSpace: "nowrap" }}>
+                                <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block" }}>{t('loannoshort')}&nbsp;:</Form.Label>
+                                <Form.Label style={{ "fontWeight": "bold", marginBottom: "0", display: "inline-block" }}>&nbsp;{ledger.length > 0 ? first.loannumber : ""}</Form.Label>
                             </Form.Group>
                         </Col>
-                        <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-4 col-md-4' : 'col-sm-3 col-md-4'} style={{ paddingLeft: "2px"}} >
-                            <Form.Group  style={{ overflow: "hidden",whiteSpace: "nowrap" }}>
-                                <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0",display: "inline-block"}}>{relationtype == 0 ? (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? t('fathername') : t('fathershort') : (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? t('husbandname') : t('husbandshort')}&nbsp;:</Form.Label>
-                                <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0",display: "inline-block"}}>&nbsp;{ledger.length > 0 ? first.fathername : ""}</Form.Label>
+                        <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-4 col-md-4' : 'col-sm-3 col-md-4'} style={{ paddingLeft: "2px" }} >
+                            <Form.Group style={{ overflow: "hidden", whiteSpace: "nowrap" }}>
+                                <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block" }}>{relationtype == 0 ? (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? t('fathername') : t('fathershort') : (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? t('husbandname') : t('husbandshort')}&nbsp;:</Form.Label>
+                                <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block" }}>&nbsp;{ledger.length > 0 ? first.fathername : ""}</Form.Label>
                             </Form.Group>
-                            <Form.Group  style={{ overflow: "hidden",whiteSpace: "nowrap" }}>
-                                <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0",display: "inline-block"}}>{t('city')}&nbsp;&nbsp;:</Form.Label>
-                                <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0",display: "inline-block"}}>&nbsp;{ledger.length > 0 ? first.referencecity : ""}</Form.Label>
+                            <Form.Group style={{ overflow: "hidden", whiteSpace: "nowrap" }}>
+                                <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block" }}>{t('city')}&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block" }}>&nbsp;{ledger.length > 0 ? first.referencecity : ""}</Form.Label>
                             </Form.Group>
-                            <Form.Group  style={{ overflow: "hidden",whiteSpace: "nowrap" }}>
-                                <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0",display: "inline-block"}}>{t('total')}&nbsp;&nbsp;:</Form.Label>
-                                <Form.Label style={{ "fontWeight": "bold", marginBottom: "0",display: "inline-block"}}>&nbsp;{ledger.length > 0 ? first.totalamount : ""}</Form.Label>
+                            <Form.Group style={{ overflow: "hidden", whiteSpace: "nowrap" }}>
+                                <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block" }}>{t('total')}&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label style={{ "fontWeight": "bold", marginBottom: "0", display: "inline-block" }}>&nbsp;{ledger.length > 0 ? first.totalamount : ""}</Form.Label>
                             </Form.Group>
                         </Col>
                     </Row>
@@ -217,10 +217,10 @@ function Chart({ loanno, ledger, company, date }) {
             </Row>
             {(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ?
                 <Row className='col-sm-8 col-md-8 mt-0 pt-0' style={{ paddingLeft: "10px", whiteSpace: "nowrap", overflow: "hidden" }}>
-                    <Col className='col-sm-4 col-md-4' style={{ fontSize: "11px", textAlign: "center", padding: "0", margin: "0",width:"30%",textOverflow: "ellipsis" }}>
-                        {t('forcontanct') + ":"}<span style={{ fontWeight: "bold",display: "inline-block", width: "50%",textOverflow: "ellipsis" }}>{first.linemanname}</span>
+                    <Col className='col-sm-4 col-md-4' style={{ fontSize: "11px", textAlign: "center", padding: "0", margin: "0", width: "30%", textOverflow: "ellipsis" }}>
+                        {t('forcontanct') + ":"}<span style={{ fontWeight: "bold", display: "inline-block", width: "50%", textOverflow: "ellipsis" }}>{first.linemanname}</span>
                     </Col>
-                    <Col className='col-sm-4 col-md-4' style={{width:"20%",textOverflow: "ellipsis",textAlign:"right",paddingLeft:"12%"}}>{first.linemanmobile}</Col>
+                    <Col className='col-sm-4 col-md-4' style={{ width: "20%", textOverflow: "ellipsis", textAlign: "right", paddingLeft: "12%" }}>{first.linemanmobile}</Col>
                 </Row>
                 : null}
         </Container>
