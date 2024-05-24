@@ -110,7 +110,7 @@ function Chart({ loanno, ledger, company, date }) {
                                 <Form.Label style={{ "fontWeight": "bold", marginBottom: "0", display: "inline-block" }}>&nbsp;{ledger.length > 0 ? first.loannumber : ""}</Form.Label>
                             </Form.Group>
                         </Col>
-                        <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-4 col-md-4' : 'col-sm-3 col-md-4'} style={{ paddingLeft: "2px" }} >
+                        <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-4 col-md-4' : 'col-sm-3 col-md-4'}  >
                             <Form.Group style={{ overflow: "hidden", whiteSpace: "nowrap" }}>
                                 <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block" }}>{relationtype == 0 ? (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? t('fathername') : t('fathershort') : (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? t('husbandname') : t('husbandshort')}&nbsp;:</Form.Label>
                                 <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block" }}>&nbsp;{ledger.length > 0 ? first.fathername : ""}</Form.Label>
