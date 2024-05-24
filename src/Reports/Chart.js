@@ -95,49 +95,54 @@ function Chart({ loanno, ledger, company, date }) {
                             padding: '0'
                         }} />
                     </Row>
-                    <Row className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-6 col-md-6' : 'col-sm-8 col-md-8'} >
-                        <div style={{ display: 'flex', flexDirection: 'row' }}>
-                            <div  style={{ flex: 1 }}>
-                                <Form.Group style={{ overflow: "hidden", whiteSpace: "nowrap" }}>
-                                    <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block"}}>
-                                        {(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? t('customer') : t('customershort')}&nbsp;:
-                                    </Form.Label>
-                                    <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block" }}>
-                                        {ledger.length > 0 ? first.customer : ""}
+                    <Row className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-5 col-md-6' : 'col-sm-8 col-md-8'}>
+                        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                            <div style={{ flex: 1, margin: '0', padding: '0' }}>
+                                <Form.Group style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", width: "100%" }}>
+                                    <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block", width: "100%" }}>
+                                        {(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? t('customer') : t('customershort')}&nbsp;:<span style={{ fontSize: fontsizevar, display: "inline-block", minWidth: "0" }}>{ledger.length > 0 ? first.customer : ""}</span>
                                     </Form.Label>
                                 </Form.Group>
-                                <Form.Group style={{ overflow: "hidden", whiteSpace: "nowrap" }}>
-                                    <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block" }}>{t('address')}&nbsp;&nbsp;&nbsp;:</Form.Label>
-                                    <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block" }}>&nbsp;{ledger.length > 0 ? first.address : ""}</Form.Label>
-                                </Form.Group>
-                                <Form.Group style={{ overflow: "hidden", whiteSpace: "nowrap" }}>
-                                    <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block" }}>{t('loannoshort')}&nbsp;:</Form.Label>
-                                    <Form.Label style={{ "fontWeight": "bold", marginBottom: "0", display: "inline-block" }}>&nbsp;{ledger.length > 0 ? first.loannumber : ""}</Form.Label>
-                                </Form.Group>
-                                {/* Other fields */}
                             </div>
-                            <div  style={{ flex: 1, paddingLeft: "2px" }}>
-                                <Form.Group style={{ overflow: "hidden", whiteSpace: "nowrap" }}>
-                                    <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block"}}>
-                                        {relationtype === 0 ? (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0 ? t('fathername') : t('fathershort')) : (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0 ? t('husbandname') : t('husbandshort'))}&nbsp;:
-                                    </Form.Label>
-                                    <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block" }}>
-                                        {ledger.length > 0 ? first.fathername : ""}
+                            <div style={{ flex: 1, margin: '0', padding: '0', paddingLeft: '2px' }}>
+                                <Form.Group style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", width: "100%" }}>
+                                    <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block", width: "100%" }}>
+                                        {relationtype === 0 ? (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0 ? t('fathername') : t('fathershort')) : (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0 ? t('husbandname') : t('husbandshort'))}&nbsp;:<span style={{ fontSize: fontsizevar, display: "inline-block", minWidth: "0" }}>{ledger.length > 0 ? first.fathername : ""}</span>
                                     </Form.Label>
                                 </Form.Group>
-                                <Form.Group style={{ overflow: "hidden", whiteSpace: "nowrap" }}>
-                                    <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block" }}>{t('city')}&nbsp;&nbsp;:</Form.Label>
-                                    <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block" }}>&nbsp;{ledger.length > 0 ? first.referencecity : ""}</Form.Label>
-                                </Form.Group>
-                                <Form.Group style={{ overflow: "hidden", whiteSpace: "nowrap" }}>
-                                    <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block" }}>{t('total')}&nbsp;&nbsp;:</Form.Label>
-                                    <Form.Label style={{ "fontWeight": "bold", marginBottom: "0", display: "inline-block" }}>&nbsp;{ledger.length > 0 ? first.totalamount : ""}</Form.Label>
-                                </Form.Group>
-                                {/* Other fields */}
                             </div>
                         </div>
-
                     </Row>
+                    <Row className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-5 col-md-6' : 'col-sm-8 col-md-8'}>
+                        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                            <div style={{ flex: 1, margin: '0', padding: '0' }}>
+                                
+                                <Form.Group style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", width: "100%" }}>
+                                    <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block", width: "100%" }}>{t('address')}&nbsp;:
+                                        <span style={{ fontSize: fontsizevar, display: "inline-block", minWidth: "0" }}>
+                                            {ledger.length > 0 ? first.address : ""}</span>
+                                    </Form.Label>
+                                </Form.Group>
+                                <Form.Group style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", width: "100%" }}>
+                                    <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", maxWidth: "100%" }}>{t('loannoshort')}&nbsp;:<span style={{ fontSize: fontsizevar, display: "inline-block", minWidth: "0", "fontWeight": "bold" }}>{ledger.length > 0 ? first.loannumber : ""}</span></Form.Label>
+                                </Form.Group>
+                            </div>
+                            <div style={{ flex: 1, margin: '0', padding: '0', paddingLeft: '2px' }}>
+                                
+                                <Form.Group style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", width: "100%" }}>
+                                    <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", maxWidth: "100%" }}>{t('city')}&nbsp;:
+                                        <span style={{ fontSize: fontsizevar, display: "inline-block", minWidth: "0" }}>{ledger.length > 0 ? first.referencecity : ""}</span></Form.Label>
+                                </Form.Group>
+                                <Form.Group style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", width: "100%" }}>
+                                    <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", maxWidth: "100%" }}>{t('total')}&nbsp;:</Form.Label>
+                                    <span style={{ fontSize: fontsizevar, display: "inline-block", minWidth: "0", "fontWeight": "bold" }}>{ledger.length > 0 ? first.totalamount : ""}</span>
+
+                                </Form.Group>
+                            </div>
+                        </div>
+                    </Row>
+
+
                 </Form>
             </Row>
 
