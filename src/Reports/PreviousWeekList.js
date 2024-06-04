@@ -50,13 +50,13 @@ const PreviousWeekList = ({ pendingLoans, date, company }) => {
 
     return (
         <Fragment>
-            <div style={{ paddingLeft: "24px", display: "flex", alignItems: "center" }}>
+            <div style={{ paddingLeft: "27px", display: "flex", alignItems: "center" }}>
                 <div className='col-sm-6 fixed mt-5' >
                     <h4>{(company)}</h4>
                 </div>
                 <div className='col-sm-6 fixed mt-5'><h4>{t('previousweekdetails')}</h4></div>
             </div>
-            <div style={{ paddingLeft: "24px", display: "flex", alignItems: "center" }}>
+            <div style={{ paddingLeft: "27px", display: "flex", alignItems: "center" }}>
                 <div className='col-sm-2 fixed' >{t('line') + " : " + (pendingLoans.length > 0 ? first.lineno : "")}</div>
                 <div className='col-sm-2 fixed'>{t("bookno") + " : " + (pendingLoans.length > 0 ? first.bookno : "")}</div>
                 <div className='col-sm-2 fixed'>{t("date") + " : " + dateFormatdd(date)}</div>
