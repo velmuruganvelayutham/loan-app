@@ -50,21 +50,22 @@ const PreviousWeekList = ({ pendingLoans, date, company }) => {
 
     return (
         <Fragment>
-            <div style={{ paddingLeft: "20px", display: "flex", alignItems: "center" }}>
+            <div style={{ paddingLeft: "24px", display: "flex", alignItems: "center" }}>
                 <div className='col-sm-6 fixed mt-5' >
                     <h4>{(company)}</h4>
                 </div>
                 <div className='col-sm-6 fixed mt-5'><h4>{t('previousweekdetails')}</h4></div>
             </div>
-            <div style={{  paddingLeft: "20px",display: "flex", alignItems: "center" }}>
+            <div style={{ paddingLeft: "24px", display: "flex", alignItems: "center" }}>
                 <div className='col-sm-2 fixed' >{t('line') + " : " + (pendingLoans.length > 0 ? first.lineno : "")}</div>
                 <div className='col-sm-2 fixed'>{t("bookno") + " : " + (pendingLoans.length > 0 ? first.bookno : "")}</div>
                 <div className='col-sm-2 fixed'>{t("date") + " : " + dateFormatdd(date)}</div>
             </div>
 
-            <Table className='table text-center table-bordered border-dark'  >
+            <Table className='table text-center table-bordered border-dark'   >
                 <thead>
                     <tr>
+                        <th></th>
                         <th></th>
                         <th style={{ fontSize: "12px" }}>
                             {t('no')}
@@ -92,6 +93,7 @@ const PreviousWeekList = ({ pendingLoans, date, company }) => {
                         <th style={{ fontSize: "12px" }}>{t('debitcredit')}</th>
                         <th style={{ fontSize: "12px" }}>{t('city')}</th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -106,6 +108,7 @@ const PreviousWeekList = ({ pendingLoans, date, company }) => {
                                 return (
                                     <tr className='previousweek'>
                                         <td></td>
+                                        <td></td>
                                         <td style={{ fontSize: "12px" }}>{serialno}</td>
                                         <td style={{ fontSize: "12px" }}>{dateFormatdd(customer.startdate)}</td>
                                         <td style={{ fontSize: "12px" }}>{customer.weeknoreceipt}</td>
@@ -117,6 +120,7 @@ const PreviousWeekList = ({ pendingLoans, date, company }) => {
                                         <td style={{ fontSize: "12px" }}>{customer.collectedamount}</td>
                                         <td style={{ fontSize: "12px" }}>{customer.collectedamount}</td>
                                         <td style={{ fontSize: "12px" }}>{customer.referencecity}</td>
+                                        <td></td>
                                         <td></td>
                                     </tr>
 
@@ -132,12 +136,14 @@ const PreviousWeekList = ({ pendingLoans, date, company }) => {
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
                         <td className='fw-bold' style={{ fontSize: "12px" }}>{t('pagetotal')}</td>
                         <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotaldue}</td>
                         <td></td>
                         <td></td>
                         <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotalcredit}</td>
                         <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotalcredit}</td>
+                        <td></td>
                         <td></td>
                         <td></td>
                     </tr>
@@ -149,12 +155,14 @@ const PreviousWeekList = ({ pendingLoans, date, company }) => {
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
                         <td className='fw-bold' style={{ fontSize: "12px" }}>{t('total')}</td>
                         <td className='fw-bold' style={{ fontSize: "12px" }}>{totaldue}</td>
                         <td></td>
                         <td></td>
                         <td className='fw-bold' style={{ fontSize: "12px" }}>{totalcredit}</td>
                         <td className='fw-bold' style={{ fontSize: "12px" }}>{totalcredit}</td>
+                        <td></td>
                         <td></td>
                         <td></td>
                     </tr> : null
