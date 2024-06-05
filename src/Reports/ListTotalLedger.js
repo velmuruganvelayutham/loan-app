@@ -17,6 +17,7 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
   var serialno = 0;
   var countbefore = 0;
   var totalbefore = 0;
+  var totalnew=0;
   var pendingbefore = 0;
   var countcurrent = 0;
   var totalcurrent = 0;
@@ -86,12 +87,14 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
                   <div style={{ fontSize: "12px" }}>{t('beforedebt')}</div>
                   <div style={{ fontSize: "12px" }}>{dateFormatddmmyyyy(datefrom)}</div>
                 </th>
+                <th style={{ fontSize: "12px" }}>{t('newdebt')}</th>
+                <th colSpan={2} style={{ fontSize: "12px" }}>
+                  {t('averagecollection')}
+                </th>
+                
                 <th colSpan={3} style={{ fontSize: "12px" }}>
                   <div style={{ fontSize: "12px" }}>{t('currentdebt')}</div>
                   <div style={{ fontSize: "12px" }}>{dateFormatddmmyyyy(dateto)}</div>
-                </th>
-                <th colSpan={2} style={{ fontSize: "12px" }}>
-                  {t('averagecollection')}
                 </th>
                 <th colSpan={2} style={{ fontSize: "12px" }} >
                   {t('pending')}
@@ -113,11 +116,12 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
                 <th style={{ fontSize: "12px" }}>{t('beforeloancount')}</th>
                 <th style={{ fontSize: "12px" }}>{t('beforetotalamount')}</th>
                 <th style={{ fontSize: "12px" }}>{t('beforependingamount')}</th>
+                <th></th>
+                <th style={{ fontSize: "12px" }}>{t('collection')}</th>
+                <th style={{ fontSize: "12px" }}>{t('average')}</th>
                 <th style={{ fontSize: "12px" }}>{t('currentloancount')}</th>
                 <th style={{ fontSize: "12px" }}>{t('currenttotalamount')}</th>
                 <th style={{ fontSize: "12px" }}>{t('currentpendingamount')}</th>
-                <th style={{ fontSize: "12px" }}>{t('collection')}</th>
-                <th style={{ fontSize: "12px" }}>{t('average')}</th>
                 <th style={{ fontSize: "12px" }}>{t('more')}</th>
                 <th style={{ fontSize: "12px" }}>{t('less')}</th>
                 <th style={{ fontSize: "12px" }}>{t('notrunningcount')}</th>
@@ -154,6 +158,7 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
                     totalcount = totalcount + customer.countafter + customer.countfinished;
                     countfinishedtotal = countfinishedtotal + customer.countfinished;
                     totalcounttotal = totalcounttotal + totalcount;
+                    totalnew=totalnew+customer.totalamountbetween;
                     //console.log(customer.collectedmore)
                     return (
                       <tr >
@@ -164,11 +169,12 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
                         <td style={{ fontSize: "12px" }}>{(Number(customer.countbefore))}</td>
                         <td style={{ fontSize: "12px" }}>{customer.totalamountbefore}</td>
                         <td style={{ fontSize: "12px" }}>{customer.pendingbefore}</td>
+                        <td style={{ fontSize: "12px" }}>{customer.totalamountbetween}</td>
+                        <td style={{ fontSize: "12px" }}>{customer.collectedbetween}</td>
+                        <td style={{ fontSize: "12px" }}>{((customer.collectedbetween / customer.totalafter) * 100).toFixed(2)}</td>
                         <td style={{ fontSize: "12px" }}>{customer.countafter}</td>
                         <td style={{ fontSize: "12px" }}>{customer.totalafter}</td>
                         <td style={{ fontSize: "12px" }}>{customer.pendingafter}</td>
-                        <td style={{ fontSize: "12px" }}>{customer.collectedbetween}</td>
-                        <td style={{ fontSize: "12px" }}>{((customer.collectedbetween / customer.totalafter) * 100).toFixed(2)}</td>
                         <td style={{ fontSize: "12px" }}>{customer.collectedmore}</td>
                         <td style={{ fontSize: "12px" }}>{customer.collectedless}</td>
                         <td style={{ fontSize: "12px" }}>{customer.notrunningloancount}</td>
@@ -192,11 +198,12 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
                 <td style={{ fontSize: "12px" }} className='fw-bold'>{countbefore}</td>
                 <td style={{ fontSize: "12px" }} className='fw-bold'>{totalbefore}</td>
                 <td style={{ fontSize: "12px" }} className='fw-bold'>{pendingbefore}</td>
+                <td style={{ fontSize: "12px" }} className='fw-bold'>{totalnew}</td>
+                <td style={{ fontSize: "12px" }} className='fw-bold'>{collectiontotal}</td>
+                <td style={{ fontSize: "12px" }} className='fw-bold'>{(avg / serialno).toFixed(2)}</td>
                 <td style={{ fontSize: "12px" }} className='fw-bold'>{countcurrent}</td>
                 <td style={{ fontSize: "12px" }} className='fw-bold'>{totalcurrent}</td>
                 <td style={{ fontSize: "12px" }} className='fw-bold'>{pendingcurrent}</td>
-                <td style={{ fontSize: "12px" }} className='fw-bold'>{collectiontotal}</td>
-                <td style={{ fontSize: "12px" }} className='fw-bold'>{(avg / serialno).toFixed(2)}</td>
                 <td style={{ fontSize: "12px" }} className='fw-bold'>{pendingmore}</td>
                 <td style={{ fontSize: "12px" }} className='fw-bold'>{pendingless}</td>
                 <td style={{ fontSize: "12px" }} className='fw-bold'>{notrunningcount}</td>

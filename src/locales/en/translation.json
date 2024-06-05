@@ -104,6 +104,7 @@
   "husbandshort": "H",
   "beforedebt": "Pre Debit Account",
   "currentdebt": "Current Debit Account",
+  "newdebt":"new Debt",
   "averagecollection": "Avg.Collection",
   "beforeloancount": "B.Count",
   "beforetotalamount": "B.Debt",
