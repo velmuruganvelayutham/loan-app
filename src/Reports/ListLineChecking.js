@@ -111,8 +111,8 @@ const ListLineChecking = ({ pendingLoans, date, company }) => {
   }
 
   return (
-    <Fragment>
-      <div style={{ paddingLeft: "32px", display: "flex", alignItems: "center" }}>
+    <Fragment >
+      <div style={{ paddingLeft: "32px", display: "flex", alignItems: "center" }} className='mt-2'>
         <div className='col-sm-6 fixed mt-3' >
           <h4>{(company)}</h4>
         </div>
