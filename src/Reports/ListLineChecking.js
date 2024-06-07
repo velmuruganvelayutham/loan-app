@@ -116,7 +116,7 @@ const ListLineChecking = ({ pendingLoans, date, company }) => {
         <div className='col-sm-6 fixed mt-3' >
           <h4>{(company)}</h4>
         </div>
-        <div className='col-sm-6 fixed mt-3'><h3>{t('linechecking')}</h3></div>
+        <div className='col-sm-6 fixed mt-3'><h4>{t('linechecking')}</h4></div>
       </div>
       <div style={{ paddingLeft: "30px", display: "flex", alignItems: "center" }}>
         <div className='col-sm-3 fixed mt-3' >{t('city') + " : " + first.city}</div>
