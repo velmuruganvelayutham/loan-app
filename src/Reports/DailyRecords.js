@@ -29,7 +29,7 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
 
     return (
         <Fragment >
-            <div style={{ paddingLeft: "26px", display: "flex", alignItems: "center" }}>
+            <div style={{ paddingLeft: "28px", display: "flex", alignItems: "center" }}>
                 <div className='fixed mt-3 fw-bold' style={{ width: "25%" }}>{t('customer') + " :" + linemanname}</div>
                 <div className='fixed mt-3 fw-bold' style={{ width: "15%" }}>{t('line') + " :" + linamnline}</div>
                 <div className='fixed mt-3 fw-bold' style={{ width: "29%" }}>{t("weekdate") + " :" + dateFormatdd(datefrom) + "-" + dateFormatdd(dateto)}</div>
@@ -365,7 +365,7 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
                 <div style={{ marginTop: "85px" }}></div>
             </Table>
             {/* daily collection list*/}
-            <div style={{ paddingLeft: "26px", display: "flex", alignItems: "center" }}>
+            <div style={{ paddingLeft: "28px", display: "flex", alignItems: "center" }}>
                 <div className='fixed fw-bold pt-5' style={{ width: "25%" }}>{t('customer') + " : " + linemanname}</div>
                 <div className='fixed fw-bold pt-5' style={{ width: "12%" }}>{t('line') + " : " + linamnline}</div>
                 <div className='fixed fw-bold pt-5' style={{ width: "30%" }}>{t("weekdate") + " : " + dateFormatdd(datefrom) + "-" + dateFormatdd(dateto)}</div>

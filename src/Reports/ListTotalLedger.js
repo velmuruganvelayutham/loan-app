@@ -61,8 +61,8 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
     <Fragment>
       <div>
       {Number(reportypeval) === 0 ?
-        <div style={{ paddingLeft: "27px" }}>
-          <Row className='col-md-12 mx-auto mt-5'>
+        <div style={{ paddingLeft: "30px" }}>
+          <Row className='col-md-12  mt-5'>
             <Col>
               <div className='col-md-12 fw-bold'>{dateFormatddmmyyyy(datefrom)}&nbsp;&nbsp;&nbsp;-&nbsp;{dateFormatddmmyyyy(dateto)}
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{t('totalledgername')}
@@ -80,7 +80,7 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
         </div>
       }
       {Number(reportypeval) === 0 ?
-        <Table className='table text-center table-bordered border-dark w-auto' >
+        <Table className='table text-center table-bordered border-dark w-auto' style={{marginLeft:"10px",marginRight:"5px"}} >
           <thead>
             <tr>
               <th></th>

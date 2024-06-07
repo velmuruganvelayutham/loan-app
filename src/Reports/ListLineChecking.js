@@ -112,13 +112,13 @@ const ListLineChecking = ({ pendingLoans, date, company }) => {
 
   return (
     <Fragment>
-      <div style={{ paddingLeft: "29px", display: "flex", alignItems: "center" }}>
+      <div style={{ paddingLeft: "32px", display: "flex", alignItems: "center" }}>
         <div className='col-sm-6 fixed mt-3' >
           <h3>{(company)}</h3>
         </div>
         <div className='col-sm-6 fixed mt-3'><h3>{t('linechecking')}</h3></div>
       </div>
-      <div style={{ paddingLeft: "27px", display: "flex", alignItems: "center" }}>
+      <div style={{ paddingLeft: "30px", display: "flex", alignItems: "center" }}>
         <div className='col-sm-3 fixed mt-3' >{t('city') + " : " + first.city}</div>
         <div className='col-sm-3 fixed mt-3'>{t('customer') + " : " + first.linemanname}</div>
         <div className='col-sm-2 fixed mt-3'>{t('line') + " : " + (pendingLoans.length > 0 ? first.lineno : "")}</div>
