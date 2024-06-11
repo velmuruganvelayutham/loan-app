@@ -3,7 +3,7 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import AsyncSelect from 'react-select/async';
 import axios from "axios";
 import { baseURL, getDefaultWeekCount, isReadOnlyLoanNo } from './utils/constant';
-import { startOfWeek,dateFormat } from './FunctionsGlobal/StartDateFn';
+import { startOfWeek, dateFormat } from './FunctionsGlobal/StartDateFn';
 import { useTranslation } from "react-i18next";
 import PlaceHolder from "./components/spinner/placeholder";
 import {
@@ -65,7 +65,7 @@ function LoanForm() {
     const [maxValueShow, setMaxValueShow] = useState(false);
     const [isButtonDisabled, setButtonDisabled] = useState(false);
     const [savedValue, setSavedValue] = useState(null);
-    const[changeBook,setChangeBook]=useState(false);
+    const [changeBook, setChangeBook] = useState(false);
     useEffect(() => {
         //console.log("weekCount", weekCount)
         async function fetchData() {
@@ -151,7 +151,16 @@ function LoanForm() {
             if (event.key === "Enter" && event.target.nodeName === "INPUT") {
                 var form = event.target.form;
                 var index = Array.prototype.indexOf.call(form, event.target);
-                form.elements[index + 1].focus();
+                let nextElement = form.elements[index + 1];
+                while (nextElement && nextElement.disabled) {
+                    nextElement = form.elements[index + 2];
+                }
+
+                if (nextElement) {
+                    nextElement.focus();
+                }
+
+                //form.elements[index + 1].focus();
                 event.preventDefault();
             }
         });
@@ -159,7 +168,7 @@ function LoanForm() {
     const loadOptions = async (inputValue, callback) => {
         try {
             // Make an API call to fetch options based on the inputValue
-           
+
             const token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             const response = await axios.get(`${baseURL}/get/view?q=${inputValue}`);
@@ -169,7 +178,7 @@ function LoanForm() {
                 value: item._id,
                 label: item.customer + '-' + item.fathername,
             }));
-            
+
             setSavedValue(null);
             setCustomers(data);
             // Call the callback function with the options to update the dropdown
@@ -197,7 +206,7 @@ function LoanForm() {
             workRef.current.value = "";
             lineRef.current.value = 0;
         }
-        if (filtered !== undefined && filtered.length > 0 && savedValue===null){ 
+        if (filtered !== undefined && filtered.length > 0 && savedValue === null) {
             setInputMobileno(filtered[0].mobileno);
             fathernameRef.current.value = filtered[0].fathername;
             citynameRef.current.value = filtered[0].cityname;
@@ -304,6 +313,33 @@ function LoanForm() {
 
 
     };
+    const savePreviousAccount = (event) => {
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+            event.stopPropagation();
+        }
+
+        setValidated(true);
+        if (Number(paidAmt.current.value) === 0) {
+            alert(t('paidamountvaluezeroalert'))
+            return false;
+        }
+        else if (Number(paidAmt.current.value) > Number(dueAmt.current.value)) {
+            alert(t('paidamountgreaterthanloanalert'))
+            if (window.confirm(t('paidamountgreaterthanloanalertyesno'))) {
+                return false;
+            }
+            else {
+            }
+        }
+        if (myForm.mySelectKey !== "" && linemanoptionRef.current.value !== "" && weekRef.current.value !== "" && bookRef.current.value && lineRef.current.value !== "" && lineRef.current.value !== "" && weekscount !== "" && givenAmt !== "" && givenAmt !== 0 &&
+            paidAmt.current.value !== 0 && paidAmt.current.value != "" &&
+            Number(paidAmt.current.value) > 0) {
+            saveLoanDetails();
+        }
+
+    }
+
     const checkLoanInvolvedTrans = async (isUpdateOrDelete) => {
         const token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -356,7 +392,7 @@ function LoanForm() {
             });
         alert(t('updatealertmessage'));
     }
-    const updateBook=async()=>{
+    const updateBook = async () => {
         setButtonDisabled(true);
         const token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -413,26 +449,26 @@ function LoanForm() {
             setButtonDisabled(false);
         });
     }
-    const loanBooknoLineman=async()=>{
-        if((linemanoptionRef.current.value!=="") &&(myForm.mySelectKey!=="")){
+    const loanBooknoLineman = async () => {
+        if ((linemanoptionRef.current.value !== "") && (myForm.mySelectKey !== "")) {
             const token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            axios.get(`${baseURL}/loancreate/get/bookNoRef`,{ params: { city_id: cityidRef.current.value, lineman_id: linemanoptionRef.current.value,assigndate:(startDate) } })
-            .then((res)=>{
-                if(res.data.length>0){
-                    if(res.data.length===1){
-                        bookRef.current.value=res.data[0].bookno
+            axios.get(`${baseURL}/loancreate/get/bookNoRef`, { params: { city_id: cityidRef.current.value, lineman_id: linemanoptionRef.current.value, assigndate: (startDate) } })
+                .then((res) => {
+                    if (res.data.length > 0) {
+                        if (res.data.length === 1) {
+                            bookRef.current.value = res.data[0].bookno
+                        }
+                        else {
+                            const concatenatedValues = res.data.map(record => record.bookno).join(',');
+                            alert(`${t('linemanbookalert')} ${concatenatedValues}`)
+                        }
                     }
-                    else{
-                        const concatenatedValues = res.data.map(record => record.bookno).join(',');
-                        alert(`${t('linemanbookalert')} ${concatenatedValues}` )
-                    } 
-                }
-                else{
-                    bookRef.current.value=""
-                }
-                
-            })
+                    else {
+                        bookRef.current.value = ""
+                    }
+
+                })
         }
 
     }
@@ -452,7 +488,7 @@ function LoanForm() {
                         }
                     })
                     setSavedValue(saveOptions)
-                    
+
                     setMyForm({ ...myForm, mySelectKey: oldReference[0].customer_id });
                     //customeroptionRef.current.value = oldReference[0].customer_id;
                     linemanoptionRef.current.value = oldReference[0].lineman_id;
@@ -474,9 +510,9 @@ function LoanForm() {
                     dueAmt.current.value = oldReference[0].dueamount;
                     paidAmt.current.value = oldReference[0].paidamount;
                     setStartDate(dateFormat(oldReference[0].startdate));
-                    givenDate.current.value=dateFormat(oldReference[0].startdate);
-                    dueDate.current.value=dateFormat(oldReference[0].duedate);
-                    endDateRef.current.value=dateFormat(oldReference[0].finisheddate);
+                    givenDate.current.value = dateFormat(oldReference[0].startdate);
+                    dueDate.current.value = dateFormat(oldReference[0].duedate);
+                    endDateRef.current.value = dateFormat(oldReference[0].finisheddate);
                     setUpdateUI(true);
                 })
         }
@@ -524,7 +560,7 @@ function LoanForm() {
             return false;
         }
     }
-    
+
     return (
         <Container className="rounded bg-white mt-5">
             <Row className="justify-content-md-center mt-5 ">
@@ -532,7 +568,7 @@ function LoanForm() {
 
                     <Row >
                         <Col xs={12} md={4} className="rounded bg-white">
-                            <Form.Group className="mb-3" border="primary" name ="loanno">
+                            <Form.Group className="mb-3" border="primary" name="loanno">
                                 <Form.Label>{t('loanno')}</Form.Label> {/*loan no*/}
                                 <Form.Control ref={loannoRef} type="number" data-cypress-loan-app-loanno="loanno" required readOnly={isReadOnlyLoanNo()} />
                             </Form.Group>
@@ -550,9 +586,9 @@ function LoanForm() {
                                 <AsyncSelect
                                     id="react-select-3-input"
                                     isLoading={isLoading}
-                                    value={(savedValue!==null)?savedValue.filter(({value}) => value === myForm.mySelectKey):options.filter(({ value }) => value === myForm.mySelectKey)}
+                                    value={(savedValue !== null) ? savedValue.filter(({ value }) => value === myForm.mySelectKey) : options.filter(({ value }) => value === myForm.mySelectKey)}
                                     onChange={({ value }) => customerSelect(value)}
-                                    defaultOptions={(savedValue!==null)?savedValue:options}
+                                    defaultOptions={(savedValue !== null) ? savedValue : options}
                                     loadOptions={loadOptions}
                                     placeholder={t('customer')} />
                             </Form.Group>
@@ -560,8 +596,8 @@ function LoanForm() {
                         <Col xs={12} md={3} className="rounded bg-white">
                             <Form.Group className="mb-3" name="linemanname" border="primary" >
                                 <Form.Label>{t('lineman')}</Form.Label>{/*lineman name*/}
-                                <Form.Select data-cypress-loan-app-lineman="lineman" 
-                                aria-label="Default select example" ref={linemanoptionRef} required onChange={loanBooknoLineman}>
+                                <Form.Select data-cypress-loan-app-lineman="lineman"
+                                    aria-label="Default select example" ref={linemanoptionRef} required onChange={loanBooknoLineman}>
                                     <option value="">{t('linemanplaceholder')}</option>
                                     {
                                         linemannames.map((linemanname) => (
@@ -609,7 +645,7 @@ function LoanForm() {
                         <Col xs={12} md={4} className="rounded bg-white">
                             <Form.Group className="mb-3" name="work" border="primary" >
                                 <Form.Label>{t('work')}</Form.Label>{/*work*/}
-                                <Form.Control  data-cypress-loan-app-work="work" ref={workRef} type="text" disabled />
+                                <Form.Control data-cypress-loan-app-work="work" ref={workRef} type="text" disabled />
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={4} className="rounded bg-white">
@@ -637,7 +673,7 @@ function LoanForm() {
                         <Col xs={12} md={3} className="rounded bg-white">
                             <Form.Group className="mb-3" name="bookno" border="primary" >
                                 <Form.Label>{t('bookno')}</Form.Label>{/*book no*/}
-                                <Form.Control type="number" data-cypress-loan-app-bookno="bookno" placeholder={t('booknoplaceholder')} required ref={bookRef} onBlur={()=>updateUI?setChangeBook(true):setChangeBook(false)} />
+                                <Form.Control type="number" data-cypress-loan-app-bookno="bookno" placeholder={t('booknoplaceholder')} required ref={bookRef} onBlur={() => updateUI ? setChangeBook(true) : setChangeBook(false)} />
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={2} className="rounded bg-white">
@@ -730,6 +766,10 @@ function LoanForm() {
 
                     <Row>
                         <div className="col-md-12 text-center mb-2 " >
+                            <Button variant="primary" data-cypress-loan-app-savenewloan="savenew" size="lg" type="button" className="text-center"
+                                onClick={savePreviousAccount} disabled={updateUI ? false : true}>
+                                {t('generatenew')}
+                            </Button>{' '}
                             <Button variant="primary" data-cypress-loan-app-save="save" size="lg" type="button" className="text-center"
                                 onClick={handleSubmit} disabled={isButtonDisabled}>
                                 {updateUI ? t('updatebutton') : t('savebutton')}
@@ -741,7 +781,7 @@ function LoanForm() {
                             <Button variant="primary" size="lg" type="button" className="text-center" onClick={clearFields}>
                                 {t('newbutton')}
                             </Button>{' '}
-                            <Button variant="primary" size="lg" type="button" className={updateUI && changeBook===true?'visible':'invisible'} onClick={updateBook}  >
+                            <Button variant="primary" size="lg" type="button" className={updateUI && changeBook === true ? 'visible' : 'invisible'} onClick={updateBook}  >
                                 {t('updatebuttonbook')}
                             </Button>
                         </div>

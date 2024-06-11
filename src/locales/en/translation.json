@@ -163,5 +163,6 @@
   "actualbookno": "Actual BookNo",
   "changebookno": "Change BookNo",
   "notrunningaccounts":"Not Running Accounts List",
-  "linemanbookalert":"This LineMan Has Book No:"
+  "linemanbookalert":"This LineMan Has Book No:",
+  "generatenew":"New Account"
 }
