@@ -164,5 +164,6 @@
   "changebookno": "Change BookNo",
   "notrunningaccounts":"Not Running Accounts List",
   "linemanbookalert":"This LineMan Has Book No:",
-  "generatenew":"New Account"
+  "generatenew":"New Account",
+  "displaycityname":"Checking City"
 }

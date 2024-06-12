@@ -56,6 +56,9 @@ function NavBar() {
         else if (languageValue === "UpdateBookByCity") {
             navigate("/updatebookcity")
         }
+        else if (languageValue === "LinemanBookWise") {
+            navigate("/linemanbookcity")
+        }
     }
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" onSelect={handleSelect} >
@@ -87,6 +90,7 @@ function NavBar() {
                             <NavDropdown.Item href="linechecking">LineChecking</NavDropdown.Item>
                             <NavDropdown.Item href="totalledger">TotalLedger</NavDropdown.Item>
                             <NavDropdown.Item href="updatebookcity">UpdateBookByCity</NavDropdown.Item>
+                            <NavDropdown.Item href="updatebookcity">LinemanBookWise</NavDropdown.Item>
                         </NavDropdown>
                         <Nav.Item>
                             <SignedIn>
