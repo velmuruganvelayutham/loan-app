@@ -234,7 +234,7 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
             <thead>
               <tr>
                 <th></th>
-                <th style={{ fontSize: "12px" }}>{t('noshort')}</th>
+                <th style={{ fontSize: "12px" }}>{t('booknoshort')}</th>
                 <th style={{ fontSize: "12px" }} >
                   {t('city')}
                 </th>
@@ -293,7 +293,7 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
                     return (
                       <tr >
                         <td></td>
-                        <td>{serialno}</td>
+                        <td>{customer.bookno}</td>
                         <td style={{ fontSize: "12px" }}>{customer.cityname}</td>
                         <td style={{ fontSize: "12px" }}>{(Number(customer.countbefore))}</td>
                         <td style={{ fontSize: "12px" }}>{customer.totalamountbefore}</td>
