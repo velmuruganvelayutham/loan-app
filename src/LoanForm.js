@@ -651,7 +651,7 @@ function LoanForm() {
                         <Col xs={12} md={4} className="rounded bg-white">
                             <Form.Group className="mb-3" name="lineno" border="primary" >
                                 <Form.Label>{t('line')}</Form.Label>{/*line no*/}
-                                <Form.Select aria-label="Default select example" ref={lineRef} data-cypress-loan-app-lineno="lineno" required disabled>
+                                <Form.Select aria-label="Default select example" ref={lineRef} data-cypress-loan-app-lineno="lineno" required >
                                     <option value="">{t('lineplaceholder')}</option>
                                     {
                                         linenames.map((linename) => (
