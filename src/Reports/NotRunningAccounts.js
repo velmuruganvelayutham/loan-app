@@ -131,7 +131,7 @@ const NotRunningAccounts = ({ pendingLoans, date, company }) => {
             <th style={{ fontSize: "11px", width: "2%" }}>
               {t('noshort')}
             </th>
-            <th style={{ fontSize: "9px", width: "4%" }}>
+            <th style={{ fontSize: "9px", width: "5%" }}>
               {t('startdate')}
             </th >
             <th style={{ fontSize: "11px", width: "4%" }}>
@@ -150,10 +150,10 @@ const NotRunningAccounts = ({ pendingLoans, date, company }) => {
             <th style={{ fontSize: "9px", width: "6%" }}>
               {t('city')}
             </th>
-            <th style={{ fontSize: "11px", width: "5%" }}>
+            <th style={{ fontSize: "11px", width: "6%" }}>
               {t('phoneno')}
             </th>
-            <th style={{ fontSize: "9px", width: "4%" }}>
+            <th style={{ fontSize: "9px", width: "5%" }}>
               {t('enddate')}
             </th>
             <th style={{ fontSize: "11px", width: "5%", textAlign: "center" }}>
@@ -162,7 +162,7 @@ const NotRunningAccounts = ({ pendingLoans, date, company }) => {
             <th style={{ fontSize: "11px", width: "5%", textAlign: "center" }}>
               {t('pay')}
             </th>
-            <th style={{ fontSize: "9px", width: "5%", textAlign: "center" }}>
+            <th style={{ fontSize: "9px", width: "6%", textAlign: "center" }}>
               {t('pending')}
             </th>
             <th style={{ fontSize: "11px", width: "1.5%" }}></th>
