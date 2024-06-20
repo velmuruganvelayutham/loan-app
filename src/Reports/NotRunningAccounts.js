@@ -159,7 +159,7 @@ const NotRunningAccounts = ({ pendingLoans, date, company }) => {
             <th style={{ fontSize: "11px", width: "5%", textAlign: "center" }}>
               {t('loanamount')}
             </th>
-            <th style={{ fontSize: "11px", width: "3%", textAlign: "center" }}>
+            <th style={{ fontSize: "11px", width: "6%", textAlign: "center" }}>
               {t('pay')}
             </th>
             <th style={{ fontSize: "9px", width: "6%", textAlign: "center" }}>
