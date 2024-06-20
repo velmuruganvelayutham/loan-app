@@ -126,7 +126,7 @@ const NotRunningAccounts = ({ pendingLoans, date, company }) => {
       <Table className=' table table-bordered border-dark linecheckingtable '   >
         <thead >
           <tr>
-            <th style={{ fontSize: "11px", width: "1.5%" }}></th>
+            <th style={{ fontSize: "11px", width: "1%" }}></th>
             <th style={{ fontSize: "11px", width: ".5%" }}></th>
             <th style={{ fontSize: "11px", width: "2%" }}>
               {t('noshort')}
@@ -165,7 +165,7 @@ const NotRunningAccounts = ({ pendingLoans, date, company }) => {
             <th style={{ fontSize: "9px", width: "6%", textAlign: "center" }}>
               {t('pending')}
             </th>
-            <th style={{ fontSize: "11px", width: "1.5%" }}></th>
+            <th style={{ fontSize: "11px", width: "1%" }}></th>
             <th style={{ fontSize: "11px", width: ".5%" }}></th>
           </tr>
         </thead>
