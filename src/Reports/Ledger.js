@@ -12,7 +12,7 @@ function Ledger({ loanno, ledger, company, date }) {
     var serialno = 0;
     var records = ledger
 
-    function TablesRows(no, date, income, weekno) {
+    function TablesRows(no, date, income, weekno,type) {
 
         return (
             <tr className='chartheight'>
@@ -22,6 +22,7 @@ function Ledger({ loanno, ledger, company, date }) {
                 <td style={{ fontSize: "11px", padding: "0", margin: "0" }}>{Number(no) === 1 && (weekno !== "") ? income : ""}</td>
                 <td style={{ fontSize: "11px", padding: "0", margin: "0" }}>{(Number(no) === 1 && (weekno !== "")) || date === "" ? "" : totalamount}</td>
                 <td style={{ fontSize: "11px", padding: "0", margin: "0" }}>{weekno}</td>
+                {type==="second"?<td></td>:null}
             </tr>
         )
     }
@@ -73,7 +74,7 @@ function Ledger({ loanno, ledger, company, date }) {
     return (
 
 
-        <Container className="rounded bg-white">
+        <Container className="rounded bg-white" style={{ paddingLeft: "25px" }}>
             <Row className="justify-content-sm-center">
                 <Form>
 
@@ -207,25 +208,25 @@ function Ledger({ loanno, ledger, company, date }) {
                 }} />
             </Row>
 
-            <Row style={{ paddingLeft: "3px" }}>
-                <Col className='col-sm-6 col-md-6'>
+            <Row style={{paddingLeft:"8px"}} >
+                <Col className='col-sm-6 col-md-6 p-1'>
                     <Table className="table text-center table-bordered border-dark" >
                         <thead>
                             <tr >
-                                <th className="col-sm-3 col-md-3">
+                                <th className="col-sm-1 col-md-1">
                                     {t('date')}
                                 </th>
-                                <th className="col-sm-1 col-md-2">
+                                <th className="col-sm-1 col-md-1">
                                     {t('dueno')}
                                 </th>
-                                <th className="col-sm-3 col-md-3">
+                                <th className="col-sm-1 col-md-1">
                                     {t('credit')}
                                 </th>
-                                <th className="col-sm-3 col-md-3">
+                                <th className="col-sm-1 col-md-1">
                                     {t('balance')}
                                 </th>
-                                <th className="col-sm-3 col-md-3 text-end">{t('loanamount')}</th>
-                                <th className="col-sm-2 col-md-2 text-end">{t('weekno')}</th>
+                                <th className="col-sm-1 col-md-1 text-end">{t('loanamount')}</th>
+                                <th className="col-sm-1 col-md-1 text-end">{t('noshorts')}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -264,24 +265,26 @@ function Ledger({ loanno, ledger, company, date }) {
                         </tbody>
                     </Table>
                 </Col>
-                <Col className='col-sm-6 col-md-6 p-0'>
-                    <Table className="table  text-center table-bordered border-dark" >
+                <Col className='col-sm-6 col-md-6 p-0' >
+                    <Table className="table  text-center table-bordered border-dark"   >
                         <thead>
                             <tr >
-                                <th className="col-sm-3 col-md-3" >
+                                
+                                <th style={{width:"20%"}}>
                                     {t('date')}
                                 </th>
-                                <th className="col-sm-1 col-md-2">
+                                <th style={{width:"10%"}}>
                                     {t('dueno')}
                                 </th>
-                                <th className="col-sm-3 col-md-3">
+                                <th style={{width:"15%"}}>
                                     {t('credit')}
                                 </th>
-                                <th className="col-sm-3 col-md-3">
+                                <th style={{width:"15%"}}>
                                     {t('balance')}
                                 </th>
-                                <th className="col-sm-3 col-md-3 text-end">{t('loanamount')}</th>
-                                <th className="col-sm-2 col-md-2 text-end">{t('weekno')}</th>
+                                <th style={{width:"15%"}}>{t('loanamount')}</th>
+                                <th style={{width:"5%"}}>{t('noshorts')}</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -308,7 +311,7 @@ function Ledger({ loanno, ledger, company, date }) {
                                 arr2.slice(ledger.length - (arr2.length - 1), arr2.length).map((i) => {
                                     serialno = serialno + 1;
                                     return (
-                                        TablesRows(serialno, "", "", "")
+                                        TablesRows(serialno, "", "", "","second")
                                     )
                                 })
                                 : ""}
