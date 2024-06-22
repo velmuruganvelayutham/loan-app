@@ -234,7 +234,7 @@ function Chart({ loanno, ledger, company, date }) {
                 </Col>
             </Row>
             {(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ?
-                <Row className='col-sm-8 col-md-8 mt-0 pt-0' style={{ paddingLeft: "12px", whiteSpace: "nowrap", overflow: "hidden" }}>
+                <Row className='col-sm-8 col-md-8 mt-0 pt-0' style={{ paddingLeft: "14px", whiteSpace: "nowrap", overflow: "hidden" }}>
                     <Col className='col-sm-4 col-md-4' style={{ fontSize: "11px", textAlign: "center", padding: "0", margin: "0", width: "30%", textOverflow: "ellipsis" }}>
                         {t('forcontanct') + ":"}<span style={{ fontWeight: "bold", display: "inline-block", width: "50%", textOverflow: "ellipsis" }}>{first.linemanname}</span>
                     </Col>
