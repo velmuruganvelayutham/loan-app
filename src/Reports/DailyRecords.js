@@ -477,7 +477,7 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
             </Table>
             { /*kodutha ruppai and selavu 35*/}
             {(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ?
-                <div className='row'>
+                <div style={{ paddingLeft: "15px", display: "flex", alignItems: "center" }}>
                     <div className='fixed fw-bold pt-5' style={{ width: "20%", paddingLeft: "20px" }}>{t('customer') + " : "}</div>
                     <div className='fixed fw-bold pt-5' style={{ width: "15%" }}>{t('line') + " : "}</div>
                     <div className='fixed fw-bold pt-5' style={{ width: "30%" }}>{t("weekdate") + " : "}</div>
@@ -615,7 +615,7 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
                 : <div style={{ paddingTop: "0px" }}></div>}
             {/*finished account 35 row*/}
             {(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ?
-                <div className='row'>
+                <div className='row' style={{paddingLeft:"25px"}}>
                     <div className='fixed fw-bold pt-5' style={{ width: "20%", paddingLeft: "20px" }}>{t('customer') + " : "}</div>
                     <div className='fixed fw-bold pt-5' style={{ width: "15%" }}>{t('line') + " : "}</div>
                     <div className='fixed fw-bold pt-5' style={{ width: "30%" }}>{t("weekdate") + " : "}</div>
@@ -710,11 +710,12 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
             {(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ?
                 <div style={{ paddingTop: "65px" }}></div>
                 : null}
-            <div className='fw-bold pt-5' style={{ width: "20%", paddingLeft: "20px" }}>{t('customer') + " : "}</div>
-            <div className='fw-bold pt-5' style={{ width: "15%" }}>{t('line') + " : "}</div>
-            <div className='fw-bold pt-5' style={{ width: "35%" }}>{t("weekdate") + " : "}</div>
-            <div className='fw-bold pt-5' style={{ width: "30%" }}>{t("collectiondate") + " : "}</div>
-
+            <div style={{ paddingLeft: "15px", display: "flex", alignItems: "center" }}>
+                <div className='fw-bold pt-5' style={{ width: "20%", paddingLeft: "20px" }}>{t('customer') + " : "}</div>
+                <div className='fw-bold pt-5' style={{ width: "15%" }}>{t('line') + " : "}</div>
+                <div className='fw-bold pt-5' style={{ width: "35%" }}>{t("weekdate") + " : "}</div>
+                <div className='fw-bold pt-5' style={{ width: "30%" }}>{t("collectiondate") + " : "}</div>
+            </div>
             <Table className='table  text-center table-bordered border-dark' >
                 <thead >
                     <tr>
