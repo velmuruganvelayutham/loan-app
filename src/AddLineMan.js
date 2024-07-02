@@ -85,14 +85,16 @@ function AddLineMan() {
     setUpdateId(id);
   }
 
-  const updateLineMan = () => {
-    setIsLoading(true);
+  const updateLineMan =async () => {
+    const token = await getToken();
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     axios.put(`${baseURL}/linemancreate/update/${updateId}`, { linemanname: input, mobileno: inputmobileno }).then((res) => {
       setIsLoading(false)
       setUpdateUI((prevState) => !prevState)
       setInput("");
       setInputMobileno("");
       setUpdateId(null);
+      setErrorMessage("");
     }).catch(error => {
       setErrorMessage(t('errormessagesavelineman'));
       setIsLoading(false);
