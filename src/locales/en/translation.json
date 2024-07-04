@@ -165,5 +165,9 @@
   "notrunningaccounts":"Not Running Accounts List",
   "linemanbookalert":"This LineMan Has Book No:",
   "generatenew":"New Account",
-  "displaycityname":"Checking City"
+  "displaycityname":"Checking City",
+  "amountgivendetailsreport":"Given Money Details",
+  "day":"Day",
+  "show":"Show",
+  "close":"Close"
 }
