@@ -246,10 +246,10 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
                 </th>
                 <th style={{ fontSize: "12px" }}>{t('beforependingamount')}</th>
                 <th style={{ fontSize: "12px" }}>
-                  {t('newloancount')}
+                  {t('newdebtcount')}
                 </th>
                 <th style={{ fontSize: "12px" }} >
-                  {t('newtotalamount')}
+                  {t('newdebt')}
                 </th>
                 <th style={{ fontSize: "12px" }}>
                   {t('totalloancount')}

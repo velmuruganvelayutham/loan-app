@@ -105,6 +105,7 @@
   "beforedebt": "Pre Debit Account",
   "currentdebt": "Current Debit Account",
   "newdebt":"Week Debt",
+  "newdebtcount":"Week Cnt",
   "averagecollection": "Avg.Collection",
   "beforeloancount": "B.Count",
   "beforetotalamount": "B.Debt",
