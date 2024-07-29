@@ -149,6 +149,10 @@ function Ledger({ loanno, ledger, company, date }) {
                                 <Form.Label>{t('cheque')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                                 <Form.Label>&nbsp;{ledger.length > 0 ? first.cheque : ""}</Form.Label>
                             </Form.Group>
+                            <Form.Group border="primary" >
+                                <Form.Label>{t('bond')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                <Form.Label>&nbsp;{ledger.length > 0 ? first.bond : ""}</Form.Label>
+                            </Form.Group>
                         </Col>
                         <Col className='col-sm-3 fixed' style={{ outline: '1px solid orange', borderRadius: ' 30px 30px 30px 30px' }}>
                             <Form.Group border="primary" >

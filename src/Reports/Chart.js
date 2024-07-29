@@ -124,7 +124,7 @@ function Chart({ loanno, ledger, company, date }) {
                                     </Form.Label>
                                 </Form.Group>
                                 <Form.Group style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", width: "100%" }}>
-                                    <Form.Label style={{ fontSize: "11px", marginBottom: "0", maxWidth: "100%" }}>{t('loannoshort')}&nbsp;:<span style={{ fontSize: "12px", display: "inline-block", minWidth: "0", fontWeight: "bold" }}>{ledger.length > 0 ? first.loannumber : ""}</span></Form.Label>
+                                    <Form.Label style={{ fontSize: "11px", marginBottom: "0", maxWidth: "100%" }}>{t('loannoshort')}&nbsp;:<span style={{ fontSize: "13px",fontWeight:"bold", display: "inline-block", minWidth: "0", fontFamily:"serif" }}>{ledger.length > 0 ? first.loannumber : ""}</span></Form.Label>
                                 </Form.Group>
                             </div>
                             <div style={{ flex: 1, margin: '0', padding: '0', paddingLeft: '2px' }}>

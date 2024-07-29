@@ -59,6 +59,7 @@ function LoanForm() {
     const bookRef = useRef(null);
     const documentRef = useRef(null);
     const chequeRef = useRef(null);
+    const bondRef=useRef(null);
     const loannoRef = useRef(null);
     const oldLoanRef = useRef(null);
     const [validated, setValidated] = useState(false);
@@ -376,7 +377,7 @@ function LoanForm() {
         axios.put(`${baseURL}/loancreate/update`,
             {
                 oldloanno: Number(oldLoanRef.current.value), customer_id: myForm.mySelectKey, lineman_id: linemanoptionRef.current.value, city_id: cityidRef.current.value,
-                weekno: weekRef.current.value, bookno: bookRef.current.value, lineno: lineRef.current.value, document: documentRef.current.value, cheque: chequeRef.current.value,
+                weekno: weekRef.current.value, bookno: bookRef.current.value, lineno: lineRef.current.value, document: documentRef.current.value, cheque: chequeRef.current.value,bond: bondRef.current.value,
                 weekcount: weekscount, startdate: new Date(startDate), givendate: new Date(givenDate.current.value), duedate: new Date(dueDate.current.value), finisheddate: new Date(endDateRef.current.value),
                 givenamount: Number(givenAmt), documentamount: Number(documentAmt.current.value), interestamount: Number(interestAmt.current.value),
                 totalamount: Number(totalAmt.current.value), dueamount: Number(dueAmt.current.value), paidamount: Number(paidAmt.current.value)
@@ -399,7 +400,7 @@ function LoanForm() {
         axios.put(`${baseURL}/loancreate/updatebook`,
             {
                 oldloanno: Number(oldLoanRef.current.value), customer_id: myForm.mySelectKey, lineman_id: linemanoptionRef.current.value, city_id: cityidRef.current.value,
-                weekno: weekRef.current.value, bookno: bookRef.current.value, lineno: lineRef.current.value, document: documentRef.current.value, cheque: chequeRef.current.value
+                weekno: weekRef.current.value, bookno: bookRef.current.value, lineno: lineRef.current.value, document: documentRef.current.value, cheque: chequeRef.current.value,bond: bondRef.current.value,
             }).then((res) => {
                 setButtonDisabled(false);
                 setErrorMessage("");
@@ -418,7 +419,7 @@ function LoanForm() {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         axios.post(`${baseURL}/loancreate/save`, {
             loanno: Number(loannoRef.current.value), customer_id: myForm.mySelectKey, lineman_id: linemanoptionRef.current.value, city_id: cityidRef.current.value,
-            weekno: weekRef.current.value, bookno: bookRef.current.value, lineno: lineRef.current.value, document: documentRef.current.value, cheque: chequeRef.current.value,
+            weekno: weekRef.current.value, bookno: bookRef.current.value, lineno: lineRef.current.value, document: documentRef.current.value, cheque: chequeRef.current.value,bond: bondRef.current.value,
             weekcount: weekscount, startdate: new Date(startDate), givendate: new Date(givenDate.current.value), duedate: new Date(dueDate.current.value), finisheddate: new Date(endDateRef.current.value),
             givenamount: Number(givenAmt), documentamount: Number(documentAmt.current.value), interestamount: Number(interestAmt.current.value),
             totalamount: Number(totalAmt.current.value), dueamount: Number(dueAmt.current.value), paidamount: Number(paidAmt.current.value)
@@ -503,6 +504,7 @@ function LoanForm() {
                     bookRef.current.value = oldReference[0].bookno;
                     documentRef.current.value = oldReference[0].document;
                     chequeRef.current.value = oldReference[0].cheque;
+                    bondRef.current.value = oldReference[0].bond;
                     setGivenAmt(oldReference[0].givenamount);
                     documentAmt.current.value = oldReference[0].documentamount;
                     interestAmt.current.value = oldReference[0].interestamount;
@@ -534,6 +536,7 @@ function LoanForm() {
         bookRef.current.value = "";
         documentRef.current.value = "";
         chequeRef.current.value = "";
+        bondRef.current.value="";
         setStartDate(startOfWeek());
         givenDate.current.value = startOfWeek();
 
@@ -664,13 +667,13 @@ function LoanForm() {
 
 
                     <Row>
-                        <Col xs={12} md={3} className="rounded bg-white">
+                        <Col xs={12} md={2} className="rounded bg-white">
                             <Form.Group className="mb-3" name="weekno" border="primary" >
                                 <Form.Label>{t('weekno')}</Form.Label>{/*week No*/}
                                 <Form.Control type="number" data-cypress-loan-app-weekno="weekno" placeholder={t('weeknoplaceholder')} required ref={weekRef} />
                             </Form.Group>
                         </Col>
-                        <Col xs={12} md={3} className="rounded bg-white">
+                        <Col xs={12} md={2} className="rounded bg-white">
                             <Form.Group className="mb-3" name="bookno" border="primary" >
                                 <Form.Label>{t('bookno')}</Form.Label>{/*book no*/}
                                 <Form.Control type="number" data-cypress-loan-app-bookno="bookno" placeholder={t('booknoplaceholder')} required ref={bookRef} onBlur={() => updateUI ? setChangeBook(true) : setChangeBook(false)} />
@@ -686,6 +689,12 @@ function LoanForm() {
                             <Form.Group className="mb-3" name="cheque" border="primary" >
                                 <Form.Label>{t('cheque')}</Form.Label>{/*cheque*/}
                                 <Form.Control type="number" placeholder={t('cheque')} ref={chequeRef} />
+                            </Form.Group>
+                        </Col>
+                        <Col xs={12} md={2} className="rounded bg-white">
+                            <Form.Group className="mb-3" name="doument" border="primary" >
+                                <Form.Label>{t('bond')}</Form.Label>{/*document*/}
+                                <Form.Control type="text" placeholder={t('bond')} ref={bondRef} />
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={2} className="rounded bg-white">
