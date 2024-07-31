@@ -104,7 +104,8 @@ function LedgerForm() {
         const token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         loannumberprocess = loanno;
-        if ((Number(reportType)) === 1) {
+       // alert(reportType);
+        if ((Number(reportType.current.value)) === 1) {
             passingreportname = "chart"
         }
         else {
