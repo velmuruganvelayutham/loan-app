@@ -12,6 +12,7 @@ import AsyncSelect from 'react-select/async';
 import {
     useAuth
 } from "@clerk/clerk-react";
+import { startOfWeek } from "../FunctionsGlobal/StartDateFn";
 
 var loannumberprocess = "";
 function LedgerForm() {
@@ -111,7 +112,7 @@ function LedgerForm() {
         }
 
         return (
-            axios.get(`${baseURL}/${passingreportname}/get`, { params: { loanno: loanno } }).then((res) => {
+            axios.get(`${baseURL}/${passingreportname}/get`, { params: { loanno: loanno,todate:new Date(startOfWeek()) } }).then((res) => {
                 setLoanDetails(res.data);
                 console.log(res.data);
                 setIsLoading(false);

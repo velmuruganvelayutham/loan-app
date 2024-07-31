@@ -66,6 +66,9 @@
   "errormessagesavecustomer": "Unable to Save Customer",
   "errormessagesavecity": "Unable to Save City",
   "errormessagesaveline": "Unable to Save Line",
+  "errormessagedeletelinemanbookwise":"Unable to Delete LinMan Details",
+  "errormessagesavelinemanbookwise":"Unable to save LinMan Details",
+  
   "ledger": "LEDGER",
   "week": "Week",
   "weekno": "Week No",
@@ -100,6 +103,7 @@
   "updatealertmessage": "Updated Sucessfully",
   "yesornoalertmessage": "Are you sure you want to Update Loan ?",
   "deletealertmessage": "Are you sure want to Remove this loan?",
+  "deletealertmessagelinemansettings":"Are you sure want to Remove this Lineman Details?",
   "fathershort": "F",
   "husbandshort": "H",
   "beforedebt": "Pre Debit Account",

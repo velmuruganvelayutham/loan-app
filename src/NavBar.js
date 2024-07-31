@@ -92,6 +92,8 @@ function NavBar() {
                             <NavDropdown.Item href="linechecking">LineChecking</NavDropdown.Item>
                             <NavDropdown.Item href="updatebookcity">GivenMoneyDetails</NavDropdown.Item>
                             <NavDropdown.Item href="totalledger">TotalLedger</NavDropdown.Item>
+                        </NavDropdown>
+                        <NavDropdown title="Settings" id="basic-nav-dropdown">
                             <NavDropdown.Item href="updatebookcity">UpdateBookByCity</NavDropdown.Item>
                             <NavDropdown.Item href="updatebookcity">LinemanBookWise</NavDropdown.Item>
                         </NavDropdown>
