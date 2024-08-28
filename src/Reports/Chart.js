@@ -14,10 +14,7 @@ function Chart({ loanno, ledger, company, date }) {
     let relationtype = 0;
     let fontsizevar = "9px";
     let paddingvar = "5px";
-    if (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 6) {
-        fontsizevar = "10px";
-        paddingvar = "12px";
-    }
+    
     function TablesRows(no, date, income, balance) {
         return (
             <tr className={(records.length > 0 && first.weekcount < 40) ? 'chartheight' : (first.weekcount > 42) ? 'chartheight43' : 'chartheight42'}>
@@ -80,7 +77,7 @@ function Chart({ loanno, ledger, company, date }) {
                         <Col className="rounded bg-white col-sm-4 fw-bold" style={{ fontSize: "12px" }}>
                             {company}
                         </Col>
-                        <Col className="rounded bg-white col-sm-2 fw-bold" style={{ fontSize: fontsizevar, position: "fixed", left: (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? "32%" : "25%" }}>
+                        <Col className="rounded bg-white col-sm-2 fw-bold" style={{ fontSize: fontsizevar, position: "fixed", left: (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? "32%" : "32%" }}>
                             {t('booknomedium') + ':' + (ledger.length > 0 ? first.bookno : "")}
                         </Col>
                     </Row>
@@ -89,31 +86,31 @@ function Chart({ loanno, ledger, company, date }) {
                             color: '#000000',
                             backgroundColor: '#000000',
                             height: '0',
-                            width: (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? "42%" : "33%",
+                            width: (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? "42%" : "42%",
                             borderColor: '#000000',
                             margin: '0',
                             padding: '0'
                         }} />
                     </Row>
-                    <Row className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-5 col-md-6' : 'col-sm-8 col-md-8'}>
+                    <Row className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-5 col-md-6' : 'col-sm-5 col-md-6'}>
                         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
                             <div style={{ flex: 1, margin: '0', padding: '0' }}>
                                 <Form.Group style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", width: "100%" }}>
                                     <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block", width: "100%" }}>
-                                        {(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? t('customer') : t('customershort')}&nbsp;:<span style={{ fontSize: fontsizevar, display: "inline-block", minWidth: "0" }}>{ledger.length > 0 ? first.customer : ""}</span>
+                                        {(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? t('customer') : t('customer')}&nbsp;:<span style={{ fontSize: fontsizevar, display: "inline-block", minWidth: "0" }}>{ledger.length > 0 ? first.customer : ""}</span>
                                     </Form.Label>
                                 </Form.Group>
                             </div>
                             <div style={{ flex: 1, margin: '0', padding: '0', paddingLeft: '2px' }}>
                                 <Form.Group style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", width: "100%" }}>
                                     <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block", width: "100%" }}>
-                                        {relationtype === 0 ? (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0 ? t('fathername') : t('fathershort')) : (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0 ? t('husbandname') : t('husbandshort'))}&nbsp;:<span style={{ fontSize: fontsizevar, display: "inline-block", minWidth: "0" }}>{ledger.length > 0 ? first.fathername : ""}</span>
+                                        {relationtype === 0 ? (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0 ? t('fathername') : t('fathername')) : (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0 ? t('husbandname') : t('husbandname'))}&nbsp;:<span style={{ fontSize: fontsizevar, display: "inline-block", minWidth: "0" }}>{ledger.length > 0 ? first.fathername : ""}</span>
                                     </Form.Label>
                                 </Form.Group>
                             </div>
                         </div>
                     </Row>
-                    <Row className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-5 col-md-6' : 'col-sm-8 col-md-8'}>
+                    <Row className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-5 col-md-6' : 'col-sm-5 col-md-6'}>
                         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
                             <div style={{ flex: 1, margin: '0', padding: '0' }}>
                                 
@@ -147,7 +144,7 @@ function Chart({ loanno, ledger, company, date }) {
             </Row>
 
             <Row className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-8 col-md-8' : 'col-sm-8 col-md-8'} style={{ paddingLeft: paddingvar }} >
-                <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-4 col-md-4 p-0' : 'col-sm-3 col-md-4 p-0'} >
+                <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-4 col-md-4 p-0' : 'col-sm-4 col-md-4 p-0'} >
                     <Table className="table text-center table-bordered border-dark chart" style={{ marginBottom: "0 !important" }}>
                         <thead>
                             <tr >
@@ -198,7 +195,7 @@ function Chart({ loanno, ledger, company, date }) {
                         </tbody>
                     </Table>
                 </Col>
-                <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-custom col-md-4 p-0' : 'col-sm-3 col-md-4 p-0'}  >
+                <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-custom col-md-4 p-0' : 'col-sm-custom col-md-4 p-0'}  >
                     <Table className="table  text-center table-bordered border-dark chart col-sm-custom col-md-4" style={{ marginBottom: "0 !important" }}>
                         <thead>
                             <tr >
