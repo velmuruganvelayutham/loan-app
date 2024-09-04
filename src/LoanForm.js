@@ -30,7 +30,7 @@ function LoanForm() {
     const [isLoading, setIsLoading] = useState(false);
     const [customers, setCustomers] = useState([]);
     const [linemannames, setLinemanNames] = useState([]);
-    const [inputmobileno, setInputMobileno] = useState();
+    const [inputmobileno, setInputMobileno] = useState('');
     //const [weekscount, setWeeksCount] = useState(Number(weekCount));
     const [weekscount, setWeeksCount] = useState(getDefaultWeekCount());
 
@@ -59,7 +59,7 @@ function LoanForm() {
     const bookRef = useRef(null);
     const documentRef = useRef(null);
     const chequeRef = useRef(null);
-    const bondRef=useRef(null);
+    const bondRef = useRef(null);
     const loannoRef = useRef(null);
     const oldLoanRef = useRef(null);
     const [validated, setValidated] = useState(false);
@@ -208,6 +208,7 @@ function LoanForm() {
             lineRef.current.value = 0;
         }
         if (filtered !== undefined && filtered.length > 0 && savedValue === null) {
+            
             setInputMobileno(filtered[0].mobileno);
             fathernameRef.current.value = filtered[0].fathername;
             citynameRef.current.value = filtered[0].cityname;
@@ -377,7 +378,7 @@ function LoanForm() {
         axios.put(`${baseURL}/loancreate/update`,
             {
                 oldloanno: Number(oldLoanRef.current.value), customer_id: myForm.mySelectKey, lineman_id: linemanoptionRef.current.value, city_id: cityidRef.current.value,
-                weekno: weekRef.current.value, bookno: bookRef.current.value, lineno: lineRef.current.value, document: documentRef.current.value, cheque: chequeRef.current.value,bond: bondRef.current.value,
+                weekno: weekRef.current.value, bookno: bookRef.current.value, lineno: lineRef.current.value, document: documentRef.current.value, cheque: chequeRef.current.value, bond: bondRef.current.value,
                 weekcount: weekscount, startdate: new Date(startDate), givendate: new Date(givenDate.current.value), duedate: new Date(dueDate.current.value), finisheddate: new Date(endDateRef.current.value),
                 givenamount: Number(givenAmt), documentamount: Number(documentAmt.current.value), interestamount: Number(interestAmt.current.value),
                 totalamount: Number(totalAmt.current.value), dueamount: Number(dueAmt.current.value), paidamount: Number(paidAmt.current.value)
@@ -400,7 +401,7 @@ function LoanForm() {
         axios.put(`${baseURL}/loancreate/updatebook`,
             {
                 oldloanno: Number(oldLoanRef.current.value), customer_id: myForm.mySelectKey, lineman_id: linemanoptionRef.current.value, city_id: cityidRef.current.value,
-                weekno: weekRef.current.value, bookno: bookRef.current.value, lineno: lineRef.current.value, document: documentRef.current.value, cheque: chequeRef.current.value,bond: bondRef.current.value,
+                weekno: weekRef.current.value, bookno: bookRef.current.value, lineno: lineRef.current.value, document: documentRef.current.value, cheque: chequeRef.current.value, bond: bondRef.current.value,
             }).then((res) => {
                 setButtonDisabled(false);
                 setErrorMessage("");
@@ -419,7 +420,7 @@ function LoanForm() {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         axios.post(`${baseURL}/loancreate/save`, {
             loanno: Number(loannoRef.current.value), customer_id: myForm.mySelectKey, lineman_id: linemanoptionRef.current.value, city_id: cityidRef.current.value,
-            weekno: weekRef.current.value, bookno: bookRef.current.value, lineno: lineRef.current.value, document: documentRef.current.value, cheque: chequeRef.current.value,bond: bondRef.current.value,
+            weekno: weekRef.current.value, bookno: bookRef.current.value, lineno: lineRef.current.value, document: documentRef.current.value, cheque: chequeRef.current.value, bond: bondRef.current.value,
             weekcount: weekscount, startdate: new Date(startDate), givendate: new Date(givenDate.current.value), duedate: new Date(dueDate.current.value), finisheddate: new Date(endDateRef.current.value),
             givenamount: Number(givenAmt), documentamount: Number(documentAmt.current.value), interestamount: Number(interestAmt.current.value),
             totalamount: Number(totalAmt.current.value), dueamount: Number(dueAmt.current.value), paidamount: Number(paidAmt.current.value)
@@ -536,7 +537,7 @@ function LoanForm() {
         bookRef.current.value = "";
         documentRef.current.value = "";
         chequeRef.current.value = "";
-        bondRef.current.value="";
+        bondRef.current.value = "";
         setStartDate(startOfWeek());
         givenDate.current.value = startOfWeek();
 
@@ -615,7 +616,7 @@ function LoanForm() {
                         <Col xs={12} md={4} className="rounded bg-white">
                             <Form.Group className="mb-3" name="mobilenumber" border="primary" >
                                 <Form.Label>{t('phoneno')}</Form.Label> {/*mobile no*/}
-                                <Form.Control data-cypress-loan-app-mobilenumber="mobilenumber" type="number" disabled
+                                <Form.Control data-cypress-loan-app-mobilenumber="mobilenumber" type="text" disabled
                                     value={inputmobileno} onChange={(e) => setInputMobileno(e.target.value)} />
                             </Form.Group>
                         </Col>

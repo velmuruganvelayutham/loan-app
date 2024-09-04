@@ -22,7 +22,8 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng:"en", //default language
+    lng:"ta", //default language
+    fallbackLng: 'en', // fallback language if the translation is missing
     keySeparator: false,
     interpolation: {
       escapeValue: false,

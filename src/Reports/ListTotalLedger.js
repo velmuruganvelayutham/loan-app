@@ -31,6 +31,8 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
   var notrunningpending = 0;
   var notrunningcountdates = 0;
   var notrunningpendingdates = 0;
+  var notrunningcountcurrent=0;
+  var notrunningloanpendingcurrent=0;
   var runningcountdates = 0;
   var runningpendingdates = 0;
   var totalcount = 0;
@@ -110,7 +112,7 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
                 <div style={{ fontSize: "12px" }}>{dateFormatddmmyyyy(notrunningdate)}</div>
 
               </th>
-              <th colSpan={2} style={{ fontSize: "12px" }}>{t('notrunning')}</th>
+              <th colSpan={4} style={{ fontSize: "12px" }}>{t('notrunning')}</th>
               <th colSpan={2} style={{ fontSize: "12px" }}>{t('running')}</th>
               <th></th>
             </tr>
@@ -135,6 +137,8 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
               <th style={{ fontSize: "12px" }}>{t('notrunningcount')}</th>
               <th style={{ fontSize: "12px" }}>{t('notrunningpending')}</th>
               <th style={{ fontSize: "12px" }}>{t('more')}</th>
+              <th style={{ fontSize: "12px" }}></th>
+              <th style={{ fontSize: "12px" }}>{t('notrunningweekcount')}</th>
               <th style={{ fontSize: "12px" }}></th>
               <th style={{ fontSize: "12px" }}>{t('less')}</th>
               <th></th>
@@ -162,6 +166,8 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
                   notrunningpending = notrunningpending + customer.notrunningloanpending;
                   notrunningcountdates = notrunningcountdates + customer.notrunningcountdates;
                   notrunningpendingdates = notrunningpendingdates + customer.notrunningloanpendingdates;
+                  notrunningcountcurrent=notrunningcountcurrent+customer.notrunningcountcurrent;
+                  notrunningloanpendingcurrent=notrunningloanpendingcurrent+customer.notrunningloanpendingcurrent;
                   runningcountdates = runningcountdates + customer.runningcountdates;
                   runningpendingdates = runningpendingdates + customer.runningloanpendingdates;
                   totalcount = totalcount + customer.countafter + customer.countfinished;
@@ -190,6 +196,8 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
                       <td style={{ fontSize: "12px" }}>{customer.notrunningloanpending}</td>
                       <td style={{ fontSize: "12px" }}>{customer.notrunningcountdates}</td>
                       <td style={{ fontSize: "12px" }}>{customer.notrunningloanpendingdates}</td>
+                      <td style={{ fontSize: "12px" }}>{customer.notrunningcountcurrent}</td>
+                      <td style={{ fontSize: "12px" }}>{customer.notrunningloanpendingcurrent}</td>
                       <td style={{ fontSize: "12px" }}>{customer.runningcountdates}</td>
                       <td style={{ fontSize: "12px" }}>{customer.runningloanpendingdates}</td>
                       <td></td>
@@ -221,6 +229,8 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
               <td style={{ fontSize: "12px" }} className='fw-bold'>{notrunningpending}</td>
               <td style={{ fontSize: "12px" }} className='fw-bold'>{notrunningcountdates}</td>
               <td style={{ fontSize: "12px" }} className='fw-bold'>{notrunningpendingdates}</td>
+              <td style={{ fontSize: "12px" }} className='fw-bold'>{notrunningcountcurrent}</td>
+              <td style={{ fontSize: "12px" }} className='fw-bold'>{notrunningloanpendingcurrent}</td>
               <td style={{ fontSize: "12px" }} className='fw-bold'>{runningcountdates}</td>
               <td style={{ fontSize: "12px" }} className='fw-bold'>{runningpendingdates}</td>
               <td></td>

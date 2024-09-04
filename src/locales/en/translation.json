@@ -175,5 +175,6 @@
   "day":"Day",
   "show":"Show",
   "close":"Close",
-  "bond":"Bond"
+  "bond":"Bond",
+  "notrunningweekcount":"W.Count"
 }
