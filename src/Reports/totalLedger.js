@@ -91,7 +91,7 @@ function TotalLedger() {
                 }
             }).then((res) => {
                 setLedger(res.data)
-                console.log(res.data)
+                //console.log(res.data)
                 setIsLoading(false);
                 setErrorMessage("");
             })
