@@ -176,5 +176,8 @@
   "show":"Show",
   "close":"Close",
   "bond":"Bond",
-  "notrunningweekcount":"W.Count"
+  "notrunningweekcount":"W.Count",
+  "linebill":"L.Bill",
+  "totalaccount":"T.Acc",
+  "totalcollection":"T.Col"
 }

@@ -35,42 +35,43 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
                 <div className='fixed mt-3 fw-bold' style={{ width: "29%" }}>{t("weekdate") + " :" + dateFormatdd(datefrom) + "-" + dateFormatdd(dateto)}</div>
                 <div className='fixed mt-3 fw-bold' style={{ width: "31%" }}>{t("collectiondate") + " :" + dateFormatdd(collectiondate) + d}</div>
             </div>
-            <Table className='table  text-center table-bordered border-dark' style={{ overflow: "auto" }}>
+            <Table className='table  text-center table-bordered border-dark linecheckingtable' >
                 <thead >
                     <tr>
-                        <th ></th>
-                        <th style={{ fontSize: "12px" }}>
-                            {t('income')}
-                        </th>
-                        <th style={{ fontSize: "12px" }} className='col-md-2 col-sm-2'>
-                            {t('customer')}
-                        </th>
-                        <th style={{ fontSize: "12px" }} className='col-md-2 col-sm-2'>
+                        <th style={{ fontSize: "12px" ,width: "1.5%"}}></th>
+                        <th style={{ fontSize: "12px" ,width: "13%"}} >
                             {t('details')}
                         </th>
-                        <th style={{ fontSize: "12px", width: "1px" }} >
-                            {t('totalcount')}
+                        <th style={{ fontSize: "12px", width: "10%" }} >
+                            {t('customer')}
                         </th>
-                        <th style={{ fontSize: "12px" }} >
-                            {t('countaccount')}
+                        <th style={{ fontSize: "12px", width: "10%" }} >
+                            {t('city')}
                         </th>
-                        <th style={{ fontSize: "12px" }} className='col-md-1 col-sm-1'>
-                            {t('totalcreditshort')}
+                        <th style={{ fontSize: "12px",width: "6%",padding:"0",margin:"0",paddingBottom:"5px"  }} >
+                            {t('totalaccount')}
                         </th>
-                        <th style={{ fontSize: "12px" }} className='col-md-1 col-sm-1'>
+                        <th style={{ fontSize: "12px", width: "7%"}}>{t('linebill')}</th>
+                        <th style={{ fontSize: "12px",width: "6%",padding:"0",margin:"0",paddingBottom:"5px"  }}  >
+                            {t('totalloancount')}
+                        </th>
+                        <th style={{ fontSize: "12px",width: "11%" }} >
+                            {t('totalcollection')}
+                        </th>
+                        <th style={{ fontSize: "12px",width: "8%" }} >
                             {t('Administrationincomeshort')}
                         </th>
-                        <th style={{ fontSize: "12px" }} className='col-md-1 col-sm-1'>
+                        <th style={{ fontSize: "12px",width: "7%" }} >
                             {t('collection')}
                         </th>
 
-                        <th style={{ fontSize: "12px" }} className='col-md-1 col-sm-1'>
+                        <th style={{ fontSize: "12px",width: "7%" }} >
                             {t('others')}
                         </th>
-                        <th style={{ fontSize: "12px" }}>
+                        <th style={{ fontSize: "12px",width: "4%" }}>
                             {t('signature')}
                         </th>
-                        <th></th>
+                        <th style={{ fontSize: "12px" ,width: "1.5%"}}></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -102,6 +103,7 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
                                         <td></td>
                                         <td></td>
                                         <td></td>
+                                        <td></td>
                                     </tr>
 
                                 )
@@ -114,6 +116,7 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
                         <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
                         <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
                         <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}>{(t('total'))}</td>
+                        <td style={{ borderLeft: "0", borderRight: "1px solid black", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
                         <td style={{ borderLeft: "0", borderRight: "1px solid black", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
                         <td style={{ borderLeft: "0", borderRight: "1px solid black", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
                         <td style={{ borderLeft: "0", borderRight: "1px solid black", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
@@ -615,7 +618,7 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
                 : <div style={{ paddingTop: "0px" }}></div>}
             {/*finished account 35 row*/}
             {(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ?
-                <div className='row' style={{paddingLeft:"25px"}}>
+                <div className='row' style={{ paddingLeft: "25px" }}>
                     <div className='fixed fw-bold pt-5' style={{ width: "20%", paddingLeft: "20px" }}>{t('customer') + " : "}</div>
                     <div className='fixed fw-bold pt-5' style={{ width: "15%" }}>{t('line') + " : "}</div>
                     <div className='fixed fw-bold pt-5' style={{ width: "30%" }}>{t("weekdate") + " : "}</div>
