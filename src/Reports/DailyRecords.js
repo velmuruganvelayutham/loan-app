@@ -38,8 +38,8 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
             <Table className='table  text-center table-bordered border-dark linecheckingtable' >
                 <thead >
                     <tr>
-                        <th style={{ fontSize: "12px" ,width: "1.5%"}}></th>
-                        <th style={{ fontSize: "12px" ,width: "13%"}} >
+                        <th style={{ fontSize: "12px", width: "1.5%" }}></th>
+                        <th style={{ fontSize: "12px", width: "13%" }} >
                             {t('details')}
                         </th>
                         <th style={{ fontSize: "12px", width: "10%" }} >
@@ -48,30 +48,30 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
                         <th style={{ fontSize: "12px", width: "10%" }} >
                             {t('city')}
                         </th>
-                        <th style={{ fontSize: "12px",width: "6%",padding:"0",margin:"0",paddingBottom:"5px"  }} >
+                        <th style={{ fontSize: "12px", width: "6%", padding: "0", margin: "0", paddingBottom: "5px" }} >
                             {t('totalaccount')}
                         </th>
-                        <th style={{ fontSize: "12px", width: "7%"}}>{t('linebill')}</th>
-                        <th style={{ fontSize: "12px",width: "6%",padding:"0",margin:"0",paddingBottom:"5px"  }}  >
+                        <th style={{ fontSize: "12px", width: "7%" }}>{t('linebill')}</th>
+                        <th style={{ fontSize: "12px", width: "6%", padding: "0", margin: "0", paddingBottom: "5px" }}  >
                             {t('totalloancount')}
                         </th>
-                        <th style={{ fontSize: "12px",width: "11%" }} >
+                        <th style={{ fontSize: "12px", width: "11%" }} >
                             {t('totalcollection')}
                         </th>
-                        <th style={{ fontSize: "12px",width: "8%" }} >
+                        <th style={{ fontSize: "12px", width: "8%" }} >
                             {t('Administrationincomeshort')}
                         </th>
-                        <th style={{ fontSize: "12px",width: "7%" }} >
+                        <th style={{ fontSize: "12px", width: "7%" }} >
                             {t('collection')}
                         </th>
 
-                        <th style={{ fontSize: "12px",width: "7%" }} >
+                        <th style={{ fontSize: "12px", width: "7%" }} >
                             {t('others')}
                         </th>
-                        <th style={{ fontSize: "12px",width: "4%" }}>
+                        <th style={{ fontSize: "12px", width: "4%" }}>
                             {t('signature')}
                         </th>
-                        <th style={{ fontSize: "12px" ,width: "1.5%"}}></th>
+                        <th style={{ fontSize: "12px", width: "1.5%" }}></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -209,21 +209,21 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
                             t('tabledata')
 
                     }
-                    <tr className='dailyrecords'>
-                        <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
-                        <td style={{ borderLeft: "1px solid black", borderRight: "1px solid black", borderBottom: "2px solid black", borderTop: "2px solid black", fontSize: "10px" }}>{t('weekshort')}</td>
-                        <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}><span className='vl'></span></td>
-                        <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}><span className='v2' style={{ fontSize: "10px" }}>{t('givenamounttooshort')}</span></td>
-                        <td style={{ borderLeft: "1px solid black", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
-                        <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}><span className='v3'></span></td>
-                        <td style={{ borderLeft: "1px solid black", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black", fontSize: "10px" }}>{t('totalcount')}</td>
-                        <td style={{ borderLeft: "1px solid black", borderColor: "black !important", borderRight: "2px solid black", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
-                        <td style={{ borderLeft: "1px solid black", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
-                        <td style={{ borderLeft: "1px solid black", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
-                        <td style={{ borderLeft: "1px solid black", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
-                        <td style={{ borderLeft: "1px solid black", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
-                        <td style={{ borderLeft: "1px solid black", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
-                        <td style={{ borderLeft: "1px solid black", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
+                    <tr className='dailyrecords dailyrecordsadditional'>
+                        <td style={{ borderLeft: "0", borderRight: "2px solid black", borderBottom: "3px solid black", borderTop: "3px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "2px solid black", borderBottom: "3px solid black", borderTop: "3px solid black", fontSize: "10px" }}>{t('weekshort')}</td>
+                        <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "3px solid black", borderTop: "3px solid black" }}><span className='vl'></span></td>
+                        <td style={{ borderLeft: "0", borderRight: "2px solid black", borderBottom: "3px solid black", borderTop: "3px solid black" }}><span className='v2' style={{ fontSize: "10px" }}>{t('givenamounttooshort')}</span></td>
+                        <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "3px solid black", borderTop: "3px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "3px solid black", borderBottom: "3px solid black", borderTop: "3px solid black" }}><span className='v3'></span></td>
+                        <td style={{ borderLeft: "0", borderRight: "2px solid black", borderBottom: "3px solid black", borderTop: "3px solid black", fontSize: "10px" }}>{t('totalcount')}</td>
+                        <td style={{ borderLeft: "0", borderColor: "black !important", borderRight: "3px solid black", borderBottom: "3px solid black", borderTop: "3px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "3px solid black", borderBottom: "3px solid black", borderTop: "3px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "2px solid black", borderBottom: "3px solid black", borderTop: "3px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "3px solid black", borderBottom: "3px solid black", borderTop: "3px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "2px solid black", borderBottom: "3px solid black", borderTop: "3px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "2px solid black", borderBottom: "3px solid black", borderTop: "3px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "2px solid black", borderBottom: "3px solid black", borderTop: "3px solid black" }}></td>
                     </tr>
 
 
@@ -232,55 +232,60 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
             </Table>
             {/*finished account*/}
             <div className='col-sm-12 text-center fixed' ></div>
-            <Table className='table  text-center table-bordered border-dark'>
-                <thead >
-                    <tr>
-                        <th></th>
-                        <th colSpan={8}><div style={{ fontSize: "12px" }}>{t('dailyrecordsfinishedaccount')}</div></th>
-                        <th colSpan={3} style={{ borderRight: "2px solid black", borderLeft: "2px solid black" }}><div style={{ fontSize: "12px" }}>{t('givenamountshort')}</div></th>
-                        <th colSpan={2} ><div style={{ fontSize: "12px" }}>{t('handsmoney')}</div></th>
-                        <th></th>
-                    </tr>
-                    <tr>
-                        <th></th>
-                        <th style={{ fontSize: "12px" }}>
-                            {t('noshort')}
-                        </th>
-                        <th style={{ fontSize: "12px" }} className='col-md-1 col-sm-1'>
-                            {t('loannotooshort')}
-                        </th>
-                        <th style={{ fontSize: "12px" }} className='col-md-2 col-sm-2'>
-                            {t('customer')}
-                        </th>
-                        <th style={{ fontSize: "12px" }} className='col-md-2 col-sm-2'>
-                            {t('city')}
-                        </th>
-                        <th style={{ fontSize: "12px" }} className='col-md-1 col-sm-1'>
-                            {t('smallno')}
-                        </th>
-                        <th style={{}} className='col-md-1 col-sm-1'>
-                            {t('noshorts')}
-                        </th>
-                        <th style={{ fontSize: "12px" }} className='col-md-1 col-sm-1'>
-                            {t('totalamounttooshort')}
-                        </th>
-                        <th style={{ fontSize: "12px", borderRight: "2px solid black" }} >
-                            {t('signature')}
-                        </th>
-                        <th style={{ fontSize: "12px" }}>
-                            {t('money')}
-                        </th>
-                        <th style={{ fontSize: "12px" }} className='col-md-1 col-sm-1'>
-                            {t('countshort')}
-                        </th>
-                        <th style={{ fontSize: "12px", borderRight: "2px solid black" }} className='col-md-1 col-sm-1'>
-                            {t('totalcount')}
-                        </th>
-                        <th>{t('countshort')}</th>
-                        <th className='col-md-1 col-sm-1'>{t('totalcount')}</th>
-                        <th></th>
-                    </tr>
+            <Table className='table  text-center table-bordered border-dark ' style={{ tableLayout: "fixed", width: "100%" }}>
+                <colgroup>
+                    <col style={{ width: "1.5%", fontSize: "12px" }} />
 
+                    <col style={{ width: "5%", fontSize: "12px" }} />
+                    <col style={{ width: "8%", fontSize: "12px" }} />
+                    <col style={{ width: "14%", fontSize: "12px" }} />
+                    <col style={{ width: "10%", fontSize: "12px" }} />
+                    <col style={{ width: "7%", fontSize: "12px" }} />
+                    <col style={{ width: "7%", fontSize: "12px" }} />
+                    <col style={{ width: "8%", fontSize: "12px" }} />
+                    <col style={{ width: "4%", fontSize: "12px" }} />
+
+                    <col style={{ width: "6%", fontSize: "12px" }} />
+                    <col style={{ width: "5%", fontSize: "12px" }} />
+                    <col style={{ width: "7%", fontSize: "12px" }} />
+
+                    <col style={{ width: "7%", fontSize: "12px" }} />
+                    <col style={{ width: "8%", fontSize: "12px" }} />
+
+                    <col style={{ width: "1.5%", fontSize: "12px" }} />
+                </colgroup>
+
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th colSpan={8}>
+                            <div>{t('dailyrecordsfinishedaccount')}</div>
+                        </th>
+                        <th colSpan={3} style={{ borderRight: "2px solid black", borderLeft: "2px solid black" }}>
+                            <div>{t('givenamountshort')}</div>
+                        </th>
+                        <th colSpan={2}>
+                            <div>{t('handsmoney')}</div>
+                        </th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th style={{ fontSize: "12px" }}>{t('noshort')}</th>
+                        <th style={{ fontSize: "12px" }}>{t('loannotooshort')}</th>
+                        <th style={{ fontSize: "12px" }}>{t('customer')}</th>
+                        <th style={{ fontSize: "12px" }}>{t('city')}</th>
+                        <th style={{ fontSize: "12px" }}>{t('smallno')}</th>
+                        <th style={{ fontSize: "12px" }}>{t('noshorts')}</th>
+                        <th style={{ fontSize: "12px" }}>{t('totalamounttooshort')}</th>
+                        <th style={{ borderRight: "2px solid black", fontSize: "12px" }}>{t('signature')}</th>
+                        <th>{t('money')}</th>
+                        <th style={{ borderRight: "1px solid black", fontSize: "12px" }}>{t('countshort')}</th>
+                        <th style={{ fontSize: "12px",borderRight:"2px solid black" }}>{t('totalcount')}</th>
+                        <th style={{ fontSize: "12px",borderLeft:"2px solid black" }}>{t('countshort')}</th>
+                        <th style={{ fontSize: "12px" }}>{t('totalcount')}</th>
+                        <th style={{ fontSize: "12px" }}></th>
+                    </tr>
                 </thead>
                 <tbody>
 
@@ -347,25 +352,90 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
                             t('tabledata')
                     }
 
-                    <tr className='dailyrecordsfinshed'>
-                        <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
-                        <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black", fontSize: "10px" }}>{t('details')}</td>
-                        <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
-                        <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
-                        <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}><span className='v4'></span></td>
-                        <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}><span className='v5'></span></td>
-                        <td style={{ borderLeft: "0", borderRight: "1px solid black", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
-                        <td style={{ borderLeft: "0", borderRight: "1px solid black", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
-                        <td style={{ borderLeft: "0", borderRight: "2px solid black", borderColor: "black !important", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
-                        <td style={{ borderLeft: "0", borderRight: "1px solid black", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
-                        <td style={{ borderLeft: "0", borderRight: "1px solid black", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
-                        <td style={{ borderLeft: "0", borderRight: "2px solid black", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
-                        <td style={{ borderLeft: "0", borderRight: "1px solid black", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
-                        <td style={{ borderLeft: "0", borderRight: "1px solid black", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
-                        <td style={{ borderLeft: "0", borderRight: "1px solid black", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
+                    <tr className='dailyrecordsfinshed dailyrecordsadditional' style={{ border: "none" }}>
+                        <td style={{ borderLeft: "0", borderRight: "2px solid black", borderBottom: "3px solid black", borderTop: "3px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "3px solid black", borderBottom: "3px solid black", borderTop: "3px solid black", fontSize: "10px", padding: "4px" }}>{t('details')}</td>
+                        <td style={{ borderLeft: "0", borderRight: "3px solid black", borderBottom: "3px solid black", borderTop: "3px solid black", padding: "4px",fontSize:"12px",fontWeight:"bold" }}>{t('bank')}</td>
+                        <td style={{ borderLeft: "0", borderRight: "3px solid black", borderBottom: "3px solid black", borderTop: "3px solid black", padding: "0", margin: "0" }}>
+                            <span style={{ fontSize: "10px", float:"left",fontSize:"11px" }}>{t('count')}</span>
+                            <span className='v9'></span>
+                            <span style={{ paddingLeft: "3px", textAlign: "right",fontSize:"11px" }}>{t('rs')}</span>
+                        </td>
+                        <td style={{ borderBottom: "3px solid black", borderTop: "3px solid black",padding: "0", margin: "0" }}>
+                            <span className='v4'></span>
+                        </td>
+                        <td style={{ borderBottom: "3px solid black", borderTop: "3px solid black",padding: "0", margin: "0" }}>
+                            <span className='v5'></span></td>
+                        <td style={{ borderLeft: "0", borderRight: "2px solid black", borderBottom: "3px solid black", borderTop: "3px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "3px solid black", borderBottom: "3px solid black", borderTop: "3px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "4px solid black", borderBottom: "3px solid black", borderTop: "3px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "3px solid black", borderBottom: "3px solid black", borderTop: "3px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "2px solid black", borderBottom: "3px solid black", borderTop: "3px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "4px solid black", borderBottom: "3px solid black", borderTop: "3px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "3px solid black", borderBottom: "3px solid black", borderTop: "3px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "2px solid black", borderBottom: "3px solid black", borderTop: "3px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "2px solid black", borderBottom: "3px solid black", borderTop: "2px solid black" }}></td>
                     </tr>
+
+                    <tr className='dailyrecordsfinshed dailyrecordsadditional'>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ borderLeft: "none", borderRight: "2px solid black", borderBottom: "none", borderTop: "none" }}></td>
+                        <td style={{ borderLeft: "3px solid black", borderRight: "2px solid black", borderBottom: "3px solid black", borderTop: "none",fontSize:"12px",fontWeight:"bold" }}>{t('customeren')}</td>
+                        <td style={{ borderLeft: "none", borderRight: "3px solid black", borderBottom: "3px solid black", borderTop: "none" }}>
+                            <span style={{ textAlign: 'center' }}></span><span className='v10'></span><span style={{ marginLeft: "3px" }}></span></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }} ></td>
+                    </tr>
+                    <tr className='dailyrecordsfinshed dailyrecordsadditional' style={{border:"none"}}>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "3px solid black", borderBottom: "none", borderTop: "none" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "2px solid black", borderBottom: "3px solid black", borderTop: "none", fontSize: "13px",fontSize:"12px",fontWeight:"bold",whiteSpace: "nowrap", overflow: "hidden",padding:"0",margin:"0" }}>{linemanname}</td>
+                        <td style={{ borderLeft: "0", borderRight: "3px solid black", borderBottom: "3px solid black", borderTop: "none" }}>
+                            <span style={{ textAlign: 'center' }}></span><span className='v10'></span><span style={{ marginLeft: "3px" }}></span></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+
+                    </tr>
+                    <tr className='dailyrecordsfinshed dailyrecordsadditional' style={{ border: "none" }}  >
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "3px solid black", borderBottom: "none", borderTop: "none" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "2px solid black", borderBottom: "2px solid black", borderTop: "none",fontSize:"12px",fontWeight:"bold" }}>{t('totalcount')}</td>
+                        <td style={{ borderLeft: "0", borderRight: "3px solid black", borderBottom: "2px solid black" }}>
+                            <span style={{ textAlign: 'center' }}></span><span className='v10'></span><span ></span></td>
+                        <td style={{ borderLeft: "0", borderRight: "none", borderBottom: "none", borderTop: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "none" }}></td>
+
+                    </tr>
+
                 </tbody>
-                <div style={{ marginTop: "85px" }}></div>
+                <div style={{ marginTop: "28px" }}></div>
             </Table>
             {/* daily collection list*/}
             <div style={{ paddingLeft: "28px", display: "flex", alignItems: "center" }}>
