@@ -61,8 +61,7 @@
   min-height: 23px;
   height: 23px;
 }
-
-.vl {
+.vl11 {
   border-left: 1px solid black;
   height: 26px;
   left: 13%;
@@ -70,12 +69,21 @@
   position: absolute;
 
 }
+.vl {
+  border-left: 1px solid black;
+  height: 26px;
+  left: 14%;
+  top: 0px;
+  position: absolute;
+}
+
+
 
 .v2 {
   border-left: 1px solid black;
   height: 26px;
   left: 22%;
-  top: 633px;
+  top: 0px;
   position: absolute;
 }
 
@@ -83,9 +91,15 @@
   border-left: 1px solid black;
   height: 26px;
   left: 35%;
-  top: 633px;
+  top: 0px;
   position: absolute;
 
+}
+.dailyrecordsfinishedadditional {
+  line-height: 10px;
+  min-height: 10px;
+  height: 10px;
+  position: relative;
 }
 
 
@@ -93,7 +107,7 @@
   border-left: 1px solid black;
   height: 26px;
   left: 36%;
-  top: 990px;
+  top: 995px;
   position: absolute;
 
 }
@@ -102,7 +116,23 @@
   border-left: 1px solid black;
   height: 26px;
   left: 43%;
-  top: 990px;
+  top: 995px;
+  position: absolute;
+
+}
+.v9 {
+  border-left: 1px solid black;
+  height: 26px;
+  left: 24%;
+  top: 0px;
+  position: absolute;
+
+}
+.v10 {
+  border-left: 1px solid black;
+  height: 26px;
+  left: 24%;
+  top: 0px;
   position: absolute;
 
 }
@@ -113,7 +143,11 @@
   height: 10px;
   position: relative;
 }
-
+dailyrecordsadditionalfinish {
+  line-height: 10px;
+  min-height: 10px;
+  height: 10px;
+}
 .v6position {
   position: relative;
 }
@@ -198,4 +232,13 @@ Table.totalledgertable {
 }
 .col-sm-custom {
   width: 40% !important; 
+}
+.separator {
+  display: inline-block;
+  width: 1.5px; /* Adjust width as needed */
+  height: 100%; /* Adjust height as needed */
+  background-color: red; /* Change color as needed */
+  margin: 0 5px; /* Space around the line */
+  vertical-align: middle; /* Align with text */
+  line-height:normal;
 }
