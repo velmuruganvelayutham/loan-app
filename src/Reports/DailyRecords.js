@@ -357,7 +357,7 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
                         <td style={{ borderLeft: "0", borderRight: "3px solid black", borderBottom: "3px solid black", borderTop: "3px solid black", fontSize: "10px", padding: "4px" }}>{t('details')}</td>
                         <td style={{ borderLeft: "0", borderRight: "3px solid black", borderBottom: "3px solid black", borderTop: "3px solid black", padding: "4px",fontSize:"12px",fontWeight:"bold" }}>{t('bank')}</td>
                         <td style={{ borderLeft: "0", borderRight: "3px solid black", borderBottom: "3px solid black", borderTop: "3px solid black", padding: "0", margin: "0" }}>
-                            <span style={{ fontSize: "10px", float:"left",fontSize:"11px" }}>{t('count')}</span>
+                            <span style={{ fontSize: "10px", float:"left",fontSize:"11px",paddingLeft:"5px" }}>{t('countshort')}</span>
                             <span className='v9'></span>
                             <span style={{ paddingLeft: "3px", textAlign: "right",fontSize:"11px" }}>{t('rs')}</span>
                         </td>
