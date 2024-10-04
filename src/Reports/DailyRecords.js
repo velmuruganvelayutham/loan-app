@@ -237,8 +237,8 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
                     <col style={{ width: "1.5%", fontSize: "12px" }} />
 
                     <col style={{ width: "5%", fontSize: "12px" }} />
-                    <col style={{ width: "8%", fontSize: "12px" }} />
-                    <col style={{ width: "14%", fontSize: "12px" }} />
+                    <col style={{ width: "9%", fontSize: "12px" }} />
+                    <col style={{ width: "13%", fontSize: "12px" }} />
                     <col style={{ width: "10%", fontSize: "12px" }} />
                     <col style={{ width: "7%", fontSize: "12px" }} />
                     <col style={{ width: "7%", fontSize: "12px" }} />
@@ -398,7 +398,7 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
                     <tr className='dailyrecordsfinshed dailyrecordsadditional' style={{border:"none"}}>
                         <td style={{ border: "none" }}></td>
                         <td style={{ borderLeft: "0", borderRight: "3px solid black", borderBottom: "none", borderTop: "none" }}></td>
-                        <td style={{ borderLeft: "0", borderRight: "2px solid black", borderBottom: "3px solid black", borderTop: "none", fontSize: "13px",fontSize:"12px",fontWeight:"bold",whiteSpace: "nowrap", overflow: "hidden",padding:"0",margin:"0" }}>{linemanname}</td>
+                        <td style={{ borderLeft: "0", borderRight: "2px solid black", borderBottom: "3px solid black", borderTop: "none",fontSize:"11px",fontWeight:"bold",whiteSpace: "nowrap", overflow: "hidden",padding:"0",margin:"0" }}>{linemanname}</td>
                         <td style={{ borderLeft: "0", borderRight: "3px solid black", borderBottom: "3px solid black", borderTop: "none" }}>
                             <span style={{ textAlign: 'center' }}></span><span className='v10'></span><span style={{ marginLeft: "3px" }}></span></td>
                         <td style={{ border: "none" }}></td>
