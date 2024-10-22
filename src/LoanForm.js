@@ -67,6 +67,7 @@ function LoanForm() {
     const [isButtonDisabled, setButtonDisabled] = useState(false);
     const [savedValue, setSavedValue] = useState(null);
     const [changeBook, setChangeBook] = useState(false);
+    
     useEffect(() => {
         //console.log("weekCount", weekCount)
         async function fetchData() {
@@ -189,6 +190,7 @@ function LoanForm() {
             callback([]);
         }
     };
+    
     function customerSelect(value) {
 
 
@@ -208,7 +210,7 @@ function LoanForm() {
             lineRef.current.value = 0;
         }
         if (filtered !== undefined && filtered.length > 0 && savedValue === null) {
-            
+
             setInputMobileno(filtered[0].mobileno);
             fathernameRef.current.value = filtered[0].fathername;
             citynameRef.current.value = filtered[0].cityname;
@@ -278,6 +280,7 @@ function LoanForm() {
         let due = (total / weekscount)
         dueAmt.current.value = due.toFixed(2);
         setGivenAmt(given.toFixed(2));
+
     }
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -516,6 +519,7 @@ function LoanForm() {
                     givenDate.current.value = dateFormat(oldReference[0].startdate);
                     dueDate.current.value = dateFormat(oldReference[0].duedate);
                     endDateRef.current.value = dateFormat(oldReference[0].finisheddate);
+                    setWeeksCount(oldReference[0].weekcount)
                     setUpdateUI(true);
                 })
         }
@@ -548,6 +552,7 @@ function LoanForm() {
         dueAmt.current.value = "";
         paidAmt.current.value = "";
         oldLoanRef.current.value = "";
+        setWeeksCount(getDefaultWeekCount());
         setUpdateUI(false);
         setChangeBook(false);
         setMaxValueShow((prevState) => !prevState)
@@ -773,29 +778,35 @@ function LoanForm() {
                             </Form.Group>
                         </Col>
                     </Row>
+                    
+                        <Row>
+                        
+                            <Col xs={12} md={3} className='col-buttons'></Col>
+                            <Col xs={12} md={9} className='col-buttons'>
+                                <Button variant="primary" data-cypress-loan-app-savenewloan="savenew" size="lg" type="button" className="text-center"
+                                    onClick={savePreviousAccount} disabled={updateUI ? false : true}>
+                                    {t('generatenew')}
+                                </Button>{' '}
+                                <Button variant="primary" data-cypress-loan-app-save="save" size="lg" type="button" className="text-center"
+                                    onClick={handleSubmit} disabled={isButtonDisabled}>
+                                    {updateUI ? t('updatebutton') : t('savebutton')}
+                                </Button>{' '}
+                                <Button variant="primary" size="lg" type="button" className="text-center"
+                                    onClick={deleteLoan} disabled={updateUI ? false : true}>
+                                    {t('deletebutton')}
+                                </Button>{' '}
+                                <Button variant="primary" size="lg" type="button" className="text-center" onClick={clearFields}>
+                                    {t('newbutton')}
+                                </Button>{' '}
+                                <Button variant="primary" size="lg" type="button" className={updateUI && changeBook === true ? 'visible' : 'invisible'} onClick={updateBook}  >
+                                    {t('updatebuttonbook')}
+                                </Button>
+                            </Col>
 
-                    <Row>
-                        <div className="col-md-12 text-center mb-2 " >
-                            <Button variant="primary" data-cypress-loan-app-savenewloan="savenew" size="lg" type="button" className="text-center"
-                                onClick={savePreviousAccount} disabled={updateUI ? false : true}>
-                                {t('generatenew')}
-                            </Button>{' '}
-                            <Button variant="primary" data-cypress-loan-app-save="save" size="lg" type="button" className="text-center"
-                                onClick={handleSubmit} disabled={isButtonDisabled}>
-                                {updateUI ? t('updatebutton') : t('savebutton')}
-                            </Button>{' '}
-                            <Button variant="primary" size="lg" type="button" className="text-center"
-                                onClick={deleteLoan} disabled={updateUI ? false : true}>
-                                {t('deletebutton')}
-                            </Button>{' '}
-                            <Button variant="primary" size="lg" type="button" className="text-center" onClick={clearFields}>
-                                {t('newbutton')}
-                            </Button>{' '}
-                            <Button variant="primary" size="lg" type="button" className={updateUI && changeBook === true ? 'visible' : 'invisible'} onClick={updateBook}  >
-                                {t('updatebuttonbook')}
-                            </Button>
-                        </div>
-                    </Row>
+
+
+                        </Row>
+                    
                     <Row>
                         {isLoading ? <PlaceHolder /> : null}
                         {errorMessage && <div className="error">{errorMessage}</div>}
