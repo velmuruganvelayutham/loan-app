@@ -242,3 +242,14 @@ Table.totalledgertable {
   vertical-align: middle; /* Align with text */
   line-height:normal;
 }
+.col-advance {
+  background-color: #f0f8ff;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.col-buttons {
+  background-color: #d1ecf1;
+  padding: 15px;
+  border-radius: 5px;
+}
