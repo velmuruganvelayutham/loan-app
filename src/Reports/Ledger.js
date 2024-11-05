@@ -12,7 +12,7 @@ function Ledger({ loanno, ledger, company, date }) {
     var serialno = 0;
     var records = ledger
 
-    function TablesRows(no, date, income, weekno,type) {
+    function TablesRows(no, date, income, weekno, type) {
 
         return (
             <tr className='chartheight'>
@@ -22,7 +22,7 @@ function Ledger({ loanno, ledger, company, date }) {
                 <td style={{ fontSize: "11px", padding: "0", margin: "0" }}>{Number(no) === 1 && (weekno !== "") ? income : ""}</td>
                 <td style={{ fontSize: "11px", padding: "0", margin: "0" }}>{(Number(no) === 1 && (weekno !== "")) || date === "" ? "" : totalamount}</td>
                 <td style={{ fontSize: "11px", padding: "0", margin: "0" }}>{weekno}</td>
-                {type==="second"?<td></td>:null}
+                {type === "second" ? <td></td> : null}
             </tr>
         )
     }
@@ -70,7 +70,7 @@ function Ledger({ loanno, ledger, company, date }) {
         }
 
     }
-
+    const tableData = Array.from({ length: arr1.length + arr2.length }, (_, i) => ledger[i] || {});
     return (
 
 
@@ -212,7 +212,7 @@ function Ledger({ loanno, ledger, company, date }) {
                 }} />
             </Row>
 
-            <Row style={{paddingLeft:"8px"}} >
+            <Row style={{ paddingLeft: "8px" }} >
                 <Col className='col-sm-6 col-md-6 p-1'>
                     <Table className="table text-center table-bordered border-dark" >
                         <thead>
@@ -236,35 +236,17 @@ function Ledger({ loanno, ledger, company, date }) {
                         <tbody>
                             {
 
-                                ledger && ledger.length > 0
-                                    ?
-                                    (ledger.slice(0, arr1.length).map((ledgerr) => {
-                                        serialno = serialno + 1;
-                                        totalamount = totalamount - parseInt(ledgerr["joined"].collectedamount);
-                                        //totalamount=ledgerr.collectedamount;
-
-                                        return (
-
-                                            <Fragment>
-                                                {TablesRows(serialno, ledgerr.receiptdate, ledgerr["joined"].collectedamount, ledgerr["joined"].weekno)}
-                                                {Number(serialno) === 1 ? TablesRows(serialno, first.startdate, "", "") : ""}
-                                            </Fragment>
-                                        )
-                                    })
-                                    )
-
-                                    :
-                                    t('nodatas')
-                            }
-                            {
-
-
-                                arr1.slice(ledger.length, (arr1.length)).map((i) => {
-                                    serialno = serialno + 1;
+                                tableData.slice(0, arr1.length).map((item, index) => {
+                                    serialno += 1;
+                                    totalamount -= item.joined?.collectedamount || 0;
                                     return (
-                                        TablesRows(serialno, "", "", "")
-                                    )
+                                        <Fragment key={index}>
+                                            {TablesRows(serialno, item.receiptdate || "", item.joined?.collectedamount || "", item.joined?.weekno || "")}
+                                            {Number(serialno) === 1 ? TablesRows(serialno, first.startdate, "", "") : ""}
+                                        </Fragment>
+                                    );
                                 })
+
                             }
                         </tbody>
                     </Table>
@@ -273,52 +255,34 @@ function Ledger({ loanno, ledger, company, date }) {
                     <Table className="table  text-center table-bordered border-dark"   >
                         <thead>
                             <tr >
-                                
-                                <th style={{width:"20%"}}>
+
+                                <th style={{ width: "20%" }}>
                                     {t('date')}
                                 </th>
-                                <th style={{width:"10%"}}>
+                                <th style={{ width: "10%" }}>
                                     {t('dueno')}
                                 </th>
-                                <th style={{width:"15%"}}>
+                                <th style={{ width: "15%" }}>
                                     {t('credit')}
                                 </th>
-                                <th style={{width:"15%"}}>
+                                <th style={{ width: "15%" }}>
                                     {t('balance')}
                                 </th>
-                                <th style={{width:"15%"}}>{t('loanamount')}</th>
-                                <th style={{width:"5%"}}>{t('noshorts')}</th>
+                                <th style={{ width: "15%" }}>{t('loanamount')}</th>
+                                <th style={{ width: "5%" }}>{t('noshorts')}</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {
-                                ledger.length > (arr1.length) ?
-                                    ledger.slice(arr1.length, ledger.length).map((ledg) => {
-                                        serialno = serialno + 1;
-                                        totalamount = totalamount - parseInt(ledg["joined"].collectedamount);
-                                        return (
-                                            TablesRows(serialno, ledg.receiptdate, ledg["joined"].collectedamount, ledg["joined"].weekno)
-                                        )
-                                    })
-                                    :
-                                    arr2.slice(0, (arr1.length + 1)).map((i) => {
-                                        serialno = serialno + 1;
-                                        return (
-                                            TablesRows(serialno, "", "", "")
-                                        )
-                                    })
-
-                            }
-                            {(ledger.length > arr1.length) ?
-                                //arr2.slice(ledger.length - arr2.length - 1, (arr1.length+1)-(ledger.length - arr2.length)).map((i) => {
-                                arr2.slice(ledger.length - (arr2.length - 1), arr2.length).map((i) => {
-                                    serialno = serialno + 1;
-                                    return (
-                                        TablesRows(serialno, "", "", "","second")
-                                    )
-                                })
-                                : ""}
+                            {tableData.slice(arr1.length, (arr1.length+arr2.length)).map((item, index) => {
+                                serialno += 1;
+                                totalamount -= item.joined?.collectedamount || 0;
+                                return (
+                                    <Fragment key={index}>
+                                        {TablesRows(serialno, item.receiptdate || "", item.joined?.collectedamount || "", item.joined?.weekno || "", "second")}
+                                    </Fragment>
+                                );
+                            })}
                         </tbody>
                     </Table>
                 </Col>
