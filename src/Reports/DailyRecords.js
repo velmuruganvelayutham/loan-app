@@ -765,13 +765,13 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
                                 t('tabledata')
                         }
 
-                        <tr className='dailyrecordsfinshed'>
+                        <tr className='dailyrecordsfinshed '>
                             <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
                             <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black", fontSize: "10px" }}>{t('details')}</td>
                             <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
                             <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
-                            <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}><span className='v4'></span></td>
-                            <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}><span className='v5'></span></td>
+                            <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
+                            <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
                             <td style={{ borderLeft: "0", borderRight: "1px solid black", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
                             <td style={{ borderLeft: "0", borderRight: "1px solid black", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
                             <td style={{ borderLeft: "0", borderRight: "2px solid black", borderColor: "black !important", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
