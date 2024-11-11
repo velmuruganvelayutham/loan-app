@@ -107,7 +107,7 @@
   border-left: 1px solid black;
   height: 26px;
   left: 36%;
-  top: 995px;
+  top: 0px;
   position: absolute;
 
 }
@@ -116,7 +116,7 @@
   border-left: 1px solid black;
   height: 26px;
   left: 43%;
-  top: 995px;
+  top: 0px;
   position: absolute;
 
 }
@@ -136,7 +136,23 @@
   position: absolute;
 
 }
+.v11 {
+  border-left: 1px solid red;
+  height: 26px;
+  left: 36%;
+  top: 0px;
+  position: absolute;
 
+}
+
+.v12 {
+  border-left: 1px solid red;
+  height: 26px;
+  left: 43%;
+  top: 0px;
+  position: absolute;
+
+}
 .dailyrecordsadditional {
   line-height: 10px;
   min-height: 10px;
