@@ -12,10 +12,10 @@ function Ledger({ loanno, ledger, company, date }) {
     var serialno = 0;
     var records = ledger
 
-    function TablesRows(no, date, income, weekno, type) {
+    function TablesRows(no, date, income, weekno, type,receipttype) {
 
         return (
-            <tr className='chartheight'>
+            <tr className={receipttype>0?'chartheight table-danger':'chartheight'}>
                 <td style={{ fontSize: "11px", padding: "0", margin: "0" }}>{date !== "" ? dateFormatdd(date) : ""}</td>
                 <td style={{ fontSize: "11px", padding: "0", margin: "0" }}>{Number(no) === 1 && (weekno === "") ? income : no}</td>
                 <td style={{ fontSize: "11px", padding: "0", margin: "0" }}>{Number(no) === 1 && (weekno === "") ? "" : income}</td>
@@ -198,11 +198,16 @@ function Ledger({ loanno, ledger, company, date }) {
                                 <Form.Label>{t('due')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                                 <Form.Label>&nbsp;{ledger.length > 0 ? first.dueamount : ""}</Form.Label>
                             </Form.Group>
-
-                        </Col>
-                    </Row>
-                </Form>
+                            {ledger.length > 0?
+                            (< Form.Group border="primary" >
+                            <Form.Label>{first.radvancetype===2?t('latepending'):t('showAdvance')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                            <Form.Label>&nbsp;{first.advanceless}</Form.Label>
+                        </Form.Group>):""
+                            }
+                    </Col>
             </Row>
+        </Form>
+            </Row >
             <Row>
                 <hr className='m-3' style={{
                     color: '#000000',
@@ -241,7 +246,7 @@ function Ledger({ loanno, ledger, company, date }) {
                                     totalamount -= item.joined?.collectedamount || 0;
                                     return (
                                         <Fragment key={index}>
-                                            {TablesRows(serialno, item.receiptdate || "", item.joined?.collectedamount || "", item.joined?.weekno || "")}
+                                            {TablesRows(serialno, item.receiptdate || "", item.joined?.collectedamount || "", item.joined?.weekno || "","",item.receipttype)}
                                             {Number(serialno) === 1 ? TablesRows(serialno, first.startdate, "", "") : ""}
                                         </Fragment>
                                     );
@@ -277,9 +282,10 @@ function Ledger({ loanno, ledger, company, date }) {
                             {tableData.slice(arr1.length, (arr1.length+arr2.length)).map((item, index) => {
                                 serialno += 1;
                                 totalamount -= item.joined?.collectedamount || 0;
+                                
                                 return (
                                     <Fragment key={index}>
-                                        {TablesRows(serialno, item.receiptdate || "", item.joined?.collectedamount || "", item.joined?.weekno || "", "second")}
+                                        {TablesRows(serialno, item.receiptdate || "", item.joined?.collectedamount || "", item.joined?.weekno || "","second",item.receipttype)}
                                     </Fragment>
                                 );
                             })}
@@ -288,7 +294,7 @@ function Ledger({ loanno, ledger, company, date }) {
                 </Col>
 
             </Row>
-        </Container>
+        </Container >
 
 
 

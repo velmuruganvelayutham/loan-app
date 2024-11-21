@@ -179,5 +179,11 @@
   "notrunningweekcount":"W.Count",
   "linebill":"L.Bill",
   "totalaccount":"T.Acc",
-  "totalcollection":"T.Col"
+  "totalcollection":"T.Col",
+  "hideAdvance":"Advance",
+  "showAdvance":"Advance",
+  "advanceless":"Advance Less",
+  "latepending":"Late Pending",
+  "none":"None",
+  "balanceamount":"Balance"
 }
