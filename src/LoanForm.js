@@ -55,6 +55,7 @@ function LoanForm() {
     const [myForm, setMyForm] = useState(initialFormState);
     const linemanoptionRef = useRef(null);
     const weekRef = useRef(null);
+    const [advanceweekno, setAdvanceweekno] = useState("");
     const lineRef = useRef(null);
     const bookRef = useRef(null);
     const documentRef = useRef(null);
@@ -288,11 +289,11 @@ function LoanForm() {
             let balance = given + document + intrested - advanceLess;
             totalAmt.current.value = total.toFixed(2);
             setGivenAmt(given.toFixed(2));
-           // setBalanceAmount(balance.toFixed(2));
+            // setBalanceAmount(balance.toFixed(2));
         }
         else {
             setGivenAmt(given.toFixed(2));
-           // setBalanceAmount(0);
+            // setBalanceAmount(0);
         }
 
 
@@ -426,7 +427,8 @@ function LoanForm() {
                 weekno: weekRef.current.value, bookno: bookRef.current.value, lineno: lineRef.current.value, document: documentRef.current.value, cheque: chequeRef.current.value, bond: bondRef.current.value,
                 weekcount: weekscount, startdate: new Date(startDate), givendate: new Date(givenDate.current.value), duedate: new Date(dueDate.current.value), finisheddate: new Date(endDateRef.current.value),
                 givenamount: Number(givenAmt), documentamount: Number(documentAmt.current.value), interestamount: Number(interestAmt.current.value),
-                totalamount: Number(totalAmt.current.value), dueamount: Number(dueAmt.current.value), paidamount: Number(paidAmt.current.value), advancetype: Number(receiptType), advanceless: Number(advanceLess)
+                totalamount: Number(totalAmt.current.value), dueamount: Number(dueAmt.current.value), paidamount: Number(paidAmt.current.value), advancetype: Number(receiptType), advanceless: Number(advanceLess),
+                advanceweekno:Number(advanceweekno)
             }).then((res) => {
                 setButtonDisabled(false);
                 console.log(res);
@@ -555,7 +557,7 @@ function LoanForm() {
                     setGivenAmt(oldReference[0].givenamount);
                     documentAmt.current.value = oldReference[0].documentamount;
                     interestAmt.current.value = oldReference[0].interestamount;
-                    setreceiptType(oldReference[0].advancetype?oldReference[0].advancetype:0);
+                    setreceiptType(oldReference[0].advancetype ? oldReference[0].advancetype : 0);
                     setAdvanceLess(oldReference[0].advanceless);
                     totalAmt.current.value = oldReference[0].totalamount;
                     dueAmt.current.value = oldReference[0].dueamount;
@@ -565,7 +567,11 @@ function LoanForm() {
                     dueDate.current.value = dateFormat(oldReference[0].duedate);
                     endDateRef.current.value = dateFormat(oldReference[0].finisheddate);
                     setWeeksCount(oldReference[0].weekcount);
-                    setBalanceAmount(oldReference[0].totalamount-oldReference[0].advanceless);
+                    setBalanceAmount(oldReference[0].totalamount - oldReference[0].advanceless);
+                    //alert(oldReference[0].advanceweekno);
+                    setAdvanceweekno(oldReference[0]?.advanceweekno || "");
+                    
+                    
                     setUpdateUI(true);
                 })
         }
@@ -598,6 +604,7 @@ function LoanForm() {
         dueAmt.current.value = "";
         paidAmt.current.value = "";
         oldLoanRef.current.value = "";
+        setAdvanceweekno("");
         setWeeksCount(getDefaultWeekCount());
         setUpdateUI(false);
         setChangeBook(false);
@@ -709,7 +716,7 @@ function LoanForm() {
                                 <Form.Control data-cypress-loan-app-work="work" ref={workRef} type="text" disabled />
                             </Form.Group>
                         </Col>
-                        <Col xs={12} md={3} className="rounded bg-white">
+                        <Col xs={12} md={receiptType > 0 ? 2 : 3} className="rounded bg-white">
                             <Form.Group className="mb-3" name="lineno" border="primary" >
                                 <Form.Label>{t('line')}</Form.Label>{/*line no*/}
                                 <Form.Select aria-label="Default select example" ref={lineRef} data-cypress-loan-app-lineno="lineno" required >
@@ -721,11 +728,11 @@ function LoanForm() {
                                 </Form.Select>
                             </Form.Group>
                         </Col>
-                        <Col>
+                        <Col xs={12} md={receiptType > 0 ? 2 : 3} className="rounded bg-white">
                             <Form.Group className="mb-3" name="cityname" border="primary" >
                                 <Form.Label>{t('showAdvance')}</Form.Label>
                                 <Form.Select aria-label="Default select example"
-                                    defaultValue={0} onChange={(e) => setreceiptType(e.target.value)} onClick={RearrangeAll} value={receiptType} disabled={updateUI?false:true}>
+                                    defaultValue={0} onChange={(e) => setreceiptType(e.target.value)} onClick={RearrangeAll} value={receiptType} disabled={updateUI ? false : true}>
                                     <option value={0} >{t('none')}</option>
                                     <option value={1}>{t('advanceless')}</option>
                                     <option value={2}>{t('latepending')}</option>
@@ -734,15 +741,24 @@ function LoanForm() {
                         </Col>
 
                         {(receiptType > 0) && (
-                            <Col xs={12} md={2} >
-                                <Form.Group className="mb-3" name="advanceless"  >
-                                    <Form.Label>{t('advanceless')}</Form.Label>{/*given Money*/}
-                                    <Form.Control className='text-end' type="number" data-cypress-loan-app-givenamount="givenamount"
-                                        value={advanceLess} required
-                                        onChange={(e) => setAdvanceLess(Number(e.target.value))}
-                                        onBlur={calBalance} />
-                                </Form.Group>
-                            </Col>)}
+                            <>
+                                <Col xs={12} md={2} >
+                                    <Form.Group className="mb-3" name="advanceless"  >
+                                        <Form.Label>{t('advanceless')}</Form.Label>{/*given Money*/}
+                                        <Form.Control className='text-end' type="number" data-cypress-loan-app-givenamount="givenamount"
+                                            value={advanceLess} required
+                                            onChange={(e) => setAdvanceLess(Number(e.target.value))}
+                                            onBlur={calBalance} />
+                                    </Form.Group>
+                                </Col>
+                                <Col xs={12} md={2} >
+                                    <Form.Group className="mb-3" name="weekno" border="primary" >
+                                        <Form.Label>{t('weekno')}</Form.Label>{/*week No*/}
+                                        <Form.Control type="number" placeholder={t('weeknoplaceholder')} value={advanceweekno}
+        onChange={(e) => setAdvanceweekno(e.target.value)} />
+                                    </Form.Group>
+                                </Col>
+                            </>)}
 
                     </Row>
 
