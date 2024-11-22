@@ -428,7 +428,7 @@ function LoanForm() {
                 weekcount: weekscount, startdate: new Date(startDate), givendate: new Date(givenDate.current.value), duedate: new Date(dueDate.current.value), finisheddate: new Date(endDateRef.current.value),
                 givenamount: Number(givenAmt), documentamount: Number(documentAmt.current.value), interestamount: Number(interestAmt.current.value),
                 totalamount: Number(totalAmt.current.value), dueamount: Number(dueAmt.current.value), paidamount: Number(paidAmt.current.value), advancetype: Number(receiptType), advanceless: Number(advanceLess),
-                advanceweekno:Number(advanceweekno)
+                advanceweekno:Number(advanceweekno),advancereceiptdate:new Date(startOfWeek())
             }).then((res) => {
                 setButtonDisabled(false);
                 console.log(res);
