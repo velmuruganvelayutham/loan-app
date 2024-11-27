@@ -101,8 +101,7 @@ function LedgerForm() {
     const processList = async (loannumber = null, nextloanactive = 0) => {
 
         setIsLoading(true);
-        setIsLoadingLedger(true)
-        //alert("muru");
+        setIsLoadingLedger(true);
         var passingreportname = "ledger";
         const token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;

@@ -63,10 +63,101 @@ function AddReceipt1() {
     }
     fetchData();
   }, [refresh, getToken, t]);
-  useEffect(() => {
+  const addTableRows = () => {
+    setIsRestore(false);
+    const rowsInput = {
+      serialno: rowsData.length + 1,
+      loanno: '',
+      customer_id: '',
+      customername: '',
+      loanamount: '',
+      dueamount: '',
+      weekno: '',
+      amount: ''
+    }
+    //alert(rowsData);
+    //setRowsData([...rowsData, rowsInput])
+    //setRowsData(prevRows => [...prevRows, rowsInput]);
+    setRowsData((prevRows) => {
+      const updatedRows = [...prevRows, rowsInput]; // Preserve previous rows and add the new row
+      // Set focus on the last row's loanno input
+      setTimeout(() => {
+        loannoRefs.current[updatedRows.length - 1]?.focus(); // Focus the last row added
+      }, 0);
+      return updatedRows; // Return the updated rows to set the new state
+    });
+
+    if (rowsData.length > 0) {
+      if (lineRef.current.value != "") {
+        setSelectDisabled(true)
+      }
+    }
+    else {
+      setSelectDisabled(false)
+    }
     calTotal();
-  }, [rowsData]);
+  }
+  
+  
   useEffect(() => {
+    // Add the event listener when the component mounts
+    const handleKeydown = (event) => {
+      // Ensure Enter key and input focus
+      if (event.key === "Enter" && event.target.nodeName === "INPUT") {
+        const form = event.target.form;
+        const index = Array.prototype.indexOf.call(form, event.target);
+        const isLastRow = index === form.elements.length - 5;
+        if (event.target.name === "loanno") {
+          form.elements[index + 5]?.focus();
+        }
+        else {
+          form.elements[index + 1]?.focus();
+        }
+        if (event.target.name === "amount") {
+          form.elements[index + 1]?.focus();
+          if (isLastRow) {
+            const rowsInput = {
+              serialno: rowsData.length + 1,
+              loanno: '',
+              customer_id: '',
+              customername: '',
+              loanamount: '',
+              dueamount: '',
+              weekno: '',
+              amount: ''
+            }
+            //alert(rowsData);
+            //setRowsData([...rowsData, rowsInput])
+            //setRowsData(prevRows => [...prevRows, rowsInput]);
+            setRowsData((prevRows) => {
+              const updatedRows = [...prevRows, rowsInput]; // Preserve previous rows and add the new row
+              // Set focus on the last row's loanno input
+              setTimeout(() => {
+                loannoRefs.current[updatedRows.length - 1]?.focus(); // Focus the last row added
+              }, 0);
+              return updatedRows; // Return the updated rows to set the new state
+            });
+          }
+          else {
+            form.elements[index + 9]?.focus();
+          }
+  
+        }
+  
+        event.preventDefault(); // Prevent the default form submission behavior
+  
+      }
+    };
+
+    // Adding the event listener
+    document.addEventListener("keydown", handleKeydown);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      document.removeEventListener("keydown", handleKeydown);
+    };
+  }, [rowsData]);
+  /*useEffect(() => {
     const handleKeydown = (event) => {
       // Ensure Enter key and input focus
       if (event.key === "Enter" && event.target.nodeName === "INPUT") {
@@ -102,39 +193,9 @@ function AddReceipt1() {
     return () => {
       document.removeEventListener("keydown", handleKeydown);
     };
-  }, []);
-  const addTableRows = () => {
-    setIsRestore(false);
-    const rowsInput = {
-      serialno: rowsData.length + 1,
-      loanno: '',
-      customer_id: '',
-      customername: '',
-      loanamount: '',
-      dueamount: '',
-      weekno: '',
-      amount: ''
-    }
-    //alert(rowsData);
-    //setRowsData([...rowsData, rowsInput])
-    setRowsData((prevRows) => {
-      const updatedRows = [...prevRows, rowsInput]; // Preserve previous rows and add the new row
-      // Set focus on the last row's loanno input
-      setTimeout(() => {
-        loannoRefs.current[updatedRows.length - 1]?.focus(); // Focus the last row added
-      }, 0);
-      return updatedRows; // Return the updated rows to set the new state
-    });
+  }, []);*/
 
-    if (rowsData.length > 0) {
-      if (lineRef.current.value != "") {
-        setSelectDisabled(true)
-      }
-    }
-    else {
-      setSelectDisabled(false)
-    }
-  }
+  
   const calTotal = () => {
     let totalValue = rowsData.reduce((previousValue, currentValue) => {
       return parseFloat(previousValue + Number(currentValue.amount))
@@ -168,7 +229,7 @@ function AddReceipt1() {
         rowsInput[index][name] = value;
         setRowsData(rowsInput);
       }
-      //calTotal();
+      calTotal();
     }
     else {
       rowsInput[index][name] = value;
