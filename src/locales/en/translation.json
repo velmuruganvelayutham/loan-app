@@ -185,5 +185,8 @@
   "advanceless":"Advance Less",
   "latepending":"Late Pending",
   "none":"None",
-  "balanceamount":"Balance"
+  "balanceamount":"Balance",
+  "nextloannotfound":"Next Loan Number Not Found",
+  "errormessagefetchloanno":"Error fetching next loan",
+  "loadingledger":"Loading ledger details..."
 }

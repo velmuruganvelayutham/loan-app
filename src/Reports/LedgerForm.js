@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import ReactToPrint from 'react-to-print';
 import PlaceHolder from "../components/spinner/placeholder";
 import Ledger from '../Reports/Ledger';
-import Chart from "../Reports/Chart";
+import Chart from "./Charrt";
 import AsyncSelect from 'react-select/async';
 import {
     useAuth
@@ -17,7 +17,7 @@ import { startOfWeek } from "../FunctionsGlobal/StartDateFn";
 var loannumberprocess = "";
 function LedgerForm() {
     const { getToken } = useAuth();
-    
+
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [loanDetails, setLoanDetails] = useState([]);
@@ -27,6 +27,7 @@ function LedgerForm() {
     const [company, setCompany] = useState([]);
     const componentRef = useRef();
     const reportType = useRef(0);
+    const [isLoadingLedger, setIsLoadingLedger] = useState(false);
     const [selectedOption, setSelectedOption] = useState(null);
     useEffect(() => {
         async function fetchData() {
@@ -44,8 +45,8 @@ function LedgerForm() {
             })
         }
         fetchData();
-    }, [getToken,t])
-    
+    }, [getToken, t])
+
 
     useEffect(() => {
 
@@ -66,17 +67,17 @@ function LedgerForm() {
         }
         fetchData();
 
-    }, [getToken,t])
+    }, [getToken, t])
     const handlePrint = () => {
         window.print()
     }
     const options = loannumbers.map((loan, i) => {
         return {
-          label: loan.loannumber + '-' + loan.customer,
-          value: loan.loannumber,
-          key: i
+            label: loan.loannumber + '-' + loan.customer,
+            value: loan.loannumber,
+            key: i
         }
-      })
+    })
     const loadOptions = async (inputValue, callback) => {
         try {
             // Make an API call to fetch options based on the inputValue
@@ -97,14 +98,18 @@ function LedgerForm() {
             callback([]);
         }
     };
-    const processList = async () => {
+    const processList = async (loannumber = null, nextloanactive = 0) => {
+
         setIsLoading(true);
-        
+        setIsLoadingLedger(true)
+        //alert("muru");
         var passingreportname = "ledger";
         const token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        loannumberprocess = loanno;
-       // alert(reportType);
+
+        loannumberprocess = Number(nextloanactive) === 1 ? loannumber : loanno;
+        //alert(loannumberprocess);
+        // alert(reportType);
         if ((Number(reportType.current.value)) === 1) {
             passingreportname = "chart"
         }
@@ -113,9 +118,9 @@ function LedgerForm() {
         }
 
         return (
-            axios.get(`${baseURL}/${passingreportname}/get`, { params: { loanno: loanno,todate:new Date(startOfWeek()) } }).then((res) => {
+            axios.get(`${baseURL}/${passingreportname}/get`, { params: { loanno: Number(nextloanactive) === 1 ? loannumber : loanno, todate: new Date(startOfWeek()) } }).then((res) => {
                 setLoanDetails(res.data);
-                console.log(res.data);
+                //console.log(res.data);
                 setIsLoading(false);
                 setErrorMessage("");
             })
@@ -123,14 +128,18 @@ function LedgerForm() {
                     console.log("error=", error);
                     setErrorMessage(t('errormessageledger'));
                     setIsLoading(false);
+                }).finally(()=> {
+                    setIsLoadingLedger(false)
                 })
         )
     }
-    
     const renderLedgerList = (
         <Row ref={componentRef}>
-            <Ledger loanno={loannumberprocess} ledger={loanDetails}
-                company={company.length > 0 ? company[0].companyname : ""} date={new Date()} />
+            {isLoadingLedger ? (
+                <div className="skeleton-loader">{t('loadingledger')}</div>
+            ) : (<Ledger loanno={loannumberprocess} ledger={loanDetails}
+                company={company.length > 0 ? company[0].companyname : ""} date={new Date()} />)
+            }
         </Row>
     )
     const renderChart = (
@@ -142,7 +151,42 @@ function LedgerForm() {
     const handleChange = (selectedOption) => {
         setLoanno(selectedOption.value);
         setSelectedOption(selectedOption);
-      };
+    };
+
+    const handleNextPrev = async (val=0) => {
+        setIsLoading(true);
+        const currentLoanNo = loanno; // Get the current loan number
+       
+        const nextLoanNo = (Number(val)===1)?currentLoanNo + 1:currentLoanNo - 1; // Increment the loan number
+
+        // Fetch the next loan
+        const token = await getToken();
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        try {
+            const response = await axios.get(`${baseURL}/loancreate/get?q=${nextLoanNo}`);
+            const nextLoan = response.data[0]; // Assuming the API returns an array
+
+            if (nextLoan) {
+                const formattedLoan = {
+                    value: nextLoan.loannumber,
+                    label: `${nextLoan.loannumber} - ${nextLoan.customer}`,
+                };
+                setLoanno(nextLoanNo);
+                setSelectedOption(formattedLoan);
+
+                processList(nextLoanNo, 1);
+            } else {
+                alert(t('nextloannotfound'));
+            }
+            setIsLoading(false);
+            setErrorMessage("");
+        } catch (error) {
+            console.log("error=", error);
+            setErrorMessage(t('errormessagefetchloanno'));
+            setIsLoading(false);
+        }
+    };
+    
     return (
         <Container>
             <Row className="justify-content-md-center mt-5 ">
@@ -176,9 +220,17 @@ function LedgerForm() {
                         </Col>
                     </Row>
                     <Row className="rounded bg-white">
-                        <Col className="col-md-6 mb-4 text-center " >
+                        <Col className="col-md-1"></Col>
+                        <Col className="col-md-5" >
+                            <Button variant="primary" size="lg" type="button" className="text-center" onClick={handleNextPrev}>
+                                {t('pageprev')}
+                            </Button>{'    '}
                             <Button variant="primary" size="lg" type="button" className="text-center" onClick={processList}>
                                 {t('processbuttonlabel')}
+                            </Button>{'    '}
+
+                            <Button variant="primary" size="lg" type="button" className="text-center" onClick={() => handleNextPrev(1)}>
+                                {t('pagenext')}
                             </Button>
                         </Col>
                         <Col className="col-md-6 mb-4 " >

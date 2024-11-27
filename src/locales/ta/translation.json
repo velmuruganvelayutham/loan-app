@@ -222,5 +222,8 @@
   "advanceless":"அட்வான்ஸ் லெஸ்",
   "latepending":"வாரா கடன்",
   "none":"எதுவும் இல்லை",
-  "balanceamount":"மீதம்"
+  "balanceamount":"மீதம்",
+  "nextloannotfound":"அக்கவுண்ட் எண் இல்லை",
+  "errormessagefetchloanno":"அக்கவுண்ட் எண்ணை எடுக்க முடியவில்லை",
+  "loadingledger":"லெட்ஜர் விவரங்களை ஏற்றுகிறது..."
 }
