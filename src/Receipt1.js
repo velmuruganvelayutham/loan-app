@@ -27,7 +27,7 @@ function AddReceipt1() {
   const lineRef = useRef(null);
   const [linenames, setLineNames] = useState([]);
   const [SelectDisabled, setSelectDisabled] = useState(false);
-  const loannoRef = useRef(null);
+  const loannoRefs = useRef([]);
   useEffect(() => {
     async function fetchData() {
       setIsLoading(true);
@@ -63,23 +63,6 @@ function AddReceipt1() {
     }
     fetchData();
   }, [refresh, getToken, t]);
-
-  useEffect(() => {
-    document.addEventListener("keydown", function (event) {
-
-      if (event.key === "Enter" && event.target.nodeName === "INPUT") {
-        var form = event.target.form;
-        var index = Array.prototype.indexOf.call(form, event.target);
-        if (event.target.name === "loanno") {
-          form.elements[index + 5].focus();
-        }
-        else {
-          form.elements[index + 1].focus();
-        }
-        event.preventDefault();
-      }
-    });
-  }, []);
   const addTableRows = () => {
     setIsRestore(false);
     const rowsInput = {
@@ -92,7 +75,18 @@ function AddReceipt1() {
       weekno: '',
       amount: ''
     }
-    setRowsData([...rowsData, rowsInput])
+    //alert(rowsData);
+    //setRowsData([...rowsData, rowsInput])
+    //setRowsData(prevRows => [...prevRows, rowsInput]);
+    setRowsData((prevRows) => {
+      const updatedRows = [...prevRows, rowsInput]; // Preserve previous rows and add the new row
+      // Set focus on the last row's loanno input
+      setTimeout(() => {
+        loannoRefs.current[updatedRows.length - 1]?.focus(); // Focus the last row added
+      }, 0);
+      return updatedRows; // Return the updated rows to set the new state
+    });
+
     if (rowsData.length > 0) {
       if (lineRef.current.value !== "") {
         setSelectDisabled(true)
@@ -102,8 +96,104 @@ function AddReceipt1() {
       setSelectDisabled(false)
     }
     calTotal();
-    //setDisabledColumn(true);
   }
+  
+  
+  useEffect(() => {
+    // Add the event listener when the component mounts
+    const handleKeydown = (event) => {
+      // Ensure Enter key and input focus
+      if (event.key === "Enter" && event.target.nodeName === "INPUT") {
+        const form = event.target.form;
+        const index = Array.prototype.indexOf.call(form, event.target);
+        const isLastRow = index === form.elements.length - 5;
+        if (event.target.name === "loanno") {
+          form.elements[index + 5]?.focus();
+        }
+        else {
+          form.elements[index + 1]?.focus();
+        }
+        if (event.target.name === "amount") {
+          form.elements[index + 1]?.focus();
+          if (isLastRow) {
+            const rowsInput = {
+              serialno: rowsData.length + 1,
+              loanno: '',
+              customer_id: '',
+              customername: '',
+              loanamount: '',
+              dueamount: '',
+              weekno: '',
+              amount: ''
+            }
+            
+            setRowsData((prevRows) => {
+              const updatedRows = [...prevRows, rowsInput]; // Preserve previous rows and add the new row
+              // Set focus on the last row's loanno input
+              setTimeout(() => {
+                loannoRefs.current[updatedRows.length - 1]?.focus(); // Focus the last row added
+              }, 0);
+              return updatedRows; // Return the updated rows to set the new state
+            });
+          }
+          else {
+            form.elements[index + 9]?.focus();
+          }
+  
+        }
+  
+        event.preventDefault(); // Prevent the default form submission behavior
+  
+      }
+    };
+
+    // Adding the event listener
+    document.addEventListener("keydown", handleKeydown);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      document.removeEventListener("keydown", handleKeydown);
+    };
+  }, );
+  /*useEffect(() => {
+    const handleKeydown = (event) => {
+      // Ensure Enter key and input focus
+      if (event.key === "Enter" && event.target.nodeName === "INPUT") {
+        const form = event.target.form;
+        const index = Array.prototype.indexOf.call(form, event.target);
+        const isLastRow = index === form.elements.length - 5;
+        if (event.target.name === "loanno") {
+          form.elements[index + 5]?.focus();
+        }
+        else {
+          form.elements[index + 1]?.focus();
+        }
+        if (event.target.name === "amount") {
+          form.elements[index + 1]?.focus();
+          if (isLastRow) {
+            addTableRows();
+          }
+          else {
+            form.elements[index + 9]?.focus();
+          }
+
+        }
+
+        event.preventDefault(); // Prevent the default form submission behavior
+
+      }
+    };
+
+    // Add the event listener on mount
+    document.addEventListener("keydown", handleKeydown);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      document.removeEventListener("keydown", handleKeydown);
+    };
+  }, []);*/
+
+  
   const calTotal = () => {
     let totalValue = rowsData.reduce((previousValue, currentValue) => {
       return parseFloat(previousValue + Number(currentValue.amount))
@@ -129,7 +219,7 @@ function AddReceipt1() {
     const { name, value } = evnt.target;
     const rowsInput = [...rowsData];
     if (evnt.target.name === "amount") {
-      if (value > rowsInput[index]['loanamount']) {
+      if (parseFloat(value) > parseFloat(rowsInput[index]['loanamount'])) {
         alert(t('greateramountthanloan'));
         rowsInput[index][name] = rowsInput[index]['amount'];
       }
@@ -167,9 +257,9 @@ function AddReceipt1() {
           rowsData.find((checkloan, i) => {
             if (loanno === checkloan.loanno && i !== index) {
               isexist = 1;
-              return true;
+              return true
             }
-            return false;
+            return false
           })
 
           if (!isexist) {
@@ -221,7 +311,8 @@ function AddReceipt1() {
     )
   }
   const saveReceipt = async () => {
-    let items = rowsData
+    setButtonDisabled(true);
+        let items = rowsData
       .filter((item) => item.amount > 0) // Filter rows where the amount is greater than 0
       .map((item) => ({
         receiptnumber: (receiptRef.current.value).toString(),
@@ -231,8 +322,8 @@ function AddReceipt1() {
         weekno: item.weekno,
         collectedamount: item.amount
       }));
+      
     
-    setButtonDisabled(true);
     const token = await getToken();
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     axios.post(`${baseURL}/receipt1/save/details`, {
@@ -241,19 +332,23 @@ function AddReceipt1() {
       receiptcode: (Number(reference[0].receiptcode) + 1),
       receiptdate: new Date(startdateRef.current.value)
     }).then((res) => {
+      console.log("saved items:",rowsData);
       setRowsData([]);
       ClearDetails();
-
-      setButtonDisabled(false);
-      setErrorMessage("");
-      alert(t('savealertmessage'))
+      alert(t("savealertmessage"));
+  
     }).catch(error => {
       console.log("error=", error);
       setErrorMessage(t('errormessagesavereceipt'));
       setButtonDisabled(false);
+    }).finally(()=>{
+      
+      setButtonDisabled(false);
+    
     })
   }
   const updateReceipt = async () => {
+    
     let items = rowsData.map((item) => {
       return {
         receiptnumber: (receiptRef.current.value).toString(),
@@ -349,13 +444,14 @@ function AddReceipt1() {
     }
   }
   const handleSubmit = () => {
+    
     if (updateUI) {
       updateReceipt();
     }
     else {
       saveReceipt();
     }
-  }
+  };
 
   return (
     <Container>
@@ -403,7 +499,7 @@ function AddReceipt1() {
               </tr>
             </thead>
             <tbody>
-              <TableRows rowsData={rowsData} deleteTableRows={deleteTableRows} handleChange={handleChange} RestoreLoan={RestoreLoan} isRestore={isRestore} loannoRef={loannoRef} />
+              <TableRows rowsData={rowsData} deleteTableRows={deleteTableRows} handleChange={handleChange} RestoreLoan={RestoreLoan} isRestore={isRestore} loannoRefs={loannoRefs} />
             </tbody>
             <tr className="dailyrecordtotalheight">
               <td></td>
@@ -447,15 +543,15 @@ function AddReceipt1() {
   )
 }
 
-function TableRows({ rowsData, deleteTableRows, handleChange, RestoreLoan, isRestore }) {
+function TableRows({ rowsData, deleteTableRows, handleChange, RestoreLoan, isRestore, loannoRefs }) {
   return (
     rowsData.map((data, index) => {
-      const { serialno, loanno, customer_id, customername, loanamount, dueamount, weekno, amount, loannoRef } = data;
+      const { serialno, loanno, customer_id, customername, loanamount, dueamount, weekno, amount } = data;
       return (
         <tr key={index}>
           <td><input type="text" value={serialno} name="serialno" className="form-control" disabled /></td>
           <td>
-            <input type="text" ref={loannoRef} value={loanno} onChange={(evnt) => (handleChange(index, evnt))}
+            <input type="text" ref={(el) => (loannoRefs.current[index] = el)} value={loanno} onChange={(evnt) => (handleChange(index, evnt))}
               name="loanno" className="form-control"
               onBlur={(e) => RestoreLoan(e, index)} disabled={isRestore} />
           </td>
