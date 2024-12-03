@@ -68,9 +68,12 @@ function Ledger({ loanno, ledger, company, date }) {
             arr2 = Array.from({ length: 0 }, (_, i) => i + 12)
 
         }
-
+       arr2=ledger.length>first.weekcount?Array.from({ length: ledger.length-arr1.length }, (_, i) => i + (ledger.length-arr1.length)):arr2
+        //alert(ledger.length-arr1.length);
     }
+    
     const tableData = Array.from({ length: arr1.length + arr2.length }, (_, i) => ledger[i] || {});
+     
     return (
 
 

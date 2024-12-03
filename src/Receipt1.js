@@ -28,6 +28,7 @@ function AddReceipt1() {
   const [linenames, setLineNames] = useState([]);
   const [SelectDisabled, setSelectDisabled] = useState(false);
   const loannoRefs = useRef([]);
+ 
   useEffect(() => {
     async function fetchData() {
       setIsLoading(true);
@@ -65,6 +66,7 @@ function AddReceipt1() {
   }, [refresh, getToken, t]);
   const addTableRows = () => {
     setIsRestore(false);
+    const weeknoAuto=rowsData.length>0?Number(rowsData[rowsData.length-1].weekno)+1:1;
     const rowsInput = {
       serialno: rowsData.length + 1,
       loanno: '',
@@ -72,10 +74,9 @@ function AddReceipt1() {
       customername: '',
       loanamount: '',
       dueamount: '',
-      weekno: '',
+      weekno: weeknoAuto,
       amount: ''
     }
-    //alert(rowsData);
     //setRowsData([...rowsData, rowsInput])
     //setRowsData(prevRows => [...prevRows, rowsInput]);
     setRowsData((prevRows) => {
@@ -116,6 +117,7 @@ function AddReceipt1() {
         if (event.target.name === "amount") {
           form.elements[index + 1]?.focus();
           if (isLastRow) {
+            const weeknoAuto=rowsData.length>0?Number(rowsData[rowsData.length-1].weekno)+1:1;
             const rowsInput = {
               serialno: rowsData.length + 1,
               loanno: '',
@@ -123,10 +125,9 @@ function AddReceipt1() {
               customername: '',
               loanamount: '',
               dueamount: '',
-              weekno: '',
+              weekno: weeknoAuto,
               amount: ''
             }
-            
             setRowsData((prevRows) => {
               const updatedRows = [...prevRows, rowsInput]; // Preserve previous rows and add the new row
               // Set focus on the last row's loanno input
@@ -155,43 +156,7 @@ function AddReceipt1() {
       document.removeEventListener("keydown", handleKeydown);
     };
   }, );
-  /*useEffect(() => {
-    const handleKeydown = (event) => {
-      // Ensure Enter key and input focus
-      if (event.key === "Enter" && event.target.nodeName === "INPUT") {
-        const form = event.target.form;
-        const index = Array.prototype.indexOf.call(form, event.target);
-        const isLastRow = index === form.elements.length - 5;
-        if (event.target.name === "loanno") {
-          form.elements[index + 5]?.focus();
-        }
-        else {
-          form.elements[index + 1]?.focus();
-        }
-        if (event.target.name === "amount") {
-          form.elements[index + 1]?.focus();
-          if (isLastRow) {
-            addTableRows();
-          }
-          else {
-            form.elements[index + 9]?.focus();
-          }
-
-        }
-
-        event.preventDefault(); // Prevent the default form submission behavior
-
-      }
-    };
-
-    // Add the event listener on mount
-    document.addEventListener("keydown", handleKeydown);
-
-    // Cleanup the event listener when the component unmounts
-    return () => {
-      document.removeEventListener("keydown", handleKeydown);
-    };
-  }, []);*/
+  
 
   
   const calTotal = () => {
@@ -233,7 +198,6 @@ function AddReceipt1() {
       rowsInput[index][name] = value;
       setRowsData(rowsInput);
     }
-
   }
   function RestoreLoan(e, index) {
 

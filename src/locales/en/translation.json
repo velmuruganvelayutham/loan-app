@@ -188,5 +188,6 @@
   "balanceamount":"Balance",
   "nextloannotfound":"Next Loan Number Not Found",
   "errormessagefetchloanno":"Error fetching next loan",
-  "loadingledger":"Loading ledger details..."
+  "loadingledger":"Loading ledger details...",
+  "loadingchart":"Loading chart... "
 }

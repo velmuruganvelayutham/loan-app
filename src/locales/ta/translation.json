@@ -225,5 +225,6 @@
   "balanceamount":"மீதம்",
   "nextloannotfound":"அக்கவுண்ட் எண் இல்லை",
   "errormessagefetchloanno":"அக்கவுண்ட் எண்ணை எடுக்க முடியவில்லை",
-  "loadingledger":"லெட்ஜர் விவரங்களை ஏற்றுகிறது..."
+  "loadingledger":"லெட்ஜர் விவரங்களை ஏற்றுகிறது...",
+  "loadingchart":"சாட் விவரங்களை ஏற்றுகிறது... "
 }

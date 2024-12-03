@@ -143,8 +143,11 @@ function LedgerForm() {
     )
     const renderChart = (
         <Row ref={componentRef}>
-            <Chart loanno={loannumberprocess} ledger={loanDetails}
-                company={company.length > 0 ? company[0].companyname : ""} date={new Date()} />
+            {isLoadingLedger ? (
+                <div className="skeleton-loader">{t('loadingchart')}</div>
+            ):(<Chart loanno={loannumberprocess} ledger={loanDetails}
+                company={company.length > 0 ? company[0].companyname : ""} date={new Date()} />)
+            }
         </Row>
     )
     const handleChange = (selectedOption) => {
