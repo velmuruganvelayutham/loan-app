@@ -57,6 +57,7 @@ function LinemanBookWise() {
         fetchData();
     }, [getToken, t]);
     const processList = async () => {
+        
         setIsLoading(true);
         setIsRestore(false);
         const token = await getToken();
@@ -66,7 +67,8 @@ function LinemanBookWise() {
                 params:
                     { lineman_id: linemanoptionRef.current.value, assigndate: dateFormat(startDateRef.current.value).toString() }
             }).then((res) => {
-                setRowsData(res.data)
+                
+                setRowsData(res.data);
                 setSelectAll(false);
                 setEnabledRows(rowsData.map(() => false));
                 setIsLoading(false);
@@ -362,7 +364,7 @@ function TableRows({ rowsData, citynames, deleteTableRows, handleChange, selectA
                         onChange={(evnt) => (handleChange(index, evnt))} disabled={!enabledRows[index]} /></td>
                     <td className="col-2"><Form.Group className="mb-3" border="primary" >
                         <Form.Control type="date" name="lastdateassign" onChange={(evnt) => (handleChange(index, evnt))}
-                            required defaultValue={(data.lastdateassign) ? (dateFormat(data.lastdateassign)) : startOfWeek()} disabled={!enabledRows[index]} />
+                            required value={(data.lastdateassign) ? (dateFormat(data.lastdateassign)) : startOfWeek()} disabled={!enabledRows[index]} />
                     </Form.Group></td>
                     <td><Button className="btn btn-danger" onClick={() => (deleteTableRows(index))} disabled={!enabledRows[index]}>x</Button></td>
                 </tr>
