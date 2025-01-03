@@ -6,10 +6,11 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import { useTranslation } from "react-i18next";
 import AsyncSelect from 'react-select/async';
-
 import {
   useAuth
 } from "@clerk/clerk-react";
+import _ from "lodash";
+
 function AddCustomer() {
   const { getToken } = useAuth();
   const [input, setInput] = useState("");
@@ -21,37 +22,58 @@ function AddCustomer() {
   const [radioValue, setRadioValue] = useState("0");
   const [citynames, setCitynames] = useState([]);
   const [validated, setValidated] = useState(false);
-  const [city, setCity] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const { t } = useTranslation();
   const fathernameref = useRef(null);
   const addressRef = useRef(null);
   const workRef = useRef(null);
   const cityRef = useRef(null);
+  const [customerOptions, setCustomerOptions] = useState([]);
+  const [cityOptions, setCityOptions] = useState([]);
+  const [cachedCustomers, setCachedCustomers] = useState({});
+  const [cachedCities, setCachedCities] = useState({});
+  const [selectedCity, setSelectedCity] = useState(null);
   const initialFormState = { mySelectKey: null };
   const [myForm, setMyForm] = useState(initialFormState);
   const [updateUI, setUpdateUI] = useState(false);
+  const asyncSelectRef = useRef();
   useEffect(() => {
-    async function fetchData() {
-      const token = await getToken();
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      await axios.get(`${baseURL}/citycreate/get`).then((res) => {
-        setCitynames(res.data)
+    const preloadCities = async () => {
+      setIsLoading(true); // Start loading
+      try {
+        const token = await getToken(); // Fetch token
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        // Fetch city data
+        const response = await axios.get(`${baseURL}/citycreate/get?q=`);
+        const data = response.data.map((city) => ({
+          value: city._id,
+          label: city.cityname,
+        }));
+
+        // Update state and cache the result
+        setCityOptions(data);
+        setCachedCities({ "": data }); // Cache the initial result for an empty query
         setErrorMessage("");
-      }).catch(error => {
-        console.log("error=", error);
-        setErrorMessage(t('errormessagecity'));
-      })
-    }
-    fetchData();
-  }, [getToken, t]);
-  useEffect(() => {
+      } catch (error) {
+        console.error("Error fetching cities:", error);
+        setErrorMessage("Failed to load cities. Please try again later.");
+      } finally {
+        setIsLoading(false); // Stop loading
+      }
+    };
+
+    preloadCities();
+  }, [getToken, baseURL]); // Add dependencies if these values could change
+
+  
+  /*useEffect(() => {
     async function fetchData() {
       setIsLoading(true);
       const token = await getToken();
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       axios.get(`${baseURL}/get/view?q=`).then((res) => {
-        setCustomer(res.data);
+        setCustomerOptions(res.data);
+        setCachedCities({ "": res.data });
         setErrorMessage("");
         setIsLoading(false);
       }).catch(error => {
@@ -61,7 +83,7 @@ function AddCustomer() {
       })
     }
     fetchData();
-  }, [getToken, t, updateUI]);
+  }, [getToken, t, updateUI]);*/
 
   useEffect(() => {
     document.addEventListener("keydown", function (event) {
@@ -76,56 +98,55 @@ function AddCustomer() {
 
 
   const handleSubmit = (event) => {
+    
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
     }
     setValidated(true);
 
-    if (input !== "" && inputmobileno !== "" && city !== "" && fathernameref.current.value !== ""
+    if (input !== "" && inputmobileno !== "" && selectedCity.value !== "" && fathernameref.current.value !== ""
       && addressRef.current.value !== "" && workRef.current.value !== "" && cityRef.current.value !== "") {
       addCustomer();
     }
 
   };
-
-  const loadOptions = async (inputValue, callback) => {
+  
+  
+  const fetchOptions = async (inputValue, apiPath, cache, setCache, type) => {
+    if (cache[inputValue]) return cache[inputValue]; // Return from cache if available
     try {
-      // Make an API call to fetch options based on the inputValue
       const token = await getToken();
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      const response = await axios.get(`${baseURL}/get/view?q=${inputValue}`);
-      const data = await response.data;
-      // Map the fetched data to the format expected by React Select
-      const options = data.map(item => ({
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      const response = await axios.get(`${baseURL}/${apiPath}?q=${inputValue}`);
+      const data = response.data.map((item) => ({
         value: item._id,
-        label: item.customer + '-' + item.fathername,
+        label: type === "customer" ? `${item.customer} - ${item.fathername || ""}`.trim() : item.cityname,
+        mobileno: item.mobileno || "",
+        address: item.address || "",
+        cityid: item.city_id || "",
+        reference: item.referencecity || "",
+        work: item.work || "",
+        relationtype: item.relationtype || ""
       }));
-      setCustomer(data);
-      // Call the callback function with the options to update the dropdown
-      callback(options);
+
+      setCache((prev) => ({ ...prev, [inputValue]: data })); // Update cache
+      return data;
     } catch (error) {
-      console.error('Error fetching options:', error);
-      callback([]);
+      console.error("Error fetching options:", error);
+      return [];
     }
   };
+
 
   const addCustomer = async () => {
     const token = await getToken();
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     axios.post(`${baseURL}/save`, {
-      customer: input, mobileno: inputmobileno, cityid: city, fathername: fathernameref.current.value,
+      customer: input, mobileno: inputmobileno, cityid: selectedCity.value, fathername: fathernameref.current.value,
       address: addressRef.current.value, work: workRef.current.value, relationtype: Number(radioValue), referencecity: cityRef.current.value
     }).then((res) => {
-
-      setInput("")
-      setInputMobileno("");
-      setCity("");
-      setRadioValue("0")
-      fathernameref.current.value = "";
-      addressRef.current.value = "";
-      workRef.current.value = "";
-      cityRef.current.value = "";
+      clearFields();
       setUpdateUI((prevState) => !prevState);
       setErrorMessage("");
     }).catch(error => {
@@ -141,19 +162,10 @@ function AddCustomer() {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
     axios.put(`${baseURL}/update/${updateId}`, {
-      customer: input, mobileno: inputmobileno, cityid: city, fathername: fathernameref.current.value,
+      customer: input, mobileno: inputmobileno, cityid: selectedCity.value, fathername: fathernameref.current.value,
       address: addressRef.current.value, work: workRef.current.value, relationtype: Number(radioValue), referencecity: cityRef.current.value
     }).then((res) => {
-      setInput("");
-      setInputMobileno("");
-      setCity("");
-      setRadioValue("0")
-      fathernameref.current.value = "";
-      addressRef.current.value = "";
-      workRef.current.value = "";
-      cityRef.current.value = "";
-      setUpdateId(null);
-      setMyForm(initialFormState);
+      clearFields();
       setUpdateUI((prevState) => !prevState);
       setErrorMessage("");
     }).catch(error => {
@@ -164,16 +176,23 @@ function AddCustomer() {
     alert(t('savealertmessage'));
   }
   const clearFields = () => {
+    
     setInput("");
     setInputMobileno("");
-    setCity("");
+    
     setRadioValue("0")
     fathernameref.current.value = "";
     addressRef.current.value = "";
     workRef.current.value = "";
     cityRef.current.value = "";
     setUpdateId(null);
-    setMyForm(initialFormState);
+    setMyForm((prevForm) => ({
+      ...prevForm,
+      mySelectKey: null, // Reset selected value
+    }));
+    setSelectedCity(null);
+    setCachedCustomers({});
+    //setMyCityForm(intialStateCity);
 
   }
   const radios = [
@@ -181,57 +200,132 @@ function AddCustomer() {
     { name: t('husbandshort'), value: '1' }
   ];
 
-  const restoreCityName = (e) => {
+  /*const restoreCityName = (value) => {
+    setMyCityForm({ ...myCityForm, myCity: value });
+
     const filtered = citynames.filter(city => {
-      return city._id === e.target.value;
+      return city._id === value;
     })
-    if (filtered.length > 0) {
+    if (myCityForm.myCity === 0) {
+      cityRef.current.value = "";
+    }
+    if (filtered !== undefined && filtered.length > 0) {
       cityRef.current.value = filtered[0].cityname;
     }
 
-  }
-  const options = customers.map((customer, i) => {
+  }*/
+    
+  const loadCustomerOptions = _.debounce(async (inputValue, callback) => {
+    
+    const options = await fetchOptions(inputValue, "get/view", cachedCustomers, setCachedCustomers, "customer");
+    callback(options);
+  },300);
+
+  // City dropdown loadOptions
+  const loadCityOptions = _.debounce(async (inputValue, callback) => {
+    if (!inputValue.trim()) {
+      return cityOptions; // Return preloaded cityOptions for an empty query
+    }
+    const options = await fetchOptions(inputValue, "citycreate/get", cachedCities, setCachedCities, "city");
+    callback(options);
+  },300);
+  
+  /*const loadDependentCityOptions = async (inputValue, callback) => {
+    if (!selectedCustomer) {
+      callback([]);
+      return;
+    }
+    const options = await fetchOptions(
+      inputValue,
+      `get/cities?customerId=${selectedCustomer.value}`,
+      cachedCities,
+      setCachedCities
+    );
+    callback(options);
+  };*/
+
+  /*const options = customers.map((customer, i) => {
     return {
       label: customer.customer + '-' + customer.fathername,
       value: customer._id,
       key: i
     }
   })
-  function customerSelect(value) {
+  const optionscity =citynames.map((city, i) => {
+    return {
+      label: city.cityname,
+      value: city._id,
+      key: i
+    }
+  })*/
+    async function customerSelect(selected) {
+      
+      setMyForm((prevForm) => ({
+        ...prevForm,
+        mySelectKey: selected.value, // Update the selected customer's value in the state
+      }));
+    //const { value, mobileno, address, cityid, reference, work, relationtype } = selected;
 
-
-    setMyForm({ ...myForm, mySelectKey: value });
-
-    const filtered = customers.filter(customer => {
-      return customer._id === value
-    })
-
-    if (myForm.mySelectKey === 0) {
-
+        if (!selected) {
+      // Reset all fields when no customer is selected
       setInput("");
       setInputMobileno("");
-      setCity("");
+      
       setRadioValue("0");
       fathernameref.current.value = "";
       addressRef.current.value = "";
       workRef.current.value = "";
       cityRef.current.value = ""
       setUpdateId(null);
-    }
-    if (filtered !== undefined && filtered.length > 0) {
-      setInput(filtered[0].customer);
-      setInputMobileno(filtered[0].mobileno);
-      setCity(filtered[0].city_id);
-      setRadioValue(filtered[0].relationtype === 1 ? "1" : "0");
-      fathernameref.current.value = filtered[0].fathername;
-      addressRef.current.value = filtered[0].address;
-      workRef.current.value = filtered[0].work;
-      cityRef.current.value = filtered[0].referencecity;
-      setUpdateId(filtered[0]._id);
+      //return;
     }
 
+    // Update additional fields
+    setInput(selected.label.split(" - ")[0]); // Customer name
+    setInputMobileno(selected.mobileno); // Mobile number
+    addressRef.current.value = selected.address;
+    fathernameref.current.value = selected.label.split(" - ")[1];
+    workRef.current.value =selected.work;
+    if (selected.cityid) {
+      // Check if the city exists in `cityOptions`
+      const existingCityOption = cityOptions.find((option) => option.value === selected.cityid);
+      
+      if (existingCityOption) {
+        // City is already loaded, use it
+        setSelectedCity(existingCityOption);
+      } else {
+        
+        // City is not loaded, fetch it dynamically
+        try {
+          const token = await getToken(); // Fetch token
+          axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+          const response = await axios.get(`${baseURL}/citycreate/getById/${selected.cityid}`); // Fetch city by ID
+          const fetchedCity = response.data;
+          const cityOption = {
+            value: fetchedCity._id,
+            label: fetchedCity.cityname,
+          };
+
+          // Add the fetched city to `cityOptions`
+          setCityOptions((prevOptions) => [...prevOptions, cityOption]);
+          setSelectedCity(cityOption); // Update the selected city
+        } catch (error) {
+          console.error("Error fetching city:", error);
+          setSelectedCity(null); // Reset if the fetch fails
+        }
+      }
+    } else {
+      setSelectedCity(null); // Reset city dropdown if no city is associated
+    }
+    cityRef.current.value = selected.reference;
+    setRadioValue(selected.relationtype === 1 ? "1" : "0");
+    setUpdateId(selected.value);
+    
   }
-
+  const restoreCity=(selected)=>{
+    setSelectedCity(selected);
+    cityRef.current.value=selected.label;
+  }
 
   return (
     <Container >
@@ -243,14 +337,16 @@ function AddCustomer() {
 
               <Form.Group className="mb-3" name="customername" border="primary" >
                 <Form.Label>{t('customer')}</Form.Label>{/*customer*/}
-                <AsyncSelect autoFocus
-                  id="react-select-3-input"
-                  isLoading={isLoading}
-                  value={options.filter(({ value }) => value === myForm.mySelectKey)}
-                  onChange={({ value }) => customerSelect(value)}
-                  defaultOptions={options}
-                  placeholder={t('customer')}
-                  loadOptions={loadOptions} />
+                <AsyncSelect
+                  ref ={asyncSelectRef}
+                  value={customerOptions.find(({ value }) => value === myForm.mySelectKey)||null}
+                  onChange={(selected) => customerSelect(selected)}
+                  loadOptions={loadCustomerOptions}
+                  placeholder="Select Customer"
+                  options={customerOptions}
+                  
+                  isClearable
+                />
 
 
 
@@ -283,17 +379,14 @@ function AddCustomer() {
             <Col xs={12} md={3} className="rounded bg-white">
               <Form.Group className="mb-3" name="cityname" border="primary" >
                 <Form.Label>{t('city')}</Form.Label>
-                <Form.Select data-cypress-loan-app-cityname="cityname" aria-label="Default select example"
-                  value={city} onChange={(e) => setCity(e.target.value)} onClick={restoreCityName} required >
-                  <option key={city} value={""} >{t('cityplaceholder')}</option>
-
-                  {
-                    citynames.map((cityname) => (
-                      <option key={cityname._id} value={cityname._id}
-                      >{cityname.cityname}</option>
-                    ))}
-
-                </Form.Select>
+                <AsyncSelect
+                  value={selectedCity}
+                  onChange={(selected) => restoreCity(selected)}
+                  loadOptions={loadCityOptions}
+                  placeholder="Select City"
+                  defaultOptions={cityOptions}
+                  isClearable
+                />
               </Form.Group>
             </Col>
             <Col xs={12} md={2} className="rounded bg-white">
