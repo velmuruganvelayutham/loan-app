@@ -9,8 +9,7 @@ import AsyncSelect from 'react-select/async';
 import {
   useAuth
 } from "@clerk/clerk-react";
-import _ from "lodash";
-
+//import _ from "lodash";
 function AddCustomer() {
   const { getToken } = useAuth();
   const [input, setInput] = useState("");
@@ -44,7 +43,7 @@ function AddCustomer() {
         const token = await getToken(); // Fetch token
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         // Fetch city data
-        const response = await axios.get(`${baseURL}/citycreate/get?q=`);
+        const response = await axios.get(`${baseURL}/citycreate/gettwenty?q=`);
         const data = response.data.map((city) => ({
           value: city._id,
           label: city.cityname,
@@ -215,20 +214,20 @@ function AddCustomer() {
 
   }*/
     
-  const loadCustomerOptions = _.debounce(async (inputValue, callback) => {
+  const loadCustomerOptions =async (inputValue, callback) => {
     
     const options = await fetchOptions(inputValue, "get/view", cachedCustomers, setCachedCustomers, "customer");
     callback(options);
-  },300);
+  };
 
   // City dropdown loadOptions
-  const loadCityOptions = _.debounce(async (inputValue, callback) => {
+  const loadCityOptions = async (inputValue, callback) => {
     if (!inputValue.trim()) {
       return cityOptions; // Return preloaded cityOptions for an empty query
     }
-    const options = await fetchOptions(inputValue, "citycreate/get", cachedCities, setCachedCities, "city");
+    const options = await fetchOptions(inputValue, "citycreate/gettwenty", cachedCities, setCachedCities, "city");
     callback(options);
-  },300);
+  };
   
   /*const loadDependentCityOptions = async (inputValue, callback) => {
     if (!selectedCustomer) {
@@ -324,7 +323,8 @@ function AddCustomer() {
   }
   const restoreCity=(selected)=>{
     setSelectedCity(selected);
-    cityRef.current.value=selected.label;
+    
+    cityRef.current.value=(!selected)?"":selected.label;
   }
 
   return (
