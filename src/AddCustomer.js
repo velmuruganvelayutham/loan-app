@@ -7,7 +7,7 @@ import ToggleButton from 'react-bootstrap/ToggleButton';
 import { useTranslation } from "react-i18next";
 import AsyncSelect from 'react-select/async';
 import Select from "react-select";
-import Fuse from "fuse.js";
+
 import {
   useAuth
 } from "@clerk/clerk-react";
