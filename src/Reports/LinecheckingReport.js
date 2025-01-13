@@ -8,10 +8,12 @@ import { startOfWeek, endOfWeek } from '../FunctionsGlobal/StartDateFn';
 import ListLineChecking from "./ListLineChecking";
 import PreviousWeekList from "./PreviousWeekList"
 import ReactToPrint from 'react-to-print';
+
 import NewAccountDetails from "./NewAccountDetails";
 import WeekEndAccountDetails from "./WeekEndAccountDetails";
 import CurrentWeekGivenAmount from "./CurrentWeekGivenAmount";
 import NotRunningAccounts from "./NotRunningAccounts";
+import PendingAccounts from "./PendingAccounts.js";
 import DailyRecords from "./DailyRecords";
 import {
     useAuth
@@ -39,7 +41,9 @@ function LinecheckingReport() {
 
     const [linemannameday, setLineManNameDay] = useState("");
     const [linemanlineno, setLineManLineno] = useState("");
+    const [isPrinting, setIsPrinting] = useState(false);
     const bookRef = useRef(null);
+    const componentRef = useRef(null);
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true);
@@ -122,12 +126,19 @@ function LinecheckingReport() {
                 passingargument = linemanoptionRef.current.value;
             }
             else if (Number(reportType.current.value) === 6) {
-                
+
                 setCheckingData([]);
                 linecheckingreportname = "notrunningaccounts";
                 passingargument = linemanoptionRef.current.value;
             }
-            
+            else if (Number(reportType.current.value) === 7) {
+                //alert("yes");
+                setCheckingData([]);
+                linecheckingreportname = "pendingaccounts";
+                passingargument = linemanoptionRef.current.value;
+            }
+
+
             const token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             return (
@@ -138,10 +149,8 @@ function LinecheckingReport() {
                     }
                 }).then((res) => {
                     Number(reportType.current.value) === 0 ? setCheckingData(res.data) : setCheckingDetailsLine(res.data)
-
-                    console.log(res.data);
+                    
                     setIsLoading(false);
-
 
                 })
                     .catch(error => {
@@ -154,15 +163,23 @@ function LinecheckingReport() {
         }
 
     }
-    const componentRef = useRef([]);
-    const handlePrint = () => {
 
-        window.print()
-    }
+    const handlePrintAll = () => {
+        setIsPrinting(true); // Enable print mode
+        setTimeout(() => {
+            window.print(); // Trigger browser print dialog
+            setIsPrinting(false); // Disable print mode after printing
+        }, 1000); // Give some time for the render to complete
+    };
+    const handlePrint = () => {
+        window.print();
+    };
+
+
     const renderLineCheckingList = (
         <Row ref={componentRef}>
             <ListLineChecking pendingLoans={checkingData} date={endDateRef.current.value}
-                company={company.length > 0 ? company[0].companyname : ""} />
+                company={company.length > 0 ? company[0].companyname : ""} isPrinting={isPrinting} />
 
         </Row>
 
@@ -199,6 +216,14 @@ function LinecheckingReport() {
             <NotRunningAccounts pendingLoans={checkingDetailsLine} date={endDateRef.current.value}
                 company={company.length > 0 ? company[0].companyname : ""} />
         </Row>
+    )
+    const renderPendingAccountList = (
+        <Row ref={componentRef}>
+            <PendingAccounts pendingLoans={checkingDetailsLine} date={endDateRef.current.value}
+                company={company.length > 0 ? company[0].companyname : ""} isPrinting={isPrinting} />
+
+        </Row>
+
     )
     const restoreLineman = (e) => {
         const filtered = linemannames.filter(lineman => {
@@ -257,10 +282,10 @@ function LinecheckingReport() {
 
     }
     return (
-        <Container>
+        <Container >
             <Row>
                 <Form>
-                    <Row >
+                    <Row className="hide-on-print">
                         {show == true ? linemanshow : citynameshow}
                         <Col xs={12} md={1} className="rounded bg-white">
                             <Form.Group className="mb-3" name="bookno" border="primary" >
@@ -280,6 +305,7 @@ function LinecheckingReport() {
                                     <option value={4}>{t('weekendaccounts')}</option>
                                     <option value={5}>{t('dailylist')}</option>
                                     <option value={6}>{t('notrunningaccounts')}</option>
+                                    <option value={7}>{t('pendingaccounts')}</option>
                                 </Form.Select>
                             </Form.Group>
                         </Col>
@@ -302,13 +328,13 @@ function LinecheckingReport() {
                             </Form.Group>
                         </Col>
                     </Row>
-                    <Row className="rounded bg-white text-center">
+                    <Row className="rounded bg-white text-center hide-on-print">
                         <div className="col-md-6 mb-4 " >
                             <Button variant="primary" size="lg" type="button" className="text-center" onClick={processList}>
                                 {t('processbuttonlabel')}
                             </Button>{' '}
                         </div>
-                        <div className="col-md-6 mb-4 ">
+                        <div className="col-md-3 mb-4 ">
                             <ReactToPrint trigger={() => (
                                 <Button variant="primary" size="lg" type="button" className="text-center" onClick={() => handlePrint}>
                                     {t('printbutton')}
@@ -317,17 +343,25 @@ function LinecheckingReport() {
                             )}
                                 content={() => componentRef.current} />
                         </div>
+                        <Col className="col-md-3 mb-4 " >
+                            <Button variant="primary" size="lg" type="button" className="text-center" onClick={handlePrintAll}>
+                                {t('printall')}
+                            </Button>
+                        </Col>
+                        
+
                     </Row>
-
-                    {isLoading ? <PlaceHolder /> : Number(reportType.current.value) === 0 ?
-                        renderLineCheckingList : Number(reportType.current.value) === 1 ?
-                            renderpreviousweekList : Number(reportType.current.value) === 2 ?
-                                rendernewaccountList : Number(reportType.current.value) === 3 ?
-                                    rendercurrentweekgivenaccountList : Number(reportType.current.value) === 4 ? 
-                                    renderweekendaccountList : Number(reportType.current.value) === 6?
-                                    rendernotrunningaccounts:renderdailyrecords}
-                    {errorMessage && <div className="error">{errorMessage}</div>}
-
+                    <Row>
+                        {isLoading ? <PlaceHolder /> : Number(reportType.current.value) === 0 ?
+                            renderLineCheckingList : Number(reportType.current.value) === 1 ?
+                                renderpreviousweekList : Number(reportType.current.value) === 2 ?
+                                    rendernewaccountList : Number(reportType.current.value) === 3 ?
+                                        rendercurrentweekgivenaccountList : Number(reportType.current.value) === 4 ?
+                                            renderweekendaccountList : Number(reportType.current.value) === 6 ?
+                                                rendernotrunningaccounts :Number(reportType.current.value)===7?
+                                                renderPendingAccountList: renderdailyrecords}
+                        {errorMessage && <div className="error">{errorMessage}</div>}
+                    </Row>
 
                 </Form>
             </Row>

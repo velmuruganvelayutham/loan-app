@@ -226,5 +226,10 @@
   "nextloannotfound":"அக்கவுண்ட் எண் இல்லை",
   "errormessagefetchloanno":"அக்கவுண்ட் எண்ணை எடுக்க முடியவில்லை",
   "loadingledger":"லெட்ஜர் விவரங்களை ஏற்றுகிறது...",
-  "loadingchart":"சாட் விவரங்களை ஏற்றுகிறது... "
+  "loadingchart":"சாட் விவரங்களை ஏற்றுகிறது... ",
+  "payingamount":"க.வே",
+  "pendingweek":"வா",
+  "pendingaccounts":"பெண்டிங் அக்கவுண்ட்ஸ்",
+  "printall":"பிரிண்ட் ஆல்"
+
 }

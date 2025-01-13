@@ -6,6 +6,7 @@ import { Table } from "react-bootstrap";
 import { startOfWeek, dateFormat } from '../FunctionsGlobal/StartDateFn';
 import { useTranslation } from "react-i18next";
 import PlaceHolder from "../components/spinner/placeholder";
+import Select from "react-select";
 import {
     useAuth
 } from "@clerk/clerk-react";
@@ -21,6 +22,7 @@ function LinemanBookWise() {
     const linemanoptionRef = useRef(null);
     const [selectAll, setSelectAll] = useState(false);
     const [isButtonDisabled, setButtonDisabled] = useState(false);
+    const [cityOptions, setCityOptions] = useState([]);
     const [enabledRows, setEnabledRows] = useState(
         Array(rowsData.length).fill(false)
     );
@@ -41,23 +43,37 @@ function LinemanBookWise() {
             })
         }
         fetchData();
-    }, [getToken])
+    }, [getToken]);
     useEffect(() => {
-        async function fetchData() {
-            const token = await getToken();
-            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            await axios.get(`${baseURL}/citycreate/get`).then((res) => {
-                setCitynames(res.data)
+        const preloadCities = async () => {
+            setIsLoading(true); // Start loading
+            try {
+                const token = await getToken(); // Fetch token
+                axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+                const response = await axios.get(`${baseURL}/citycreate/get?q=`);
+                const data = response.data.map((city) => ({
+                    value: city._id,
+                    label: city.cityname,
+                }));
+
+                // Update state and cache the result
+                setCityOptions(data);
                 setErrorMessage("");
-            }).catch(error => {
+                setIsLoading(false);
+            } catch (error) {
                 console.log("error=", error);
                 setErrorMessage(t('errormessagecity'));
-            })
-        }
-        fetchData();
-    }, [getToken, t]);
+                setIsLoading(false);
+            } finally {
+                setIsLoading(false); // Stop loading
+            }
+        };
+
+        preloadCities();
+    }, [getToken]);
+
     const processList = async () => {
-        
+
         setIsLoading(true);
         setIsRestore(false);
         const token = await getToken();
@@ -67,7 +83,7 @@ function LinemanBookWise() {
                 params:
                     { lineman_id: linemanoptionRef.current.value, assigndate: dateFormat(startDateRef.current.value).toString() }
             }).then((res) => {
-                
+
                 setRowsData(res.data);
                 setSelectAll(false);
                 setEnabledRows(rowsData.map(() => false));
@@ -84,11 +100,8 @@ function LinemanBookWise() {
             })
         )
     }
-    const componentRef = useRef([]);
-    const handlePrint = () => {
-
-        window.print()
-    }
+    
+    
 
     useEffect(() => {
         document.addEventListener("keydown", function (event) {
@@ -147,20 +160,30 @@ function LinemanBookWise() {
 
         const { name, value } = evnt.target;
         const rowsInput = [...rowsData];
-        if (name === "displaycity_id") {
-            const selectedcity = citynames.find(city => city._id === value);
-            if (selectedcity) {
-                rowsInput[index]['displaycity_id'] = value;
-                rowsInput[index]['displaycityname'] = selectedcity.cityname; // Set the city name
-                setRowsData(rowsInput); // Update the state
-            }
-        } else {
-            // Handle other input changes
-            rowsInput[index][name] = value;
-            setRowsData(rowsInput);
-        }
+
+        // Handle other input changes
+        rowsInput[index][name] = value;
+        setRowsData(rowsInput);
+
 
         setRowsData(rowsInput);
+    }
+    const handleChangeDropDown = (index, evnt, type) => {
+
+        const newData = [...rowsData];
+        // Update city_id or reset to null if cleared
+        if (type === "displaycity") {
+            newData[index].displaycity_id = evnt ? evnt.value : null;
+            if(evnt){
+                newData[index]['displaycityname'] = evnt.label;
+            }
+            
+        }
+        else {
+            newData[index].city_id = evnt ? evnt.value : null;
+        }
+        setRowsData(newData);
+
     }
     const handleSubmit = async () => {
 
@@ -281,7 +304,7 @@ function LinemanBookWise() {
                         </thead>
                         <tbody>
                             <TableRows rowsData={rowsData} citynames={citynames} deleteTableRows={deleteTableRows} handleChange={handleChange} selectAll={selectAll}
-                                enabledRows={enabledRows} toggleRow={toggleRow} />
+                                enabledRows={enabledRows} toggleRow={toggleRow} cityOptions={cityOptions} handleChangeDropDown={handleChangeDropDown} />
                         </tbody>
 
                     </Table>
@@ -313,7 +336,8 @@ function LinemanBookWise() {
     )
 }
 
-function TableRows({ rowsData, citynames, deleteTableRows, handleChange, selectAll, enabledRows, toggleRow }) {
+function TableRows({ rowsData, citynames, deleteTableRows, handleChange, selectAll, enabledRows, toggleRow, cityOptions, handleChangeDropDown }) {
+
     return (
         rowsData.map((data, index) => {
             return (
@@ -326,30 +350,27 @@ function TableRows({ rowsData, citynames, deleteTableRows, handleChange, selectA
                     /></td>
                     <td className="col-1">{index + 1}</td>
                     <td className="col-3">
-                        <Form.Select aria-label="Default select example"
-                            value={data.city_id} required onChange={(evnt) => (handleChange(index, evnt))} name="city_id" disabled={!enabledRows[index]}>
-                            <option key={data.city_id} value={""} ></option>
+                        <Select
+                            options={cityOptions}
+                            onChange={(evnt) => (handleChangeDropDown(index, evnt, "city"))}  // Handles selection
+                            value={cityOptions.find((option) => option.value === data.city_id)}
+                            name="city_id" isDisabled={!enabledRows[index]}
+                            isSearchable
+                            isClearable={true}
+                        />
 
-                            {
-                                citynames.map((cityname) => (
-                                    <option key={cityname._id} value={cityname._id}
-                                    >{cityname.cityname}</option>
-                                ))}
-
-                        </Form.Select>
                     </td>
 
-                    <td className="col-3"><Form.Select aria-label="Default select example"
-                        value={data.displaycity_id} required onChange={(evnt) => (handleChange(index, evnt))} name="displaycity_id" disabled={!enabledRows[index]}>
-                        <option key={data.displaycity_id} value={""} ></option>
-
-                        {
-                            citynames.map((cityname) => (
-                                <option key={cityname._id} value={cityname._id}
-                                >{cityname.cityname}</option>
-                            ))}
-
-                    </Form.Select></td>
+                    <td className="col-3">
+                        <Select
+                            options={cityOptions}
+                            onChange={(evnt) => (handleChangeDropDown(index, evnt, "displaycity"))}  // Handles selection
+                            value={cityOptions.find((option) => option.value === data.displaycity_id)}
+                            name="displaycity_id" isDisabled={!enabledRows[index]}
+                            isSearchable
+                            isClearable={true}
+                        />
+                    </td>
                     <td style={{ display: "none" }}><input type="text"
                         name="displaycityname" className="form-control"
                         value={data.displaycityname || ''}

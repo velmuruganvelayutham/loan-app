@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import ReactToPrint from 'react-to-print';
 import PlaceHolder from "../components/spinner/placeholder";
 import { endOfWeek } from '../FunctionsGlobal/StartDateFn';
-
+import Select from "react-select";
 import AsyncSelect from 'react-select/async';
 import {
     useAuth
@@ -26,25 +26,38 @@ function GivenMoneyDetailsReport() {
     const { t } = useTranslation();
     const [company, setCompany] = useState([]);
     const [citynames, setCitynames] = useState([]);
-    const [city, setCity] = useState("");
+    const [city, setCity] = useState(null);
     const componentRef = useRef();
     const endDateRef = useRef(endOfWeek());
     const [selectedOption, setSelectedOption] = useState(null);
     useEffect(() => {
-        async function fetchData() {
-            const token = await getToken();
-            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            await axios.get(`${baseURL}/citycreate/get`).then((res) => {
-                setCitynames(res.data)
+        const preloadCities = async () => {
+            setIsLoading(true); // Start loading
+            try {
+                const token = await getToken(); // Fetch token
+                axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+                const response = await axios.get(`${baseURL}/citycreate/get?q=`);
+                const data = response.data.map((city) => ({
+                    value: city._id,
+                    label: city.cityname,
+                }));
+
+                // Update state and cache the result
+                setCitynames(data);
                 setErrorMessage("");
-            }).catch(error => {
+                setIsLoading(false);
+            } catch (error) {
                 console.log("error=", error);
                 setErrorMessage(t('errormessagecity'));
-            })
-        }
-        fetchData();
-    }, [getToken, t]);
+                setIsLoading(false);
+            } finally {
+                setIsLoading(false); // Stop loading
+            }
+        };
 
+        preloadCities();
+    }, [getToken, t]);
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true);
@@ -71,7 +84,7 @@ function GivenMoneyDetailsReport() {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             axios.get(`${baseURL}/get/view?q=`).then((res) => {
                 setCustomers(res.data);
-                console.log(res.data);
+
                 setIsLoading(false);
                 setErrorMessage("");
             }).catch(error => {
@@ -91,11 +104,12 @@ function GivenMoneyDetailsReport() {
         }
     })
     const loadOptions = async (inputValue, callback) => {
+        
         try {
             // Make an API call to fetch options based on the inputValue
             const token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            const response = await axios.get(`${baseURL}/get/view?q=${inputValue}`, { params: { city: city.toString() } });
+            const response = await axios.get(`${baseURL}/get/view?q=${inputValue}`, { params: { city: city.value.toString() } });
             const data = await response.data;
 
             // Map the fetched data to the format expected by React Select
@@ -113,7 +127,7 @@ function GivenMoneyDetailsReport() {
         }
     };
     const processList = async () => {
-        
+
         setIsLoading(true);
         const token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -149,6 +163,9 @@ function GivenMoneyDetailsReport() {
         setCustomer(selectedOption.value);
         setSelectedOption(selectedOption);
     };
+    const handleChangeCity=(selected)=>{
+        setCity(selected);
+    }
     return (
         <Container>
             <Row className="justify-content-md-center mt-5 ">
@@ -158,17 +175,16 @@ function GivenMoneyDetailsReport() {
 
                             <Form.Group className="mb-3" name="linenumber" border="primary" >
                                 <Form.Label>{t('city')}</Form.Label>
-                                <Form.Select data-cypress-loan-app-cityname="cityname" aria-label="Default select example"
-                                    value={city} onChange={(e) => setCity(e.target.value)} required >
-                                    <option key={city} value={""} >{t('cityplaceholder')}</option>
-
-                                    {
-                                        citynames.map((cityname) => (
-                                            <option key={cityname._id} value={cityname._id}
-                                            >{cityname.cityname}</option>
-                                        ))}
-
-                                </Form.Select>
+                                <Select
+                                    options={citynames}
+                                    isLoading={isLoading}
+                                    onChange={handleChangeCity} // Handles selection
+                                    placeholder={t('cityplaceholder')}
+                                    value={city}
+                                    isSearchable
+                                    isClearable={true}
+                                />
+                                
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={4} className="rounded bg-white">

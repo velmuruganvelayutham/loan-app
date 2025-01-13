@@ -189,5 +189,9 @@
   "nextloannotfound":"Next Loan Number Not Found",
   "errormessagefetchloanno":"Error fetching next loan",
   "loadingledger":"Loading ledger details...",
-  "loadingchart":"Loading chart... "
+  "loadingchart":"Loading chart... ",
+  "payingamount":"Paying",
+  "pendingweek":"P.Week",
+  "printall":"Print All"
+
 }

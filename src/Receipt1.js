@@ -229,7 +229,7 @@ function AddReceipt1() {
           if (!isexist) {
             const Editcheck = rowsData.map((item, i) => {
               if (i === index)
-                return { ...item, customer_id: res.data[0]["_id"].customer_id, customername: res.data[0]["_id"].customer, loanamount: res.data[0].pending, dueamount: res.data[0]["_id"].dueamount };
+                return { ...item, customer_id: res.data[0]["_id"].customer_id, customername: res.data[0]["_id"].customer, loanamount: res.data[0].pending, dueamount: res.data[0]["_id"].dueamount,amount:res.data[0]["_id"].dueamount };
               return item
             });
 
