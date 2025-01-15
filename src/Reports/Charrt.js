@@ -196,7 +196,7 @@ function Charrt({ loanno, ledger, company, date }) {
                     </Table>
                 </Col>
                 <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-custom col-md-4 p-0' : 'col-sm-custom col-md-4 p-0'}  >
-                    <Table className="table  text-center table-bordered border-dark chart col-sm-custom col-md-4" style={{ marginBottom: "0 !important" }}>
+                    <Table className="table  text-center table-bordered border-dark chart col-sm-custom col-md-4" style={{ marginBottom: "0 !important",width:"40%" }} >
                         <thead>
                             <tr >
                                 <th style={{ fontSize: "11px", padding: "0", margin: "0", width: "6%" }}>

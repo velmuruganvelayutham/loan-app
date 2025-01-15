@@ -1,5 +1,5 @@
 import React from "react";
-import { Navbar, Container, Nav, NavLink } from 'react-bootstrap';
+import { Navbar, Container, Nav, NavLink, NavItem } from 'react-bootstrap';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
@@ -20,7 +20,11 @@ function NavBar() {
             i18n.changeLanguage('en');
         } else if (languageValue === "Tamil") {
             i18n.changeLanguage('ta');
-        } else if (languageValue === "Borrower") {
+            
+        } else if(languageValue==="Home"){
+            navigate('/home')
+        }
+        else if (languageValue === "Borrower") {
             navigate(`/create`);
         }
         else if (languageValue === "City") {
@@ -59,16 +63,18 @@ function NavBar() {
         else if (languageValue === "LinemanBookWise") {
             navigate("/linemanbookcity")
         }
-        else if(languageValue==="GivenMoneyDetails")
-        navigate("/givenmoneydetails")
+        else if (languageValue === "GivenMoneyDetails")
+            navigate("/givenmoneydetails")
     }
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" onSelect={handleSelect} >
             <Container>
-                <Navbar.Brand href="#home" data-cypress-loan-app-id="app-customer-name">{process.env.REACT_APP_LOAN_APP_CUSTOMER}</Navbar.Brand>
+                <Navbar.Brand href="#home" data-cypress-loan-app-id="app-customer-name" className="hide-on-print">{process.env.REACT_APP_LOAN_APP_CUSTOMER}</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ms-auto" as="ul" >
+                        <Nav.Link href="#">Home</Nav.Link>
+                        
                         <NavDropdown title="Language" id="basic-nav-dropdown">
                             <NavDropdown.Item href="#">English</NavDropdown.Item>
                             <NavDropdown.Item href="#">Tamil</NavDropdown.Item>

@@ -25,6 +25,8 @@ const Line = lazy(() => import('./AddLine'));
 const UpdateBookCity=lazy(()=>import('./Settings/UpdateBookCity'))
 const LinemanBookWise=lazy(()=>import('./Reports/LinemanBookWise'))
 const GivenMoneyDetails=lazy(()=>import('./Reports/GivenMoneyDetailsReport'))
+const Home=lazy(()=>import ('./Home'))
+//const CheckingSample=lazy(()=>import('./Reports/checkingsample'))
 if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key")
 }
@@ -38,6 +40,23 @@ function ClerkProviderWithRoutes() {
       navigate={(to) => navigate(to)}
     >
       <Routes>
+      <Route
+          path="/Home"
+          element={
+            <>
+              <ClerkLoading>
+                <div>Clerk is loading</div>
+              </ClerkLoading>
+              <SignedIn>
+                <NavBar />
+                <Home />
+              </SignedIn>
+              <SignedOut>
+                <RedirectToSignIn />
+              </SignedOut>
+            </>
+          }
+        />
         <Route
           path="/create"
           element={
@@ -231,7 +250,7 @@ function ClerkProviderWithRoutes() {
             </>
           } />
  
-        <Route index element={<Navigate to="/create" />} />
+        <Route index element={<Navigate to="/home" />} />
       </Routes>
 
     </ClerkProvider>

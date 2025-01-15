@@ -296,7 +296,6 @@ function AddReceipt1() {
       receiptcode: (Number(reference[0].receiptcode) + 1),
       receiptdate: new Date(startdateRef.current.value)
     }).then((res) => {
-      console.log("saved items:",rowsData);
       setRowsData([]);
       ClearDetails();
       alert(t("savealertmessage"));
@@ -489,7 +488,7 @@ function AddReceipt1() {
             <Button variant="primary" size="lg" type="button" className="text-center" onClick={handleSubmit} disabled={isButtonDisabled}>
               {updateUI ? t('updatebutton') : t('savebutton')}
             </Button>{' '}
-            <Button variant="primary" size="lg" type="button" className="text-center" onClick={ClearDetails}>
+            <Button variant="primary" size="lg" type="button" className="text-center d-none" onClick={ClearDetails}>
               {t('newbutton')}
             </Button>{' '}
             <Button variant="primary" size="lg" type="button" className="text-center"

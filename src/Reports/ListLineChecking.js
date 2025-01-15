@@ -127,20 +127,20 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting }) => {
     serialno = startIndex;
     return (
       <Fragment >
-        <div style={{ display: "flex", alignItems: "center" }} >
+        <div style={{ display: "flex", alignItems: "center",paddingTop:page===1?"0px":"15px" }} className='print-margin'>
           <div className='col-sm-6 fixed' >
             <h4>{(company)}</h4>
           </div>
           <div className='col-sm-6 fixed'><h4>{t('linechecking')}</h4></div>
         </div>
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div style={{ display: "flex", alignItems: "center" }} className='print-margin'>
           <div className='col-sm-3 fixed' style={{ whiteSpace: "normal", wordWrap: "break-word" }} >{t('city') + " : " + first.city}</div>
           <div className='col-sm-3 fixed'>{t('customer') + " : " + first.linemanname}</div>
           <div className='col-sm-2 fixed'>{t('line') + " : " + (pendingLoans.length > 0 ? first.lineno : "")}</div>
           <div className='col-sm-2 fixed'>{t("bookno") + " : " + (pendingLoans.length > 0 ? first.bookno : "")}</div>
           <div className='col-sm-2 fixed'>{t("date") + " : " + dateFormatdd(date)}</div>
         </div>
-        <Table className='table table-bordered border-dark linecheckingtable ' style={{width:"100%"}}  >
+        <Table className='table table-bordered border-dark linecheckingtable print-margin' style={{width:"100%"}}  >
           <thead>
             <tr>
 
@@ -291,7 +291,7 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting }) => {
           }
 
         </Table>
-       {!isLastPage && <div style={{ pageBreakAfter: "always" }}></div>} 
+       {!isLastPage && <div style={{ pageBreakAfter: "always"}} ><div style={{paddingTop:"20px"}}></div></div>} 
       </Fragment>
     );
   };

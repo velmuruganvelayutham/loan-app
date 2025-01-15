@@ -297,11 +297,16 @@ Table.totalledgertable {
 }
 
 @media print {
-  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
   @page {
     size: 210mm 297mm;
     margin: 0;
+    padding: 0;
   }
 
   body {
@@ -313,7 +318,7 @@ Table.totalledgertable {
     display: none !important;
   }
 
-  table {
+  .linecheckingtable {
     margin: auto;
     width: 100%;
     border-collapse: collapse;
@@ -338,6 +343,9 @@ Table.totalledgertable {
   }
   .disable-print * {
     display: none !important; /* Prevent printing */
+  }
+  .print-margin{
+    margin-left:10px
   }
   
 }
