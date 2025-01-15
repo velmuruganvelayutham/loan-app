@@ -133,7 +133,7 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting }) => {
           </div>
           <div className='col-sm-6 fixed'><h4>{t('linechecking')}</h4></div>
         </div>
-        <div style={{ display: "flex", alignItems: "center" }} className='print-margin'>
+        <div style={{ display: "flex", alignItems: "center" }} className='col-sm-12 fixed print-margin'>
           <div className='col-sm-3 fixed' style={{ whiteSpace: "normal", wordWrap: "break-word" }} >{t('city') + " : " + first.city}</div>
           <div className='col-sm-3 fixed'>{t('customer') + " : " + first.linemanname}</div>
           <div className='col-sm-2 fixed'>{t('line') + " : " + (pendingLoans.length > 0 ? first.lineno : "")}</div>
