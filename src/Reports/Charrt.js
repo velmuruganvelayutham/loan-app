@@ -67,7 +67,7 @@ function Charrt({ loanno, ledger, company, date }) {
 
     return (
         <Container className="rounded bg-white" style={{ paddingLeft: "25px" }}>
-            <Row style={{ paddingLeft: "5px" }}>
+            <Row style={{ paddingLeft: "5px" }} className='print-margin '>
                 <Form>
 
                     <Row className='col-sm-6 col-md-8 pt-3' style={{ whiteSpace: "nowrap", overflow: "hidden" }} >
@@ -143,7 +143,7 @@ function Charrt({ loanno, ledger, company, date }) {
                 </Form>
             </Row>
 
-            <Row className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-8 col-md-8' : 'col-sm-8 col-md-8'} style={{ paddingLeft: paddingvar }} >
+            <Row className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-8 col-md-8 print-margin ' : 'col-sm-8 col-md-8'} style={{ paddingLeft: paddingvar }} >
                 <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-4 col-md-4 p-0' : 'col-sm-4 col-md-4 p-0'} >
                     <Table className="table text-center table-bordered border-dark chart" style={{ marginBottom: "0 !important" }}>
                         <thead>
@@ -231,7 +231,7 @@ function Charrt({ loanno, ledger, company, date }) {
                 </Col>
             </Row>
             {(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ?
-                <Row className='col-sm-8 col-md-8 mt-0 pt-0' style={{ paddingLeft: "14px", whiteSpace: "nowrap", overflow: "hidden" }}>
+                <Row className='col-sm-8 col-md-8 mt-0 pt-0 print-margin ' style={{ paddingLeft: "14px", whiteSpace: "nowrap", overflow: "hidden" }}>
                     <Col className='col-sm-4 col-md-4' style={{ fontSize: "11px", textAlign: "center", padding: "0", margin: "0", width: "30%", textOverflow: "ellipsis" }}>
                         {t('forcontanct') + ":"}<span style={{ fontWeight: "bold", display: "inline-block", width: "50%", textOverflow: "ellipsis" }}>{first.linemanname}</span>
                     </Col>
