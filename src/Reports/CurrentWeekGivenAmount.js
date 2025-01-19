@@ -58,8 +58,8 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
                 <Table className='table text-center fs-6 table-bordered border-dark'  >
                     <thead>
                         <tr>
-                            <th></th>
-                            <th></th>
+                            <th style={{width:"1%"}}></th>
+                            <th style={{width:"1%"}}></th>
                             <th style={{ fontSize: "12px" }}>
                                 {t('no')}
                             </th>
@@ -86,8 +86,8 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
                             <th style={{ fontSize: "12px" }}>{t('total')}</th>
                             <th style={{ fontSize: "12px" }}>{t('week')}</th>
                             <th style={{ fontSize: "12px" }}>{t('pay')}</th>
-                            <th></th>
-                            <th></th>
+                            <th style={{width:"1%"}}></th>
+                            <th style={{width:"1%"}}></th>
                         </tr>
                     </thead>
                     <tbody>
