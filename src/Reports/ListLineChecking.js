@@ -101,13 +101,13 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting,type }) => {
     return (
       <Fragment >
         
-        <div style={{ display: "flex", alignItems: "center", paddingTop: page === 1 ? "0px" : "15px" }} className='print-margin'>
+        <div style={{ display: "flex", alignItems: "center", paddingTop: page === 1 ? "0px" : "19px" }} className='linechecking-print-margin'>
           <div className='col-sm-6 fixed' >
             <h4>{(company)}</h4>
           </div>
           <div className='col-sm-6 fixed'><h4>{type===0?t('linechecking'):t('notrunningaccounts')}</h4></div>
         </div>
-        <div style={{ display: "flex", alignItems: "center" }} className='col-sm-12 fixed print-margin'>
+        <div style={{ display: "flex", alignItems: "center" }} className='col-sm-12 fixed linechecking-print-margin'>
           {type===0&&(<div className='col-sm-3 fixed' style={{ whiteSpace: "normal", wordWrap: "break-word" }} >{t('city') + " : " + first.city}</div>)}
           
           <div className={type===0?'col-sm-3 fixed':'col-sm-6 fixed'}>{t('customer') + " : " + first.linemanname}</div>
@@ -117,7 +117,7 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting,type }) => {
           
         </div>
 
-        <Table className='table table-bordered border-dark linecheckingtable print-margin' style={{ width: "97%" }}  >
+        <Table className='table table-bordered border-dark linecheckingtable linechecking-print-margin' style={{ width: "97%" }}  >
           <thead>
             <tr>
 

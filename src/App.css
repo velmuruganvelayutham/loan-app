@@ -356,5 +356,7 @@ Table.totalledgertable {
   .print-margin{
     margin-left:10px !important;
   }
-  
+  .linechecking-print-margin{
+    margin-left:20px !important;
+  }
 }

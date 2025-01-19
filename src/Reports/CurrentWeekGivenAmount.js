@@ -14,7 +14,7 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
     const recordsPerPage = 35;
     const totalPages = useMemo(() => Math.ceil(pendingLoans.length / recordsPerPage), [pendingLoans]);
     var serialno = 0;
-    
+
     const renderPage = (page) => {
         var pagetotalgiven = 0;
         var pagetotalamount = 0;
@@ -24,7 +24,7 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
         var totalamount = 0;
         var totaldocument = 0;
         var totalinterest = 0;
-    
+
         const startIndex = (page - 1) * recordsPerPage;
         const pageRecords = pendingLoans.slice(startIndex, startIndex + recordsPerPage);
         const isLastPage = page === totalPages;
@@ -49,125 +49,133 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
                 <div style={{ display: "flex" }}>
                     <div className='col-sm-12 fixed text-center mt-5'><h3>{t('currentweekamountgiven')}</h3></div>
                 </div>
-                <div style={{ display: "flex" }}>
+                <div style={{ display: "flex",paddingLeft:"10px" }}>
                     <div className='col-sm-4 fixed' style={{ paddingLeft: "20px" }}>{t('line') + " : " + (pendingLoans.length > 0 ? first.lineno : "")}</div>
                     <div className='col-sm-4 fixed'>{t("lineman") + " : " + (pendingLoans.length > 0 ? first.linemanname : "")}</div>
                     <div className='col-sm-4 fixed fw-bold'>{t("date") + " : " + dateFormatdd(datefrom) + " - " + dateFormatdd(dateto)}</div>
                 </div>
-                
-                    <Table className='table text-center fs-6 table-bordered border-dark'  >
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th style={{ fontSize: "12px" }}>
-                                    {t('no')}
-                                </th>
-                                <th style={{ fontSize: "12px" }}>
-                                    {t('givendate')}
-                                </th>
-                                <th style={{ fontSize: "12px" }}>
-                                    {t('loannotooshort')}
-                                </th>
-                                <th>{t('doc')}</th>
-                                <th style={{ fontSize: "12px" }}>
-                                    {t('customer')}
-                                </th>
-                                <th style={{ fontSize: "12px" }}>{t('city')}</th>
-                                <th style={{ fontSize: "12px", width: "60px" }} className='w-5'>
-                                    {t('booknomedium')}
-                                </th>
-                                <th style={{ fontSize: "12px" }}>
-                                    {t('enddate')}
-                                </th>
-                                <th style={{ fontSize: "12px" }}>{t('givenamount')}</th>
-                                <th style={{ fontSize: "12px" }}>{t('doc')}</th>
-                                <th style={{ fontSize: "12px" }}>{t('interest')}</th>
-                                <th style={{ fontSize: "12px" }}>{t('total')}</th>
-                                <th style={{ fontSize: "12px" }}>{t('week')}</th>
-                                <th style={{ fontSize: "12px" }}>{t('pay')}</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                pageRecords && pageRecords.length > 0
-                                    ?
-                                    (pageRecords.map((customer, i) => {
-                                        serialno = serialno + 1;
-                                        pagetotalgiven = pagetotalgiven + customer.givenamount;
-                                        pagetotaldocument = pagetotaldocument + customer.documentamount;
-                                        pagetotalinterest = pagetotalinterest + customer.interestamount;
-                                        pagetotalamount = pagetotalamount + customer.totalamount;
-                                        return (
-                                            <tr>
-                                                <td></td>
-                                                <td style={{ fontSize: "12px" }}>{serialno}</td>
-                                                <td style={{ fontSize: "12px" }}>{dateFormatdd(customer.givendate)}</td>
-                                                <td className="fw-bold" style={{ fontSize: "12px" }}>{customer.loannumber}</td>
-                                                <td style={{ fontSize: "12px" }}>{customer.document}</td>
 
-                                                <td style={{ fontSize: "12px" }}>{customer.customer}</td>
-                                                <td style={{ fontSize: "12px" }}>{customer.referencecity}</td>
-                                                <td style={{ fontSize: "12px" }}>{customer.bookno}</td>
-                                                <td style={{ fontSize: "12px" }}>{dateFormatdd(customer.finisheddate)}</td>
-                                                <td style={{ fontSize: "12px" }}>{customer.givenamount}</td>
-                                                <td style={{ fontSize: "12px" }}>{customer.documentamount}</td>
-                                                <td style={{ fontSize: "12px" }}>{customer.interestamount}</td>
-                                                <td style={{ fontSize: "12px" }}>{customer.totalamount}</td>
-                                                <td style={{ fontSize: "12px" }}>{customer.weekcount}</td>
-                                                <td style={{ fontSize: "12px" }}>{customer.dueamount}</td>
-                                                <td></td>
-                                            </tr>
-
-                                        )
-                                    })
-                                    )
-                                    :
-                                    t('tabledata')
-                            }
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td className='fw-bold' style={{ fontSize: "12px" }}>{t('pagetotal')}</td>
-                                <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotalgiven}</td>
-                                <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotaldocument}</td>
-                                <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotalinterest}</td>
-                                <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotalamount}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
+                <Table className='table text-center fs-6 table-bordered border-dark'  >
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th style={{ fontSize: "12px" }}>
+                                {t('no')}
+                            </th>
+                            <th style={{ fontSize: "12px" }}>
+                                {t('givendate')}
+                            </th>
+                            <th style={{ fontSize: "12px" }}>
+                                {t('loannotooshort')}
+                            </th>
+                            <th>{t('doc')}</th>
+                            <th style={{ fontSize: "12px" }}>
+                                {t('customer')}
+                            </th>
+                            <th style={{ fontSize: "12px" }}>{t('city')}</th>
+                            <th style={{ fontSize: "12px", width: "60px" }} className='w-5'>
+                                {t('booknomedium')}
+                            </th>
+                            <th style={{ fontSize: "12px" }}>
+                                {t('enddate')}
+                            </th>
+                            <th style={{ fontSize: "12px" }}>{t('givenamount')}</th>
+                            <th style={{ fontSize: "12px" }}>{t('doc')}</th>
+                            <th style={{ fontSize: "12px" }}>{t('interest')}</th>
+                            <th style={{ fontSize: "12px" }}>{t('total')}</th>
+                            <th style={{ fontSize: "12px" }}>{t('week')}</th>
+                            <th style={{ fontSize: "12px" }}>{t('pay')}</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         {
-                            isLastPage? <tr className="rounded bg-white ">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td className='fw-bold' style={{ fontSize: "12px" }}>{t('total')}</td>
-                                <td className='fw-bold' style={{ fontSize: "12px" }}>{totalgiven}</td>
-                                <td className='fw-bold' style={{ fontSize: "12px" }}>{totaldocument}</td>
-                                <td className='fw-bold' style={{ fontSize: "12px" }}>{totalinterest}</td>
-                                <td className='fw-bold' style={{ fontSize: "12px" }}>{totalamount}</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr> : null
-                        }
-                    </Table>
-                    {!isLastPage && <div style={{ pageBreakAfter: "always" }} ><div style={{ paddingTop: "20px" }}></div></div>}
+                            pageRecords && pageRecords.length > 0
+                                ?
+                                (pageRecords.map((customer, i) => {
+                                    serialno = serialno + 1;
+                                    pagetotalgiven = pagetotalgiven + customer.givenamount;
+                                    pagetotaldocument = pagetotaldocument + customer.documentamount;
+                                    pagetotalinterest = pagetotalinterest + customer.interestamount;
+                                    pagetotalamount = pagetotalamount + customer.totalamount;
+                                    return (
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td style={{ fontSize: "12px" }}>{serialno}</td>
+                                            <td style={{ fontSize: "12px" }}>{dateFormatdd(customer.givendate)}</td>
+                                            <td className="fw-bold" style={{ fontSize: "12px" }}>{customer.loannumber}</td>
+                                            <td style={{ fontSize: "12px" }}>{customer.document}</td>
 
-                
+                                            <td style={{ fontSize: "12px" }}>{customer.customer}</td>
+                                            <td style={{ fontSize: "12px" }}>{customer.referencecity}</td>
+                                            <td style={{ fontSize: "12px" }}>{customer.bookno}</td>
+                                            <td style={{ fontSize: "12px" }}>{dateFormatdd(customer.finisheddate)}</td>
+                                            <td style={{ fontSize: "12px" }}>{customer.givenamount}</td>
+                                            <td style={{ fontSize: "12px" }}>{customer.documentamount}</td>
+                                            <td style={{ fontSize: "12px" }}>{customer.interestamount}</td>
+                                            <td style={{ fontSize: "12px" }}>{customer.totalamount}</td>
+                                            <td style={{ fontSize: "12px" }}>{customer.weekcount}</td>
+                                            <td style={{ fontSize: "12px" }}>{customer.dueamount}</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+
+                                    )
+                                })
+                                )
+                                :
+                                t('tabledata')
+                        }
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td className='fw-bold' style={{ fontSize: "12px" }}>{t('pagetotal')}</td>
+                            <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotalgiven}</td>
+                            <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotaldocument}</td>
+                            <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotalinterest}</td>
+                            <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotalamount}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                    {
+                        isLastPage ? <tr className="rounded bg-white ">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td className='fw-bold' style={{ fontSize: "12px" }}>{t('total')}</td>
+                            <td className='fw-bold' style={{ fontSize: "12px" }}>{totalgiven}</td>
+                            <td className='fw-bold' style={{ fontSize: "12px" }}>{totaldocument}</td>
+                            <td className='fw-bold' style={{ fontSize: "12px" }}>{totalinterest}</td>
+                            <td className='fw-bold' style={{ fontSize: "12px" }}>{totalamount}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr> : null
+                    }
+                </Table>
+                {!isLastPage && <div style={{ pageBreakAfter: "always" }} ><div style={{ paddingTop: "20px" }}></div></div>}
+
+
             </Fragment>
         )
     }
