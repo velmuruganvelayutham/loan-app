@@ -101,7 +101,7 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting,type }) => {
     return (
       <Fragment >
         
-        <div style={{ display: "flex", alignItems: "center", paddingTop: page === 1 ? "0px" : "19px" }} className='linechecking-print-margin'>
+        <div style={{ display: "flex", alignItems: "center", paddingTop: page === 1 ? "10px" : "19px" }} className='linechecking-print-margin'>
           <div className='col-sm-6 fixed' >
             <h4>{(company)}</h4>
           </div>
