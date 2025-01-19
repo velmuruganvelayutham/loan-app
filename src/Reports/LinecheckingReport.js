@@ -7,12 +7,10 @@ import PlaceHolder from "../components/spinner/placeholder";
 import { startOfWeek, endOfWeek } from '../FunctionsGlobal/StartDateFn';
 import ListLineChecking from "./ListLineChecking";
 import PreviousWeekList from "./PreviousWeekList"
-import ReactToPrint from 'react-to-print';
-
 import NewAccountDetails from "./NewAccountDetails";
 import WeekEndAccountDetails from "./WeekEndAccountDetails";
 import CurrentWeekGivenAmount from "./CurrentWeekGivenAmount";
-import NotRunningAccounts from "./NotRunningAccounts";
+import ReactToPrint from 'react-to-print';
 import PendingAccounts from "./PendingAccounts.js";
 import DailyRecords from "./DailyRecords";
 import {
@@ -31,7 +29,7 @@ function LinecheckingReport() {
     const [company, setCompany] = useState([]);
     const [linemannames, setLinemanNames] = useState([]);
     const reportType = useRef(0);
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const [line, setLine] = useState("");
     const startDateRef = useRef(startOfWeek());
     const endDateRef = useRef(endOfWeek());
@@ -149,7 +147,7 @@ function LinecheckingReport() {
                     }
                 }).then((res) => {
                     Number(reportType.current.value) === 0 ? setCheckingData(res.data) : setCheckingDetailsLine(res.data)
-                    
+
                     setIsLoading(false);
 
                 })
@@ -165,21 +163,25 @@ function LinecheckingReport() {
     }
 
     const handlePrintAll = () => {
-        setIsPrinting(true); // Enable print mode
-        setTimeout(() => {
-            window.print(); // Trigger browser print dialog
-            setIsPrinting(false); // Disable print mode after printing
-        }, 1000); // Give some time for the render to complete
-    };
-    const handlePrint = () => {
-        window.print();
+        if (Number(reportType.current.value) === 5) {
+            
+            window.print();
+        }
+        else {
+            setIsPrinting(true); // Enable print mode
+            setTimeout(() => {
+                window.print(); // Trigger browser print dialog
+                setIsPrinting(false); // Disable print mode after printing
+            }, 1000); // Give some time for the render to complete
+        }
+
     };
 
 
     const renderLineCheckingList = (
         <Row ref={componentRef}>
-            <ListLineChecking pendingLoans={checkingData} date={endDateRef.current.value}
-                company={company.length > 0 ? company[0].companyname : ""} isPrinting={isPrinting} />
+            <ListLineChecking pendingLoans={Number(reportType.current.value) === 0 ? checkingData : checkingDetailsLine} date={endDateRef.current.value}
+                company={company.length > 0 ? company[0].companyname : ""} isPrinting={isPrinting} type={Number(reportType.current.value)} />
 
         </Row>
 
@@ -187,23 +189,23 @@ function LinecheckingReport() {
     const renderpreviousweekList = (
         <Row ref={componentRef}>
             <PreviousWeekList pendingLoans={checkingDetailsLine} date={endDateRef.current.value}
-                company={company.length > 0 ? company[0].companyname : ""} />
+                company={company.length > 0 ? company[0].companyname : ""} isPrinting={isPrinting} />
         </Row>
 
     )
     const rendernewaccountList = (
         <Row ref={componentRef}>
-            <NewAccountDetails pendingLoans={checkingDetailsLine} datefrom={startDateRef.current.value} dateto={endDateRef.current.value} />
+            <NewAccountDetails pendingLoans={checkingDetailsLine} datefrom={startDateRef.current.value} dateto={endDateRef.current.value} isPrinting={isPrinting} />
         </Row>
     )
     const renderweekendaccountList = (
-        <Row ref={componentRef}>
-            <WeekEndAccountDetails pendingLoans={checkingDetailsLine} datefrom={startDateRef.current.value} dateto={endDateRef.current.value} />
+        <Row >
+            <WeekEndAccountDetails pendingLoans={checkingDetailsLine} datefrom={startDateRef.current.value} dateto={endDateRef.current.value} isPrinting={isPrinting} />
         </Row>
     )
     const rendercurrentweekgivenaccountList = (
         <Row ref={componentRef}>
-            <CurrentWeekGivenAmount pendingLoans={checkingDetailsLine} datefrom={startDateRef.current.value} dateto={endDateRef.current.value} />
+            <CurrentWeekGivenAmount pendingLoans={checkingDetailsLine} datefrom={startDateRef.current.value} dateto={endDateRef.current.value} isPrinting={isPrinting} />
         </Row>
     )
     const renderdailyrecords = (
@@ -211,12 +213,7 @@ function LinecheckingReport() {
             <DailyRecords datefrom={startDateRef.current.value} dateto={endDateRef.current.value} linemanname={linemannameday} linamnline={linemanlineno} collectiondate={printDateRef} />
         </Row>
     )
-    const rendernotrunningaccounts = (
-        <Row ref={componentRef}>
-            <NotRunningAccounts pendingLoans={checkingDetailsLine} date={endDateRef.current.value}
-                company={company.length > 0 ? company[0].companyname : ""} />
-        </Row>
-    )
+    
     const renderPendingAccountList = (
         <Row ref={componentRef}>
             <PendingAccounts pendingLoans={checkingDetailsLine} date={endDateRef.current.value}
@@ -334,32 +331,32 @@ function LinecheckingReport() {
                                 {t('processbuttonlabel')}
                             </Button>{' '}
                         </div>
-                        <div className="col-md-3 mb-4 ">
-                            <ReactToPrint trigger={() => (
-                                <Button variant="primary" size="lg" type="button" className="text-center" onClick={() => handlePrint}>
-                                    {t('printbutton')}
-                                </Button>
-
-                            )}
-                                content={() => componentRef.current} />
-                        </div>
+                        
                         <Col className="col-md-3 mb-4 " >
                             <Button variant="primary" size="lg" type="button" className="text-center" onClick={handlePrintAll}>
                                 {t('printall')}
                             </Button>
                         </Col>
-                        
+                        <Col className="col-md-3 mb-4 ">
+                            <ReactToPrint trigger={() => (
+                                <Button variant="primary" size="lg" type="button" className="text-center" onClick={() => handlePrintAll}>
+                                    {t('dailylist')}
+                                </Button>
+
+                            )}
+                                content={() => componentRef.current} />
+                        </Col>
 
                     </Row>
-                    <Row>
+                    <Row  >
                         {isLoading ? <PlaceHolder /> : Number(reportType.current.value) === 0 ?
                             renderLineCheckingList : Number(reportType.current.value) === 1 ?
                                 renderpreviousweekList : Number(reportType.current.value) === 2 ?
                                     rendernewaccountList : Number(reportType.current.value) === 3 ?
                                         rendercurrentweekgivenaccountList : Number(reportType.current.value) === 4 ?
                                             renderweekendaccountList : Number(reportType.current.value) === 6 ?
-                                                rendernotrunningaccounts :Number(reportType.current.value)===7?
-                                                renderPendingAccountList: renderdailyrecords}
+                                                renderLineCheckingList : Number(reportType.current.value) === 7 ?
+                                                    renderPendingAccountList : renderdailyrecords}
                         {errorMessage && <div className="error">{errorMessage}</div>}
                     </Row>
 

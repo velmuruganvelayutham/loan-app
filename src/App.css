@@ -308,7 +308,15 @@ Table.totalledgertable {
     margin: 0;
     padding: 0;
   }
-
+  @page landscape {
+    size: 11.69in 8.27in; /* A4 Landscape */
+    margin: 0;
+    padding: 0;
+  }
+  .landscape {
+    page: landscape;
+  }
+  
   body {
     margin: 0;
     padding: 0;
@@ -340,6 +348,7 @@ Table.totalledgertable {
   }
   table, tr, td {
     page-break-inside: avoid; /* Prevent splitting rows and tables */
+    
   }
   .disable-print * {
     display: none !important; /* Prevent printing */

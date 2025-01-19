@@ -5,56 +5,24 @@ import { useTranslation } from "react-i18next";
 import { dateFormatdd } from "../FunctionsGlobal/StartDateFn"
 var first = [];
 
-const ListLineChecking = ({ pendingLoans, date, company, isPrinting }) => {
+const ListLineChecking = ({ pendingLoans, date, company, isPrinting,type }) => {
 
   const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 35;
-  const nPage = Math.ceil(Object.keys(pendingLoans).length / recordsPerPage);
-
-  var serialno = 0;
-
-  //first = records.length > 0 ? pendingLoans[0] : "";
-
-  var pagetotal = 0;
-  var pendingtotal = 0;
-  var pending = 0;
-  var duepending = 0;
-  var pendingweek = 0;
-  var pendingweektotal = 0;
   var duependingcheck = 0;
   var duependingweekcheck = 0;
   var duependingcheckval = 0;
   var pendingweekcheck = 0;
 
 
+  var serialno = 0;
+
+  //first = records.length > 0 ? pendingLoans[0] : "";
+
+
+
   const totalPages = useMemo(() => Math.ceil(pendingLoans.length / recordsPerPage), [pendingLoans]);
-  const records = useMemo(() => {
-    const startIndex = (currentPage - 1) * recordsPerPage;
-    return pendingLoans.slice(startIndex, startIndex + recordsPerPage);
-  }, [pendingLoans, currentPage, recordsPerPage]);
-
-  first = records.length > 0 ? pendingLoans[0] : "";
-
-  /*const calculateTotals = (pageRecords) => {
-    const total = pageRecords.reduce((acc, item) => acc + (item.totalamount - item.collectedtotal), 0);
-    const totalDuePending = pageRecords.reduce((previous, current) => {
-      if (current.collectedamountdate > 0 || current['addFields'].receiptpendingweekafter <= -1 || current.finisheddatepending === 1) {
-        return previous + 0;
-      }
-      // Simplified logic for duePending calculation
-      let duependingcheck = current.dueamount;
-      duependingcheck = parseFloat(duependingcheck.toFixed(2));
-      return previous + duependingcheck;
-    }, 0);
-    const totalPendingWeek = pageRecords.reduce((previousval, currentval) => {
-      let duependingweekcheck = currentval.dueamount;
-      duependingweekcheck = parseFloat(duependingweekcheck.toFixed(2));
-      return previousval + duependingweekcheck;
-    }, 0);
-
-    return { total, totalDuePending, totalPendingWeek };
-  };*/
   const totals = useMemo(() => {
     const total = pendingLoans.reduce((acc, item) => acc + (item.totalamount - item.collectedtotal), 0);
     const totalDuePending = pendingLoans.reduce((previous, current) => {
@@ -115,32 +83,41 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting }) => {
     return { total, totalDuePending, totalPendingWeek };
   }, [pendingLoans]);
 
-
   const renderPage = (page) => {
     const startIndex = (page - 1) * recordsPerPage;
 
     const pageRecords = pendingLoans.slice(startIndex, startIndex + recordsPerPage);
     const isLastPage = page === totalPages;
-//calculation//
-//const totals = calculateTotals(pendingLoans);
+    var pagetotal = 0;
+    var pendingtotal = 0;
+    var pending = 0;
+    var duepending = 0;
+    var pendingweek = 0;
+    var pendingweektotal = 0;
 
+    first = pageRecords.length > 0 ? pendingLoans[0] : "";
     serialno = startIndex;
+    
     return (
       <Fragment >
-        <div style={{ display: "flex", alignItems: "center",paddingTop:page===1?"0px":"15px" }} className='print-margin'>
+        
+        <div style={{ display: "flex", alignItems: "center", paddingTop: page === 1 ? "0px" : "15px" }} className='print-margin'>
           <div className='col-sm-6 fixed' >
             <h4>{(company)}</h4>
           </div>
-          <div className='col-sm-6 fixed'><h4>{t('linechecking')}</h4></div>
+          <div className='col-sm-6 fixed'><h4>{type===0?t('linechecking'):t('notrunningaccounts')}</h4></div>
         </div>
         <div style={{ display: "flex", alignItems: "center" }} className='col-sm-12 fixed print-margin'>
-          <div className='col-sm-3 fixed' style={{ whiteSpace: "normal", wordWrap: "break-word" }} >{t('city') + " : " + first.city}</div>
-          <div className='col-sm-3 fixed'>{t('customer') + " : " + first.linemanname}</div>
+          {type===0&&(<div className='col-sm-3 fixed' style={{ whiteSpace: "normal", wordWrap: "break-word" }} >{t('city') + " : " + first.city}</div>)}
+          
+          <div className={type===0?'col-sm-3 fixed':'col-sm-6 fixed'}>{t('customer') + " : " + first.linemanname}</div>
           <div className='col-sm-2 fixed'>{t('line') + " : " + (pendingLoans.length > 0 ? first.lineno : "")}</div>
-          <div className='col-sm-2 fixed'>{t("bookno") + " : " + (pendingLoans.length > 0 ? first.bookno : "")}</div>
+          {type===0&&(<div className='col-sm-2 fixed'>{t("bookno") + " : " + (pendingLoans.length > 0 ? first.bookno : "")}</div>)}
           <div className='col-sm-2 fixed'>{t("date") + " : " + dateFormatdd(date)}</div>
+          
         </div>
-        <Table className='table table-bordered border-dark linecheckingtable print-margin' style={{width:"97%"}}  >
+
+        <Table className='table table-bordered border-dark linecheckingtable print-margin' style={{ width: "97%" }}  >
           <thead>
             <tr>
 
@@ -159,7 +136,7 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting }) => {
               <th style={{ fontSize: "11px", width: "7%", textAlign: "center" }}>
                 {t('pay')}
               </th>
-              <th style={{ fontSize: "10px", width: "10%", textAlign:"center" }}>
+              <th style={{ fontSize: "10px", width: "10%", textAlign: "center" }}>
                 {t('pending')}
               </th>
 
@@ -235,7 +212,7 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting }) => {
                       {
                         customer.pendingweekcolor >= 4
                           ?
-                          <td style={{ backgroundColor: "black", color: "white", fontSize: "11px",textAlign:"center" }} >{pendingweek > 0 ? pendingweek : ""}</td>
+                          <td style={{ backgroundColor: "black", color: "white", fontSize: "11px", textAlign: "center" }} >{pendingweek > 0 ? pendingweek : ""}</td>
                           :
                           customer.pendingweekcolor <= 4 && customer['addFields'].receiptpendingweekafter > 0
                             ?
@@ -291,7 +268,7 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting }) => {
           }
 
         </Table>
-       {!isLastPage && <div style={{ pageBreakAfter: "always"}} ><div style={{paddingTop:"20px"}}></div></div>} 
+        {!isLastPage && <div style={{ pageBreakAfter: "always" }} ><div style={{ paddingTop: "20px" }}></div></div>}
       </Fragment>
     );
   };

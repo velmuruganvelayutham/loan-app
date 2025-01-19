@@ -202,18 +202,18 @@ const GivenMoneyDetailsList = ({ pendingLoans }) => {
                 <nav>
                 <Pagination>
                     <Pagination.Prev >
-                        <a href="#" className='page-link' onClick={prevPage}>{t('pageprev')}</a>
+                        <button href="#" className='page-link' onClick={prevPage}>{t('pageprev')}</button>
                     </Pagination.Prev>
                     {
                         numbers.map((n, i) => (
                             <Pagination.Item>
-                                <a href="#" className='page-link'
-                                    onClick={() => changeCPage(n)}>{n}</a>
+                                <button href="#" className='page-link'
+                                    onClick={() => changeCPage(n)}>{n}</button>
                             </Pagination.Item>
                         ))
                     }
                     <Pagination.Next>
-                        <a href="#" className='page-link' onClick={nextPage}>{t('pagenext')}</a>
+                        <button href="#" className='page-link' onClick={nextPage}>{t('pagenext')}</button>
                     </Pagination.Next>
                 </Pagination>
             </nav>

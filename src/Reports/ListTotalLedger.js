@@ -60,8 +60,8 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
   }
 
   return (
-    <Fragment>
-      <div>
+    <Fragment >
+      <div className="landscape">
       {Number(reportypeval) === 0 ?
         <div style={{ paddingLeft: "30px" }}>
           <Row className='col-md-12  mt-5'>
