@@ -29,7 +29,11 @@
   min-height: 15px;
   height: 15px;
 }
-
+.currentweekamount {
+  line-height: 20px;
+  min-height: 15px;
+  height: 15px;
+}
 .linechecking {
   line-height: 10px;
   min-height: 10px;

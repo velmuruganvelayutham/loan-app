@@ -101,7 +101,7 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
                                     pagetotalinterest = pagetotalinterest + customer.interestamount;
                                     pagetotalamount = pagetotalamount + customer.totalamount;
                                     return (
-                                        <tr>
+                                        <tr className='currentweekamount'>
                                             <td></td>
                                             <td></td>
                                             <td style={{ fontSize: "12px" }}>{serialno}</td>
@@ -129,7 +129,7 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
                                 :
                                 t('tabledata')
                         }
-                        <tr>
+                        <tr className='currentweekamount'>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -151,7 +151,7 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
                         </tr>
                     </tbody>
                     {
-                        isLastPage ? <tr className="rounded bg-white ">
+                        isLastPage ? <tr className="rounded bg-white currentweekamount">
                             <td></td>
                             <td></td>
                             <td></td>
