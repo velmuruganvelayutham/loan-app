@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { dateFormatdd } from "../FunctionsGlobal/StartDateFn"
 var first = [];
 
-const ListLineChecking = ({ pendingLoans, date, company, isPrinting,type }) => {
+const ListLineChecking = ({ pendingLoans, date, company, isPrinting, type }) => {
 
   const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
@@ -84,6 +84,7 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting,type }) => {
   }, [pendingLoans]);
 
   const renderPage = (page) => {
+
     const startIndex = (page - 1) * recordsPerPage;
 
     const pageRecords = pendingLoans.slice(startIndex, startIndex + recordsPerPage);
@@ -97,37 +98,38 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting,type }) => {
 
     first = pageRecords.length > 0 ? pendingLoans[0] : "";
     serialno = startIndex;
-    
+
     return (
       <Fragment >
-        
-        <div style={{ display: "flex", alignItems: "center", paddingTop: page === 1 ? "10px" : "19px" }} className='linechecking-print-margin'>
+
+        <div style={{ display: "flex", alignItems: "center", paddingTop: page === 1 ? "5px" : "19px" }} className='linechecking-print-margin'>
           <div className='col-sm-6 fixed' >
             <h4>{(company)}</h4>
           </div>
-          <div className='col-sm-6 fixed'><h4>{type===0?t('linechecking'):t('notrunningaccounts')}</h4></div>
+          <div className='col-sm-6 fixed'><h4>{type === 0 ? t('linechecking') : t('notrunningaccounts')}</h4></div>
         </div>
         <div style={{ display: "flex", alignItems: "center" }} className='col-sm-12 fixed linechecking-print-margin'>
-          {type===0&&(<div className='col-sm-3 fixed' style={{ whiteSpace: "normal", wordWrap: "break-word" }} >{t('city') + " : " + first.city}</div>)}
-          
-          <div className={type===0?'col-sm-3 fixed':'col-sm-6 fixed'}>{t('customer') + " : " + first.linemanname}</div>
+          {type === 0 && (<div className='col-sm-3 fixed' style={{ whiteSpace: "normal", wordWrap: "break-word" }} >{t('city') + " : " + first.city}</div>)}
+
+          <div className={type === 0 ? 'col-sm-3 fixed' : 'col-sm-6 fixed'}>{t('customer') + " : " + first.linemanname}</div>
           <div className='col-sm-2 fixed'>{t('line') + " : " + (pendingLoans.length > 0 ? first.lineno : "")}</div>
-          {type===0&&(<div className='col-sm-2 fixed'>{t("bookno") + " : " + (pendingLoans.length > 0 ? first.bookno : "")}</div>)}
+          {type === 0 && (<div className='col-sm-2 fixed'>{t("bookno") + " : " + (pendingLoans.length > 0 ? first.bookno : "")}</div>)}
           <div className='col-sm-2 fixed'>{t("date") + " : " + dateFormatdd(date)}</div>
-          
+
         </div>
 
-        <Table className='table table-bordered border-dark linecheckingtable linechecking-print-margin' style={{ width: "97%" }}  >
+        <Table className='table table-bordered border-dark linecheckingtable linechecking-print-margin' style={{margin:0,padding:0,width:"103%"}}  >
           <thead>
             <tr>
 
+              <th style={{ fontSize: "11px", width: "1.5%" }}></th>
               <th style={{ fontSize: "11px", width: "4%" }}>{t('noshort')}</th>
               <th style={{ fontSize: "8px", width: "7%" }}>{t('startdate')}</th>
               <th style={{ fontSize: "11px", width: "6%" }}>{t('loannotooshort')}</th>
               <th style={{ fontSize: "11px", width: "13%" }}>{t('customer')}</th>
               <th style={{ fontSize: "11px", width: "3%" }}></th>
               <th style={{ fontSize: "11px", width: "13%" }}>{t('fathername')}</th>
-              <th style={{ fontSize: "11px", width: "12%" }}>{t('address')}</th>
+              <th style={{ fontSize: "11px", width: "13%" }}>{t('address')}</th>
               <th style={{ fontSize: "11px", width: "9%" }}>{t('phoneno')}</th>
               <th style={{ fontSize: "8px", width: "7%" }}>{t('enddate')}</th>
               <th style={{ fontSize: "11px", width: "9%", textAlign: "center" }}>
@@ -139,6 +141,7 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting,type }) => {
               <th style={{ fontSize: "10px", width: "10%", textAlign: "center" }}>
                 {t('pending')}
               </th>
+              <th style={{ fontSize: "11px", width: "2%" }}></th>
 
             </tr>
           </thead>
@@ -197,7 +200,7 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting,type }) => {
 
                   return (
                     <tr className='linechecking'>
-
+                      <td></td>
                       <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden' id='nowidth'>{serialno}</td>
                       <td style={{ fontSize: "11px" }} className='text-nowrap overflow-hidden'>{dateFormatdd(customer.startdate)}</td>
                       <td style={{ fontSize: "11px" }} className='text-nowrap overflow-hidden'>{customer.loannumber}</td>
@@ -220,7 +223,7 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting,type }) => {
                             :
                             <td style={{ fontSize: "11px", textAlign: "center" }} ></td>
                       }
-
+                      <td></td>
                     </tr>
 
                   )
@@ -230,7 +233,7 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting,type }) => {
                 t('tabledata')
             }
             <tr className='linechecking'>
-
+              <td></td>
               <td ></td>
               <td ></td>
               <td ></td>
@@ -243,14 +246,14 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting,type }) => {
               <td className='fw-bold' style={{ fontSize: "11px", textAlign: "center" }}>{pagetotal}</td>
               <td className='fw-bold' style={{ fontSize: "11px", textAlign: "center" }}>{pendingtotal}</td>
               <td className='fw-bold' style={{ fontSize: "11px", textAlign: "center" }}>{pendingweektotal}</td>
-
+              <td></td>
             </tr>
           </tbody>
 
           {
 
             isLastPage ? <tr className="rounded bg-white">
-
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -263,7 +266,7 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting,type }) => {
               <td className='fw-bold' style={{ fontSize: "13px", textAlign: "center" }}>{totals.total}</td>
               <td className='fw-bold' style={{ fontSize: "13px", textAlign: "center" }}>{totals.totalDuePending}</td>
               <td className='fw-bold' style={{ fontSize: "13px", textAlign: "center" }}>{totals.totalPendingWeek.toFixed(2)}</td>
-
+              <td></td>
             </tr> : null
           }
 

@@ -299,7 +299,6 @@ Table.totalledgertable {
   padding: 15px;
   border-radius: 5px;
 }
-
 @media print {
   * {
     margin: 0;
@@ -331,7 +330,7 @@ Table.totalledgertable {
   }
 
   .linecheckingtable {
-    margin: auto;
+    
     width: 100%;
     border-collapse: collapse;
     -webkit-print-color-adjust: exact; /* Ensures colors are printed accurately */
@@ -361,6 +360,6 @@ Table.totalledgertable {
     margin-left:10px !important;
   }
   .linechecking-print-margin{
-    margin-left:20px !important;
+    margin-left:0px !important;
   }
 }
