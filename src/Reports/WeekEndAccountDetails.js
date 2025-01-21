@@ -20,6 +20,7 @@ const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting }) =
     var totalcredit = 0;
     var totalincentive = 0;
     const totalPages = useMemo(() => Math.ceil(pendingLoans.length / recordsPerPage), [pendingLoans]);
+
     const renderPage = (page) => {
         var pagetotaldebit = 0;
         var pagetotalcredit = 0;
@@ -30,7 +31,18 @@ const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting }) =
         const isLastPage = page === totalPages;
         first = pageRecords.length > 0 ? pendingLoans[0] : "";
         serialno = startIndex;
-
+        
+        if (isLastPage && totalPages>0) {
+            totalcredit = pendingLoans.reduce((previous, current) => {
+                return previous + current.collected
+            }, 0);
+            totaldebit = pendingLoans.reduce((previous, current) => {
+                return previous + current.totalamount
+            }, 0);
+            totalincentive = pendingLoans.reduce((previous, current) => {
+                return previous + Number(((current.collected * current.incentivepercentage) / 100).toFixed(0))
+            }, 0);
+        }
         return (
             <Fragment>
                 <div style={{ paddingLeft: "27px", display: "flex", alignItems: "center", paddingTop: page === 1 ? "0px" : "15px" }} className='print-margin'>

@@ -13,6 +13,7 @@ import CurrentWeekGivenAmount from "./CurrentWeekGivenAmount";
 import ReactToPrint from 'react-to-print';
 import PendingAccounts from "./PendingAccounts.js";
 import DailyRecords from "./DailyRecords";
+
 import {
     useAuth
 } from "@clerk/clerk-react";
@@ -172,7 +173,7 @@ function LinecheckingReport() {
             setTimeout(() => {
                 window.print(); // Trigger browser print dialog
                 setIsPrinting(false); // Disable print mode after printing
-            }, 1000); // Give some time for the render to complete
+            }, 2000); // Give some time for the render to complete
         }
 
     };
@@ -186,6 +187,7 @@ function LinecheckingReport() {
         </Row>
 
     )
+    
     const renderpreviousweekList = (
         <Row ref={componentRef}>
             <PreviousWeekList pendingLoans={checkingDetailsLine} date={endDateRef.current.value}
@@ -217,7 +219,7 @@ function LinecheckingReport() {
     const renderPendingAccountList = (
         <Row ref={componentRef}>
             <PendingAccounts pendingLoans={checkingDetailsLine} date={endDateRef.current.value}
-                company={company.length > 0 ? company[0].companyname : ""} isPrinting={isPrinting} />
+                company={company.length > 0 ? company[0].companyname : ""} isPrinting={isPrinting} bookno={bookRef.current?Number(bookRef.current.value):""} />
 
         </Row>
 

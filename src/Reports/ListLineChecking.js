@@ -118,31 +118,47 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting, type }) => 
 
         </div>
 
-        <Table className='table table-bordered border-dark linecheckingtable linechecking-print-margin' style={{margin:0,padding:0,width:"103%"}}  >
+        <Table className='table table-bordered border-dark linecheckingtable' style={{ margin: 0, padding: 0, width: "103%" }}  >
           <thead>
             <tr>
-
+              
               <th style={{ fontSize: "11px", width: "1.5%" }}></th>
-              <th style={{ fontSize: "11px", width: "4%" }}>{t('noshort')}</th>
-              <th style={{ fontSize: "8px", width: "7%" }}>{t('startdate')}</th>
-              <th style={{ fontSize: "11px", width: "6%" }}>{t('loannotooshort')}</th>
-              <th style={{ fontSize: "11px", width: "13%" }}>{t('customer')}</th>
-              <th style={{ fontSize: "11px", width: "3%" }}></th>
-              <th style={{ fontSize: "11px", width: "13%" }}>{t('fathername')}</th>
-              <th style={{ fontSize: "11px", width: "13%" }}>{t('address')}</th>
-              <th style={{ fontSize: "11px", width: "9%" }}>{t('phoneno')}</th>
-              <th style={{ fontSize: "8px", width: "7%" }}>{t('enddate')}</th>
-              <th style={{ fontSize: "11px", width: "9%", textAlign: "center" }}>
-                {t('loanamount')}
+              <th style={{ fontSize: "11px", width: "3%" }}>
+                {t('noshort')}
               </th>
-              <th style={{ fontSize: "11px", width: "7%", textAlign: "center" }}>
-                {t('pay')}
+              <th style={{ fontSize: "9px", width: "5%" }}>
+                {t('startdate')}
+              </th >
+              <th style={{ fontSize: "11px", width: "4%" }}>
+                {t('loannotooshort')}
               </th>
-              <th style={{ fontSize: "10px", width: "10%", textAlign: "center" }}>
-                {t('pending')}
+              <th style={{ fontSize: "11px", width: "9%" }} >
+                {t('customer')}
               </th>
               <th style={{ fontSize: "11px", width: "2%" }}></th>
-
+              <th style={{ fontSize: "11px", width: "8%" }} >
+                {t('fathername')}
+              </th>
+              <th style={{ fontSize: "11px", width: "9%" }} >
+                {t('address')}
+              </th>
+              <th style={{ fontSize: "11px", width: "6%" }}>
+                {t('phoneno')}
+              </th>
+              <th style={{ fontSize: "9px", width: "5%" }}>
+                {t('enddate')}
+              </th>
+              <th style={{ fontSize: "11px", width: "6%", textAlign: "center" }}>
+                {t('loanamount')}
+              </th>
+              <th style={{ fontSize: "11px", width: "5%", textAlign: "center" }}>
+                {t('pay')}
+              </th>
+              <th style={{ fontSize: "9px", width: "6%", textAlign: "center" }}>
+                {t('pending')}
+              </th>
+              <th style={{ fontSize: "11px", width: "1.5%" }}></th>
+              
             </tr>
           </thead>
           <tbody>
