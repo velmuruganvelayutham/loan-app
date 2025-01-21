@@ -55,7 +55,7 @@ const PendingAccounts = ({ pendingLoans, date, company, isPrinting, bookno }) =>
         serialno = startIndex;
         return (
             <Fragment >
-                <div style={{ display: "flex", alignItems: "center" }} className='print-margin' >
+                <div style={{ display: "flex", alignItems: "center",paddingTop: page === 1 ? "5px" : "19px" }} className='print-margin' >
                     <div className='col-sm-6 fixed' >
                         <h4>{(company)}</h4>
                     </div>

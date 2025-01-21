@@ -71,13 +71,13 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
               </div></Col></Row>
         </div>
         :
-        <div className='print-margin'>
+        <div className='totalledger-print-margin'>
           <Row className='col-md-10 mx-auto mt-5' >
             <Col className='col-md-4 mx-auto'>{companyname}</Col>
             <Col className='col-md-3 fw-bold text-center'>{t('line') + " " + linamnline}</Col>
             <Col className='col-md-3 fw-bold text-center'>{linemanname}</Col>
           </Row>
-          <Row><Col><div className='col-md-10 fw-bold print-margin'>{dateFormatddmmyyyy(datefrom)}&nbsp;-&nbsp;{dateFormatddmmyyyy(dateto)}
+          <Row><Col><div className='col-md-10 fw-bold totalledger-print-margin text-center'>{dateFormatddmmyyyy(datefrom)}&nbsp;-&nbsp;{dateFormatddmmyyyy(dateto)}
             &nbsp;&nbsp;&nbsp;&nbsp;{t('totalledgernamecitywise')}
           </div></Col></Row>
         </div>

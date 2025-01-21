@@ -84,9 +84,9 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
                             <th style={{ fontSize: "12px" }}>{t('interest')}</th>
                             <th style={{ fontSize: "12px" }}>{t('total')}</th>
                             <th style={{ fontSize: "12px" }}>{t('week')}</th>
-                            <th style={{ fontSize: "12px" }}>{t('pay')}</th>
+                            <th style={{ fontSize: "12px",textAlign:"left" }}>{t('pay')}</th>
+                            <th style={{width:"1.5%"}}></th>
                             <th style={{width:"2.5%"}}></th>
-                            
                         </tr>
                     </thead>
                     <tbody>
@@ -117,9 +117,9 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
                                             <td style={{ fontSize: "12px" }}>{customer.interestamount}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.totalamount}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.weekcount}</td>
-                                            <td style={{ fontSize: "12px" }}>{customer.dueamount}</td>
+                                            <td style={{ fontSize: "12px",textAlign:"left" }}>{customer.dueamount}</td>
                                             <td></td>
-                                            
+                                            <td></td>
                                         </tr>
 
                                     )
@@ -146,7 +146,7 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
                             <td></td>
                             <td></td>
                             <td></td>
-                            
+                            <td></td>
                         </tr>
                     </tbody>
                     {
@@ -168,7 +168,7 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
                             <td></td>
                             <td></td>
                             <td></td>
-                            
+                            <td></td>
                         </tr> : null
                     }
                 </Table>
