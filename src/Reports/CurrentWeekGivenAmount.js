@@ -59,7 +59,6 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
                     <thead>
                         <tr>
                             <th style={{width:"1%"}}></th>
-                            
                             <th style={{ fontSize: "12px" }}>
                                 {t('no')}
                             </th>
@@ -86,7 +85,7 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
                             <th style={{ fontSize: "12px" }}>{t('total')}</th>
                             <th style={{ fontSize: "12px" }}>{t('week')}</th>
                             <th style={{ fontSize: "12px" }}>{t('pay')}</th>
-                            <th style={{width:"2%"}}></th>
+                            <th style={{width:"2.5%"}}></th>
                             
                         </tr>
                     </thead>
