@@ -54,11 +54,10 @@ const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting }) =
                     <div className='col-sm-4 fixed fw-bold'>{t("date") + " : " + dateFormatdd(datefrom) + " - " + dateFormatdd(dateto)}</div>
 
                 </div>
-                <Table className='table text-center fs-6 table-bordered border-dark'  >
+                <Table className='table text-center fs-6 table-bordered border-dark' style={{width:"103%"}}  >
                     <thead>
                         <tr>
-                            <th></th>
-                            <th></th>
+                            <th style={{ fontSize: "11px", width: "1%" }}></th>
                             <th style={{ fontSize: "12px" }}>
                                 {t('no')}
                             </th>
@@ -82,8 +81,8 @@ const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting }) =
                             <th style={{ fontSize: "12px" }}>%</th>
                             <th style={{ fontSize: "12px" }}>%</th>
                             <th style={{ fontSize: "12px" }}>{t('lineincentive')}</th>
-                            <th></th>
-                            <th></th>
+                            <th style={{ fontSize: "11px", width: "2%" }}></th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -98,7 +97,7 @@ const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting }) =
                                     pagetotalincentive = pagetotalincentive + Number(percentamount)
                                     return (
                                         <tr className='newaccountaddress'>
-                                            <td></td>
+                                            
                                             <td></td>
                                             <td style={{ fontSize: "12px" }}>{serialno}</td>
                                             <td className="fw-bold" style={{ fontSize: "12px" }}>{customer.loannumber}</td>
@@ -114,7 +113,7 @@ const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting }) =
                                             <td style={{ fontSize: "12px" }}>{Number(customer.incentivepercentage) < 1 ? customer.incentivepercentage : 0}</td>
                                             <td style={{ fontSize: "12px" }}>{percentamount}</td>
                                             <td></td>
-                                            <td></td>
+                                            
                                         </tr>
 
                                     )
@@ -124,7 +123,7 @@ const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting }) =
                                 t('tabledata')
                         }
                         <tr className='newaccountaddress'>
-                            <td></td>
+                            
                             <td></td>
                             <td></td>
                             <td></td>
@@ -139,12 +138,12 @@ const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting }) =
                             <td></td>
                             <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotalincentive}</td>
                             <td></td>
-                            <td></td>
+                            
                         </tr>
                     </tbody>
                     {
                         isLastPage ? <tr className="rounded bg-white newaccountaddress">
-                            <td></td>
+                            
                             <td></td>
                             <td></td>
                             <td></td>
@@ -159,7 +158,7 @@ const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting }) =
                             <td></td>
                             <td className='fw-bold' style={{ fontSize: "12px" }}>{totalincentive}</td>
                             <td></td>
-                            <td></td>
+                            
                         </tr> : null
                     }
                 </Table>

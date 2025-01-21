@@ -53,7 +53,7 @@ const PreviousWeekList = ({ pendingLoans, date, company, isPrinting }) => {
                     <thead>
                         <tr>
                             
-                            <th></th>
+                            <th style={{ fontSize: "11px", width: "1%" }}></th>
                             <th style={{ fontSize: "12px" }}>
                                 {t('no')}
                             </th>
@@ -79,8 +79,7 @@ const PreviousWeekList = ({ pendingLoans, date, company, isPrinting }) => {
                             </th>
                             <th style={{ fontSize: "12px" }}>{t('debitcredit')}</th>
                             <th style={{ fontSize: "12px" }}>{t('city')}</th>
-                            <th></th>
-                            
+                            <th style={{ fontSize: "11px", width: "1.5%" }}></th>
                         </tr>
                     </thead>
                     <tbody>

@@ -122,11 +122,11 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting, type }) => 
           <thead>
             <tr>
               
-              <th style={{ fontSize: "11px", width: "1.5%" }}></th>
+              <th style={{ fontSize: "11px", width: "1%" }}></th>
               <th style={{ fontSize: "11px", width: "3%" }}>
                 {t('noshort')}
               </th>
-              <th style={{ fontSize: "9px", width: "5%" }}>
+              <th style={{ fontSize: "9px", width: "5.5%" }}>
                 {t('startdate')}
               </th >
               <th style={{ fontSize: "11px", width: "4%" }}>
@@ -139,10 +139,10 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting, type }) => 
               <th style={{ fontSize: "11px", width: "8%" }} >
                 {t('fathername')}
               </th>
-              <th style={{ fontSize: "11px", width: "9%" }} >
+              <th style={{ fontSize: "11px", width: "8.5%" }} >
                 {t('address')}
               </th>
-              <th style={{ fontSize: "11px", width: "6%" }}>
+              <th style={{ fontSize: "11px", width: "6.5%" }}>
                 {t('phoneno')}
               </th>
               <th style={{ fontSize: "9px", width: "5%" }}>
@@ -154,7 +154,7 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting, type }) => 
               <th style={{ fontSize: "11px", width: "5%", textAlign: "center" }}>
                 {t('pay')}
               </th>
-              <th style={{ fontSize: "9px", width: "6%", textAlign: "center" }}>
+              <th style={{ fontSize: "9px", width: "6%", textAlign: "left" }}>
                 {t('pending')}
               </th>
               <th style={{ fontSize: "11px", width: "1.5%" }}></th>

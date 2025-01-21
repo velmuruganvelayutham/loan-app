@@ -55,11 +55,11 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
                     <div className='col-sm-4 fixed fw-bold'>{t("date") + " : " + dateFormatdd(datefrom) + " - " + dateFormatdd(dateto)}</div>
                 </div>
 
-                <Table className='table text-center fs-6 table-bordered border-dark'  >
+                <Table className='table text-center fs-6 table-bordered border-dark' style={{width:"103%"}} >
                     <thead>
                         <tr>
                             <th style={{width:"1%"}}></th>
-                            <th style={{width:"1%"}}></th>
+                            
                             <th style={{ fontSize: "12px" }}>
                                 {t('no')}
                             </th>
@@ -86,8 +86,8 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
                             <th style={{ fontSize: "12px" }}>{t('total')}</th>
                             <th style={{ fontSize: "12px" }}>{t('week')}</th>
                             <th style={{ fontSize: "12px" }}>{t('pay')}</th>
-                            <th style={{width:"1%"}}></th>
-                            <th style={{width:"1%"}}></th>
+                            <th style={{width:"2%"}}></th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -102,7 +102,7 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
                                     pagetotalamount = pagetotalamount + customer.totalamount;
                                     return (
                                         <tr className='currentweekamount'>
-                                            <td></td>
+                                            
                                             <td></td>
                                             <td style={{ fontSize: "12px" }}>{serialno}</td>
                                             <td style={{ fontSize: "12px" }}>{dateFormatdd(customer.givendate)}</td>
@@ -120,7 +120,7 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
                                             <td style={{ fontSize: "12px" }}>{customer.weekcount}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.dueamount}</td>
                                             <td></td>
-                                            <td></td>
+                                            
                                         </tr>
 
                                     )
@@ -130,7 +130,7 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
                                 t('tabledata')
                         }
                         <tr className='currentweekamount'>
-                            <td></td>
+                            
                             <td></td>
                             <td></td>
                             <td></td>
@@ -147,12 +147,12 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
+                            
                         </tr>
                     </tbody>
                     {
                         isLastPage ? <tr className="rounded bg-white currentweekamount">
-                            <td></td>
+                            
                             <td></td>
                             <td></td>
                             <td></td>
@@ -169,7 +169,7 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
+                            
                         </tr> : null
                     }
                 </Table>
