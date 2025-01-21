@@ -49,10 +49,10 @@ const PreviousWeekList = ({ pendingLoans, date, company, isPrinting }) => {
                     <div className='col-sm-2 fixed'>{t("date") + " : " + dateFormatdd(date)}</div>
                 </div>
 
-                <Table className='table text-center table-bordered border-dark'   >
+                <Table className='table text-center table-bordered border-dark' style={{width:"103%"}}  >
                     <thead>
                         <tr>
-                            <th></th>
+                            
                             <th></th>
                             <th style={{ fontSize: "12px" }}>
                                 {t('no')}
@@ -80,7 +80,7 @@ const PreviousWeekList = ({ pendingLoans, date, company, isPrinting }) => {
                             <th style={{ fontSize: "12px" }}>{t('debitcredit')}</th>
                             <th style={{ fontSize: "12px" }}>{t('city')}</th>
                             <th></th>
-                            <th></th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -94,7 +94,7 @@ const PreviousWeekList = ({ pendingLoans, date, company, isPrinting }) => {
                                     totalinstallment = parseInt((customer.totalcollected) / customer.dueamount);
                                     return (
                                         <tr className='previousweek'>
-                                            <td></td>
+                                            
                                             <td></td>
                                             <td style={{ fontSize: "12px" }}>{serialno}</td>
                                             <td style={{ fontSize: "12px" }}>{dateFormatdd(customer.startdate)}</td>
@@ -108,7 +108,7 @@ const PreviousWeekList = ({ pendingLoans, date, company, isPrinting }) => {
                                             <td style={{ fontSize: "12px" }}>{customer.collectedamount}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.referencecity}</td>
                                             <td></td>
-                                            <td></td>
+                                           
                                         </tr>
 
                                     )
@@ -118,7 +118,7 @@ const PreviousWeekList = ({ pendingLoans, date, company, isPrinting }) => {
                                 t('tabledata')
                         }
                         <tr>
-                            <td></td>
+                            
                             <td></td>
                             <td></td>
                             <td></td>
@@ -132,13 +132,13 @@ const PreviousWeekList = ({ pendingLoans, date, company, isPrinting }) => {
                             <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotalcredit}</td>
                             <td></td>
                             <td></td>
-                            <td></td>
+                            
 
                         </tr>
                     </tbody>
                     {
                         isLastPage ? <tr className="rounded bg-white ">
-                            <td></td>
+                            
                             <td></td>
                             <td></td>
                             <td></td>
@@ -152,7 +152,7 @@ const PreviousWeekList = ({ pendingLoans, date, company, isPrinting }) => {
                             <td className='fw-bold' style={{ fontSize: "12px" }}>{totals.totalcredit}</td>
                             <td></td>
                             <td></td>
-                            <td></td>
+                            
                         </tr> : null
                     }
                 </Table>
