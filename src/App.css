@@ -30,7 +30,7 @@
   height: 15px;
 }
 .currentweekamount {
-  line-height: 20px;
+  line-height: 18px;
   min-height: 15px;
   height: 15px;
 }
@@ -358,6 +358,9 @@ Table.totalledgertable {
   }
   .print-margin{
     margin-left:10px !important;
+  }
+  .totalledger-print-margin{
+    margin-left:15px !important;
   }
   .linechecking-print-margin{
     margin-left:16px !important;
