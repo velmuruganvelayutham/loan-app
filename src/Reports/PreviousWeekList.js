@@ -54,31 +54,31 @@ const PreviousWeekList = ({ pendingLoans, date, company, isPrinting }) => {
                         <tr>
                             
                             <th style={{ fontSize: "11px", width: "1%" }}></th>
-                            <th style={{ fontSize: "12px" }}>
+                            <th style={{ fontSize: "12px",width:"5%" }}>
                                 {t('no')}
                             </th>
-                            <th style={{ fontSize: "12px" }}>
+                            <th style={{ fontSize: "12px",width:"6%" }}>
                                 {t('startdate')}
                             </th >
-                            <th style={{ fontSize: "12px" }}>{t('noshort')}</th>
-                            <th style={{ fontSize: "12px" }}>
+                            <th style={{ fontSize: "12px",width:"5%" }}>{t('noshort')}</th>
+                            <th style={{ fontSize: "12px",width:"6%" }}>
                                 {t('loannotooshort')}
                             </th>
-                            <th style={{ fontSize: "12px" }}>
+                            <th style={{ fontSize: "12px",width:"14%" }}>
                                 {t('customer')}
                             </th>
-                            <th style={{ fontSize: "12px" }}>
+                            <th style={{ fontSize: "12px",width:"7%" }}>
                                 {t('due')}
                             </th>
-                            <th style={{ fontSize: "12px" }}>
+                            <th style={{ fontSize: "12px",width:"7%" }}>
                                 {t('dueno')}
                             </th>
-                            <th style={{ fontSize: "12px" }}>{t('receiptnoshort')}</th>
-                            <th style={{ fontSize: "12px" }}>
+                            <th style={{ fontSize: "12px",width:"7%" }}>{t('receiptnoshort')}</th>
+                            <th style={{ fontSize: "12px",width:"8%" }}>
                                 {t('totalcredit')}
                             </th>
-                            <th style={{ fontSize: "12px" }}>{t('debitcredit')}</th>
-                            <th style={{ fontSize: "12px",width:"10%" }}>{t('city')}</th>
+                            <th style={{ fontSize: "12px",width:"8%" }}>{t('debitcredit')}</th>
+                            <th style={{ fontSize: "12px",width:"14%" }}>{t('city')}</th>
                             <th style={{ fontSize: "11px", width: "1.5%" }}></th>
                         </tr>
                     </thead>
