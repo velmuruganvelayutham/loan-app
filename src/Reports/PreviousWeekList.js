@@ -49,36 +49,36 @@ const PreviousWeekList = ({ pendingLoans, date, company, isPrinting }) => {
                     <div className='col-sm-2 fixed'>{t("date") + " : " + dateFormatdd(date)}</div>
                 </div>
 
-                <Table className='table text-center table-bordered border-dark' style={{width:"103%"}}  >
+                <Table className='table text-center table-bordered border-dark linecheckingtable' style={{width:"103%"}}  >
                     <thead>
                         <tr>
                             
                             <th style={{ fontSize: "11px", width: "1%" }}></th>
-                            <th style={{ fontSize: "12px",width:"5%" }}>
-                                {t('no')}
+                            <th style={{ fontSize: "11px",width:"4%" }}>
+                                {t('countshort')}
                             </th>
-                            <th style={{ fontSize: "12px",width:"6%" }}>
+                            <th style={{ fontSize: "10px",width:"7%" }}>
                                 {t('startdate')}
                             </th >
                             <th style={{ fontSize: "12px",width:"5%" }}>{t('noshort')}</th>
                             <th style={{ fontSize: "12px",width:"6%" }}>
                                 {t('loannotooshort')}
                             </th>
-                            <th style={{ fontSize: "12px",width:"14%" }}>
+                            <th style={{ fontSize: "11px",width:"14%" }}>
                                 {t('customer')}
                             </th>
-                            <th style={{ fontSize: "12px",width:"7%" }}>
+                            <th style={{ fontSize: "10px",width:"8%" }}>
                                 {t('due')}
                             </th>
-                            <th style={{ fontSize: "12px",width:"7%" }}>
+                            <th style={{ fontSize: "11px",width:"7%" }}>
                                 {t('dueno')}
                             </th>
                             <th style={{ fontSize: "12px",width:"7%" }}>{t('receiptnoshort')}</th>
-                            <th style={{ fontSize: "12px",width:"8%" }}>
-                                {t('totalcredit')}
+                            <th style={{ fontSize: "11px",width:"8%" }}>
+                                {t('totalcreditshort')}
                             </th>
-                            <th style={{ fontSize: "12px",width:"8%" }}>{t('debitcredit')}</th>
-                            <th style={{ fontSize: "12px",width:"14%" }}>{t('city')}</th>
+                            <th style={{ fontSize: "11px",width:"8%" }}>{t('debitcredit')}</th>
+                            <th style={{ fontSize: "11px",width:"14%" }}>{t('city')}</th>
                             <th style={{ fontSize: "11px", width: "1.5%" }}></th>
                         </tr>
                     </thead>
@@ -95,17 +95,17 @@ const PreviousWeekList = ({ pendingLoans, date, company, isPrinting }) => {
                                         <tr className='previousweek'>
                                             
                                             <td></td>
-                                            <td style={{ fontSize: "12px" }}>{serialno}</td>
-                                            <td style={{ fontSize: "12px" }}>{dateFormatdd(customer.startdate)}</td>
-                                            <td style={{ fontSize: "12px" }}>{customer.weeknoreceipt}</td>
-                                            <td style={{ fontSize: "12px" }}>{customer.loannumber}</td>
-                                            <td style={{ fontSize: "12px" }}>{customer.customer}</td>
-                                            <td style={{ fontSize: "12px" }}>{customer.dueamount}</td>
-                                            <td style={{ fontSize: "12px" }}>{totalinstallment}</td>
-                                            <td style={{ fontSize: "12px" }}>{customer.receiptnumber}</td>
-                                            <td style={{ fontSize: "12px" }}>{customer.collectedamount}</td>
-                                            <td style={{ fontSize: "12px" }}>{customer.collectedamount}</td>
-                                            <td style={{ fontSize: "12px" }}>{customer.referencecity}</td>
+                                            <td style={{ fontSize: "12px" }} className='text-nowrap overflow-hidden'>{serialno}</td>
+                                            <td style={{ fontSize: "12px" }} className='text-nowrap overflow-hidden'>{dateFormatdd(customer.startdate)}</td>
+                                            <td style={{ fontSize: "12px" }} className='text-nowrap overflow-hidden'>{customer.weeknoreceipt}</td>
+                                            <td style={{ fontSize: "12px" }} className='text-nowrap overflow-hidden'>{customer.loannumber}</td>
+                                            <td style={{ fontSize: "12px" }} className='text-nowrap overflow-hidden'>{customer.customer}</td>
+                                            <td style={{ fontSize: "12px" }} className='text-nowrap overflow-hidden'>{customer.dueamount}</td>
+                                            <td style={{ fontSize: "12px" }} className='text-nowrap overflow-hidden'>{totalinstallment}</td>
+                                            <td style={{ fontSize: "12px" }} className='text-nowrap overflow-hidden'>{customer.receiptnumber}</td>
+                                            <td style={{ fontSize: "12px" }} className='text-nowrap overflow-hidden'>{customer.collectedamount}</td>
+                                            <td style={{ fontSize: "12px" }} className='text-nowrap overflow-hidden'>{customer.collectedamount}</td>
+                                            <td style={{ fontSize: "12px" }} className='text-nowrap overflow-hidden'>{customer.referencecity}</td>
                                             <td></td>
                                            
                                         </tr>
