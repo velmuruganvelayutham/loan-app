@@ -270,8 +270,12 @@ Table.totalledgertable {
 }
 
 .col-sm-custom {
-  width: 40% !important;
+ width: 40% !important;
+
 }
+.col-sm-custom_chart {
+  width: 90% !important;
+ }
 
 .separator {
   display: inline-block;
@@ -364,5 +368,8 @@ Table.totalledgertable {
   }
   .linechecking-print-margin{
     margin-left:16px !important;
+  }
+  .col-sm-custom {
+    margin-left: -10px !important;
   }
 }
