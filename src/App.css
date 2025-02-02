@@ -366,10 +366,14 @@ Table.totalledgertable {
   .totalledger-print-margin{
     margin-left:15px !important;
   }
+  
   .linechecking-print-margin{
     margin-left:16px !important;
   }
-  .col-sm-custom {
-    margin-left: -10px !important;
+  .chart-print-margin{
+    margin-left: -19px !important;
+  }
+  .print-margin-chartalign{
+    margin-left:5px !important;
   }
 }
