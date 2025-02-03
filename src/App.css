@@ -276,7 +276,12 @@ Table.totalledgertable {
 .col-sm-custom_chart {
   width: 90% !important;
  }
-
+ .col-sm-custom_chart_90 {
+  width: 71% !important;
+ }
+ .col-sm-custom_chart_90_90{
+  width: 80% !important;
+ }
 .separator {
   display: inline-block;
   width: 1.5px;
@@ -372,6 +377,15 @@ Table.totalledgertable {
   }
   .chart-print-margin{
     margin-left: -19px !important;
+  }
+  .chart-print-margin_90{
+    margin-left: -59px !important;
+  }
+  .chart-print-margin_90_90{
+    margin-left: -100px !important;
+  }
+  .chart-print-margin_90_90_90{
+    margin-left: -160px !important;
   }
   .print-margin-chartalign{
     margin-left:9px !important;
