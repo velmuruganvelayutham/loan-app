@@ -308,6 +308,7 @@ Table.totalledgertable {
   padding: 15px;
   border-radius: 5px;
 }
+
 @media print {
   * {
     margin: 0;

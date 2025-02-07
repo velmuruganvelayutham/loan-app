@@ -4,7 +4,9 @@ import { useTranslation } from "react-i18next";
 import { dateFormatdd } from '../FunctionsGlobal/StartDateFn'
 var first = [];
 var arr1 = Array.from(Array(12).keys());
-var arr2 = Array.from({ length: 13 }, (_, i) => i + 12)
+var arr2 = Array.from({ length: 13 }, (_, i) => i + 12);
+var arr3 = [];
+var arr4 = [];
 function Ledger({ loanno, ledger, company, date }) {
     let totalamount = 0;
     const { t } = useTranslation();
@@ -32,6 +34,8 @@ function Ledger({ loanno, ledger, company, date }) {
         first = records.length > 0 ? ledger[0] : "";
 
         totalamount = first.totalamount;
+        arr3 = [];
+        arr4 = [];
         if (first.weekcount === 12) {
             arr1 = Array.from(Array(12).keys());
             arr2 = [];
@@ -68,11 +72,17 @@ function Ledger({ loanno, ledger, company, date }) {
             arr2 = Array.from({ length: 0 }, (_, i) => i + 12)
 
         }
+        else if (first.weekcount === 90) {
+            arr1 = Array.from(Array(25).keys());
+            arr2 = Array.from({ length: 25 }, (_, i) => i + 25)
+            arr3 = Array.from({ length: 25 }, (_, i) => i + 51)
+            arr4 = Array.from({ length: 15 }, (_, i) => i + 76)
+        }
        arr2=ledger.length>first.weekcount?Array.from({ length: ledger.length-arr1.length }, (_, i) => i + (ledger.length-arr1.length)):arr2
         //alert(ledger.length-arr1.length);
     }
     
-    const tableData = Array.from({ length: arr1.length + arr2.length }, (_, i) => ledger[i] || {});
+    const tableData = Array.from({ length: arr1.length + arr2.length +arr3.length+arr4.length}, (_, i) => ledger[i] || {});
      
     return (
 
@@ -220,7 +230,7 @@ function Ledger({ loanno, ledger, company, date }) {
                 }} />
             </Row>
 
-            <Row style={{ paddingLeft: "8px" }} >
+            <Row style={{ paddingLeft: "8px" }} className="gx-0">
                 <Col className='col-sm-6 col-md-6 p-1'>
                     <Table className="table text-center table-bordered border-dark" >
                         <thead>
@@ -259,6 +269,7 @@ function Ledger({ loanno, ledger, company, date }) {
                         </tbody>
                     </Table>
                 </Col>
+
                 <Col className='col-sm-6 col-md-6 p-0' >
                     <Table className="table  text-center table-bordered border-dark"   >
                         <thead>
@@ -295,7 +306,76 @@ function Ledger({ loanno, ledger, company, date }) {
                         </tbody>
                     </Table>
                 </Col>
+                {arr3.length>0 && <Col className='col-sm-6 col-md-6 p-1'>
+                    <Table className="table text-center table-bordered border-dark" >
+                        <thead>
+                            <tr >
+                                <th className="col-sm-1 col-md-1">
+                                    {t('date')}
+                                </th>
+                                <th className="col-sm-1 col-md-1">
+                                    {t('dueno')}
+                                </th>
+                                <th className="col-sm-1 col-md-1">
+                                    {t('credit')}
+                                </th>
+                                <th className="col-sm-1 col-md-1">
+                                    {t('balance')}
+                                </th>
+                                <th className="col-sm-1 col-md-1 text-end">{t('loanamount')}</th>
+                                <th className="col-sm-1 col-md-1 text-end">{t('noshorts')}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {tableData.slice(arr2.length, (arr2.length+arr3.length)).map((item, index) => {
+                                serialno += 1;
+                                totalamount -= item.joined?.collectedamount || 0;
+                                
+                                return (
+                                    <Fragment key={index}>
+                                        {TablesRows(serialno, item.receiptdate || "", item.joined?.collectedamount || "", item.joined?.weekno || "","first",item.receipttype)}
+                                    </Fragment>
+                                );
+                            })}
+                        </tbody>
+                    </Table>
+                </Col>}
+                {arr4.length>0 && <Col className='col-sm-6 col-md-6 p-0' >
+                    <Table className="table  text-center table-bordered border-dark"   >
+                        <thead>
+                            <tr >
 
+                                <th style={{ width: "20%" }}>
+                                    {t('date')}
+                                </th>
+                                <th style={{ width: "10%" }}>
+                                    {t('dueno')}
+                                </th>
+                                <th style={{ width: "15%" }}>
+                                    {t('credit')}
+                                </th>
+                                <th style={{ width: "15%" }}>
+                                    {t('balance')}
+                                </th>
+                                <th style={{ width: "15%" }}>{t('loanamount')}</th>
+                                <th style={{ width: "5%" }}>{t('noshorts')}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {tableData.slice(arr3.length, (arr3.length+arr4.length)).map((item, index) => {
+                                serialno += 1;
+                                totalamount -= item.joined?.collectedamount || 0;
+                                
+                                return (
+                                    <Fragment key={index}>
+                                        {TablesRows(serialno, item.receiptdate || "", item.joined?.collectedamount || "", item.joined?.weekno || "","second",item.receipttype)}
+                                    </Fragment>
+                                );
+                            })}
+                        </tbody>
+                    </Table>
+                </Col>}
             </Row>
         </Container >
 

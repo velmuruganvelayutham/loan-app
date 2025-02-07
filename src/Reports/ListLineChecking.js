@@ -26,10 +26,10 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting, type }) => 
   const totals = useMemo(() => {
     const total = pendingLoans.reduce((acc, item) => acc + (item.totalamount - item.collectedtotal), 0);
     const totalDuePending = pendingLoans.reduce((previous, current) => {
-      if (current.collectedamountdate > 0 || current['addFields'].receiptpendingweekafter <= -1 || current.finisheddatepending == 1) {
+      if (current.collectedamountdate > 0 || current.topay <=0 || current.finisheddatepending == 1) {
         return previous + 0;
       }
-      else if (current.collectedamountdate == 0 && current['addFields'].receiptpendingweekafter <= 0) {
+      else if (current.collectedamountdate == 0 && current['addFields'].receiptpendingweekafter <= 0 && current.topay>0) {
         if ((-1 * (current['addFields'].receiptpendingweekafter * current.dueamount)) < current.dueamount && ((current['addFields'].receiptpendingweekafter * current.dueamount) != 0)) {
 
           return previous + (current.dueamount - (-1 * (current['addFields'].receiptpendingweekafter * current.dueamount)))
@@ -171,11 +171,11 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting, type }) => 
                   pagetotal = pagetotal + pending;
 
 
-                  if (customer.collectedamountdate > 0 || customer['addFields'].receiptpendingweekafter <= -1 || customer.finisheddatepending == 1) {
+                  if (customer.collectedamountdate > 0 || customer.topay <=0 || customer.finisheddatepending == 1) {
                     duepending = 0
                   }
 
-                  else if (customer.collectedamountdate == 0 && customer['addFields'].receiptpendingweekafter <= 0) {
+                  else if (customer.collectedamountdate == 0 && customer['addFields'].receiptpendingweekafter <= 0 && customer.topay>0) {
 
                     duepending = -1 * (customer['addFields'].receiptpendingweekafter) * customer.dueamount
                     if (duepending < customer.dueamount && duepending != 0) {
