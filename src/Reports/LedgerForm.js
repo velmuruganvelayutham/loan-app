@@ -12,7 +12,7 @@ import AsyncSelect from 'react-select/async';
 import {
     useAuth
 } from "@clerk/clerk-react";
-import { startOfWeek } from "../FunctionsGlobal/StartDateFn";
+import { endOfWeek } from "../FunctionsGlobal/StartDateFn";
 
 var loannumberprocess = "";
 function LedgerForm() {
@@ -56,7 +56,7 @@ function LedgerForm() {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             axios.get(`${baseURL}/loancreate/get?q=`).then((res) => {
                 setLoannumbers(res.data);
-                console.log(res.data);
+                
                 setIsLoading(false);
                 setErrorMessage("");
             }).catch(error => {
@@ -115,9 +115,9 @@ function LedgerForm() {
         else {
             passingreportname = "ledger"
         }
-
+        
         return (
-            axios.get(`${baseURL}/${passingreportname}/get`, { params: { loanno: Number(nextloanactive) === 1 ? loannumber : loanno, todate: new Date(startOfWeek()) } }).then((res) => {
+            axios.get(`${baseURL}/${passingreportname}/get`, { params: { loanno: Number(nextloanactive) === 1 ? loannumber : loanno, todate: new Date(endOfWeek()) } }).then((res) => {
                 setLoanDetails(res.data);
                 //console.log(res.data);
                 setIsLoading(false);
