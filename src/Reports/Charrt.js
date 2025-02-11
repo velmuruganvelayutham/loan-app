@@ -143,7 +143,7 @@ function Charrt({ loanno, ledger, company, date }) {
                                         <span style={{ fontSize: fontsizevar, display: "inline-block", minWidth: "0" }}>{ledger.length > 0 ? first.referencecity : ""}</span></Form.Label>
                                 </Form.Group>
                                 <Form.Group style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", width: "100%" }}>
-                                    <span style={{ fontSize: "12px", display: "inline-block", minWidth: "0" }}>{ledger.length > 0 ? dateFormatdd(first.givendate) : ""}</span>&nbsp;<Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", maxWidth: "100%" }}>{t('total')}&nbsp;:</Form.Label>
+                                    <span style={{ fontSize: "12px", display: "inline-block", minWidth: "0" }}>{ledger.length > 0 ? dateFormatdd(first.givendate) : ""}</span>&nbsp;<Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", maxWidth: "100%" }}>{t('totalamounttooshort')}&nbsp;:</Form.Label>
                                     <span style={{ fontSize: "12px", display: "inline-block", minWidth: "0", fontWeight: "bold" }}>{ledger.length > 0 ? first.totalamount : ""}</span>
 
                                 </Form.Group>

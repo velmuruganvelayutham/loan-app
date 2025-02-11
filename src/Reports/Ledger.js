@@ -217,6 +217,12 @@ function Ledger({ loanno, ledger, company, date }) {
                             <Form.Label>&nbsp;{first.advanceless}</Form.Label>
                         </Form.Group>):""
                             }
+                            {ledger.length > 0?first.topay!==0?
+                            (< Form.Group border="primary" >
+                            <Form.Label>{first.topay>0?t('pending'):t('showAdvance')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                            <Form.Label>&nbsp;{first.topay}</Form.Label>
+                        </Form.Group>):"":""
+                            }
                     </Col>
             </Row>
         </Form>
@@ -256,10 +262,10 @@ function Ledger({ loanno, ledger, company, date }) {
 
                                 tableData.slice(0, arr1.length).map((item, index) => {
                                     serialno += 1;
-                                    totalamount -= item.joined?.collectedamount || 0;
+                                    totalamount -= item.collectedamount || 0;
                                     return (
                                         <Fragment key={index}>
-                                            {TablesRows(serialno, item.receiptdate || "", item.joined?.collectedamount || "", item.joined?.weekno || "","",item.receipttype)}
+                                            {TablesRows(serialno, item.receiptdate || "", item.collectedamount || "", item.weekno || "","",item.receipttype)}
                                             {Number(serialno) === 1 ? TablesRows(serialno, first.startdate, "", "") : ""}
                                         </Fragment>
                                     );
@@ -295,11 +301,11 @@ function Ledger({ loanno, ledger, company, date }) {
                         <tbody>
                             {tableData.slice(arr1.length, (arr1.length+arr2.length)).map((item, index) => {
                                 serialno += 1;
-                                totalamount -= item.joined?.collectedamount || 0;
+                                totalamount -= item.collectedamount || 0;
                                 
                                 return (
                                     <Fragment key={index}>
-                                        {TablesRows(serialno, item.receiptdate || "", item.joined?.collectedamount || "", item.joined?.weekno || "","second",item.receipttype)}
+                                        {TablesRows(serialno, item.receiptdate || "", item.collectedamount || "", item.weekno || "","second",item.receipttype)}
                                     </Fragment>
                                 );
                             })}
@@ -329,11 +335,11 @@ function Ledger({ loanno, ledger, company, date }) {
                         <tbody>
                             {tableData.slice(arr2.length, (arr2.length+arr3.length)).map((item, index) => {
                                 serialno += 1;
-                                totalamount -= item.joined?.collectedamount || 0;
+                                totalamount -= item.collectedamount || 0;
                                 
                                 return (
                                     <Fragment key={index}>
-                                        {TablesRows(serialno, item.receiptdate || "", item.joined?.collectedamount || "", item.joined?.weekno || "","first",item.receipttype)}
+                                        {TablesRows(serialno, item.receiptdate || "", item.collectedamount || "", item.weekno || "","first",item.receipttype)}
                                     </Fragment>
                                 );
                             })}
@@ -365,11 +371,11 @@ function Ledger({ loanno, ledger, company, date }) {
                         <tbody>
                             {tableData.slice(arr3.length, (arr3.length+arr4.length)).map((item, index) => {
                                 serialno += 1;
-                                totalamount -= item.joined?.collectedamount || 0;
+                                totalamount -= item.collectedamount || 0;
                                 
                                 return (
                                     <Fragment key={index}>
-                                        {TablesRows(serialno, item.receiptdate || "", item.joined?.collectedamount || "", item.joined?.weekno || "","second",item.receipttype)}
+                                        {TablesRows(serialno, item.receiptdate || "", item.collectedamount || "", item.weekno || "","second",item.receipttype)}
                                     </Fragment>
                                 );
                             })}
