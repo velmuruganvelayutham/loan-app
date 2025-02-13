@@ -31,7 +31,7 @@ const PendingAccounts = ({ pendingLoans, date, company, isPrinting, bookno }) =>
             return prev + current.payingamount
         }, 0);
         const paid = pendingLoans.reduce((prev, current) => {
-            return prev + current.collectedTotal
+            return prev + current.collectedAmountDate
         }, 0);
         const topay = pendingLoans.reduce((prev, current) => {
             return prev + current.topay
@@ -106,7 +106,7 @@ const PendingAccounts = ({ pendingLoans, date, company, isPrinting, bookno }) =>
                                 (pageRecords.map((customer, i) => {
                                     serialno = serialno + 1;
                                     pagetotal = pagetotal + customer.totalamount;
-                                    pagepaid = pagepaid + customer.collectedTotal;
+                                    pagepaid = pagepaid + customer.collectedAmountDate;
                                     pagetopay = pagetopay + customer.topay;
                                     pagepaying = pagepaying + customer.payingamount;
 
