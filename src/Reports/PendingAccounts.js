@@ -17,7 +17,7 @@ const PendingAccounts = ({ pendingLoans, date, company, isPrinting, bookno }) =>
     //first = records.length > 0 ? pendingLoans[0] : "";
 
     var pagetotal = 0;
-    var pagepaying = 0;
+    
     var pagepaid = 0;
     var pagetopay = 0;
 
@@ -27,16 +27,14 @@ const PendingAccounts = ({ pendingLoans, date, company, isPrinting, bookno }) =>
         const total = pendingLoans.reduce((prev, current) => {
             return prev + current.totalamount
         }, 0);
-        const paying = pendingLoans.reduce((prev, current) => {
-            return prev + current.payingamount
-        }, 0);
+        
         const paid = pendingLoans.reduce((prev, current) => {
-            return prev + current.collectedAmountDate
+            return prev + current.collectedTotal
         }, 0);
         const topay = pendingLoans.reduce((prev, current) => {
-            return prev + current.topay
+            return prev + current.balance
         }, 0);
-        return { total, paying, paid, topay }
+        return { total,paid, topay }
     }, [pendingLoans]);
 
 
@@ -84,9 +82,7 @@ const PendingAccounts = ({ pendingLoans, date, company, isPrinting, bookno }) =>
                             <th style={{ fontSize: "11px", width: "9%", textAlign: "center" }}>
                                 {t('loanamount')}
                             </th>
-                            <th style={{ fontSize: "11px", width: "9%", textAlign: "center" }}>
-                                {t('payingamount')}
-                            </th>
+                            
                             <th style={{ fontSize: "10px", width: "8%", textAlign: "center" }}>
                                 {t('pay')}
                             </th>
@@ -106,9 +102,9 @@ const PendingAccounts = ({ pendingLoans, date, company, isPrinting, bookno }) =>
                                 (pageRecords.map((customer, i) => {
                                     serialno = serialno + 1;
                                     pagetotal = pagetotal + customer.totalamount;
-                                    pagepaid = pagepaid + customer.collectedAmountDate;
-                                    pagetopay = pagetopay + customer.topay;
-                                    pagepaying = pagepaying + customer.payingamount;
+                                    pagepaid = pagepaid + customer.collectedTotal;
+                                    pagetopay = pagetopay + customer.balance;
+                                    //pagepaying = pagepaying + customer.payingamount;
 
 
 
@@ -127,9 +123,9 @@ const PendingAccounts = ({ pendingLoans, date, company, isPrinting, bookno }) =>
                                             <td style={{ fontSize: "11px", overflow: "hidden" }} className='text-nowrap overflow-hidden'>{customer.address}</td>
                                             <td style={{ fontSize: "11px" }} className='text-nowrap overflow-hidden'>{dateFormatdd(customer.finisheddate)}</td>
                                             <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{customer.totalamount}</td>
-                                            <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{customer.payingamount}</td>
-                                            <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{customer.collectedAmountDate}</td>
-                                            <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{customer.topay}</td>
+                                            
+                                            <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{customer.collectedTotal}</td>
+                                            <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{customer.balance}</td>
                                             <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{customer.pendingweek}</td>
                                             <td></td>
                                         </tr>
@@ -152,7 +148,7 @@ const PendingAccounts = ({ pendingLoans, date, company, isPrinting, bookno }) =>
                             <td ></td>
                             <td className='fw-bold' style={{ fontSize: "9px", textAlign: "left" }}>{t('pagetotal')}</td>
                             <td className='fw-bold' style={{ fontSize: "10px", textAlign: "center" }}>{pagetotal}</td>
-                            <td className='fw-bold' style={{ fontSize: "10px", textAlign: "center" }}>{pagepaying}</td>
+                            
                             <td className='fw-bold' style={{ fontSize: "11px", textAlign: "center" }}>{pagepaid}</td>
                             <td className='fw-bold' style={{ fontSize: "11px", textAlign: "center" }}>{pagetopay}</td>
                             <td className='fw-bold' style={{ fontSize: "11px", textAlign: "center" }}></td>
@@ -174,7 +170,7 @@ const PendingAccounts = ({ pendingLoans, date, company, isPrinting, bookno }) =>
                             <td></td>
                             <td className='fw-bold' style={{ fontSize: "13px", textAlign: "right" }}>{t('totalcount')}</td>
                             <td className='fw-bold' style={{ fontSize: "13px", textAlign: "center" }}>{totals.total}</td>
-                            <td className='fw-bold' style={{ fontSize: "13px", textAlign: "center" }}>{totals.paying}</td>
+                            
                             <td className='fw-bold' style={{ fontSize: "13px", textAlign: "center" }}>{totals.paid}</td>
                             <td className='fw-bold' style={{ fontSize: "13px", textAlign: "center" }}>{totals.topay}</td>
                             <td className='fw-bold' style={{ fontSize: "13px", textAlign: "center" }}></td>
