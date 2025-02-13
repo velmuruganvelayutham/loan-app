@@ -128,7 +128,7 @@ const PendingAccounts = ({ pendingLoans, date, company, isPrinting, bookno }) =>
                                             <td style={{ fontSize: "11px" }} className='text-nowrap overflow-hidden'>{dateFormatdd(customer.finisheddate)}</td>
                                             <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{customer.totalamount}</td>
                                             <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{customer.payingamount}</td>
-                                            <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{customer.collectedTotal}</td>
+                                            <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{customer.collectedAmountDate}</td>
                                             <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{customer.topay}</td>
                                             <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{customer.pendingweek}</td>
                                             <td></td>
