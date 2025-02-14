@@ -140,6 +140,7 @@
   "paidamountgreaterthanloanalert": "கட்டிய பணம் கடன் தொகையை விட அதிகமாக உள்ளது",
   "paidamountgreaterthanloanalertyesno": "கட்டிய பணம் கடன் தொகையை விட அதிகம்,தொகையை மாற்றனுமா? ",
   "deleteyesnoalert": "இந்த எண்ணை நீக்க வேண்டுமா?",
+  "isitnewaccountyesnoalert":"இந்த எண்ணை புதிய அக்கவுண்டாக மாற்ற வேண்டுமா?",
   "report": "ரிபோர்டை தேர்ந்தெடு",
   "newaccountaddress": "புது அக்கவுண்ட் அட்ரஸ்",
   "weekendaccounts": "வார முடிவு அக்கவுண்ட்ஸ்",
@@ -230,6 +231,8 @@
   "payingamount":"க.வே",
   "pendingweek":"வா",
   "pendingaccounts":"பெண்டிங் அக்கவுண்ட்ஸ்",
-  "printall":"பிரிண்ட் ஆல்"
+  "printall":"பிரிண்ட் ஆல்",
+  "yes":"ஆம்",
+  "noo":"இல்லை"
 
 }

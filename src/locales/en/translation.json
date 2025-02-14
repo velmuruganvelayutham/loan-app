@@ -138,6 +138,7 @@
   "paidamountgreaterthanloanalert": "Paid Amount Greater than Loan Amount",
   "paidamountgreaterthanloanalertyesno": "Paid Amount Greater than Loan Amount,Do You Want To Change? ",
   "deleteyesnoalert": "Do you want to Delete This Entry",
+  "isitnewaccountyesnoalert":"Do You Want To Change This Account into New Account",
   "report": "Select Report",
   "newaccountaddress": "New Account Address",
   "weekendaccounts": "Week End Accounts",
@@ -192,6 +193,9 @@
   "loadingchart":"Loading chart... ",
   "payingamount":"Paying",
   "pendingweek":"P.Week",
-  "printall":"Print All"
+  "printall":"Print All",
+  "yes":"Yes",
+  "noo":"No"
+
 
 }

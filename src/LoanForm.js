@@ -6,6 +6,7 @@ import { baseURL, getDefaultWeekCount, isReadOnlyLoanNo } from './utils/constant
 import { startOfWeek, dateFormat, endOfWeek } from './FunctionsGlobal/StartDateFn';
 import { useTranslation } from "react-i18next";
 import PlaceHolder from "./components/spinner/placeholder";
+import CustomConfirm from "./components/CustomConfirm";
 import {
     useAuth
 } from "@clerk/clerk-react";
@@ -74,7 +75,8 @@ function LoanForm() {
     const [receiptType, setreceiptType] = useState(0);
     const [balanceAmount, setBalanceAmount] = useState(0);
     const [pending, setPending] = useState([]);
-    const[show,setShow]=useState(false);
+    const [show, setShow] = useState(false);
+    const [showConfirm, setShowConfirm] = useState(false);
     var passingref = "update";
     useEffect(() => {
         //console.log("weekCount", weekCount)
@@ -227,9 +229,7 @@ function LoanForm() {
             addressRef.current.value = filtered[0].address;
             workRef.current.value = filtered[0].work;
             lineRef.current.value = filtered[0].lineno;
-            if(value!==null){
-                processList(value);
-            }
+
         }
 
     }
@@ -576,9 +576,15 @@ function LoanForm() {
                     setBalanceAmount(oldReference[0].totalamount - oldReference[0].advanceless);
                     //alert(oldReference[0].advanceweekno);
                     setAdvanceweekno(oldReference[0]?.advanceweekno || "");
-
-
                     setUpdateUI(true);
+                    /*if (window.confirm(t('isitnewaccountyesnoalert'))) {
+                        if (oldReference[0].customer_id !== null) {
+                            processList(oldReference[0].customer_id);
+                        }
+                    }*/
+                    setShowConfirm(true);
+                    
+
                 })
         }
 
@@ -649,10 +655,10 @@ function LoanForm() {
                 setPending(res.data);
                 setIsLoading(false);
                 console.log(res.data);
-                if(res.data.length>0){
+                if (res.data.length > 0) {
                     setShow(true);
                 }
-                else{
+                else {
                     setShow(false);
                     setPending([]);
                 }
@@ -667,6 +673,13 @@ function LoanForm() {
 
     }
     const handleClose = () => setShow(false);
+
+    const handleConfirm = () => {
+        if (myForm.mySelectKey !== null) {
+            processList(myForm.mySelectKey);
+        }
+        setShowConfirm(false);
+    }
     return (
         <Container className="rounded bg-white mt-5">
             <Row className="justify-content-md-center mt-5 ">
@@ -942,7 +955,12 @@ function LoanForm() {
                     <Row>
                         {isLoading ? <PlaceHolder /> : null}
                         {errorMessage && <div className="error">{errorMessage}</div>}
-                        {show?<LoanFormPendingModal pendingLoans={pending} handleClose={handleClose} showModal={show} />:null}
+                        {show ? <LoanFormPendingModal pendingLoans={pending} handleClose={handleClose} showModal={show} /> : null}
+                        {showConfirm?<CustomConfirm
+                            show={showConfirm}
+                            onClose={() => setShowConfirm(false)}
+                            handleConfirm={handleConfirm}
+                        />:null}
                     </Row>
                 </Form>
             </Row>
