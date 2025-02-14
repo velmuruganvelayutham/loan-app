@@ -3,12 +3,13 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import AsyncSelect from 'react-select/async';
 import axios from "axios";
 import { baseURL, getDefaultWeekCount, isReadOnlyLoanNo } from './utils/constant';
-import { startOfWeek, dateFormat } from './FunctionsGlobal/StartDateFn';
+import { startOfWeek, dateFormat, endOfWeek } from './FunctionsGlobal/StartDateFn';
 import { useTranslation } from "react-i18next";
 import PlaceHolder from "./components/spinner/placeholder";
 import {
     useAuth
 } from "@clerk/clerk-react";
+import LoanFormPendingModal from './LoanFormPendingModal';
 var maxLoanNo = 0;
 const weekCount = process.env.REACT_APP_DEFAULT_WEEK_COUNT;
 function LoanForm() {
@@ -72,6 +73,8 @@ function LoanForm() {
 
     const [receiptType, setreceiptType] = useState(0);
     const [balanceAmount, setBalanceAmount] = useState(0);
+    const [pending, setPending] = useState([]);
+    const[show,setShow]=useState(false);
     var passingref = "update";
     useEffect(() => {
         //console.log("weekCount", weekCount)
@@ -224,6 +227,9 @@ function LoanForm() {
             addressRef.current.value = filtered[0].address;
             workRef.current.value = filtered[0].work;
             lineRef.current.value = filtered[0].lineno;
+            if(value!==null){
+                processList(value);
+            }
         }
 
     }
@@ -428,7 +434,7 @@ function LoanForm() {
                 weekcount: weekscount, startdate: new Date(startDate), givendate: new Date(givenDate.current.value), duedate: new Date(dueDate.current.value), finisheddate: new Date(endDateRef.current.value),
                 givenamount: Number(givenAmt), documentamount: Number(documentAmt.current.value), interestamount: Number(interestAmt.current.value),
                 totalamount: Number(totalAmt.current.value), dueamount: Number(dueAmt.current.value), paidamount: Number(paidAmt.current.value), advancetype: Number(receiptType), advanceless: Number(advanceLess),
-                advanceweekno:Number(advanceweekno),advancereceiptdate:new Date(startOfWeek())
+                advanceweekno: Number(advanceweekno), advancereceiptdate: new Date(startOfWeek())
             }).then((res) => {
                 setButtonDisabled(false);
                 console.log(res);
@@ -570,8 +576,8 @@ function LoanForm() {
                     setBalanceAmount(oldReference[0].totalamount - oldReference[0].advanceless);
                     //alert(oldReference[0].advanceweekno);
                     setAdvanceweekno(oldReference[0]?.advanceweekno || "");
-                    
-                    
+
+
                     setUpdateUI(true);
                 })
         }
@@ -629,6 +635,38 @@ function LoanForm() {
         setAdvanceLess(0);
         calBalance()
     }
+    const processList = async (value) => {
+        setIsLoading(true);
+        const token = await getToken();
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        return (
+            axios.get(`${baseURL}/loan/givenmoneypending`, {
+                params: {
+                    customer_id: value.toString(),
+                    todate: new Date(endOfWeek())
+                }
+            }).then((res) => {
+                setPending(res.data);
+                setIsLoading(false);
+                console.log(res.data);
+                if(res.data.length>0){
+                    setShow(true);
+                }
+                else{
+                    setShow(false);
+                    setPending([]);
+                }
+
+            })
+                .catch(error => {
+                    console.log("error=", error);
+                    setErrorMessage(t('erroressagelinechecking'));
+                    setIsLoading(false);
+                })
+        )
+
+    }
+    const handleClose = () => setShow(false);
     return (
         <Container className="rounded bg-white mt-5">
             <Row className="justify-content-md-center mt-5 ">
@@ -755,7 +793,7 @@ function LoanForm() {
                                     <Form.Group className="mb-3" name="weekno" border="primary" >
                                         <Form.Label>{t('weekno')}</Form.Label>{/*week No*/}
                                         <Form.Control type="number" placeholder={t('weeknoplaceholder')} value={advanceweekno}
-        onChange={(e) => setAdvanceweekno(e.target.value)} />
+                                            onChange={(e) => setAdvanceweekno(e.target.value)} />
                                     </Form.Group>
                                 </Col>
                             </>)}
@@ -904,6 +942,7 @@ function LoanForm() {
                     <Row>
                         {isLoading ? <PlaceHolder /> : null}
                         {errorMessage && <div className="error">{errorMessage}</div>}
+                        {show?<LoanFormPendingModal pendingLoans={pending} handleClose={handleClose} showModal={show} />:null}
                     </Row>
                 </Form>
             </Row>
