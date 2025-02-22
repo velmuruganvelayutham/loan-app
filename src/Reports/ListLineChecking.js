@@ -52,12 +52,12 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting, type }) => 
     const totalPendingWeek = pendingLoans.reduce((previousval, currentval) => {
 
       if (currentval['addFields'].receiptpendingweekafter > 0 && currentval['addFields'].receiptpendingweekafter < 8) {
-        if (currentval.collectedamountdate > 0 || currentval['addFields'].receiptpendingweekafter < 0 || currentval.finisheddatepending == 1) {
+        if (currentval.collectedamountdate > 0 && currentval.collectedamountdate >= currentval.dueamount || currentval.topay <= 0 || currentval.finisheddatepending == 1) {
           duependingcheck = 0;
         }
         else {
           duependingcheck = currentval.dueamount
-        } 
+        }
         pendingweekcheck = (currentval['addFields'].receiptpendingweekafter * currentval.dueamount);
         duependingcheckval = ((pendingweekcheck) < duependingcheck && duependingcheck != 0 ? (pendingweekcheck) : duependingcheck)
         duependingweekcheck = pendingweekcheck - duependingcheckval;
