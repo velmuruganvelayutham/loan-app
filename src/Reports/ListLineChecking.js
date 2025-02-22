@@ -26,10 +26,10 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting, type }) => 
   const totals = useMemo(() => {
     const total = pendingLoans.reduce((acc, item) => acc + (item.totalamount - item.collectedtotal), 0);
     const totalDuePending = pendingLoans.reduce((previous, current) => {
-      if (current.collectedamountdate > 0 || current.topay <=0 || current.finisheddatepending == 1) {
+      if (current.collectedamountdate > 0 && current.collectedamountdate >= current.dueamount || current.topay <= 0 || current.finisheddatepending == 1) {
         return previous + 0;
       }
-      else if (current.collectedamountdate == 0 && current['addFields'].receiptpendingweekafter <= 0 && current.topay>0) {
+      else if (current.collectedamountdate == 0 && current['addFields'].receiptpendingweekafter <= 0 && current.topay > 0) {
         if ((-1 * (current['addFields'].receiptpendingweekafter * current.dueamount)) < current.dueamount && ((current['addFields'].receiptpendingweekafter * current.dueamount) != 0)) {
 
           return previous + (current.dueamount - (-1 * (current['addFields'].receiptpendingweekafter * current.dueamount)))
@@ -39,12 +39,16 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting, type }) => 
         }
 
       }
+      else if (current.collectedamountdate > 0 && current.collectedamountdate < current.dueamount) {
+        return previous + (current.dueamount - current.collectedamountdate)
+      }
       else {
         duependingcheck = ((current['addFields'].receiptpendingweekafter * current.dueamount) < current.dueamount && current.dueamount != 0 ? current['addFields'].receiptpendingweekafter * current.dueamount : current.dueamount)
         duependingcheck = parseFloat(duependingcheck.toFixed(2))
         return previous + duependingcheck
       }
     }, 0);
+
     const totalPendingWeek = pendingLoans.reduce((previousval, currentval) => {
 
       if (currentval['addFields'].receiptpendingweekafter > 0 && currentval['addFields'].receiptpendingweekafter < 8) {
@@ -53,7 +57,7 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting, type }) => 
         }
         else {
           duependingcheck = currentval.dueamount
-        }
+        } 
         pendingweekcheck = (currentval['addFields'].receiptpendingweekafter * currentval.dueamount);
         duependingcheckval = ((pendingweekcheck) < duependingcheck && duependingcheck != 0 ? (pendingweekcheck) : duependingcheck)
         duependingweekcheck = pendingweekcheck - duependingcheckval;
@@ -121,7 +125,7 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting, type }) => 
         <Table className='table table-bordered border-dark linecheckingtable' style={{ margin: 0, padding: 0, width: "103%" }}  >
           <thead>
             <tr>
-              
+
               <th style={{ fontSize: "11px", width: "1%" }}></th>
               <th style={{ fontSize: "11px", width: "3%" }}>
                 {t('noshort')}
@@ -158,7 +162,7 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting, type }) => 
                 {t('pending')}
               </th>
               <th style={{ fontSize: "11px", width: "1.5%" }}></th>
-              
+
             </tr>
           </thead>
           <tbody>
@@ -171,16 +175,18 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting, type }) => 
                   pagetotal = pagetotal + pending;
 
 
-                  if (customer.collectedamountdate > 0 || customer.topay <=0 || customer.finisheddatepending == 1) {
+                  if (customer.collectedamountdate > 0 && customer.collectedamountdate >= customer.dueamount || customer.topay <= 0 || customer.finisheddatepending == 1) {
                     duepending = 0
                   }
-
-                  else if (customer.collectedamountdate == 0 && customer['addFields'].receiptpendingweekafter <= 0 && customer.topay>0) {
+                  else if (customer.collectedamountdate == 0 && customer['addFields'].receiptpendingweekafter <= 0 && customer.topay > 0) {
 
                     duepending = -1 * (customer['addFields'].receiptpendingweekafter) * customer.dueamount
                     if (duepending < customer.dueamount && duepending != 0) {
                       duepending = customer.dueamount - duepending
                     }
+                  }
+                  else if (customer.collectedamountdate > 0 && customer.collectedamountdate < customer.dueamount) {
+                    duepending = customer.dueamount - customer.collectedamountdate
                   }
                   else {
                     duepending = customer.dueamount
