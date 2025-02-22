@@ -77,6 +77,7 @@ function LoanForm() {
     const [pending, setPending] = useState([]);
     const [show, setShow] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
+    const[isUpdateNew,setIsUpdateNew]=useState(false)
     var passingref = "update";
     useEffect(() => {
         //console.log("weekCount", weekCount)
@@ -246,7 +247,7 @@ function LoanForm() {
             document = ((100 * given) / 1000);
         }
         else if (weekscount == 42 || weekscount == 43) {
-            document = ((30 * given) / 1000);
+            document = ((60 * given) / 1000);
         }
         else if (weekscount == 20) {
             document = ((60 * given) / 1000);
@@ -267,14 +268,14 @@ function LoanForm() {
 
             intrested = ((given * 24) / 100);
         }
-        else if (weekscount == 42) {
-            intrested = ((given * 23) / 100);
+        else if (weekscount == 42) {     //changed for 42 weeks 60rs document charge before change its 23%
+            intrested = ((given * 20) / 100);
         }
         else if (weekscount == 12) {
             intrested = ((given * 10) / 100);
         }
-        else if (weekscount == 43) {
-            intrested = ((given * 26) / 100);
+        else if (weekscount == 43) {   //changed for 43 weeks 60rs document charge before change its 
+            intrested = ((given * 23) / 100);
         }
         else if (weekscount == 20) {
             intrested = ((given * 14) / 100);
@@ -583,7 +584,7 @@ function LoanForm() {
                         }
                     }*/
                     setShowConfirm(true);
-                    
+
 
                 })
         }
@@ -623,6 +624,7 @@ function LoanForm() {
         setAdvanceLess(0);
         setBalanceAmount(0);
         setreceiptType(0);
+        setIsUpdateNew(false);
         setMaxValueShow((prevState) => !prevState)
     }
     const options = customers.map((customer, i) => {
@@ -675,10 +677,20 @@ function LoanForm() {
     const handleClose = () => setShow(false);
 
     const handleConfirm = () => {
+        setIsUpdateNew(true);
         if (myForm.mySelectKey !== null) {
             processList(myForm.mySelectKey);
+            setStartDate(startOfWeek());
+            givenDate.current.value = startOfWeek();
+            dueDate.current.value = startOfWeek();
+            endDateRef.current.value = endingDate();
+
         }
         setShowConfirm(false);
+    }
+    const handleClosee=()=>{
+        setShowConfirm(false);
+        setIsUpdateNew(false);
     }
     return (
         <Container className="rounded bg-white mt-5">
@@ -927,15 +939,15 @@ function LoanForm() {
                         <Col xs={12} md={9} >
 
                             <Button variant="primary" data-cypress-loan-app-savenewloan="savenew" size="lg" type="button" className="text-center"
-                                onClick={savePreviousAccount} disabled={updateUI ? false : true}>
+                                onClick={savePreviousAccount} disabled={updateUI && isUpdateNew ? false : true}>
                                 {t('generatenew')}
                             </Button>{' '}
                             <Button variant="primary" data-cypress-loan-app-save="save" size="lg" type="button" className="text-center"
-                                onClick={handleSubmit} disabled={isButtonDisabled}>
+                                onClick={handleSubmit} disabled={isButtonDisabled|| isUpdateNew?true:false}>
                                 {updateUI ? t('updatebutton') : t('savebutton')}
                             </Button>{' '}
                             <Button variant="primary" size="lg" type="button" className="text-center"
-                                onClick={deleteLoan} disabled={updateUI ? false : true}>
+                                onClick={deleteLoan} disabled={updateUI && !isUpdateNew ? false : true}>
                                 {t('deletebutton')}
                             </Button>{' '}
                             <Button variant="primary" size="lg" type="button" className="text-center" onClick={clearFields}>
@@ -956,11 +968,11 @@ function LoanForm() {
                         {isLoading ? <PlaceHolder /> : null}
                         {errorMessage && <div className="error">{errorMessage}</div>}
                         {show ? <LoanFormPendingModal pendingLoans={pending} handleClose={handleClose} showModal={show} /> : null}
-                        {showConfirm?<CustomConfirm
+                        {showConfirm ? <CustomConfirm
                             show={showConfirm}
-                            onClose={() => setShowConfirm(false)}
+                            onClose={handleClosee}
                             handleConfirm={handleConfirm}
-                        />:null}
+                        /> : null}
                     </Row>
                 </Form>
             </Row>

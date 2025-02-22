@@ -10,6 +10,7 @@ import { dateFormatdd } from "../FunctionsGlobal/StartDateFn"
 let receiptdateadd;
 const GivenMoneyModalView = ({ showModal, handleClose, data }) => {
     const { getToken } = useAuth();
+    
     const [errorMessage, setErrorMessage] = useState("");
     const [receiptDetails, setReceiptDetails] = useState([]);
     const itemsPerPage = 10; // Number of items per page

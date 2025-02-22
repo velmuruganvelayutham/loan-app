@@ -87,34 +87,35 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
           <thead>
             <tr>
               <th></th>
-              {reportypeval == 0 ? <th style={{ fontSize: "12px" }}>{t('line')}</th> : null}
-              {reportypeval == 0 ? <th style={{ fontSize: "12px" }} >
+              {reportypeval == 0 ? <th style={{ fontSize: "11px" }}>{t('line')}</th> : null}
+              {reportypeval == 0 ? <th style={{ fontSize: "11px" }} >
                 {t('customer')}
               </th> : null}
-              {reportypeval == 1 ? <th style={{ fontSize: "12px", width: "12%" }}>{t('city')}</th> : null}
-              <th colSpan={3} style={{ fontSize: "12px" }}>
-                <div style={{ fontSize: "12px" }}>{t('beforedebt')}</div>
-                <div style={{ fontSize: "12px" }}>{dateFormatddmmyyyy(datefrom)}</div>
+              {reportypeval == 1 ? <th style={{ fontSize: "11px", width: "12%" }}>{t('city')}</th> : null}
+              <th colSpan={3} style={{ fontSize: "11px" }}>
+                <div style={{ fontSize: "11px" }}>{t('beforedebt')}</div>
+                <div style={{ fontSize: "11px" }}>{dateFormatddmmyyyy(datefrom)}</div>
               </th>
-              <th style={{ fontSize: "12px" }}>{t('newdebt')}</th>
-              <th colSpan={2} style={{ fontSize: "12px" }}>
+              <th style={{ fontSize: "11px" }}>{t('newdebt')}</th>
+              <th colSpan={2} style={{ fontSize: "11px" }}>
                 {t('averagecollection')}
               </th>
 
-              <th colSpan={3} style={{ fontSize: "12px" }}>
-                <div style={{ fontSize: "12px" }}>{t('currentdebt')}</div>
-                <div style={{ fontSize: "12px" }}>{dateFormatddmmyyyy(dateto)}</div>
+              <th colSpan={3} style={{ fontSize: "11px" }}>
+                <div style={{ fontSize: "11px" }}>{t('currentdebt')}</div>
+                <div style={{ fontSize: "11px" }}>{dateFormatddmmyyyy(dateto)}</div>
               </th>
-              <th colSpan={2} style={{ fontSize: "12px" }} >
+              <th colSpan={2} style={{ fontSize: "11px" }} >
                 {t('pending')}
               </th>
-              <th colSpan={2} style={{ fontSize: "12px" }}>
-                <div style={{ fontSize: "12px" }}>{t('notrunning')}</div>
-                <div style={{ fontSize: "12px" }}>{dateFormatddmmyyyy(notrunningdate)}</div>
+              <th colSpan={2} style={{ fontSize: "11px" }}>
+                <div style={{ fontSize: "11px" }}>{t('notrunningprevious')}</div>
+                <div style={{ fontSize: "11px" }}>{dateFormatddmmyyyy(notrunningdate)}</div>
 
               </th>
-              <th colSpan={4} style={{ fontSize: "12px" }}>{t('notrunning')}</th>
-              <th colSpan={2} style={{ fontSize: "12px" }}>{t('running')}</th>
+              <th colSpan={2} style={{ fontSize: "11px" }}>{t('notrunning')}</th>
+              <th colSpan={2} style={{ fontSize: "11px" }}>{t('running')}</th>
+              <th colSpan={2} style={{ fontSize: "11px" }}>{t('notrunning')}</th>
               <th></th>
             </tr>
           </thead>
@@ -124,25 +125,26 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
               {reportypeval == 0 ? <th></th> : null}
               {reportypeval == 0 ? <th></th> : null}
               {reportypeval == 1 ? <th></th> : null}
-              <th style={{ fontSize: "12px" }}>{t('beforeloancount')}</th>
-              <th style={{ fontSize: "12px" }}>{t('beforetotalamount')}</th>
-              <th style={{ fontSize: "12px" }}>{t('beforependingamount')}</th>
+              <th style={{ fontSize: "11px" }}>{t('beforeloancount')}</th>
+              <th style={{ fontSize: "11px" }}>{t('beforetotalamount')}</th>
+              <th style={{ fontSize: "11px" }}>{t('beforependingamount')}</th>
               <th></th>
-              <th style={{ fontSize: "12px" }}>{t('collection')}</th>
-              <th style={{ fontSize: "12px" }}>{t('average')}</th>
-              <th style={{ fontSize: "12px" }}>{t('currentloancount')}</th>
-              <th style={{ fontSize: "12px" }}>{t('currenttotalamount')}</th>
-              <th style={{ fontSize: "12px" }}>{t('currentpendingamount')}</th>
-              <th style={{ fontSize: "12px" }}>{t('more')}</th>
-              <th style={{ fontSize: "12px" }}>{t('less')}</th>
-              <th style={{ fontSize: "12px" }}>{t('notrunningcount')}</th>
-              <th style={{ fontSize: "12px" }}>{t('notrunningpending')}</th>
-              <th style={{ fontSize: "12px" }}>{t('more')}</th>
-              <th style={{ fontSize: "12px" }}></th>
-              <th style={{ fontSize: "12px" }}>{t('notrunningweekcount')}</th>
-              <th style={{ fontSize: "12px" }}></th>
-              <th style={{ fontSize: "12px" }}>{t('less')}</th>
-              <th></th>
+              <th style={{ fontSize: "11px" }}>{t('collection')}</th>
+              <th style={{ fontSize: "11px" }}>{t('average')}</th>
+              <th style={{ fontSize: "11px" }}>{t('currentloancount')}</th>
+              <th style={{ fontSize: "11px" }}>{t('currenttotalamount')}</th>
+              <th style={{ fontSize: "11px" }}>{t('currentpendingamount')}</th>
+              <th style={{ fontSize: "11px" }}>{t('more')}</th>
+              <th style={{ fontSize: "11px" }}>{t('less')}</th>
+              <th style={{ fontSize: "11px" }}>{t('notrunningcount')}</th>
+              <th style={{ fontSize: "11px" }}>{t('notrunningpending')}</th>
+              <th style={{ fontSize: "11px" }}>{t('more')}</th>
+              <th style={{ fontSize: "11px" }}></th>
+              <th style={{ fontSize: "11px" }}>{t('less')}</th>
+              <th style={{ fontSize: "11px" }}></th>
+              <th style={{ fontSize: "11px" }}>{t('total')}</th>
+              <th style={{ fontSize: "11px" }}></th>
+              
               <th></th>
             </tr>
           </thead>
@@ -195,12 +197,12 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
                       <td style={{ fontSize: "12px" }}>{customer.collectedless}</td>
                       <td style={{ fontSize: "12px" }}>{customer.notrunningloancount}</td>
                       <td style={{ fontSize: "12px" }}>{customer.notrunningloanpending}</td>
-                      <td style={{ fontSize: "12px" }}>{customer.notrunningcountdates}</td>
-                      <td style={{ fontSize: "12px" }}>{customer.notrunningloanpendingdates}</td>
                       <td style={{ fontSize: "12px" }}>{customer.notrunningcountcurrent}</td>
                       <td style={{ fontSize: "12px" }}>{customer.notrunningloanpendingcurrent}</td>
                       <td style={{ fontSize: "12px" }}>{customer.runningcountdates}</td>
                       <td style={{ fontSize: "12px" }}>{customer.runningloanpendingdates}</td>
+                      <td style={{ fontSize: "12px" }}>{customer.notrunningcountdates}</td>
+                      <td style={{ fontSize: "12px" }}>{customer.notrunningloanpendingdates}</td>
                       <td></td>
                     </tr>
 
@@ -228,12 +230,13 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
               <td style={{ fontSize: "12px" }} className='fw-bold'>{pendingless}</td>
               <td style={{ fontSize: "12px" }} className='fw-bold'>{notrunningcount}</td>
               <td style={{ fontSize: "12px" }} className='fw-bold'>{notrunningpending}</td>
-              <td style={{ fontSize: "12px" }} className='fw-bold'>{notrunningcountdates}</td>
-              <td style={{ fontSize: "12px" }} className='fw-bold'>{notrunningpendingdates}</td>
+              
               <td style={{ fontSize: "12px" }} className='fw-bold'>{notrunningcountcurrent}</td>
               <td style={{ fontSize: "12px" }} className='fw-bold'>{notrunningloanpendingcurrent}</td>
               <td style={{ fontSize: "12px" }} className='fw-bold'>{runningcountdates}</td>
               <td style={{ fontSize: "12px" }} className='fw-bold'>{runningpendingdates}</td>
+              <td style={{ fontSize: "12px" }} className='fw-bold'>{notrunningcountdates}</td>
+              <td style={{ fontSize: "12px" }} className='fw-bold'>{notrunningpendingdates}</td>
               <td></td>
             </tr>
           </tbody>

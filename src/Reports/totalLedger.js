@@ -4,7 +4,7 @@ import { Button, Container, Form, Row, Col } from 'react-bootstrap';
 import { baseURL } from "../utils/constant";
 import { useTranslation } from "react-i18next";
 import PlaceHolder from "../components/spinner/placeholder";
-import { startOfWeek, endOfWeek, notRunningOfWeek } from '../FunctionsGlobal/StartDateFn';
+import { startOfWeek, endOfWeek, getPreviousMonday } from '../FunctionsGlobal/StartDateFn';
 import ReactToPrint from 'react-to-print';
 import ListTotalLedger from "./ListTotalLedger";
 import {
@@ -20,7 +20,6 @@ function TotalLedger() {
     const startDateRef = useRef(startOfWeek());
     const endDateRef = useRef(endOfWeek());
     const componentRef = useRef();
-    const notrunningDateRef = useRef(notRunningOfWeek());
     const reportType = useRef(0);
     const [show, setShow] = useState(false);
     const linemanoptionRef = useRef(null);
@@ -28,6 +27,11 @@ function TotalLedger() {
     const [linemannameday, setLineManNameDay] = useState("");
     const [linemanlineno, setLineManLineno] = useState("");
     const [line, setLine] = useState("");
+    const [previousDate,setPreviousDate]=useState(null);;
+    useEffect(() => {
+        const start = startOfWeek();
+        setPreviousDate(getPreviousMonday(start));
+    }, []);
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true);
@@ -85,7 +89,7 @@ function TotalLedger() {
             axios.get(`${baseURL}/city/${reporttypename}`, {
                 params: {
                     fromdate: startDateRef.current.value,
-                    todate: endDateRef.current.value, notrundate: notrunningDateRef.current.value,
+                    todate: endDateRef.current.value, notrundate: previousDate,
                     reporttype: reportType.current.value,
                     linemanref: passingargument.toString()
                 }
@@ -106,7 +110,7 @@ function TotalLedger() {
     const renderTotalLedgerList = (
         <Row ref={componentRef}>
             <ListTotalLedger totalledger={ledger} datefrom={startDateRef.current.value}
-                dateto={endDateRef.current.value} notrunningdate={notrunningDateRef.current.value} 
+                dateto={endDateRef.current.value} notrunningdate={previousDate} 
                 reportypeval={reportType.current.value} 
                 companyname={company.length > 0 ? company[0].companyname : ""} linemanname={linemannameday} linamnline={linemanlineno}/>
         </Row>
@@ -156,12 +160,12 @@ function TotalLedger() {
         <Container>
             <Row>
                 <Form>
-                    <Row >
+                    <Row className="rounder bg-white ">
                         {show === true ? linemanshow : null}
                         <Col md={show === true ? 2 : 3} className="rounder bg-white">
                             <Form.Group>
                                 <Form.Label>{t('startdate')}</Form.Label>
-                                <Form.Control type="date" ref={startDateRef} defaultValue={startOfWeek()} />
+                                <Form.Control type="date" ref={startDateRef} defaultValue={startOfWeek()} onChange={()=>setPreviousDate(getPreviousMonday(startDateRef.current.value))} />
                             </Form.Group>
                         </Col>
                         <Col md={show === true ? 2 : 3} className="rounder bg-white">
@@ -170,10 +174,10 @@ function TotalLedger() {
                                 <Form.Control type="date" ref={endDateRef} defaultValue={endOfWeek()} />
                             </Form.Group>
                         </Col>
-                        <Col md={show === true ? 2 : 3} className="rounder bg-white">
+                        <Col md={show === true ? 2 : 3} className="rounder bg-white" hidden={true}>
                             <Form.Group>
                                 <Form.Label>{t('notrunningdate')}</Form.Label>
-                                <Form.Control type="date" ref={notrunningDateRef} defaultValue={notRunningOfWeek()} />
+                                <Form.Control type="date" value={previousDate}  />
                             </Form.Group>
                         </Col>
                         <Col md={3} className="rounder bg-white">
@@ -189,12 +193,12 @@ function TotalLedger() {
                         </Col>
                     </Row>
                     <Row className="rounded bg-white text-center">
-                        <div className="col-md-6 mb-4 " >
+                        <div className="col-md-5 mb-4 " >
                             <Button variant="primary" size="lg" type="button" className="text-center" onClick={processList} >
                                 {t('processbuttonlabel')}
                             </Button>{' '}
                         </div>
-                        <div className="col-md-6 mb-4 ">
+                        <div className="col-md-4 mb-4 bg-white ">
                             <ReactToPrint trigger={() => (
                                 <Button variant="primary" size="lg" type="button" className="text-center" >
                                     {t('printbutton')}
