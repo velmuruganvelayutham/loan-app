@@ -53,60 +53,31 @@ const NotRunningAccounts = ({ pendingLoans, date, company }) => {
     }, 0);
 
     totalduepending = pendingLoans.reduce((previous, current) => {
-      if (current.collectedamountdate > 0 || current['addFields'].receiptpendingweekafter <= -1 || current.finisheddatepending == 1) {
-        return previous + 0;
+      if (current.finisheddatepending !== 1) {
+        return previous + customer.dueamount;
       }
-      else if (current.collectedamountdate == 0 && current['addFields'].receiptpendingweekafter <= 0) {
-        if ((-1 * (current['addFields'].receiptpendingweekafter * current.dueamount)) < current.dueamount && ((current['addFields'].receiptpendingweekafter * current.dueamount) != 0)) {
-
-          return previous + (current.dueamount - (-1 * (current['addFields'].receiptpendingweekafter * current.dueamount)))
-        }
-        else {
-          return previous + (-1 * (current['addFields'].receiptpendingweekafter) * current.dueamount)
-        }
-
-      }
-      else {
-        duependingcheck = ((current['addFields'].receiptpendingweekafter * current.dueamount) < current.dueamount && current.dueamount != 0 ? current['addFields'].receiptpendingweekafter * current.dueamount : current.dueamount)
-        duependingcheck = parseFloat(duependingcheck.toFixed(2))
-        return previous + duependingcheck
-      }
+      else{
+        return previous+0;      }
     }, 0);
 
     totalpendingweek = pendingLoans.reduce((previousval, currentval) => {
 
-      if (currentval['addFields'].receiptpendingweekafter > 0 && currentval['addFields'].receiptpendingweekafter < 8) {
-        if (currentval.collectedamountdate > 0 || currentval['addFields'].receiptpendingweekafter < 0 || currentval.finisheddatepending == 1) {
-          duependingcheck = 0;
-        }
-        else {
-          duependingcheck = currentval.dueamount
-        }
-        pendingweekcheck = (currentval['addFields'].receiptpendingweekafter * currentval.dueamount);
-        duependingcheckval = ((pendingweekcheck) < duependingcheck && duependingcheck != 0 ? (pendingweekcheck) : duependingcheck)
-        duependingweekcheck = pendingweekcheck - duependingcheckval;
-
-        duependingweekcheck = parseFloat(duependingweekcheck.toFixed(2))
-        return previousval + duependingweekcheck;
+      if (currentval.finisheddatepending !== 1) {
+        duependingcheck = currentval.dueamount;
       }
-      else if (currentval['addFields'].receiptpendingweekafter >= 8) {
-        if (currentval.collectedamountdate > 0 || currentval['addFields'].receiptpendingweekafter < 0 || currentval.finisheddatepending == 1) {
-          duependingcheck = 0;
-        }
-        else {
-          duependingcheck = currentval.dueamount
-        }
-        pendingweekcheck = (currentval['addFields'].receiptpendingweekafter * currentval.dueamount);
-        duependingcheckval = ((pendingweekcheck) < duependingcheck && duependingcheck != 0 ? (pendingweekcheck) : duependingcheck)
-        duependingweekcheck = pendingweekcheck;
-
-        duependingweekcheck = parseFloat(duependingweekcheck.toFixed(2))
-        return previousval + duependingweekcheck - duependingcheckval;
-
+      else{
+        duependingcheck=0;
       }
-      else {
-        return previousval + 0;
-      }
+
+      pendingweekcheck = (currentval.pendingweekcolor * currentval.dueamount);
+      duependingcheckval = ((pendingweekcheck) < duependingcheck && duependingcheck != 0 ? (pendingweekcheck) : duependingcheck)
+      duependingweekcheck = pendingweekcheck - duependingcheckval;
+
+      duependingweekcheck = parseFloat(duependingweekcheck.toFixed(2))
+      return previousval + duependingweekcheck;
+
+
+
     }, 0);
   }
 
@@ -179,36 +150,22 @@ const NotRunningAccounts = ({ pendingLoans, date, company }) => {
                 pagetotal = pagetotal + pending;
 
 
-                if (customer.collectedamountdate > 0 || customer['addFields'].receiptpendingweekafter <= -1 || customer.finisheddatepending == 1) {
-                  duepending = 0
-                }
-
-                else if (customer.collectedamountdate == 0 && customer['addFields'].receiptpendingweekafter <= 0) {
-
-                  duepending = -1 * (customer['addFields'].receiptpendingweekafter) * customer.dueamount
-                  if (duepending < customer.dueamount && duepending != 0) {
-                    duepending = customer.dueamount - duepending
-                  }
+                if (finisheddatepending !== 1) {
+                  duepending = customer.dueamount;
                 }
                 else {
-                  duepending = customer.dueamount
+                  duepending = 0;
                 }
 
-                //if(customer['addFields'].receiptpendingweekafter >1 )
-                if (customer['addFields'].receiptpendingweekafter > 0 && customer['addFields'].receiptpendingweekafter < 8) {
-                  pendingweek = (customer['addFields'].receiptpendingweekafter * customer.dueamount);
-                }
-                else if (customer['addFields'].receiptpendingweekafter >= 8) {
-                  pendingweek = (customer['addFields'].receiptpendingweekafter * customer.dueamount);
+                if (customer.pendingweekcolor >= 4) {
+                  pendingweek = (customer.pendingweekcolor * customer.dueamount);
 
                 }
                 else {
                   pendingweek = 0;
                 }
 
-                if (pendingweek < duepending && duepending != 0 && pendingweek != 0) {
-                  duepending = pendingweek
-                }
+
                 duepending = parseFloat(duepending.toFixed(2));
 
                 pendingtotal = pendingtotal + duepending;
