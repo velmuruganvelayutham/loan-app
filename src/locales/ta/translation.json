@@ -132,6 +132,13 @@
   "notrunningprevious": "ரன்னிங் ஆகாத",
   "notrunningcount": "த.ர ஆள்",
   "notrunningpending": "த.ர ரூபா",
+  "notrunningcountbefore":"மு.ர.ஆள்",
+  "notrunningpendingbefore":"மு.ர ரூபா",
+  "notrunningcountweek":"வா.ர.ஆள்",
+  "notrunningpendingweek":"வா.ர ரூபா",
+  "runningcountweek":"வா.ரன்.ஆ",
+  "runningpendingweek":"வா.ரன் ரூபா",
+  
   "running": "ரன்னிங்",
   "notrunningdate": "ரன்னிங் ஆகாத தேதி",
   "totalledgername": "முன் பற்று கணக்கு,த.பற்று கணக்கு,ஆவரேஜ் வசூல்,பெண்டிங் மற்றும் ரன்னிங் ஆகாத அக்கவுண்ட்",

@@ -17,6 +17,7 @@ import DailyRecords from "./DailyRecords";
 import {
     useAuth
 } from "@clerk/clerk-react";
+import NotRunningAccounts from "./NotRunningAccounts.js";
 
 var linecheckingreportname = "checkingdetails";
 var passingargument = "";
@@ -222,7 +223,13 @@ function LinecheckingReport() {
                 company={company.length > 0 ? company[0].companyname : ""} isPrinting={isPrinting} bookno={bookRef.current?Number(bookRef.current.value):""} />
 
         </Row>
+    )
+const renderNotRunningAccountList=(
+    <Row ref={componentRef}>
+            <NotRunningAccounts pendingLoans={checkingDetailsLine} date={endDateRef.current.value}
+                company={company.length > 0 ? company[0].companyname : ""} isPrinting={isPrinting} bookno={bookRef.current?Number(bookRef.current.value):""} />
 
+        </Row>
     )
     const restoreLineman = (e) => {
         const filtered = linemannames.filter(lineman => {
@@ -357,7 +364,7 @@ function LinecheckingReport() {
                                     rendernewaccountList : Number(reportType.current.value) === 3 ?
                                         rendercurrentweekgivenaccountList : Number(reportType.current.value) === 4 ?
                                             renderweekendaccountList : Number(reportType.current.value) === 6 ?
-                                                renderLineCheckingList : Number(reportType.current.value) === 7 ?
+                                                renderNotRunningAccountList : Number(reportType.current.value) === 7 ?
                                                     renderPendingAccountList : renderdailyrecords}
                         {errorMessage && <div className="error">{errorMessage}</div>}
                     </Row>
