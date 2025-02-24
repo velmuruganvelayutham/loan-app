@@ -165,7 +165,6 @@ const NotRunningAccounts = ({ pendingLoans, date, company }) => {
                   pendingweek = 0;
                 }
 
-
                 duepending = parseFloat(duepending.toFixed(2));
 
                 pendingtotal = pendingtotal + duepending;
