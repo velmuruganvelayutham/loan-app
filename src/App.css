@@ -308,6 +308,27 @@ Table.totalledgertable {
   padding: 15px;
   border-radius: 5px;
 }
+.totalledgercitywise {
+  line-height: 25px;
+  min-height: 25px;
+  height: 25px;
+}
+.reducesizenotrunning {
+  display: block;  /* Ensures it behaves like a block inside the table cell */
+  width: 40px;     /* Adjust width as needed */
+  text-align: center;
+  white-space: normal; /* Allows wrapping */
+  word-wrap: break-word; /* Breaks long words */
+  overflow-wrap: break-word; /* Ensures long words wrap properly */
+}
+.reducesizerunning {
+  display: block;  /* Ensures it behaves like a block inside the table cell */
+  width: 48px;     /* Adjust width as needed */
+  text-align: center;
+  white-space: normal; /* Allows wrapping */
+  word-wrap: break-word; /* Breaks long words */
+  overflow-wrap: break-word; /* Ensures long words wrap properly */
+}
 
 @media print {
   * {
