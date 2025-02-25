@@ -413,3 +413,28 @@ Table.totalledgertable {
     margin-left:9px !important;
   }
 }
+@media print and (max-width: 768px) {
+  @page {
+    size: A4;
+    margin: 5mm; /* Smaller margin for mobile */
+  }
+
+  body {
+    font-size: 12px; /* Reduce text size */
+  }
+
+  table {
+    page-break-inside: auto;
+    width: 100%;
+  }
+
+  tr {
+    page-break-inside: avoid;
+  }
+
+  td {
+    word-wrap: break-word;
+    page-break-inside: auto;
+  }
+}
+
