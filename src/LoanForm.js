@@ -237,7 +237,7 @@ function LoanForm() {
     function calculateTotalAmt() {
         let given = Number(givenAmt);
         let document = 0;
-        if (weekscount == 25) {
+        if (weekscount == 25 || weekscount==26) {
             document = ((50 * given) / 1000);
         }
         else if (weekscount == 32) {
@@ -263,6 +263,9 @@ function LoanForm() {
         let intrested = 0
         if (weekscount == 25) {
             intrested = ((given * 20) / 100);
+        }
+        else if (weekscount == 26) {
+            intrested = ((given * 25) / 100);
         }
         else if (weekscount == 32) {
 

@@ -41,6 +41,9 @@ export function startOfWeek() {
         // If start day is Saturday (6), move to the previous Saturday
         dayOffset = currday === 6 ? 0 : -currday - 1;
     }
+    else if (loanStartDate === 3) {
+        dayOffset = currday === 6 ? 0 : 3 - currday;
+    }
 
     // Calculate the start date
     const start = new Date(curr);
@@ -53,7 +56,7 @@ export function startOfWeek() {
 export function endOfWeek() {
     var curr = new Date();
     var currday = curr.getDay();
-    var daycalno=0;
+    var daycalno = 0;
     if (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) {
         if (currday == 0) {
             currday = 7;
@@ -65,6 +68,12 @@ export function endOfWeek() {
             currday = -1;
         }
         daycalno = (7 - currday - 7) + 4;
+    }
+    if (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 3) {
+        if (currday == 6) {
+            currday = 7;
+        }
+        daycalno = (8 - currday) % 7;
     }
 
     var start = new Date(curr.setDate(curr.getDate() + daycalno));
@@ -79,7 +88,7 @@ export function endOfWeek() {
 export function notRunningOfWeek() {
     var curr = new Date();
     var currday = curr.getDay();
-    var daycalno=0;
+    var daycalno = 0;
     if (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) {
         if (currday == 0) {
             currday = 7;
@@ -92,7 +101,7 @@ export function notRunningOfWeek() {
         }
         daycalno = (7 - currday - 10 - 7 - 7 - 7);
     }
-    
+
 
 
     var start = new Date(curr.setDate(curr.getDate() + daycalno));
@@ -141,9 +150,9 @@ export function dateFormatoneweek(datevalue) {
     return start;
 }
 export const getPreviousMonday = (currentDate) => {
-    
+
     const previousMonday = new Date(currentDate);
     previousMonday.setDate(previousMonday.getDate() - 7); // Subtract 7 days
     return previousMonday.toISOString().split("T")[0];
-    
-  };
+
+};

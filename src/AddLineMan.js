@@ -118,7 +118,7 @@ function AddLineMan() {
     <Container >
       <h2 className="text-center">{t('linemanheader')}</h2>
       <Row className="justify-content-md-center mt-5 ">
-        <Col xs={6} lg={6} className="rounded bg-white">
+        <Col xs={12} lg={6} className="rounded bg-white">
           <Form validated={validated}>
             <Row className="rounded bg-white">
               <Col xs={12} md={12} >

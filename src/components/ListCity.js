@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 const ListCity = ({ citynames, updateMode }) => {
   const { t, i18n } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 5;
+  const recordsPerPage = 12;
   const lastIndex = currentPage * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;
   const records = citynames.slice(firstIndex, lastIndex);
