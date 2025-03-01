@@ -62,6 +62,11 @@ function Ledger({ loanno, ledger, company, date }) {
             arr2 = Array.from({ length: 12 }, (_, i) => i + 12)
 
         }
+        else if (first.weekcount === 26) {
+            arr1 = Array.from(Array(13).keys());
+            arr2 = Array.from({ length: 13 }, (_, i) => i + 13)
+
+        }
         else if (first.weekcount === 20) {
             arr1 = Array.from(Array(10).keys());
             arr2 = Array.from({ length: 10 }, (_, i) => i + 12)
@@ -71,6 +76,11 @@ function Ledger({ loanno, ledger, company, date }) {
             arr1 = Array.from(Array(11).keys());
             arr2 = Array.from({ length: 0 }, (_, i) => i + 12)
 
+        }
+        else if (first.weekcount === 65) {
+            arr1 = Array.from(Array(25).keys());
+            arr2 = Array.from({ length: 25 }, (_, i) => i + 25)
+            arr3 = Array.from({ length: 15 }, (_, i) => i + 51)
         }
         else if (first.weekcount === 90) {
             arr1 = Array.from(Array(25).keys());

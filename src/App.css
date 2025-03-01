@@ -276,6 +276,9 @@ Table.totalledgertable {
 .col-sm-custom_chart {
   width: 90% !important;
  }
+ .col-sm-custom_75 {
+  width: 53% !important;
+ }
  .col-sm-custom_chart_90 {
   width: 71% !important;
  }
@@ -412,29 +415,10 @@ Table.totalledgertable {
   .print-margin-chartalign{
     margin-left:9px !important;
   }
-}
-@media print and (max-width: 768px) {
-  @page {
-    size: A4;
-    margin: 5mm; /* Smaller margin for mobile */
+  .chart-print-margin_75{
+    margin-left: -59px !important;
   }
-
-  body {
-    font-size: 12px; /* Reduce text size */
-  }
-
-  table {
-    page-break-inside: auto;
-    width: 100%;
-  }
-
-  tr {
-    page-break-inside: avoid;
-  }
-
-  td {
-    word-wrap: break-word;
-    page-break-inside: auto;
+  .chart-print-margin_75_75{
+    margin-left: -205px !important;
   }
 }
-

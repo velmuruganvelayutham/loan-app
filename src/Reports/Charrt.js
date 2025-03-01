@@ -61,6 +61,10 @@ function Charrt({ loanno, ledger, company, date }) {
             arr1 = Array.from(Array(12).keys());
             arr2 = Array.from({ length: 12 }, (_, i) => i + 12)
         }
+        else if (first.weekcount === 26) {
+            arr1 = Array.from(Array(16).keys());
+            arr2 = Array.from({ length: 10 }, (_, i) => i + 16)
+        }
         else if (first.weekcount === 20) {
             arr1 = Array.from(Array(12).keys());
             arr2 = Array.from({ length: 8 }, (_, i) => i + 12)
@@ -68,6 +72,11 @@ function Charrt({ loanno, ledger, company, date }) {
         else if (first.weekcount === 11) {
             arr1 = Array.from(Array(11).keys());
             arr2 = Array.from({ length: 0 }, (_, i) => i + 12)
+        }
+        else if (first.weekcount === 65) {
+            arr1 = Array.from(Array(25).keys());
+            arr2 = Array.from({ length: 25 }, (_, i) => i + 25)
+            arr3 = Array.from({ length: 15 }, (_, i) => i + 51)
         }
         else if (first.weekcount === 90) {
             arr1 = Array.from(Array(25).keys());
@@ -214,7 +223,7 @@ function Charrt({ loanno, ledger, company, date }) {
                     </Table>
                 </Col>
                 <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-custom col-md-4 p-0' : 'col-sm-custom col-md-4 p-0'}  >
-                    <Table className={arr3.length>0?"table  text-center table-bordered border-dark chart col-sm-custom_chart_90_90 chart-print-margin_90":"table  text-center table-bordered border-dark chart col-sm-custom chart-print-margin"} style={{ marginBottom: "0 !important", width:arr3.length>0?"90%":"40%"}}>
+                    <Table className={arr3.length>0 && arr4.length>0?"table  text-center table-bordered border-dark chart col-sm-custom_chart_90_90 chart-print-margin_90":arr3.length>0?"table  text-center table-bordered border-dark chart col-sm-custom_75 chart-print-margin_75":"table  text-center table-bordered border-dark chart col-sm-custom chart-print-margin"} style={{ marginBottom: "0 !important", width:arr3.length && arr4.length>0>0?"90%":"40%"}}>
                         <thead>
                             <tr >
                                 <th style={{ fontSize: "11px", padding: "0", margin: "0", width: "6%" }}>
@@ -248,7 +257,7 @@ function Charrt({ loanno, ledger, company, date }) {
                     </Table>
                 </Col>
                 {arr3.length > 0 && <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-md-3 p-0' : 'col-sm-custom col-md-4 p-0'}  >
-                    <Table className="table  text-center table-bordered border-dark chart col-sm-custom_chart_90 chart-print-margin_90_90" style={{ marginBottom: "0 !important", width: "80%", padding: "0 !important" }} >
+                    <Table className={arr4.length>0?"table  text-center table-bordered border-dark chart col-sm-custom_chart_90 chart-print-margin_90_90":"table  text-center table-bordered border-dark chart col-sm-custom_75 chart-print-margin_75_75"} style={{ marginBottom: "0 !important", width: "80%", padding: "0 !important" }} >
                         <thead>
                             <tr >
                                 <th style={{ fontSize: "11px", padding: "0", margin: "0", width: "6%" }}>
