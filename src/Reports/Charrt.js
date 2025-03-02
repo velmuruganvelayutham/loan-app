@@ -98,13 +98,13 @@ function Charrt({ loanno, ledger, company, date }) {
                 <Form>
 
                     <Row className='col-sm-6 col-md-8 pt-3' style={{ whiteSpace: "nowrap", overflow: "hidden" }} >
-                        <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'rounded bg-white col-sm-2 fw-bold' : 'rounded bg-white col-sm-1 fw-bold'} style={{ fontSize: fontsizevar }}>
+                        <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)||(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 3) ? 'rounded bg-white col-sm-2 fw-bold' : 'rounded bg-white col-sm-1 fw-bold'} style={{ fontSize: fontsizevar }}>
                             {t('lineshort') + ":" + (ledger.length > 0 ? first.lineno : "")}
                         </Col>
                         <Col className="rounded bg-white col-sm-4 fw-bold" style={{ fontSize: "12px" }}>
                             {company}
                         </Col>
-                        <Col className="rounded bg-white col-sm-2 fw-bold" style={{ fontSize: fontsizevar, position: "fixed", left: (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? "32%" : "32%" }}>
+                        <Col className="rounded bg-white col-sm-2 fw-bold" style={{ fontSize: fontsizevar, position: "fixed", left: (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)||(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 3) ? "32%" : "32%" }}>
                             {t('booknomedium') + ':' + (ledger.length > 0 ? first.bookno : "")}
                         </Col>
                     </Row>
@@ -113,31 +113,31 @@ function Charrt({ loanno, ledger, company, date }) {
                             color: '#000000',
                             backgroundColor: '#000000',
                             height: '0',
-                            width: (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? "42%" : "42%",
+                            width: (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)||(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 3) ? "42%" : "42%",
                             borderColor: '#000000',
                             margin: '0',
                             padding: '0'
                         }} />
                     </Row>
-                    <Row className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-5 col-md-6' : 'col-sm-5 col-md-6'}>
+                    <Row className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)||(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 3) ? 'col-sm-5 col-md-6' : 'col-sm-5 col-md-6'}>
                         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
                             <div style={{ flex: 1, margin: '0', padding: '0' }}>
                                 <Form.Group style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", width: "100%" }}>
                                     <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block", width: "100%" }}>
-                                        {(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? t('customer') : t('customer')}&nbsp;:<span style={{ fontSize: fontsizevar, display: "inline-block", minWidth: "0" }}>{ledger.length > 0 ? first.customer : ""}</span>
+                                        {(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)||(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 3) ? t('customer') : t('customer')}&nbsp;:<span style={{ fontSize: fontsizevar, display: "inline-block", minWidth: "0" }}>{ledger.length > 0 ? first.customer : ""}</span>
                                     </Form.Label>
                                 </Form.Group>
                             </div>
                             <div style={{ flex: 1, margin: '0', padding: '0', paddingLeft: '2px' }}>
                                 <Form.Group style={{ overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis", width: "100%" }}>
                                     <Form.Label style={{ fontSize: fontsizevar, marginBottom: "0", display: "inline-block", width: "100%" }}>
-                                        {relationtype === 0 ? (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0 ? t('fathername') : t('fathername')) : (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0 ? t('husbandname') : t('husbandname'))}&nbsp;:<span style={{ fontSize: fontsizevar, display: "inline-block", minWidth: "0" }}>{ledger.length > 0 ? first.fathername : ""}</span>
+                                        {relationtype === 0 ? (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0||(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 3) ? t('fathername') : t('fathername')) : (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0||(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 3) ? t('husbandname') : t('husbandname'))}&nbsp;:<span style={{ fontSize: fontsizevar, display: "inline-block", minWidth: "0" }}>{ledger.length > 0 ? first.fathername : ""}</span>
                                     </Form.Label>
                                 </Form.Group>
                             </div>
                         </div>
                     </Row>
-                    <Row className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-5 col-md-6' : 'col-sm-5 col-md-6'}>
+                    <Row className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)||(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 3) ? 'col-sm-5 col-md-6' : 'col-sm-5 col-md-6'}>
                         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
                             <div style={{ flex: 1, margin: '0', padding: '0' }}>
 
@@ -169,9 +169,9 @@ function Charrt({ loanno, ledger, company, date }) {
 
                 </Form>
             </Row>
-            <Row className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? arr3.length > 0 ? 'col-sm-12 col-md-12 print-margin-chartalign' : 'col-sm-8 col-md-8 print-margin-chartalign' : 'col-sm-8 col-md-8'} style={{ paddingLeft: paddingvar }} >
+            <Row className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)||(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 3) ? arr3.length > 0 ? 'col-sm-12 col-md-12 print-margin-chartalign' : 'col-sm-8 col-md-8 print-margin-chartalign' : 'col-sm-8 col-md-8'} style={{ paddingLeft: paddingvar }} >
                 
-                <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? arr3.length>0?'col-sm-3 col-md-3 p-0':'col-sm-4 col-md-4 p-0' : 'col-sm-4 col-md-4 p-0'} >
+                <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)||(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 3) ? arr3.length>0?'col-sm-3 col-md-3 p-0':'col-sm-4 col-md-4 p-0' : 'col-sm-4 col-md-4 p-0'} >
                     <Table className={arr3.length>0?"table text-center table-bordered border-dark chart col-sm-custom_chart_90":"table text-center table-bordered border-dark chart col-sm-custom_chart"} style={{ marginBottom: "0 !important", width:arr3.length>0?"70%":"90%" }}>
                         <thead>
                             <tr >
@@ -222,7 +222,7 @@ function Charrt({ loanno, ledger, company, date }) {
                         </tbody>
                     </Table>
                 </Col>
-                <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-custom col-md-4 p-0' : 'col-sm-custom col-md-4 p-0'}  >
+                <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)||(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 3) ? 'col-sm-custom col-md-4 p-0' : 'col-sm-custom col-md-4 p-0'}  >
                     <Table className={arr3.length>0 && arr4.length>0?"table  text-center table-bordered border-dark chart col-sm-custom_chart_90_90 chart-print-margin_90":arr3.length>0?"table  text-center table-bordered border-dark chart col-sm-custom_75 chart-print-margin_75":"table  text-center table-bordered border-dark chart col-sm-custom chart-print-margin"} style={{ marginBottom: "0 !important", width:arr3.length && arr4.length>0>0?"90%":"40%"}}>
                         <thead>
                             <tr >
@@ -256,7 +256,7 @@ function Charrt({ loanno, ledger, company, date }) {
                         </tbody>
                     </Table>
                 </Col>
-                {arr3.length > 0 && <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-md-3 p-0' : 'col-sm-custom col-md-4 p-0'}  >
+                {arr3.length > 0 && <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)||(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 3) ? 'col-md-3 p-0' : 'col-sm-custom col-md-4 p-0'}  >
                     <Table className={arr4.length>0?"table  text-center table-bordered border-dark chart col-sm-custom_chart_90 chart-print-margin_90_90":"table  text-center table-bordered border-dark chart col-sm-custom_75 chart-print-margin_75_75"} style={{ marginBottom: "0 !important", width: "80%", padding: "0 !important" }} >
                         <thead>
                             <tr >
@@ -290,7 +290,7 @@ function Charrt({ loanno, ledger, company, date }) {
                         </tbody>
                     </Table>
                 </Col>}
-                {arr4.length > 0 && <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ? 'col-sm-custom col-md-3 p-0' : 'col-sm-custom col-md-4 p-0'}  >
+                {arr4.length > 0 && <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)||(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 3) ? 'col-sm-custom col-md-3 p-0' : 'col-sm-custom col-md-4 p-0'}  >
                     <Table className="table  text-center table-bordered border-dark chart  col-sm-custom_chart_90_90 chart-print-margin_90_90_90" style={{ marginBottom: "0 !important", width: "80%" }} >
                         <thead>
                             <tr >
@@ -325,7 +325,7 @@ function Charrt({ loanno, ledger, company, date }) {
                     </Table>
                 </Col>}
             </Row>
-            {(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) ?
+            {(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)||(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 3) ?
                 <Row className='col-sm-8 col-md-8 mt-0 pt-0 print-margin-chartalign' style={{ paddingLeft: "14px", whiteSpace: "nowrap", overflow: "hidden" }}>
                     <Col className='col-sm-4 col-md-4' style={{ fontSize: "11px", textAlign: "center", padding: "0", margin: "0", width: "30%", textOverflow: "ellipsis" }}>
                         {t('forcontanct') + ":"}<span style={{ fontWeight: "bold", display: "inline-block", width: "50%", textOverflow: "ellipsis" }}>{first.linemanname}</span>
