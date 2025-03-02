@@ -21,6 +21,11 @@ export const getDefaultWeekCount = () => {
         //console.log("REACT_APP_DEFAULT_WEEK_COUNT", 24)
         return 24;
     }
+    if (Number(process.env.REACT_APP_DEFAULT_WEEK_COUNT) === 26) {
+        //console.log("REACT_APP_DEFAULT_WEEK_COUNT", 24)
+        return 26;
+    }
+
 }
 
 
