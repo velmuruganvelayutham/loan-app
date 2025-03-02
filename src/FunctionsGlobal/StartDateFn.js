@@ -1,4 +1,4 @@
-/*export function startOfWeek() {
+export function startOfWeek() {
     var curr = new Date();
     var currday = curr.getDay();
     var daycalno = 0;
@@ -16,7 +16,15 @@
 
         daycalno = (7 - currday - 7) - 1
     }
-
+    if (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 3) {
+        if (currday < 3) {
+            // If today is Sunday (6), Monday (1), or Tuesday (2), go to the previous Wednesday
+            daycalno = - (currday + (7 - 3)); 
+        } else {
+            // If today is Wednesday or after, find the last Wednesday
+            daycalno = 3 - currday;
+        }
+    }
 
     var start = new Date(curr.setDate(curr.getDate() + daycalno));
 
@@ -26,8 +34,8 @@
         day: '2-digit',
     }).split("/").reverse().join("-");
     return datestartyearformat;
-}*/
-export function startOfWeek() {
+}
+/*export function startOfWeek() {
     const curr = new Date();
     const currday = curr.getDay(); // Get current day (0 = Sunday, 6 = Saturday)
     const loanStartDate = Number(process.env.REACT_APP_LOAN_APP_STARTDATE);
@@ -42,6 +50,7 @@ export function startOfWeek() {
         dayOffset = currday === 6 ? 0 : -currday - 1;
     }
     else if (loanStartDate === 3) {
+
         dayOffset = currday === 6 ? 0 : 3 - currday;
     }
 
@@ -51,7 +60,7 @@ export function startOfWeek() {
 
     // Format date as YYYY-MM-DD
     return start.toISOString().split("T")[0];
-}
+}*/
 
 export function endOfWeek() {
     var curr = new Date();
