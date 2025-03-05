@@ -203,7 +203,8 @@
   "pendingweek":"P.Week",
   "printall":"Print All",
   "yes":"Yes",
-  "noo":"No"
+  "noo":"No",
+  "fillanydetails":"Choose Any Filter Option"
 
 
 }

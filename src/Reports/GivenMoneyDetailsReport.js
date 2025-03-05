@@ -21,43 +21,17 @@ function GivenMoneyDetailsReport() {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [loanDetails, setLoanDetails] = useState([]);
-    const [customers, setCustomers] = useState([]);
+
     const [customer, setCustomer] = useState("");
     const { t } = useTranslation();
     const [company, setCompany] = useState([]);
-    const [citynames, setCitynames] = useState([]);
+
     const [city, setCity] = useState(null);
     const componentRef = useRef();
     const endDateRef = useRef(endOfWeek());
     const [selectedOption, setSelectedOption] = useState(null);
-    useEffect(() => {
-        const preloadCities = async () => {
-            setIsLoading(true); // Start loading
-            try {
-                const token = await getToken(); // Fetch token
-                axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    const [inputmobileno, setInputMobileno] = useState("")
 
-                const response = await axios.get(`${baseURL}/citycreate/get?q=`);
-                const data = response.data.map((city) => ({
-                    value: city._id,
-                    label: city.cityname,
-                }));
-
-                // Update state and cache the result
-                setCitynames(data);
-                setErrorMessage("");
-                setIsLoading(false);
-            } catch (error) {
-                console.log("error=", error);
-                setErrorMessage(t('errormessagecity'));
-                setIsLoading(false);
-            } finally {
-                setIsLoading(false); // Stop loading
-            }
-        };
-
-        preloadCities();
-    }, [getToken, t]);
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true);
@@ -76,65 +50,49 @@ function GivenMoneyDetailsReport() {
         fetchData();
     }, [getToken, t])
 
-    useEffect(() => {
 
-        async function fetchData() {
-            setIsLoading(true);
-            const token = await getToken();
-            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            axios.get(`${baseURL}/get/view?q=`).then((res) => {
-                setCustomers(res.data);
 
-                setIsLoading(false);
-                setErrorMessage("");
-            }).catch(error => {
-                console.log("error=", error);
-                setErrorMessage(t('errormessageloan'));
-                setIsLoading(false);
-            })
-        }
-        fetchData();
-
-    }, [getToken, t])
-    const options = customers.map((cust, i) => {
-        return {
-            label: cust.customer + '-' + cust.fathername,
-            value: cust._id,
-            key: i
-        }
-    })
-    const loadOptions = async (inputValue, callback) => {
-        
+    const loadOptions = async (inputValue, callback, searchType) => {
         try {
-            // Make an API call to fetch options based on the inputValue
+            // Make an API call to fetch options based on the inputValue and searchType
             const token = await getToken();
-            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            const response = await axios.get(`${baseURL}/get/view?q=${inputValue}`, { params: { city: city.value.toString() } });
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+            // Define search parameters dynamically based on searchType
+            let params = { q: inputValue };
+            params.type = searchType
+
+            const response = await axios.get(`${baseURL}/get/namesearch`, { params });
             const data = await response.data;
 
             // Map the fetched data to the format expected by React Select
-            const options = data.map(item => ({
-                value: item._id,
-                label: item.customer + '-' + item.fathername,
+            const options = data.map((item) => ({
+                value: item[searchType],
+                label: item[searchType], // Dynamically set label based on searchType
             }));
-            setSelectedOption(null)
-            setCustomers(data);
-            // Call the callback function with the options to update the dropdown
+
             callback(options);
         } catch (error) {
-            console.error('Error fetching options:', error);
+            console.error("Error fetching options:", error);
             callback([]);
         }
     };
-    const processList = async () => {
 
+    const processList = async () => {
+        if(!customer&& !selectedOption&& !city&& !inputmobileno){
+            alert(t('fillanydetails'));
+            return;
+        }
         setIsLoading(true);
         const token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         return (
             axios.get(`${baseURL}/loan/givenmoney`, {
                 params: {
-                    customer_id: selectedOption.value.toString(),
+                    customename: customer,
+                    fathername: selectedOption,
+                    referencecity: city,
+                    mobileno: inputmobileno,
                     todate: endDateRef.current.value
                 }
             }).then((res) => {
@@ -160,45 +118,91 @@ function GivenMoneyDetailsReport() {
         </Row>
     )
     const handleChange = (selectedOption) => {
+        if (!selectedOption) {
+            // Handle case where value is cleared
+            setCustomer(null);
+            return;
+        }
         setCustomer(selectedOption.value);
-        setSelectedOption(selectedOption);
+
     };
-    const handleChangeCity=(selected)=>{
-        setCity(selected);
+    const handleChangeCity = (selected) => {
+        if (!selected) {
+            setCity(null);
+            return;
+        }
+        setCity(selected.value);
+
     }
+    const handleChangeFatherName = (selected) => {
+        if (!selected) {
+            setSelectedOption(null);
+            return;
+        }
+        setSelectedOption(selected.value);
+
+    }
+
+
     return (
         <Container>
             <Row className="justify-content-md-center mt-5 ">
                 <Form>
                     <Row>
-                        <Col xs={12} md={4} className="rounded bg-white">
 
-                            <Form.Group className="mb-3" name="linenumber" border="primary" >
-                                <Form.Label>{t('city')}</Form.Label>
-                                <Select
-                                    options={citynames}
-                                    isLoading={isLoading}
-                                    onChange={handleChangeCity} // Handles selection
-                                    placeholder={t('cityplaceholder')}
-                                    value={city}
-                                    isSearchable
-                                    isClearable={true}
-                                />
-                                
-                            </Form.Group>
-                        </Col>
-                        <Col xs={12} md={4} className="rounded bg-white">
+                        <Col xs={12} md={3} className="rounded bg-white">
 
                             <Form.Group className="mb-3" name="linenumber" border="primary" >
                                 <Form.Label>{t('customer')}</Form.Label>
-                                <AsyncSelect autoFocus
-                                    id="react-select-3-input"
-                                    isLoading={isLoading}
-                                    value={selectedOption}
+                                <AsyncSelect
+                                    loadOptions={(inputValue, callback) => loadOptions(inputValue, callback, "customer")}
                                     onChange={handleChange}
-                                    defaultOptions={options}
-                                    placeholder={t('customer')}
-                                    loadOptions={loadOptions} />
+                                    placeholder={t('customerplaceholder')}
+                                    cacheOptions
+                                    defaultOptions
+                                    isSearchable
+                                    isClearable={true}
+                                />
+
+                            </Form.Group>
+                        </Col>
+                        <Col xs={12} md={3} className="rounded bg-white">
+
+                            <Form.Group className="mb-3" name="linenumber" border="primary" >
+                                <Form.Label>{t('city')}</Form.Label>
+                                <AsyncSelect
+                                    loadOptions={(inputValue, callback) => loadOptions(inputValue, callback, "referencecity")}
+                                    onChange={handleChangeCity}
+                                    placeholder={t('cityplaceholder')}
+                                    cacheOptions
+                                    defaultOptions
+                                    isSearchable
+                                    isClearable={true}
+                                />
+                            </Form.Group>
+                        </Col>
+                        <Col xs={12} md={3} className="rounded bg-white">
+
+                            <Form.Group className="mb-3" name="linenumber" border="primary" >
+                                <Form.Label>{t('fatherhusbandnameplaceholder')}</Form.Label>
+                                <AsyncSelect
+                                    loadOptions={(inputValue, callback) => loadOptions(inputValue, callback, "fathername")}
+                                    onChange={handleChangeFatherName}
+                                    placeholder={t('fatherhusbandnameplaceholder')}
+                                    cacheOptions
+                                    defaultOptions
+                                    isSearchable
+                                    isClearable={true}
+                                />
+
+
+                            </Form.Group>
+                        </Col>
+                        <Col xs={12} md={3} className="rounded bg-white">
+                            <Form.Group className="mb-3" name="mobilenumber" border="primary" >
+                                <Form.Label>{t('phoneno')}</Form.Label>
+                                <Form.Control type="text" placeholder={t('phonenoplaceholder')} required value={inputmobileno}
+                                    onChange={(e) => setInputMobileno(e.target.value)} />
                             </Form.Group>
                         </Col>
                         <Col md={2} className="rounder bg-white d-none" >
@@ -207,8 +211,7 @@ function GivenMoneyDetailsReport() {
                                 <Form.Control type="date" ref={endDateRef} defaultValue={endOfWeek()} />
                             </Form.Group>
                         </Col>
-                        <Col xs={12} md={4} className="rounded bg-white">
-                        </Col>
+
                     </Row>
                     <Row className="rounded bg-white">
                         <Col className="col-md-6 mb-4 text-center " >
