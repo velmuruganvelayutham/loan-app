@@ -229,7 +229,7 @@ function Ledger({ loanno, ledger, company, date }) {
                             </Form.Group>
                             {ledger.length > 0 ?
                                 (< Form.Group border="primary" >
-                                    <Form.Label>{first.advancetype === 2 ? t('latepending') : t('showAdvance')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                    <Form.Label>{first.advancetype === 2 ? t('latepending') : t('advanceless')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                                     <Form.Label>&nbsp;{first.advanceless}</Form.Label>
                                 </Form.Group>) : ""
                             }
