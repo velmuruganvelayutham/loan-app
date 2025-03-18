@@ -17,7 +17,7 @@ function Ledger({ loanno, ledger, company, date }) {
     function TablesRows(no, date, income, weekno, type,receipttype) {
 
         return (
-            <tr className={receipttype>0?'chartheight table-danger':'chartheight'}>
+            <tr className={receipttype!==0?'chartheight table-danger':'chartheight'}>
                 <td style={{ fontSize: "11px", padding: "0", margin: "0" }}>{date !== "" ? dateFormatdd(date) : ""}</td>
                 <td style={{ fontSize: "11px", padding: "0", margin: "0" }}>{Number(no) === 1 && (weekno === "") ? income : no}</td>
                 <td style={{ fontSize: "11px", padding: "0", margin: "0" }}>{Number(no) === 1 && (weekno === "") ? "" : income}</td>
@@ -229,7 +229,7 @@ function Ledger({ loanno, ledger, company, date }) {
                             </Form.Group>
                             {ledger.length > 0?
                             (< Form.Group border="primary" >
-                            <Form.Label>{first.radvancetype===2?t('latepending'):t('showAdvance')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                            <Form.Label>{first.advancetype===2?t('latepending'):t('showAdvance')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                             <Form.Label>&nbsp;{first.advanceless}</Form.Label>
                         </Form.Group>):""
                             }
