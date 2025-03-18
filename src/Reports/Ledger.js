@@ -14,10 +14,10 @@ function Ledger({ loanno, ledger, company, date }) {
     var serialno = 0;
     var records = ledger
 
-    function TablesRows(no, date, income, weekno, type,receipttype) {
+    function TablesRows(no, date, income, weekno, type, receipttype) {
 
         return (
-            <tr className={receipttype!==0?'chartheight table-danger':'chartheight'}>
+            <tr className={receipttype === 1 || receipttype === 2 ? 'chartheight table-danger' : 'chartheight'}>
                 <td style={{ fontSize: "11px", padding: "0", margin: "0" }}>{date !== "" ? dateFormatdd(date) : ""}</td>
                 <td style={{ fontSize: "11px", padding: "0", margin: "0" }}>{Number(no) === 1 && (weekno === "") ? income : no}</td>
                 <td style={{ fontSize: "11px", padding: "0", margin: "0" }}>{Number(no) === 1 && (weekno === "") ? "" : income}</td>
@@ -94,12 +94,12 @@ function Ledger({ loanno, ledger, company, date }) {
             arr3 = Array.from({ length: 25 }, (_, i) => i + 51)
             arr4 = Array.from({ length: 25 }, (_, i) => i + 76)
         }
-       arr2=ledger.length>first.weekcount?Array.from({ length: ledger.length-arr1.length }, (_, i) => i + (ledger.length-arr1.length)):arr2
+        arr2 = ledger.length > first.weekcount ? Array.from({ length: ledger.length - arr1.length }, (_, i) => i + (ledger.length - arr1.length)) : arr2
         //alert(ledger.length-arr1.length);
     }
-    
-    const tableData = Array.from({ length: arr1.length + arr2.length +arr3.length+arr4.length}, (_, i) => ledger[i] || {});
-     
+
+    const tableData = Array.from({ length: arr1.length + arr2.length + arr3.length + arr4.length }, (_, i) => ledger[i] || {});
+
     return (
 
 
@@ -227,21 +227,21 @@ function Ledger({ loanno, ledger, company, date }) {
                                 <Form.Label>{t('due')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
                                 <Form.Label>&nbsp;{ledger.length > 0 ? first.dueamount : ""}</Form.Label>
                             </Form.Group>
-                            {ledger.length > 0?
-                            (< Form.Group border="primary" >
-                            <Form.Label>{first.advancetype===2?t('latepending'):t('showAdvance')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
-                            <Form.Label>&nbsp;{first.advanceless}</Form.Label>
-                        </Form.Group>):""
+                            {ledger.length > 0 ?
+                                (< Form.Group border="primary" >
+                                    <Form.Label>{first.advancetype === 2 ? t('latepending') : t('showAdvance')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                    <Form.Label>&nbsp;{first.advanceless}</Form.Label>
+                                </Form.Group>) : ""
                             }
-                            {ledger.length > 0?first.topay!==0?
-                            (< Form.Group border="primary" >
-                            <Form.Label>{first.topay>0?t('pending'):t('showAdvance')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
-                            <Form.Label>&nbsp;{first.topay}</Form.Label>
-                        </Form.Group>):"":""
+                            {ledger.length > 0 ? first.topay !== 0 ?
+                                (< Form.Group border="primary" >
+                                    <Form.Label>{first.topay > 0 ? t('pending') : t('showAdvance')}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</Form.Label>
+                                    <Form.Label>&nbsp;{first.topay}</Form.Label>
+                                </Form.Group>) : "" : ""
                             }
-                    </Col>
-            </Row>
-        </Form>
+                        </Col>
+                    </Row>
+                </Form>
             </Row >
             <Row>
                 <hr className='m-3' style={{
@@ -281,7 +281,7 @@ function Ledger({ loanno, ledger, company, date }) {
                                     totalamount -= item.collectedamount || 0;
                                     return (
                                         <Fragment key={index}>
-                                            {TablesRows(serialno, item.receiptdate || "", item.collectedamount || "", item.weekno || "","",item.receipttype)}
+                                            {TablesRows(serialno, item.receiptdate || "", item.collectedamount || "", item.weekno || "", "", item.receipttype)}
                                             {Number(serialno) === 1 ? TablesRows(serialno, first.startdate, "", "") : ""}
                                         </Fragment>
                                     );
@@ -315,20 +315,20 @@ function Ledger({ loanno, ledger, company, date }) {
                             </tr>
                         </thead>
                         <tbody>
-                            {tableData.slice(arr1.length, (arr1.length+arr2.length)).map((item, index) => {
+                            {tableData.slice(arr1.length, (arr1.length + arr2.length)).map((item, index) => {
                                 serialno += 1;
                                 totalamount -= item.collectedamount || 0;
-                                
+
                                 return (
                                     <Fragment key={index}>
-                                        {TablesRows(serialno, item.receiptdate || "", item.collectedamount || "", item.weekno || "","second",item.receipttype)}
+                                        {TablesRows(serialno, item.receiptdate || "", item.collectedamount || "", item.weekno || "", "second", item.receipttype)}
                                     </Fragment>
                                 );
                             })}
                         </tbody>
                     </Table>
                 </Col>
-                {arr3.length>0 && <Col className='col-sm-6 col-md-6 p-1'>
+                {arr3.length > 0 && <Col className='col-sm-6 col-md-6 p-1'>
                     <Table className="table text-center table-bordered border-dark" >
                         <thead>
                             <tr >
@@ -349,20 +349,20 @@ function Ledger({ loanno, ledger, company, date }) {
                             </tr>
                         </thead>
                         <tbody>
-                            {tableData.slice(arr2.length, (arr2.length+arr3.length)).map((item, index) => {
+                            {tableData.slice(arr2.length, (arr2.length + arr3.length)).map((item, index) => {
                                 serialno += 1;
                                 totalamount -= item.collectedamount || 0;
-                                
+
                                 return (
                                     <Fragment key={index}>
-                                        {TablesRows(serialno, item.receiptdate || "", item.collectedamount || "", item.weekno || "","first",item.receipttype)}
+                                        {TablesRows(serialno, item.receiptdate || "", item.collectedamount || "", item.weekno || "", "first", item.receipttype)}
                                     </Fragment>
                                 );
                             })}
                         </tbody>
                     </Table>
                 </Col>}
-                {arr4.length>0 && <Col className='col-sm-6 col-md-6 p-0' >
+                {arr4.length > 0 && <Col className='col-sm-6 col-md-6 p-0' >
                     <Table className="table  text-center table-bordered border-dark"   >
                         <thead>
                             <tr >
@@ -385,13 +385,13 @@ function Ledger({ loanno, ledger, company, date }) {
                             </tr>
                         </thead>
                         <tbody>
-                            {tableData.slice(arr3.length, (arr3.length+arr4.length)).map((item, index) => {
+                            {tableData.slice(arr3.length, (arr3.length + arr4.length)).map((item, index) => {
                                 serialno += 1;
                                 totalamount -= item.collectedamount || 0;
-                                
+
                                 return (
                                     <Fragment key={index}>
-                                        {TablesRows(serialno, item.receiptdate || "", item.collectedamount || "", item.weekno || "","second",item.receipttype)}
+                                        {TablesRows(serialno, item.receiptdate || "", item.collectedamount || "", item.weekno || "", "second", item.receipttype)}
                                     </Fragment>
                                 );
                             })}
