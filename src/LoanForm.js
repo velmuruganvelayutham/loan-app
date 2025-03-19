@@ -79,6 +79,8 @@ function LoanForm() {
     const [showConfirm, setShowConfirm] = useState(false);
     const[isUpdateNew,setIsUpdateNew]=useState(false)
     var passingref = "update";
+    const [formData, setFormData] = useState({ customernamefilter: "", citynamefilter: "" });
+
     useEffect(() => {
         //console.log("weekCount", weekCount)
         async function fetchData() {
@@ -550,12 +552,14 @@ function LoanForm() {
                     setSavedValue(saveOptions)
 
                     setMyForm({ ...myForm, mySelectKey: oldReference[0].customer_id });
-                    //customeroptionRef.current.value = oldReference[0].customer_id;
+                    
+                    setFormData({ ...formData, customernamefilter: oldReference[0].customer,citynamefilter: oldReference[0].cityname});
                     linemanoptionRef.current.value = oldReference[0].lineman_id;
                     setInputMobileno(oldReference[0].mobileno);
                     fathernameRef.current.value = oldReference[0].fathername;
                     citynameRef.current.value = oldReference[0].cityname;
                     cityidRef.current.value = oldReference[0].city;
+
                     addressRef.current.value = oldReference[0].address;
                     workRef.current.value = oldReference[0].work;
                     lineRef.current.value = oldReference[0].lineno;
@@ -648,18 +652,22 @@ function LoanForm() {
     }
     const processList = async (value) => {
         setIsLoading(true);
+        const mobileArray = inputmobileno.split(/\s+/).filter(Boolean);
+        
         const token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         return (
             axios.get(`${baseURL}/loan/givenmoneypending`, {
                 params: {
-                    customer_id: value.toString(),
+                    mobileNumbers: mobileArray,
+                    customername:formData.customernamefilter.toString(),
+                    cityname:formData.citynamefilter.toString(),
                     todate: new Date(endOfWeek())
                 }
             }).then((res) => {
                 setPending(res.data);
                 setIsLoading(false);
-                console.log(res.data);
+                //console.log(res.data);
                 if (res.data.length > 0) {
                     setShow(true);
                 }
