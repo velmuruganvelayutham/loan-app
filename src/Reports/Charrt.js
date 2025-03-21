@@ -169,7 +169,7 @@ function Charrt({ loanno, ledger, company, date }) {
 
                 </Form>
             </Row>
-            <Row className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)||(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 3) ? arr3.length > 0 ? 'col-sm-12 col-md-12 print-margin-chartalign' : 'col-sm-8 col-md-8 print-margin-chartalign' : 'col-sm-8 col-md-8'} style={{ paddingLeft: paddingvar }} >
+            <Row className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)||(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 3) ? arr3.length > 0 ? 'col-sm-12 col-md-12 print-margin-chartalign' : 'col-sm-8 col-md-8 print-margin-chartalign' : 'col-sm-8 col-md-8 print-margin-chartalign'} style={{ paddingLeft: paddingvar }} >
                 
                 <Col className={(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0)||(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 3) ? arr3.length>0?'col-sm-3 col-md-3 p-0':'col-sm-4 col-md-4 p-0' : 'col-sm-4 col-md-4 p-0'} >
                     <Table className={arr3.length>0?"table text-center table-bordered border-dark chart col-sm-custom_chart_90":"table text-center table-bordered border-dark chart col-sm-custom_chart"} style={{ marginBottom: "0 !important", width:arr3.length>0?"70%":"90%" }}>
