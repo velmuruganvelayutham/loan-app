@@ -58,8 +58,8 @@ function Charrt({ loanno, ledger, company, date }) {
             arr2 = Array.from({ length: 9 }, (_, i) => i + 12)
         }
         else if (first.weekcount === 24) {
-            arr1 = Array.from(Array(12).keys());
-            arr2 = Array.from({ length: 12 }, (_, i) => i + 12)
+            arr1 = Array.from(Array(16).keys());
+            arr2 = Array.from({ length: 8 }, (_, i) => i + 12)
         }
         else if (first.weekcount === 26) {
             arr1 = Array.from(Array(16).keys());
