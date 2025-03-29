@@ -79,6 +79,7 @@ function AddReceipt1() {
     }
     //setRowsData([...rowsData, rowsInput])
     //setRowsData(prevRows => [...prevRows, rowsInput]);
+    
     setRowsData((prevRows) => {
       const updatedRows = [...prevRows, rowsInput]; // Preserve previous rows and add the new row
       // Set focus on the last row's loanno input
@@ -128,6 +129,7 @@ function AddReceipt1() {
               weekno: weeknoAuto,
               amount: ''
             }
+
             setRowsData((prevRows) => {
               const updatedRows = [...prevRows, rowsInput]; // Preserve previous rows and add the new row
               // Set focus on the last row's loanno input
@@ -136,6 +138,7 @@ function AddReceipt1() {
               }, 0);
               return updatedRows; // Return the updated rows to set the new state
             });
+            calTotal();
           }
           else {
             form.elements[index + 9]?.focus();
@@ -160,6 +163,7 @@ function AddReceipt1() {
 
   
   const calTotal = () => {
+    
     let totalValue = rowsData.reduce((previousValue, currentValue) => {
       return parseFloat(previousValue + Number(currentValue.amount))
     }, 0);
