@@ -7,7 +7,7 @@ import { dateFormatdd } from "../FunctionsGlobal/StartDateFn"
 var first = [];
 
 
-const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) => {
+const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting, lineman }) => {
 
     const { t } = useTranslation();
     const [currentPage, setCurrentPage] = useState(1);
@@ -49,16 +49,16 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
                 <div style={{ display: "flex" }}>
                     <div className='col-sm-12 fixed text-center mt-5'><h3>{t('currentweekamountgiven')}</h3></div>
                 </div>
-                <div style={{ display: "flex",paddingLeft:"10px" }}>
+                {lineman !== "" && <div style={{ display: "flex", paddingLeft: "10px" }}>
                     <div className='col-sm-4 fixed' style={{ paddingLeft: "20px" }}>{t('line') + " : " + (pendingLoans.length > 0 ? first.lineno : "")}</div>
                     <div className='col-sm-4 fixed'>{t("lineman") + " : " + (pendingLoans.length > 0 ? first.linemanname : "")}</div>
                     <div className='col-sm-4 fixed fw-bold'>{t("date") + " : " + dateFormatdd(datefrom) + " - " + dateFormatdd(dateto)}</div>
                 </div>
-
-                <Table className='table text-center fs-6 table-bordered border-dark' style={{width:"103%"}} >
+                }
+                <Table className='table text-center fs-6 table-bordered border-dark' style={{ width: "103%" }} >
                     <thead>
                         <tr>
-                            <th style={{width:"1%"}}></th>
+                            <th style={{ width: "1%" }}></th>
                             <th style={{ fontSize: "12px" }}>
                                 {t('no')}
                             </th>
@@ -84,9 +84,9 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
                             <th style={{ fontSize: "12px" }}>{t('interest')}</th>
                             <th style={{ fontSize: "12px" }}>{t('total')}</th>
                             <th style={{ fontSize: "12px" }}>{t('week')}</th>
-                            <th style={{ fontSize: "12px",textAlign:"left" }}>{t('pay')}</th>
-                            <th style={{width:"1.5%"}}></th>
-                            <th style={{width:"2.5%"}}></th>
+                            <th style={{ fontSize: "12px", textAlign: "left" }}>{t('pay')}</th>
+                            <th style={{ width: "1.5%" }}></th>
+                            <th style={{ width: "2.5%" }}></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -101,7 +101,7 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
                                     pagetotalamount = pagetotalamount + customer.totalamount;
                                     return (
                                         <tr className='currentweekamount'>
-                                            
+
                                             <td></td>
                                             <td style={{ fontSize: "12px" }}>{serialno}</td>
                                             <td style={{ fontSize: "12px" }}>{dateFormatdd(customer.givendate)}</td>
@@ -117,7 +117,7 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
                                             <td style={{ fontSize: "12px" }}>{customer.interestamount}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.totalamount}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.weekcount}</td>
-                                            <td style={{ fontSize: "12px",textAlign:"left" }}>{customer.dueamount}</td>
+                                            <td style={{ fontSize: "12px", textAlign: "left" }}>{customer.dueamount}</td>
                                             <td></td>
                                             <td></td>
                                         </tr>
@@ -129,7 +129,7 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
                                 t('tabledata')
                         }
                         <tr className='currentweekamount'>
-                            
+
                             <td></td>
                             <td></td>
                             <td></td>
@@ -151,7 +151,7 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting }) 
                     </tbody>
                     {
                         isLastPage ? <tr className="rounded bg-white currentweekamount">
-                            
+
                             <td></td>
                             <td></td>
                             <td></td>

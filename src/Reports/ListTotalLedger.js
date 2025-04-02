@@ -65,6 +65,9 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
         {Number(reportypeval) === 0 ?
           <div style={{ paddingLeft: "30px" }}>
             <Row className='col-md-12  mt-5'>
+            <Col className='col-md-4 mx-auto'>{companyname}</Col>
+            </Row>
+            <Row className='col-md-12'>
               <Col>
                 <div className='col-md-12 fw-bold'>{dateFormatddmmyyyy(datefrom)}&nbsp;&nbsp;&nbsp;-&nbsp;{dateFormatddmmyyyy(dateto)}
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{t('totalledgername')}

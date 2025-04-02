@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { dateFormatdd } from "../FunctionsGlobal/StartDateFn"
 var first = [];
 
-const ListLineChecking = ({ pendingLoans, date, company, isPrinting, type }) => {
+const ListLineChecking = ({ pendingLoans, date, company, isPrinting, bookno, lineno }) => {
 
   const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
@@ -50,9 +50,9 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting, type }) => 
     }, 0);
 
     const totalPendingWeek = pendingLoans.reduce((previousval, currentval) => {
-
+      duependingcheck = 0;
       if (currentval['addFields'].receiptpendingweekafter > 0 && currentval['addFields'].receiptpendingweekafter < 8) {
-        if (currentval.collectedamountdate > 0 && currentval.collectedamountdate >= currentval.dueamount || currentval.topay <=0 || currentval.finisheddatepending == 1) {
+        if (currentval.collectedamountdate > 0 && currentval.collectedamountdate >= currentval.dueamount || currentval.topay <= 0 || currentval.finisheddatepending == 1) {
           duependingcheck = 0;
         }
         else if (currentval.collectedamountdate == 0 && currentval['addFields'].receiptpendingweekafter <= 0 && currentval.topay > 0) {
@@ -63,21 +63,34 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting, type }) => 
           }
         }
         else if (currentval.collectedamountdate > 0 && currentval.collectedamountdate < currentval.dueamount) {
-          duependingcheck=currentval.dueamount-currentval.collectedamountdate;
+          duependingcheck = currentval.dueamount - currentval.collectedamountdate;
         }
         else {
           duependingcheck = currentval.dueamount
         }
+
         pendingweekcheck = (currentval['addFields'].receiptpendingweekafter * currentval.dueamount);
         duependingcheckval = ((pendingweekcheck) < duependingcheck && duependingcheck != 0 ? (pendingweekcheck) : duependingcheck)
         duependingweekcheck = pendingweekcheck - duependingcheckval;
 
         duependingweekcheck = parseFloat(duependingweekcheck.toFixed(2))
+
+
         return previousval + duependingweekcheck;
       }
       else if (currentval['addFields'].receiptpendingweekafter >= 8) {
-        if (currentval.collectedamountdate > 0 || currentval['addFields'].receiptpendingweekafter < 0 || currentval.finisheddatepending == 1) {
+        if (currentval.collectedamountdate > 0 && currentval.collectedamountdate >= currentval.dueamount || currentval.topay <= 0 || currentval.finisheddatepending == 1) {
           duependingcheck = 0;
+        }
+        else if (currentval.collectedamountdate == 0 && currentval['addFields'].receiptpendingweekafter <= 0 && currentval.topay > 0) {
+
+          duependingcheck = -1 * (currentval['addFields'].receiptpendingweekafter) * currentval.dueamount
+          if (duependingcheck < currentval.dueamount && duependingcheck != 0) {
+            duependingcheck = currentval.dueamount - duependingcheck
+          }
+        }
+        else if (currentval.collectedamountdate > 0 && currentval.collectedamountdate < currentval.dueamount) {
+          duependingcheck = currentval.dueamount - currentval.collectedamountdate;
         }
         else {
           duependingcheck = currentval.dueamount
@@ -120,17 +133,17 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting, type }) => 
           <div className='col-sm-6 fixed' >
             <h4>{(company)}</h4>
           </div>
-          <div className='col-sm-6 fixed'><h4>{type === 0 ? t('linechecking') : t('notrunningaccounts')}</h4></div>
+          <div className='col-sm-6 fixed'><h4>{t('linechecking')}</h4></div>
         </div>
-        <div style={{ display: "flex", alignItems: "center" }} className='col-sm-12 fixed linechecking-print-margin'>
-          {type === 0 && (<div className='col-sm-3 fixed' style={{ whiteSpace: "normal", wordWrap: "break-word" }} >{t('city') + " : " + first.city}</div>)}
+        {lineno !== "" &&
+          <div style={{ display: "flex", alignItems: "center" }} className='col-sm-12 fixed linechecking-print-margin'>
+            {bookno !== "" && (<div className='col-sm-3 fixed' style={{ whiteSpace: "normal", wordWrap: "break-word" }} >{t('city') + " : " + first.city}</div>)}
 
-          <div className={type === 0 ? 'col-sm-3 fixed' : 'col-sm-6 fixed'}>{t('customer') + " : " + first.linemanname}</div>
-          <div className='col-sm-2 fixed'>{t('line') + " : " + (pendingLoans.length > 0 ? first.lineno : "")}</div>
-          {type === 0 && (<div className='col-sm-2 fixed'>{t("bookno") + " : " + (pendingLoans.length > 0 ? first.bookno : "")}</div>)}
-          <div className='col-sm-2 fixed'>{t("date") + " : " + dateFormatdd(date)}</div>
-
-        </div>
+            <div className={bookno !== '' ? 'col-sm-3 fixed' : 'col-sm-6 fixed'}>{t('customer') + " : " + first.linemanname}</div>
+            <div className='col-sm-2 fixed'>{t('line') + " : " + (pendingLoans.length > 0 ? first.lineno : "")}</div>
+            {bookno !== "" && (<div className='col-sm-2 fixed'>{t("bookno") + " : " + (pendingLoans.length > 0 ? first.bookno : "")}</div>)}
+            <div className='col-sm-2 fixed'>{t("date") + " : " + dateFormatdd(date)}</div>
+          </div>}
 
         <Table className='table table-bordered border-dark linecheckingtable' style={{ margin: 0, padding: 0, width: "103%" }}  >
           <thead>
@@ -255,7 +268,7 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting, type }) => 
                             :
                             <td style={{ fontSize: "11px", textAlign: "center" }} ></td>
                       }
-                      <td></td>
+                      <td ></td>
                     </tr>
 
                   )
@@ -310,11 +323,11 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting, type }) => 
   return (
     <div>
       {(!isPrinting) ?
-        (<div>{renderPage(currentPage)}
-          <Pagination>
+        (<div >{renderPage(currentPage)}
+          <Pagination >
             <Pagination.Prev onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))} />
             {Array.from({ length: totalPages }, (_, i) => (
-              <Pagination.Item
+              <Pagination.Item 
                 key={i + 1} active={currentPage === i + 1} onClick={() => setCurrentPage(i + 1)}
               >{i + 1}
               </Pagination.Item>

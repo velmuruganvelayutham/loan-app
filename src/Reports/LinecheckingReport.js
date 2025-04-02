@@ -44,6 +44,7 @@ function LinecheckingReport() {
     const [isPrinting, setIsPrinting] = useState(false);
     const bookRef = useRef(null);
     const componentRef = useRef(null);
+    const radioRef = useRef(null);
     useEffect(() => {
         async function fetchData() {
             setIsLoading(true);
@@ -132,7 +133,6 @@ function LinecheckingReport() {
                 passingargument = linemanoptionRef.current.value;
             }
             else if (Number(reportType.current.value) === 7) {
-                //alert("yes");
                 setCheckingData([]);
                 linecheckingreportname = "pendingaccounts";
                 passingargument = linemanoptionRef.current.value;
@@ -145,7 +145,9 @@ function LinecheckingReport() {
                 axios.get(`${baseURL}/loan/${linecheckingreportname}`, {
                     params: {
                         city_id: passingargument.toString(),
-                        fromdate: startDateRef.current.value, todate: endDateRef.current.value, bookno: Number(bookRef.current.value)
+                        fromdate: startDateRef.current.value, todate: endDateRef.current.value,
+                        bookno: Number(bookRef.current.value),
+                        document: Number(radioRef.current.querySelector('input[name="option"]:checked').value)
                     }
                 }).then((res) => {
                     Number(reportType.current.value) === 0 ? setCheckingData(res.data) : setCheckingDetailsLine(res.data)
@@ -166,7 +168,7 @@ function LinecheckingReport() {
 
     const handlePrintAll = () => {
         if (Number(reportType.current.value) === 5) {
-            
+
             window.print();
         }
         else {
@@ -183,12 +185,12 @@ function LinecheckingReport() {
     const renderLineCheckingList = (
         <Row ref={componentRef}>
             <ListLineChecking pendingLoans={Number(reportType.current.value) === 0 ? checkingData : checkingDetailsLine} date={endDateRef.current.value}
-                company={company.length > 0 ? company[0].companyname : ""} isPrinting={isPrinting} type={Number(reportType.current.value)} />
+                company={company.length > 0 ? company[0].companyname : ""} isPrinting={isPrinting} bookno={bookRef.current?bookRef.current.value:""} lineno={line} />
 
         </Row>
 
     )
-    
+
     const renderpreviousweekList = (
         <Row ref={componentRef}>
             <PreviousWeekList pendingLoans={checkingDetailsLine} date={endDateRef.current.value}
@@ -203,12 +205,12 @@ function LinecheckingReport() {
     )
     const renderweekendaccountList = (
         <Row >
-            <WeekEndAccountDetails pendingLoans={checkingDetailsLine} datefrom={startDateRef.current.value} dateto={endDateRef.current.value} isPrinting={isPrinting} />
+            <WeekEndAccountDetails pendingLoans={checkingDetailsLine} datefrom={startDateRef.current.value} dateto={endDateRef.current.value} isPrinting={isPrinting} lineman={linemanoptionRef.current?linemanoptionRef.current.value:""}/>
         </Row>
     )
     const rendercurrentweekgivenaccountList = (
         <Row ref={componentRef}>
-            <CurrentWeekGivenAmount pendingLoans={checkingDetailsLine} datefrom={startDateRef.current.value} dateto={endDateRef.current.value} isPrinting={isPrinting} />
+            <CurrentWeekGivenAmount pendingLoans={checkingDetailsLine} datefrom={startDateRef.current.value} dateto={endDateRef.current.value} isPrinting={isPrinting} lineman={linemanoptionRef.current?linemanoptionRef.current.value:""}/>
         </Row>
     )
     const renderdailyrecords = (
@@ -216,18 +218,18 @@ function LinecheckingReport() {
             <DailyRecords datefrom={startDateRef.current.value} dateto={endDateRef.current.value} linemanname={linemannameday} linamnline={linemanlineno} collectiondate={printDateRef} />
         </Row>
     )
-    
+
     const renderPendingAccountList = (
         <Row ref={componentRef}>
             <PendingAccounts pendingLoans={checkingDetailsLine} date={endDateRef.current.value}
-                company={company.length > 0 ? company[0].companyname : ""} isPrinting={isPrinting} bookno={bookRef.current?Number(bookRef.current.value):""} />
+                company={company.length > 0 ? company[0].companyname : ""} isPrinting={isPrinting} bookno={bookRef.current ? Number(bookRef.current.value) : ""} />
 
         </Row>
     )
-const renderNotRunningAccountList=(
-    <Row ref={componentRef}>
+    const renderNotRunningAccountList = (
+        <Row ref={componentRef}>
             <NotRunningAccounts pendingLoans={checkingDetailsLine} date={endDateRef.current.value}
-                company={company.length > 0 ? company[0].companyname : ""} isPrinting={isPrinting} bookno={bookRef.current?Number(bookRef.current.value):""} />
+                company={company.length > 0 ? company[0].companyname : ""} isPrinting={isPrinting} lineman={linemanoptionRef.current?linemanoptionRef.current.value:""} />
 
         </Row>
     )
@@ -290,7 +292,7 @@ const renderNotRunningAccountList=(
     return (
         <Container >
             <Row>
-                <Form>
+                <Form ref={radioRef}>
                     <Row className="hide-on-print">
                         {show == true ? linemanshow : citynameshow}
                         <Col xs={12} md={1} className="rounded bg-white">
@@ -335,12 +337,26 @@ const renderNotRunningAccountList=(
                         </Col>
                     </Row>
                     <Row className="rounded bg-white text-center hide-on-print">
-                        <div className="col-md-6 mb-4 " >
+                        <Col className="col-md-3 mb-4 d-flex align-items-center gap-2" >
+                            <label className="d-flex align-items-center" style={{fontWeight:"600",fontSize:"11px"}}>
+                                <input type="radio" name="option" value={3} defaultChecked/>
+                                {t('all')}
+                            </label>
+                            <label className="d-flex align-items-center" style={{fontWeight:"600",fontSize:"11px"}}>
+                                <input type="radio" name="option" value={1}  />
+                                {t('document')}
+                            </label>{'  '}
+                            <label className="d-flex align-items-center" style={{fontWeight:"600",fontSize:"11px"}}>
+                                <input type="radio" name="option" value={2} />
+                                {t('other')}
+                            </label>
+                        </Col>
+                        <Col className="col-md-3 mb-4 " >
                             <Button variant="primary" size="lg" type="button" className="text-center" onClick={processList}>
                                 {t('processbuttonlabel')}
                             </Button>{' '}
-                        </div>
-                        
+                        </Col>
+
                         <Col className="col-md-3 mb-4 " >
                             <Button variant="primary" size="lg" type="button" className="text-center" onClick={handlePrintAll}>
                                 {t('printall')}

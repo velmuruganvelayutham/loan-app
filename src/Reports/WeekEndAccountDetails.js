@@ -7,7 +7,7 @@ import { dateFormatdd } from "../FunctionsGlobal/StartDateFn"
 var first = [];
 
 
-const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting }) => {
+const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting,lineman }) => {
 
     const { t, i18n } = useTranslation();
     const [currentPage, setCurrentPage] = useState(1);
@@ -48,12 +48,14 @@ const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting }) =
                 <div style={{ paddingLeft: "27px", display: "flex", alignItems: "center", paddingTop: page === 1 ? "0px" : "15px" }} className='print-margin'>
                     <div className='col-sm-12 text-center'><h4>{t('weekendaccounts')}</h4></div>
                 </div>
+                {lineman!==""&&
                 <div style={{ paddingLeft: "27px", display: "flex", alignItems: "center" }} className='print-margin'>
                     <div className='col-sm-4 fixed'>{t('line') + " : " + (pendingLoans.length > 0 ? first.lineno : "")}</div>
                     <div className='col-sm-4 fixed'>{t("lineman") + " : " + (pendingLoans.length > 0 ? first.linemanname : "")}</div>
                     <div className='col-sm-4 fixed fw-bold'>{t("date") + " : " + dateFormatdd(datefrom) + " - " + dateFormatdd(dateto)}</div>
 
                 </div>
+                }
                 <Table className='table text-center fs-6 table-bordered border-dark' style={{width:"103%"}}  >
                     <thead>
                         <tr>
