@@ -26,6 +26,9 @@ const UpdateBookCity=lazy(()=>import('./Settings/UpdateBookCity'))
 const LinemanBookWise=lazy(()=>import('./Reports/LinemanBookWise'))
 const GivenMoneyDetails=lazy(()=>import('./Reports/GivenMoneyDetailsReport'))
 const Home=lazy(()=>import ('./Home'))
+const AccountMaster=lazy(()=>import('./AccountMaster'))
+const AccountEntry=lazy(()=>import('./AccountItems'))
+const AccountReport=lazy(()=>import('./AccountReports'))
 //const CheckingSample=lazy(()=>import('./Reports/checkingsample'))
 if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key")
@@ -243,6 +246,45 @@ function ClerkProviderWithRoutes() {
               <SignedIn>
                 <NavBar />
                 <GivenMoneyDetails />
+              </SignedIn>
+              <SignedOut>
+                <RedirectToSignIn />
+              </SignedOut>
+            </>
+          } />
+          <Route
+          path="/accountmaster"
+          element={
+            <>
+              <SignedIn>
+                <NavBar />
+                <AccountMaster />
+              </SignedIn>
+              <SignedOut>
+                <RedirectToSignIn />
+              </SignedOut>
+            </>
+          } />
+          <Route
+          path="/accountentry"
+          element={
+            <>
+              <SignedIn>
+                <NavBar />
+                <AccountEntry />
+              </SignedIn>
+              <SignedOut>
+                <RedirectToSignIn />
+              </SignedOut>
+            </>
+          } />
+          <Route
+          path="/accountreport"
+          element={
+            <>
+              <SignedIn>
+                <NavBar />
+                <AccountReport />
               </SignedIn>
               <SignedOut>
                 <RedirectToSignIn />

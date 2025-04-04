@@ -332,6 +332,12 @@ Table.totalledgertable {
   word-wrap: break-word; /* Breaks long words */
   overflow-wrap: break-word; /* Ensures long words wrap properly */
 }
+.fixed-width {
+  width: 200px; /* Adjust this value as needed */
+  min-width: 200px;
+  max-width: 200px;
+  white-space: nowrap;
+}
 
 @media print {
   * {

@@ -204,5 +204,19 @@
   "noo": "No",
   "fillanydetails": "Choose Any Filter Option",
   "all": "All",
-  "other": "Others"
+  "other": "Others",
+  "debit":"Debit",
+  "incomeaccounts":"Income",
+  "Expenseaccounts":"Expense",
+  "description":"Description",
+  "accountname":"Account Name",
+  "openingbalance":"Opening Balance",
+  "ledgerreport":"Account Ledger ",
+  "accounttype":"Account Type",
+  "search":"Search",
+  "accountmaster":"Account Master",
+  "transactiontype":"Transaction Type",
+  "duplicateaccountalert":"Duplicate entry! Same Account ID & Transaction Type is not allowed.",
+  "notransaction":"Please enter at least one valid transaction."
+
 }

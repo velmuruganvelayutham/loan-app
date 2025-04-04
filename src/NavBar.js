@@ -63,8 +63,18 @@ function NavBar() {
         else if (languageValue === "LinemanBookWise") {
             navigate("/linemanbookcity")
         }
-        else if (languageValue === "GivenMoneyDetails")
+        else if (languageValue === "GivenMoneyDetails"){
             navigate("/givenmoneydetails")
+        }
+        else if (languageValue === "AccountMaster"){
+            navigate("/accountmaster")
+        }
+        else if (languageValue === "AccountEntry"){
+            navigate("/accountentry")
+        }
+        else if (languageValue === "AccountReport"){
+            navigate("/accountreport")
+        }
     }
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" onSelect={handleSelect} >
@@ -98,6 +108,11 @@ function NavBar() {
                             <NavDropdown.Item href="linechecking">LineChecking</NavDropdown.Item>
                             <NavDropdown.Item href="updatebookcity">GivenMoneyDetails</NavDropdown.Item>
                             <NavDropdown.Item href="totalledger">TotalLedger</NavDropdown.Item>
+                        </NavDropdown>
+                        <NavDropdown title="Accounts" id="basic-nav-dropdown">
+                            <NavDropdown.Item href="accountmaster">AccountMaster</NavDropdown.Item>
+                            <NavDropdown.Item href="accountentry">AccountEntry</NavDropdown.Item>
+                            <NavDropdown.Item href="accountreport">AccountReport</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title="Settings" id="basic-nav-dropdown">
                             <NavDropdown.Item href="updatebookcity">UpdateBookByCity</NavDropdown.Item>

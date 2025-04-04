@@ -244,6 +244,22 @@
   "noo":"இல்லை",
   "fillanydetails":"ஏதாவது தேர்ந்தெடுக்கவும்",
   "all":"அனைத்தும்",
-  "other":"மற்றது"
+  "other":"மற்றது",
+  "debit":"செலவு",
+  "incomeaccounts":"வருமானம்",
+  "expenseaccounts":"செலவுகள்",
+  "description":"விளக்கம்",
+  "accountname":"அக்கவுண்ட் பெயர்",
+  "openingbalance":"தொடக்க இருப்பு",
+  "ledgerreport":"கணக்கு வாரியாக பரிவர்த்தனைப் பதிவுகள்",
+  "accounttype":"கணக்கு வகை",
+  "search":"தேர்ந்தெடு",
+  "accountmaster":"அக்கவுண்ட் விபரம்",
+  "transactiontype":"பரிவர்த்தனை வகை",
+  "duplicateaccountalert":"இந்த அக்கவுண்ட் முன்னதாக கொடுக்கப்பட்டுள்ளது!.",
+  "notransaction":"ஒரு அக்கவுண்டாவது தேர்ந்தெடுக்கப்பட வேண்டும்"
+  
+  
+
 
 }
