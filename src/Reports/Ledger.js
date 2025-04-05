@@ -77,10 +77,10 @@ function Ledger({ loanno, ledger, company, date }) {
             arr2 = Array.from({ length: 0 }, (_, i) => i + 12)
 
         }
-        else if (first.weekcount === 65) {
+        else if (first.weekcount === 65 || first.weekcount === 60) {
             arr1 = Array.from(Array(25).keys());
             arr2 = Array.from({ length: 25 }, (_, i) => i + 25)
-            arr3 = Array.from({ length: 15 }, (_, i) => i + 51)
+            arr3 = Array.from({ length: (first.weekcount-50) }, (_, i) => i + 51)
         }
         else if (first.weekcount === 90) {
             arr1 = Array.from(Array(25).keys());
