@@ -421,6 +421,9 @@ Table.totalledgertable {
   .print-margin-chartalign{
     margin-left:9px !important;
   }
+  .print-margin-chartalignl3210{
+    margin-left:0px !important;
+  }
   .chart-print-margin_75{
     margin-left: -59px !important;
   }
