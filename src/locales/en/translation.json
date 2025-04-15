@@ -217,6 +217,8 @@
   "accountmaster":"Account Master",
   "transactiontype":"Transaction Type",
   "duplicateaccountalert":"Duplicate entry! Same Account ID & Transaction Type is not allowed.",
-  "notransaction":"Please enter at least one valid transaction."
+  "notransaction":"Please enter at least one valid transaction.",
+  "bondandcheque":"Bond&Cheque",
+  "dueshort":"Due"
 
 }

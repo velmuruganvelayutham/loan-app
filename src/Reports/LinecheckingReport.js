@@ -137,7 +137,7 @@ function LinecheckingReport() {
                 linecheckingreportname = "pendingaccounts";
                 passingargument = linemanoptionRef.current.value;
             }
-
+            
 
             const token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -345,6 +345,10 @@ function LinecheckingReport() {
                             <label className="d-flex align-items-center" style={{fontWeight:"600",fontSize:"11px"}}>
                                 <input type="radio" name="option" value={1}  />
                                 {t('document')}
+                            </label>{'  '}
+                            <label className="d-flex align-items-center" style={{fontWeight:"600",fontSize:"11px"}}>
+                                <input type="radio" name="option" value={4}  />
+                                {t('bondandcheque')}
                             </label>{'  '}
                             <label className="d-flex align-items-center" style={{fontWeight:"600",fontSize:"11px"}}>
                                 <input type="radio" name="option" value={2} />

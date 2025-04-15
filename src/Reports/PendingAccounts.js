@@ -17,7 +17,7 @@ const PendingAccounts = ({ pendingLoans, date, company, isPrinting, bookno }) =>
     //first = records.length > 0 ? pendingLoans[0] : "";
 
     var pagetotal = 0;
-    
+
     var pagepaid = 0;
     var pagetopay = 0;
 
@@ -27,14 +27,14 @@ const PendingAccounts = ({ pendingLoans, date, company, isPrinting, bookno }) =>
         const total = pendingLoans.reduce((prev, current) => {
             return prev + current.totalamount
         }, 0);
-        
+
         const paid = pendingLoans.reduce((prev, current) => {
             return prev + current.collectedTotal
         }, 0);
         const topay = pendingLoans.reduce((prev, current) => {
             return prev + current.balance
         }, 0);
-        return { total,paid, topay }
+        return { total, paid, topay }
     }, [pendingLoans]);
 
 
@@ -53,7 +53,7 @@ const PendingAccounts = ({ pendingLoans, date, company, isPrinting, bookno }) =>
         serialno = startIndex;
         return (
             <Fragment >
-                <div style={{ display: "flex", alignItems: "center",paddingTop: page === 1 ? "5px" : "19px" }} className='print-margin' >
+                <div style={{ display: "flex", alignItems: "center", paddingTop: page === 1 ? "5px" : "19px" }} className='print-margin' >
                     <div className='col-sm-6 fixed' >
                         <h4>{(company)}</h4>
                     </div>
@@ -70,29 +70,47 @@ const PendingAccounts = ({ pendingLoans, date, company, isPrinting, bookno }) =>
                     <thead>
                         <tr>
                             <th style={{ fontSize: "11px", width: "1%" }}></th>
-                            <th style={{ fontSize: "11px", width: "4%" }}>{t('noshort')}</th>
-                            <th style={{ fontSize: "8px", width: "7%" }}>{t('startdate')}</th>
-                            <th style={{ fontSize: "11px", width: "5%" }}>{t('loannotooshort')}</th>
-                            <th style={{ fontSize: "11px", width: "13%" }}>{t('customer')}</th>
-                            <th style={{ fontSize: "11px", width: "3%" }}></th>
-                            <th style={{ fontSize: "10px", width: "11%" }}>{t('fathername')}</th>
-                            <th style={{ fontSize: "11px", width: "11%" }}>{t('address')}</th>
-
-                            <th style={{ fontSize: "8px", width: "7%" }}>{t('enddate')}</th>
-                            <th style={{ fontSize: "11px", width: "9%", textAlign: "center" }}>
+                            <th style={{ fontSize: "11px", width: "2.5%" }}>
+                                {t('noshort')}
+                            </th>
+                            <th style={{ fontSize: "9px", width: "5%" }}>
+                                {t('startdate')}
+                            </th >
+                            <th style={{ fontSize: "11px", width: "4%" }}>
+                                {t('loannotooshort')}
+                            </th>
+                            <th style={{ fontSize: "11px", width: "8%" }} >
+                                {t('customer')}
+                            </th>
+                            <th style={{ fontSize: "10px", width: "2%" }}></th>
+                            <th style={{ fontSize: "10px", width: "7.5%" }} >
+                                {t('fathername')}
+                            </th>
+                            <th style={{ fontSize: "11px", width: "5.5%" }} >
+                                {t('address')}
+                            </th>
+                            <th style={{ fontSize: "11px", width: "5.5%" }}>
+                                {t('city')}
+                            </th>
+                            <th style={{ fontSize: "11px", width: "6%" }}>
+                                {t('phoneno')}
+                            </th>
+                            <th style={{ fontSize: "9px", width: "5%" }}>
+                                {t('enddate')}
+                            </th>
+                            <th style={{ fontSize: "11px", width: "6%", textAlign: "center" }}>
                                 {t('loanamount')}
                             </th>
-                            
-                            <th style={{ fontSize: "10px", width: "8%", textAlign: "center" }}>
-                                {t('pay')}
-                            </th>
-                            <th style={{ fontSize: "9px", width: "9%", textAlign: "center" }}>
-                                {t('pending')}
+                            <th style={{ fontSize: "11px", width: "4%", textAlign: "center" }}>
+                                {t('dueshort')}
                             </th>
                             <th style={{ fontSize: "9px", width: "6%", textAlign: "left" }}>
+                                {t('pending')}
+                            </th>
+                            <th style={{ fontSize: "9px", width: "2%", textAlign: "left",margin:"0" }}>
                                 {t('pendingweek')}
                             </th>
-                            <th style={{ fontSize: "11px", width: "1.5%" }}></th>
+                            <th style={{ fontSize: "11px", width: "1%" }}></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -121,10 +139,12 @@ const PendingAccounts = ({ pendingLoans, date, company, isPrinting, bookno }) =>
                                             <td style={{ fontSize: "11px", width: "1%" }} >{customer.relationtype == 0 ? t('fathershort') : t('husbandshort')}</td>
                                             <td style={{ fontSize: "11px", width: "12%" }} className='text-nowrap overflow-hidden'>{customer.fathername}</td>
                                             <td style={{ fontSize: "11px", overflow: "hidden" }} className='text-nowrap overflow-hidden'>{customer.address}</td>
+                                            <td style={{ fontSize: "11px", overflow: "hidden" }} className='text-nowrap overflow-hidden'>{customer.referencecity}</td>
+                                            <td style={{ fontSize: "12px", wordWrap: "break-word", padding: "0px", margin: "0px" }}>{customer.mobileno}</td>
                                             <td style={{ fontSize: "11px" }} className='text-nowrap overflow-hidden'>{dateFormatdd(customer.finisheddate)}</td>
                                             <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{customer.totalamount}</td>
-                                            
-                                            <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{customer.collectedTotal}</td>
+
+                                            <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{customer.dueamount}</td>
                                             <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{customer.balance}</td>
                                             <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{customer.pendingweek}</td>
                                             <td></td>
@@ -142,13 +162,15 @@ const PendingAccounts = ({ pendingLoans, date, company, isPrinting, bookno }) =>
                             <td ></td>
                             <td ></td>
                             <td ></td>
+                            <td ></td>
+                            <td ></td>
                             <td></td>
                             <td ></td>
                             <td ></td>
                             <td ></td>
                             <td className='fw-bold' style={{ fontSize: "9px", textAlign: "left" }}>{t('pagetotal')}</td>
                             <td className='fw-bold' style={{ fontSize: "10px", textAlign: "center" }}>{pagetotal}</td>
-                            
+
                             <td className='fw-bold' style={{ fontSize: "11px", textAlign: "center" }}>{pagepaid}</td>
                             <td className='fw-bold' style={{ fontSize: "11px", textAlign: "center" }}>{pagetopay}</td>
                             <td className='fw-bold' style={{ fontSize: "11px", textAlign: "center" }}></td>
@@ -163,6 +185,8 @@ const PendingAccounts = ({ pendingLoans, date, company, isPrinting, bookno }) =>
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td ></td>
+                            <td ></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -170,7 +194,7 @@ const PendingAccounts = ({ pendingLoans, date, company, isPrinting, bookno }) =>
                             <td></td>
                             <td className='fw-bold' style={{ fontSize: "13px", textAlign: "right" }}>{t('totalcount')}</td>
                             <td className='fw-bold' style={{ fontSize: "13px", textAlign: "center" }}>{totals.total}</td>
-                            
+
                             <td className='fw-bold' style={{ fontSize: "13px", textAlign: "center" }}>{totals.paid}</td>
                             <td className='fw-bold' style={{ fontSize: "13px", textAlign: "center" }}>{totals.topay}</td>
                             <td className='fw-bold' style={{ fontSize: "13px", textAlign: "center" }}></td>
