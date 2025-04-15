@@ -28,13 +28,11 @@ const PendingAccounts = ({ pendingLoans, date, company, isPrinting, bookno }) =>
             return prev + current.totalamount
         }, 0);
 
-        const paid = pendingLoans.reduce((prev, current) => {
-            return prev + current.collectedTotal
-        }, 0);
+       
         const topay = pendingLoans.reduce((prev, current) => {
             return prev + current.balance
         }, 0);
-        return { total, paid, topay }
+        return { total, topay }
     }, [pendingLoans]);
 
 
@@ -120,7 +118,7 @@ const PendingAccounts = ({ pendingLoans, date, company, isPrinting, bookno }) =>
                                 (pageRecords.map((customer, i) => {
                                     serialno = serialno + 1;
                                     pagetotal = pagetotal + customer.totalamount;
-                                    pagepaid = pagepaid + customer.collectedTotal;
+                                    //pagepaid = pagepaid + customer.collectedTotal;
                                     pagetopay = pagetopay + customer.balance;
                                     //pagepaying = pagepaying + customer.payingamount;
 
@@ -171,7 +169,7 @@ const PendingAccounts = ({ pendingLoans, date, company, isPrinting, bookno }) =>
                             <td className='fw-bold' style={{ fontSize: "9px", textAlign: "left" }}>{t('pagetotal')}</td>
                             <td className='fw-bold' style={{ fontSize: "10px", textAlign: "center" }}>{pagetotal}</td>
 
-                            <td className='fw-bold' style={{ fontSize: "11px", textAlign: "center" }}>{pagepaid}</td>
+                            <td className='fw-bold' style={{ fontSize: "11px", textAlign: "center" }}></td>
                             <td className='fw-bold' style={{ fontSize: "11px", textAlign: "center" }}>{pagetopay}</td>
                             <td className='fw-bold' style={{ fontSize: "11px", textAlign: "center" }}></td>
                             <td></td>
@@ -195,7 +193,7 @@ const PendingAccounts = ({ pendingLoans, date, company, isPrinting, bookno }) =>
                             <td className='fw-bold' style={{ fontSize: "13px", textAlign: "right" }}>{t('totalcount')}</td>
                             <td className='fw-bold' style={{ fontSize: "13px", textAlign: "center" }}>{totals.total}</td>
 
-                            <td className='fw-bold' style={{ fontSize: "13px", textAlign: "center" }}>{totals.paid}</td>
+                            <td className='fw-bold' style={{ fontSize: "13px", textAlign: "center" }}></td>
                             <td className='fw-bold' style={{ fontSize: "13px", textAlign: "center" }}>{totals.topay}</td>
                             <td className='fw-bold' style={{ fontSize: "13px", textAlign: "center" }}></td>
                             <td></td>
