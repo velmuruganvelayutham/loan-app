@@ -7,7 +7,7 @@ import { dateFormatdd } from "../FunctionsGlobal/StartDateFn"
 var first = [];
 
 
-const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting, lineman }) => {
+const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting, lineman, bond }) => {
 
     const { t } = useTranslation();
     const [currentPage, setCurrentPage] = useState(1);
@@ -69,6 +69,9 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting, li
                                 {t('loannotooshort')}
                             </th>
                             <th>{t('doc')}</th>
+                            {bond && (<><th style={{ fontSize: "12px" }}>{t('bond')}</th>
+                                <th style={{ fontSize: "12px" }}>{t('cheque')}</th></>)}
+
                             <th style={{ fontSize: "12px" }}>
                                 {t('customer')}
                             </th>
@@ -107,7 +110,8 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting, li
                                             <td style={{ fontSize: "12px" }}>{dateFormatdd(customer.givendate)}</td>
                                             <td className="fw-bold" style={{ fontSize: "12px" }}>{customer.loannumber}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.document}</td>
-
+                                            {bond && <><td style={{ fontSize: "12px" }}>{customer.bond}</td>
+                                                <td style={{ fontSize: "12px" }}>{customer.cheque}</td></>}
                                             <td style={{ fontSize: "12px" }}>{customer.customer}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.referencecity}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.bookno}</td>
@@ -135,6 +139,7 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting, li
                             <td></td>
                             <td></td>
                             <td></td>
+                            {bond && <><td></td><td></td></>}
                             <td></td>
                             <td></td>
                             <td></td>
@@ -157,6 +162,7 @@ const CurrentWeekGivenAmount = ({ pendingLoans, datefrom, dateto, isPrinting, li
                             <td></td>
                             <td></td>
                             <td></td>
+                            {bond && <><td></td><td></td></>}
                             <td></td>
                             <td></td>
                             <td></td>

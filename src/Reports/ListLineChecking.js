@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { dateFormatdd } from "../FunctionsGlobal/StartDateFn"
 var first = [];
 
-const ListLineChecking = ({ pendingLoans, date, company, isPrinting, bookno, lineno }) => {
+const ListLineChecking = ({ pendingLoans, date, company, isPrinting, bookno, lineno, bond }) => {
 
   const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
@@ -166,12 +166,13 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting, bookno, lin
               <th style={{ fontSize: "11px", width: "8%" }} >
                 {t('fathername')}
               </th>
-              <th style={{ fontSize: "11px", width: "8.5%" }} >
-                {t('address')}
+              <th style={{ fontSize: "11px", width: "8.5%" }}>
+                {bond?t('bond'):t('address')}
               </th>
               <th style={{ fontSize: "11px", width: "6.5%" }}>
-                {t('phoneno')}
+                {bond?t('cheque'):t('phoneno')}
               </th>
+
               <th style={{ fontSize: "9px", width: "5%" }}>
                 {t('enddate')}
               </th>
@@ -252,8 +253,9 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting, bookno, lin
                       <td style={{ fontSize: "11px" }} className='text-nowrap overflow-hidden'>{customer.customer}</td>
                       <td style={{ fontSize: "11px", width: "1%" }} >{customer.relationtype == 0 ? t('fathershort') : t('husbandshort')}</td>
                       <td style={{ fontSize: "11px", width: "12%" }} className='text-nowrap overflow-hidden'>{customer.fathername}</td>
-                      <td style={{ fontSize: "11px", overflow: "hidden" }} className='text-nowrap overflow-hidden'>{customer.address}</td>
-                      <td style={{ fontSize: "12px", wordWrap: "break-word", padding: "0px", margin: "0px" }}>{customer.mobileno}</td>
+
+                      <td style={{ fontSize: "11px", overflow: "hidden" }} className='text-nowrap overflow-hidden'>  {bond ? customer.bond : customer.address}</td>
+                      <td style={{ fontSize: "12px", wordWrap: "break-word", padding: "0px", margin: "0px" }}>  {bond ? customer.cheque : customer.mobileno}</td>
                       <td style={{ fontSize: "11px" }} className='text-nowrap overflow-hidden'>{dateFormatdd(customer.finisheddate)}</td>
                       <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{pending}</td>
                       <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{duepending > 0 ? duepending : ""}</td>
@@ -327,7 +329,7 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting, bookno, lin
           <Pagination >
             <Pagination.Prev onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))} />
             {Array.from({ length: totalPages }, (_, i) => (
-              <Pagination.Item 
+              <Pagination.Item
                 key={i + 1} active={currentPage === i + 1} onClick={() => setCurrentPage(i + 1)}
               >{i + 1}
               </Pagination.Item>

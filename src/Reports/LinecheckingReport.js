@@ -150,6 +150,7 @@ function LinecheckingReport() {
                         document: Number(radioRef.current.querySelector('input[name="option"]:checked').value)
                     }
                 }).then((res) => {
+                    console.log(res.data);
                     Number(reportType.current.value) === 0 ? setCheckingData(res.data) : setCheckingDetailsLine(res.data)
 
                     setIsLoading(false);
@@ -185,7 +186,7 @@ function LinecheckingReport() {
     const renderLineCheckingList = (
         <Row ref={componentRef}>
             <ListLineChecking pendingLoans={Number(reportType.current.value) === 0 ? checkingData : checkingDetailsLine} date={endDateRef.current.value}
-                company={company.length > 0 ? company[0].companyname : ""} isPrinting={isPrinting} bookno={bookRef.current?bookRef.current.value:""} lineno={line} />
+                company={company.length > 0 ? company[0].companyname : ""} isPrinting={isPrinting} bookno={bookRef.current?bookRef.current.value:""} lineno={line} bond={radioRef.current?Number(radioRef.current.querySelector('input[name="option"]:checked').value)===4?true:false:false} />
 
         </Row>
 
@@ -205,12 +206,12 @@ function LinecheckingReport() {
     )
     const renderweekendaccountList = (
         <Row >
-            <WeekEndAccountDetails pendingLoans={checkingDetailsLine} datefrom={startDateRef.current.value} dateto={endDateRef.current.value} isPrinting={isPrinting} lineman={linemanoptionRef.current?linemanoptionRef.current.value:""}/>
+            <WeekEndAccountDetails pendingLoans={checkingDetailsLine} datefrom={startDateRef.current.value} dateto={endDateRef.current.value} isPrinting={isPrinting} lineman={linemanoptionRef.current?linemanoptionRef.current.value:""} bond={radioRef.current?Number(radioRef.current.querySelector('input[name="option"]:checked').value)===4?true:false:false}/>
         </Row>
     )
     const rendercurrentweekgivenaccountList = (
         <Row ref={componentRef}>
-            <CurrentWeekGivenAmount pendingLoans={checkingDetailsLine} datefrom={startDateRef.current.value} dateto={endDateRef.current.value} isPrinting={isPrinting} lineman={linemanoptionRef.current?linemanoptionRef.current.value:""}/>
+            <CurrentWeekGivenAmount pendingLoans={checkingDetailsLine} datefrom={startDateRef.current.value} dateto={endDateRef.current.value} isPrinting={isPrinting} lineman={linemanoptionRef.current?linemanoptionRef.current.value:""} bond={radioRef.current?Number(radioRef.current.querySelector('input[name="option"]:checked').value)===4?true:false:false}/>
         </Row>
     )
     const renderdailyrecords = (
@@ -229,7 +230,7 @@ function LinecheckingReport() {
     const renderNotRunningAccountList = (
         <Row ref={componentRef}>
             <NotRunningAccounts pendingLoans={checkingDetailsLine} date={endDateRef.current.value}
-                company={company.length > 0 ? company[0].companyname : ""} isPrinting={isPrinting} lineman={linemanoptionRef.current?linemanoptionRef.current.value:""} />
+                company={company.length > 0 ? company[0].companyname : ""} isPrinting={isPrinting} lineman={linemanoptionRef.current?linemanoptionRef.current.value:""} bond={radioRef.current?Number(radioRef.current.querySelector('input[name="option"]:checked').value)===4?true:false:false}/>
 
         </Row>
     )

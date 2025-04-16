@@ -7,7 +7,7 @@ import { dateFormatdd } from "../FunctionsGlobal/StartDateFn"
 var first = [];
 
 
-const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting,lineman }) => {
+const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting, lineman, bond }) => {
 
     const { t, i18n } = useTranslation();
     const [currentPage, setCurrentPage] = useState(1);
@@ -31,8 +31,8 @@ const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting,line
         const isLastPage = page === totalPages;
         first = pageRecords.length > 0 ? pendingLoans[0] : "";
         serialno = startIndex;
-        
-        if (isLastPage && totalPages>0) {
+
+        if (isLastPage && totalPages > 0) {
             totalcredit = pendingLoans.reduce((previous, current) => {
                 return previous + current.collected
             }, 0);
@@ -48,15 +48,15 @@ const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting,line
                 <div style={{ paddingLeft: "27px", display: "flex", alignItems: "center", paddingTop: page === 1 ? "0px" : "15px" }} className='print-margin'>
                     <div className='col-sm-12 text-center'><h4>{t('weekendaccounts')}</h4></div>
                 </div>
-                {lineman!==""&&
-                <div style={{ paddingLeft: "27px", display: "flex", alignItems: "center" }} className='print-margin'>
-                    <div className='col-sm-4 fixed'>{t('line') + " : " + (pendingLoans.length > 0 ? first.lineno : "")}</div>
-                    <div className='col-sm-4 fixed'>{t("lineman") + " : " + (pendingLoans.length > 0 ? first.linemanname : "")}</div>
-                    <div className='col-sm-4 fixed fw-bold'>{t("date") + " : " + dateFormatdd(datefrom) + " - " + dateFormatdd(dateto)}</div>
+                {lineman !== "" &&
+                    <div style={{ paddingLeft: "27px", display: "flex", alignItems: "center" }} className='print-margin'>
+                        <div className='col-sm-4 fixed'>{t('line') + " : " + (pendingLoans.length > 0 ? first.lineno : "")}</div>
+                        <div className='col-sm-4 fixed'>{t("lineman") + " : " + (pendingLoans.length > 0 ? first.linemanname : "")}</div>
+                        <div className='col-sm-4 fixed fw-bold'>{t("date") + " : " + dateFormatdd(datefrom) + " - " + dateFormatdd(dateto)}</div>
 
-                </div>
+                    </div>
                 }
-                <Table className='table text-center fs-6 table-bordered border-dark' style={{width:"103%"}}  >
+                <Table className='table text-center fs-6 table-bordered border-dark' style={{ width: "103%" }}  >
                     <thead>
                         <tr>
                             <th style={{ fontSize: "11px", width: "1%" }}></th>
@@ -67,10 +67,12 @@ const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting,line
                                 {t('loannotooshort')}
                             </th>
                             <th>{t('doc')}</th>
+                            {bond && (<><th style={{ fontSize: "12px" }}>{t('bond')}</th>
+                                <th style={{ fontSize: "12px" }}>{t('cheque')}</th></>)}
+
                             <th style={{ fontSize: "12px" }}>
                                 {t('customer')}
                             </th>
-
                             <th style={{ fontSize: "12px" }}>{t('city')}</th>
                             <th style={{ fontSize: "12px", width: "60px" }} >
                                 {t('booknomedium')}
@@ -84,7 +86,7 @@ const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting,line
                             <th style={{ fontSize: "12px" }}>%</th>
                             <th style={{ fontSize: "12px" }}>{t('lineincentive')}</th>
                             <th style={{ fontSize: "11px", width: "2%" }}></th>
-                            
+
                         </tr>
                     </thead>
                     <tbody>
@@ -99,12 +101,13 @@ const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting,line
                                     pagetotalincentive = pagetotalincentive + Number(percentamount)
                                     return (
                                         <tr className='newaccountaddress'>
-                                            
+
                                             <td></td>
                                             <td style={{ fontSize: "12px" }}>{serialno}</td>
-                                            <td className="fw-bold" style={{ fontSize: "12px" }}>{customer.loannumber}</td>
+                                            <td className="fw-bold" style={{ fontSize: "12px"}}>{customer.loannumber}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.document}</td>
-
+                                            {bond && <><td style={{ fontSize: "12px" }}>{customer.bond}</td>
+                                                <td style={{ fontSize: "12px" }}>{customer.cheque}</td></>}
                                             <td style={{ fontSize: "12px" }}>{customer.customer}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.referencecity}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.bookno}</td>
@@ -115,7 +118,7 @@ const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting,line
                                             <td style={{ fontSize: "12px" }}>{Number(customer.incentivepercentage) < 1 ? customer.incentivepercentage : 0}</td>
                                             <td style={{ fontSize: "12px" }}>{percentamount}</td>
                                             <td></td>
-                                            
+
                                         </tr>
 
                                     )
@@ -125,11 +128,12 @@ const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting,line
                                 t('tabledata')
                         }
                         <tr className='newaccountaddress'>
-                            
+
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
+                            {bond && <><td></td><td></td></>}
                             <td></td>
                             <td></td>
                             <td></td>
@@ -140,16 +144,17 @@ const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting,line
                             <td></td>
                             <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotalincentive}</td>
                             <td></td>
-                            
+
                         </tr>
                     </tbody>
                     {
                         isLastPage ? <tr className="rounded bg-white newaccountaddress">
-                            
+
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
+                            {bond && <><td></td><td></td></>}
                             <td></td>
                             <td></td>
                             <td></td>
@@ -160,7 +165,7 @@ const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting,line
                             <td></td>
                             <td className='fw-bold' style={{ fontSize: "12px" }}>{totalincentive}</td>
                             <td></td>
-                            
+
                         </tr> : null
                     }
                 </Table>
