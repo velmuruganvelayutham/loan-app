@@ -253,9 +253,10 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting, bookno, lin
                       <td style={{ fontSize: "11px" }} className='text-nowrap overflow-hidden'>{customer.customer}</td>
                       <td style={{ fontSize: "11px", width: "1%" }} >{customer.relationtype == 0 ? t('fathershort') : t('husbandshort')}</td>
                       <td style={{ fontSize: "11px", width: "12%" }} className='text-nowrap overflow-hidden'>{customer.fathername}</td>
-
+                      
                       <td style={{ fontSize: "11px", overflow: "hidden" }} className='text-nowrap overflow-hidden'>  {bond ? customer.bond : customer.address}</td>
-                      <td style={{ fontSize: "12px", wordWrap: "break-word", padding: "0px", margin: "0px" }}>  {bond ? customer.cheque : customer.mobileno}</td>
+                      {bond ?<td style={{ fontSize: "12px"}}>{customer.cheque}</td>:<td style={{ fontSize: "12px", wordWrap: "break-word", padding: "0px", margin: "0px" }}>{customer.mobileno}</td>}
+                      
                       <td style={{ fontSize: "11px" }} className='text-nowrap overflow-hidden'>{dateFormatdd(customer.finisheddate)}</td>
                       <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{pending}</td>
                       <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{duepending > 0 ? duepending : ""}</td>

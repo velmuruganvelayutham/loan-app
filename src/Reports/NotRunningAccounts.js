@@ -196,7 +196,8 @@ const NotRunningAccounts = ({ pendingLoans, date, company, isPrinting, lineman, 
                       <td style={{ fontSize: "11px", width: "12%" }} className='text-nowrap overflow-hidden'>{customer.fathername}</td>
                       <td style={{ fontSize: "11px", overflow: "hidden" }} className='text-nowrap overflow-hidden'>{bond ? customer.bond : customer.address}</td>
                       <td style={{ fontSize: "10px", overflow: "hidden", }} className='text-nowrap overflow-hidden'>{customer.city}</td>
-                      <td style={{ fontSize: "11px", wordWrap: "break-word", padding: "0px", margin: "0px", fontWeight: "500" }}>{bond ? customer.cheque : customer.mobileno}</td>
+                      {bond?<td style={{ fontSize: "11px",fontWeight: "500" }}>{customer.cheque}</td>:<td style={{ fontSize: "11px", wordWrap: "break-word", padding: "0px", margin: "0px", fontWeight: "500" }}>{customer.mobileno}</td>}
+                      
                       <td style={{ fontSize: "11px" }} className='text-nowrap overflow-hidden'>{dateFormatdd(customer.finisheddate)}</td>
                       <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{pending}</td>
                       <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{duepending > 0 ? duepending : ""}</td>
