@@ -166,12 +166,13 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting, bookno, lin
               <th style={{ fontSize: "11px", width: "8%" }} >
                 {t('fathername')}
               </th>
-              <th style={{ fontSize: "11px", width: "8.5%" }}>
-                {bond?t('bond'):t('address')}
-              </th>
-              <th style={{ fontSize: "11px", width: "6.5%" }}>
-                {bond?t('cheque'):t('phoneno')}
-              </th>
+              {bond ? <th style={{ fontSize: "10px", width: "6%" }}>{t('bond')}</th> :
+                <th style={{ fontSize: "11px", width: "8.5%" }}>{t('address')}</th>}
+
+              {bond ? <th style={{ fontSize: "10px", width: "4%" }}>{t('cheque')}</th> :
+                <th style={{ fontSize: "11px", width: "6.5%" }}>{t('phoneno')}</th>}
+
+              {bond && <th style={{ fontSize: "11px", width: "5%" }}>{t('city')}</th>}
 
               <th style={{ fontSize: "9px", width: "5%" }}>
                 {t('enddate')}
@@ -253,10 +254,10 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting, bookno, lin
                       <td style={{ fontSize: "11px" }} className='text-nowrap overflow-hidden'>{customer.customer}</td>
                       <td style={{ fontSize: "11px", width: "1%" }} >{customer.relationtype == 0 ? t('fathershort') : t('husbandshort')}</td>
                       <td style={{ fontSize: "11px", width: "12%" }} className='text-nowrap overflow-hidden'>{customer.fathername}</td>
-                      
+
                       <td style={{ fontSize: "11px", overflow: "hidden" }} className='text-nowrap overflow-hidden'>  {bond ? customer.bond : customer.address}</td>
-                      {bond ?<td style={{ fontSize: "12px"}}>{customer.cheque}</td>:<td style={{ fontSize: "12px", wordWrap: "break-word", padding: "0px", margin: "0px" }}>{customer.mobileno}</td>}
-                      
+                      {bond ? <td style={{ fontSize: "11px" }}>{customer.cheque}</td> : <td style={{ fontSize: "12px", wordWrap: "break-word", padding: "0px", margin: "0px" }}>{customer.mobileno}</td>}
+                      {bond && <td style={{ fontSize: "11px"}} className='text-nowrap overflow-hidden'>{customer.referencecity}</td>}
                       <td style={{ fontSize: "11px" }} className='text-nowrap overflow-hidden'>{dateFormatdd(customer.finisheddate)}</td>
                       <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{pending}</td>
                       <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{duepending > 0 ? duepending : ""}</td>
@@ -290,6 +291,7 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting, bookno, lin
               <td ></td>
               <td ></td>
               <td ></td>
+              {bond && <td></td>}
               <td className='fw-bold' style={{ fontSize: "10px", textAlign: "center" }}>{t('pagetotal')}</td>
               <td className='fw-bold' style={{ fontSize: "11px", textAlign: "center" }}>{pagetotal}</td>
               <td className='fw-bold' style={{ fontSize: "11px", textAlign: "center" }}>{pendingtotal}</td>
@@ -310,6 +312,7 @@ const ListLineChecking = ({ pendingLoans, date, company, isPrinting, bookno, lin
               <td></td>
               <td></td>
               <td></td>
+              {bond && <td></td>}
               <td className='fw-bold' style={{ fontSize: "13px", textAlign: "center" }}>{t('totalcount')}</td>
               <td className='fw-bold' style={{ fontSize: "13px", textAlign: "center" }}>{totals.total}</td>
               <td className='fw-bold' style={{ fontSize: "13px", textAlign: "center" }}>{totals.totalDuePending}</td>
