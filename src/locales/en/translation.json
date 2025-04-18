@@ -219,6 +219,7 @@
   "duplicateaccountalert":"Duplicate entry! Same Account ID & Transaction Type is not allowed.",
   "notransaction":"Please enter at least one valid transaction.",
   "bondandcheque":"Bond&Cheque",
-  "dueshort":"Due"
+  "dueshort":"Due",
+  "weenkendnewaccounts":"Ween End Not New Account "
 
 }

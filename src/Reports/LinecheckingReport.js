@@ -18,6 +18,7 @@ import {
     useAuth
 } from "@clerk/clerk-react";
 import NotRunningAccounts from "./NotRunningAccounts.js";
+import WeekEndNewAccounts from "./WeekEndNewAccounts.js";
 
 var linecheckingreportname = "checkingdetails";
 var passingargument = "";
@@ -137,6 +138,11 @@ function LinecheckingReport() {
                 linecheckingreportname = "pendingaccounts";
                 passingargument = linemanoptionRef.current.value;
             }
+            else if (Number(reportType.current.value) === 8) {
+                setCheckingData([]);
+                linecheckingreportname = "weekendnewdetails";
+                passingargument = linemanoptionRef.current.value;
+            }
             
 
             const token = await getToken();
@@ -234,6 +240,11 @@ function LinecheckingReport() {
 
         </Row>
     )
+    const renderWeekEndNewAccount=(
+        <Row ref={componentRef}>
+            <WeekEndNewAccounts pendingLoans={checkingDetailsLine} datefrom={startDateRef.current.value} dateto={endDateRef.current.value} isPrinting={isPrinting} lineman={linemanoptionRef.current?linemanoptionRef.current.value:""} bond={radioRef.current?Number(radioRef.current.querySelector('input[name="option"]:checked').value)===4?true:false:false}/>
+        </Row>
+    )
     const restoreLineman = (e) => {
         const filtered = linemannames.filter(lineman => {
             return lineman._id === e.target.value;
@@ -315,6 +326,7 @@ function LinecheckingReport() {
                                     <option value={5}>{t('dailylist')}</option>
                                     <option value={6}>{t('notrunningaccounts')}</option>
                                     <option value={7}>{t('pendingaccounts')}</option>
+                                    <option value={8}>{t('weenkendnewaccounts')}</option>
                                 </Form.Select>
                             </Form.Group>
                         </Col>
@@ -386,7 +398,8 @@ function LinecheckingReport() {
                                         rendercurrentweekgivenaccountList : Number(reportType.current.value) === 4 ?
                                             renderweekendaccountList : Number(reportType.current.value) === 6 ?
                                                 renderNotRunningAccountList : Number(reportType.current.value) === 7 ?
-                                                    renderPendingAccountList : renderdailyrecords}
+                                                    renderPendingAccountList : Number(reportType.current.value) === 8 ?
+                                                    renderWeekEndNewAccount:renderdailyrecords}
                         {errorMessage && <div className="error">{errorMessage}</div>}
                     </Row>
 
