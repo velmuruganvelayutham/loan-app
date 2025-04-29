@@ -220,6 +220,8 @@
   "notransaction":"Please enter at least one valid transaction.",
   "bondandcheque":"Bond&Cheque",
   "dueshort":"Due",
-  "weenkendnewaccounts":"Ween End Not New Account "
+  "weenkendnewaccounts":"Ween End Not New Account ",
+  "latependingadvanceless":"Late Pending And Advance Less",
+  "type":"Type"
 
 }

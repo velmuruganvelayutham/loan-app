@@ -105,7 +105,7 @@ function LinecheckingReport() {
                 linecheckingreportname = "checkingdetails";
                 passingargument = line;
             }
-            else if (Number(reportType.current.value) === 1) {
+            else if (Number(reportType.current.value) === 1 || Number(reportType.current.value) === 9) {
                 setCheckingData([]);
                 linecheckingreportname = "previousweekdetails";
                 passingargument = line;
@@ -143,7 +143,7 @@ function LinecheckingReport() {
                 linecheckingreportname = "weekendnewdetails";
                 passingargument = linemanoptionRef.current.value;
             }
-            
+
 
             const token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -153,6 +153,7 @@ function LinecheckingReport() {
                         city_id: passingargument.toString(),
                         fromdate: startDateRef.current.value, todate: endDateRef.current.value,
                         bookno: Number(bookRef.current.value),
+                        reporttype:Number(reportType.current.value),
                         document: Number(radioRef.current.querySelector('input[name="option"]:checked').value)
                     }
                 }).then((res) => {
@@ -192,7 +193,7 @@ function LinecheckingReport() {
     const renderLineCheckingList = (
         <Row ref={componentRef}>
             <ListLineChecking pendingLoans={Number(reportType.current.value) === 0 ? checkingData : checkingDetailsLine} date={endDateRef.current.value}
-                company={company.length > 0 ? company[0].companyname : ""} isPrinting={isPrinting} bookno={bookRef.current?bookRef.current.value:""} lineno={line} bond={radioRef.current?Number(radioRef.current.querySelector('input[name="option"]:checked').value)===4?true:false:false} />
+                company={company.length > 0 ? company[0].companyname : ""} isPrinting={isPrinting} bookno={bookRef.current ? bookRef.current.value : ""} lineno={line} bond={radioRef.current ? Number(radioRef.current.querySelector('input[name="option"]:checked').value) === 4 ? true : false : false} />
 
         </Row>
 
@@ -201,7 +202,7 @@ function LinecheckingReport() {
     const renderpreviousweekList = (
         <Row ref={componentRef}>
             <PreviousWeekList pendingLoans={checkingDetailsLine} date={endDateRef.current.value}
-                company={company.length > 0 ? company[0].companyname : ""} isPrinting={isPrinting} />
+                company={company.length > 0 ? company[0].companyname : ""} isPrinting={isPrinting} reporttype={Number(reportType.current.value)} />
         </Row>
 
     )
@@ -212,12 +213,12 @@ function LinecheckingReport() {
     )
     const renderweekendaccountList = (
         <Row >
-            <WeekEndAccountDetails pendingLoans={checkingDetailsLine} datefrom={startDateRef.current.value} dateto={endDateRef.current.value} isPrinting={isPrinting} lineman={linemanoptionRef.current?linemanoptionRef.current.value:""} bond={radioRef.current?Number(radioRef.current.querySelector('input[name="option"]:checked').value)===4?true:false:false}/>
+            <WeekEndAccountDetails pendingLoans={checkingDetailsLine} datefrom={startDateRef.current.value} dateto={endDateRef.current.value} isPrinting={isPrinting} lineman={linemanoptionRef.current ? linemanoptionRef.current.value : ""} bond={radioRef.current ? Number(radioRef.current.querySelector('input[name="option"]:checked').value) === 4 ? true : false : false} />
         </Row>
     )
     const rendercurrentweekgivenaccountList = (
         <Row ref={componentRef}>
-            <CurrentWeekGivenAmount pendingLoans={checkingDetailsLine} datefrom={startDateRef.current.value} dateto={endDateRef.current.value} isPrinting={isPrinting} lineman={linemanoptionRef.current?linemanoptionRef.current.value:""} bond={radioRef.current?Number(radioRef.current.querySelector('input[name="option"]:checked').value)===4?true:false:false}/>
+            <CurrentWeekGivenAmount pendingLoans={checkingDetailsLine} datefrom={startDateRef.current.value} dateto={endDateRef.current.value} isPrinting={isPrinting} lineman={linemanoptionRef.current ? linemanoptionRef.current.value : ""} bond={radioRef.current ? Number(radioRef.current.querySelector('input[name="option"]:checked').value) === 4 ? true : false : false} />
         </Row>
     )
     const renderdailyrecords = (
@@ -236,13 +237,13 @@ function LinecheckingReport() {
     const renderNotRunningAccountList = (
         <Row ref={componentRef}>
             <NotRunningAccounts pendingLoans={checkingDetailsLine} date={endDateRef.current.value}
-                company={company.length > 0 ? company[0].companyname : ""} isPrinting={isPrinting} lineman={linemanoptionRef.current?linemanoptionRef.current.value:""} bond={radioRef.current?Number(radioRef.current.querySelector('input[name="option"]:checked').value)===4?true:false:false}/>
+                company={company.length > 0 ? company[0].companyname : ""} isPrinting={isPrinting} lineman={linemanoptionRef.current ? linemanoptionRef.current.value : ""} bond={radioRef.current ? Number(radioRef.current.querySelector('input[name="option"]:checked').value) === 4 ? true : false : false} />
 
         </Row>
     )
-    const renderWeekEndNewAccount=(
+    const renderWeekEndNewAccount = (
         <Row ref={componentRef}>
-            <WeekEndNewAccounts pendingLoans={checkingDetailsLine} datefrom={startDateRef.current.value} dateto={endDateRef.current.value} isPrinting={isPrinting} lineman={linemanoptionRef.current?linemanoptionRef.current.value:""} bond={radioRef.current?Number(radioRef.current.querySelector('input[name="option"]:checked').value)===4?true:false:false}/>
+            <WeekEndNewAccounts pendingLoans={checkingDetailsLine} datefrom={startDateRef.current.value} dateto={endDateRef.current.value} isPrinting={isPrinting} lineman={linemanoptionRef.current ? linemanoptionRef.current.value : ""} bond={radioRef.current ? Number(radioRef.current.querySelector('input[name="option"]:checked').value) === 4 ? true : false : false} />
         </Row>
     )
     const restoreLineman = (e) => {
@@ -293,7 +294,7 @@ function LinecheckingReport() {
     )
     const handleClick = () => {
 
-        if (Number(reportType.current.value) === 0 || Number(reportType.current.value) === 1) {
+        if (Number(reportType.current.value) === 0 || Number(reportType.current.value) === 1 || Number(reportType.current.value) === 9) {
             setShow(false);
         }
         else {
@@ -327,6 +328,7 @@ function LinecheckingReport() {
                                     <option value={6}>{t('notrunningaccounts')}</option>
                                     <option value={7}>{t('pendingaccounts')}</option>
                                     <option value={8}>{t('weenkendnewaccounts')}</option>
+                                    <option value={9}>{t('latependingadvanceless')}</option>
                                 </Form.Select>
                             </Form.Group>
                         </Col>
@@ -350,28 +352,28 @@ function LinecheckingReport() {
                         </Col>
                     </Row>
                     <Row className="rounded bg-white text-center hide-on-print">
-                        <Col className="col-md-3 mb-4 d-flex align-items-center gap-2" >
-                            <label className="d-flex align-items-center" style={{fontWeight:"600",fontSize:"11px"}}>
-                                <input type="radio" name="option" value={3} defaultChecked/>
+                        <Col className="col-md-4 mb-4 d-flex align-items-center gap-2" >
+                            <label className="d-flex align-items-center" style={{ fontWeight: "600", fontSize: "11px" }}>
+                                <input type="radio" name="option" value={3} defaultChecked />
                                 {t('all')}
                             </label>
-                            <label className="d-flex align-items-center" style={{fontWeight:"600",fontSize:"11px"}}>
-                                <input type="radio" name="option" value={1}  />
+                            <label className="d-flex align-items-center" style={{ fontWeight: "600", fontSize: "11px" }}>
+                                <input type="radio" name="option" value={1} />
                                 {t('document')}
                             </label>{'  '}
-                            <label className="d-flex align-items-center" style={{fontWeight:"600",fontSize:"11px"}}>
-                                <input type="radio" name="option" value={4}  />
+                            <label className="d-flex align-items-center" style={{ fontWeight: "600", fontSize: "11px" }}>
+                                <input type="radio" name="option" value={4} />
                                 {t('bondandcheque')}
                             </label>{'  '}
-                            <label className="d-flex align-items-center" style={{fontWeight:"600",fontSize:"11px"}}>
+                            <label className="d-flex align-items-center" style={{ fontWeight: "600", fontSize: "11px" }}>
                                 <input type="radio" name="option" value={2} />
                                 {t('other')}
                             </label>
                         </Col>
-                        <Col className="col-md-3 mb-4 " >
+                        <Col className="col-md-2 mb-4 " >
                             <Button variant="primary" size="lg" type="button" className="text-center" onClick={processList}>
                                 {t('processbuttonlabel')}
-                            </Button>{' '}
+                            </Button>
                         </Col>
 
                         <Col className="col-md-3 mb-4 " >
@@ -392,14 +394,14 @@ function LinecheckingReport() {
                     </Row>
                     <Row  >
                         {isLoading ? <PlaceHolder /> : Number(reportType.current.value) === 0 ?
-                            renderLineCheckingList : Number(reportType.current.value) === 1 ?
+                            renderLineCheckingList : Number(reportType.current.value) === 1 || Number(reportType.current.value) === 9 ?
                                 renderpreviousweekList : Number(reportType.current.value) === 2 ?
                                     rendernewaccountList : Number(reportType.current.value) === 3 ?
                                         rendercurrentweekgivenaccountList : Number(reportType.current.value) === 4 ?
                                             renderweekendaccountList : Number(reportType.current.value) === 6 ?
                                                 renderNotRunningAccountList : Number(reportType.current.value) === 7 ?
                                                     renderPendingAccountList : Number(reportType.current.value) === 8 ?
-                                                    renderWeekEndNewAccount:renderdailyrecords}
+                                                        renderWeekEndNewAccount : renderdailyrecords}
                         {errorMessage && <div className="error">{errorMessage}</div>}
                     </Row>
 

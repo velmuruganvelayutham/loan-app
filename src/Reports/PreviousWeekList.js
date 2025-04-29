@@ -3,11 +3,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Table, Pagination } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { dateFormatdd } from "../FunctionsGlobal/StartDateFn"
+import { number } from 'react-i18next/icu.macro';
 
 var first = [];
 
 
-const PreviousWeekList = ({ pendingLoans, date, company, isPrinting }) => {
+const PreviousWeekList = ({ pendingLoans, date, company, isPrinting,reporttype }) => {
     const { t } = useTranslation();
     const [currentPage, setCurrentPage] = useState(1);
     const recordsPerPage = 35;
@@ -41,7 +42,7 @@ const PreviousWeekList = ({ pendingLoans, date, company, isPrinting }) => {
                     <div className='col-sm-5 fixed mt-5' >
                         <h4>{(company)}</h4>
                     </div>
-                    <div className='col-sm-7 fixed mt-5'><h4>{t('previousweekdetails')}</h4></div>
+                    <div className='col-sm-7 fixed mt-5'><h4>{Number(reporttype)==1?t('previousweekdetails'):t('latependingadvanceless')}</h4></div>
                 </div>
                 <div style={{ paddingLeft: "27px", display: "flex", alignItems: "center" }} className='print-margin'>
                     <div className='col-sm-2 fixed' >{t('line') + " : " + (pendingLoans.length > 0 ? first.lineno : "")}</div>
@@ -64,9 +65,9 @@ const PreviousWeekList = ({ pendingLoans, date, company, isPrinting }) => {
                             <th style={{ fontSize: "12px",width:"6%" }}>
                                 {t('loannotooshort')}
                             </th>
-                            <th style={{ fontSize: "11px",width:"14%" }}>
+                            {Number(reporttype)==1?<th style={{ fontSize: "11px",width:"14%" }}>
                                 {t('customer')}
-                            </th>
+                            </th>:<th style={{ fontSize: "11px",width:"12%" }}>{t('customer')}</th>}
                             <th style={{ fontSize: "10px",width:"8%" }}>
                                 {t('due')}
                             </th>
@@ -78,7 +79,9 @@ const PreviousWeekList = ({ pendingLoans, date, company, isPrinting }) => {
                                 {t('totalcreditshort')}
                             </th>
                             <th style={{ fontSize: "11px",width:"8%" }}>{t('debitcredit')}</th>
-                            <th style={{ fontSize: "11px",width:"14%" }}>{t('city')}</th>
+                            {Number(reporttype)==1?<th style={{ fontSize: "11px",width:"14%" }}>{t('city')}</th>:
+                            <th style={{ fontSize: "11px",width:"9%" }}>{t('city')}</th>}
+                            {Number(reporttype)==9 && <th style={{ fontSize: "11px",width:"7%" }}>{t('type')}</th>}
                             <th style={{ fontSize: "11px", width: "1.5%" }}></th>
                         </tr>
                     </thead>
@@ -106,6 +109,7 @@ const PreviousWeekList = ({ pendingLoans, date, company, isPrinting }) => {
                                             <td style={{ fontSize: "12px" }} className='text-nowrap overflow-hidden'>{customer.collectedamount}</td>
                                             <td style={{ fontSize: "12px" }} className='text-nowrap overflow-hidden'>{customer.collectedamount}</td>
                                             <td style={{ fontSize: "12px" }} className='text-nowrap overflow-hidden'>{customer.referencecity}</td>
+                                            {Number(reporttype)==9 && <td style={{ fontSize: "11px" }} className='text-nowrap overflow-hidden'>{Number(customer.receipttype)==1?t('advanceless'):t('latepending')}</td>}
                                             <td></td>
                                            
                                         </tr>
@@ -130,6 +134,7 @@ const PreviousWeekList = ({ pendingLoans, date, company, isPrinting }) => {
                             <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotalcredit}</td>
                             <td className='fw-bold' style={{ fontSize: "12px" }}>{pagetotalcredit}</td>
                             <td></td>
+                            {Number(reporttype)==9 &&<td></td>}
                             <td></td>
                             
 
@@ -150,6 +155,7 @@ const PreviousWeekList = ({ pendingLoans, date, company, isPrinting }) => {
                             <td className='fw-bold' style={{ fontSize: "12px" }}>{totals.totalcredit}</td>
                             <td className='fw-bold' style={{ fontSize: "12px" }}>{totals.totalcredit}</td>
                             <td></td>
+                            {Number(reporttype)==9 && <td></td>}
                             <td></td>
                             
                         </tr> : null

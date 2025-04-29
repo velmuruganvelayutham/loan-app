@@ -577,7 +577,7 @@ function LoanForm() {
                     dueAmt.current.value = oldReference[0].dueamount;
                     paidAmt.current.value = oldReference[0].paidamount;
                     setStartDate(dateFormat(oldReference[0].startdate));
-                    givenDate.current.value = dateFormat(oldReference[0].startdate);
+                    givenDate.current.value = dateFormat(oldReference[0].givendate);
                     dueDate.current.value = dateFormat(oldReference[0].duedate);
                     endDateRef.current.value = dateFormat(oldReference[0].finisheddate);
                     setWeeksCount(oldReference[0].weekcount);
