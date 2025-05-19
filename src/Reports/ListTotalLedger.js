@@ -114,7 +114,6 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
                 <th colSpan={2} style={{ fontSize: "11px" }}>
                   <div style={{ fontSize: "11px" }}>{t('notrunningprevious')}</div>
                   <div style={{ fontSize: "11px" }}>{dateFormatddmmyyyy(notrunningdate)}</div>
-
                 </th>
                 <th colSpan={2} style={{ fontSize: "11px" }}>{t('notrunning')}</th>
                 <th colSpan={2} style={{ fontSize: "11px" }}>{t('running')}</th>
@@ -279,13 +278,16 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
                   <th style={{ fontSize: "11px" }}>{t('currentpendingamount')}</th>
                   <th style={{ fontSize: "11px" }}>{t('pendingmore')}</th>
                   <th style={{ fontSize: "11px" }}>{t('pendingless')}</th>
-                  <th style={{ fontSize: "11px"}}>
-                    <span style={{ fontSize: "11px"}} className='reducesizenotrunning'>{t('notrunningcountbefore')}</span></th>
-                  <th style={{ fontSize: "11px"}}>{t('notrunningpendingbefore')}</th>
-                  <th style={{ fontSize: "11px"}}><span style={{ fontSize: "11px"}} className='reducesizenotrunning'>{t('notrunningcountweek')}</span></th>
-                  <th style={{ fontSize: "11px"}}>{t('notrunningpendingweek')}</th>
-                  <th style={{ fontSize: "11px"}}><span style={{ fontSize: "11px"}} className='reducesizerunning'>{t('runningcountweek')}</span></th>
-                  <th style={{ fontSize: "11px"}}>{t('runningpendingweek')}</th>
+                  <th colSpan={2} style={{ fontSize: "11px" }}>
+                  {t('notrunningcountbefore')}
+                  </th>
+                  <th colSpan={2} style={{ fontSize: "11px" }}>
+                  {t('notrunningcountweek')}
+                  </th>
+                  <th colSpan={2} style={{ fontSize: "11px" }}>
+                  {t('runningcountweek')}
+                  </th>
+                  
                   <th style={{ fontSize: "11px"}}>{t('notrunningcount')}</th>
                   <th style={{ fontSize: "11px"}}>{t('notrunningpending')}</th>
                   <th ></th>

@@ -3,14 +3,14 @@ export function startOfWeek() {
     var currday = curr.getDay();
     var daycalno = 0;
     if (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) {
-        if (currday == 0) {
+        if (Number(currday) === 0) {
             currday = 7;
         }
         daycalno = (7 - currday - 7) + 1;
     }
 
     if (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 6) {
-        if (currday == 6) {
+        if (Number(currday) === 6) {
             currday = -1;
         }
 
@@ -19,7 +19,7 @@ export function startOfWeek() {
     if (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 3) {
         if (currday < 3) {
             // If today is Sunday (6), Monday (1), or Tuesday (2), go to the previous Wednesday
-            daycalno = - (currday + (7 - 3)); 
+            daycalno = - (currday + (7 - 3));
         } else {
             // If today is Wednesday or after, find the last Wednesday
             daycalno = 3 - currday;
@@ -34,6 +34,12 @@ export function startOfWeek() {
         day: '2-digit',
     }).split("/").reverse().join("-");
     return datestartyearformat;
+}
+
+export function getDayBeforeToday() {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    return yesterday.toISOString().split('T')[0]; // YYYY-MM-DD format
 }
 /*export function startOfWeek() {
     const curr = new Date();
@@ -67,19 +73,19 @@ export function endOfWeek() {
     var currday = curr.getDay();
     var daycalno = 0;
     if (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) {
-        if (currday == 0) {
+        if (Number(currday) === 0) {
             currday = 7;
         }
         daycalno = (7 - currday - 7) + 6;
     }
     if (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 6) {
-        if (currday == 6) {
+        if (Number(currday) === 6) {
             currday = -1;
         }
         daycalno = (7 - currday - 7) + 4;
     }
     if (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 3) {
-        if (currday == 6) {
+        if (Number(currday) === 6) {
             currday = 7;
         }
         daycalno = (8 - currday) % 7;
@@ -99,13 +105,13 @@ export function notRunningOfWeek() {
     var currday = curr.getDay();
     var daycalno = 0;
     if (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) {
-        if (currday == 0) {
+        if (Number(currday) === 0) {
             currday = 7;
         }
         daycalno = (7 - currday - 8 - 7 - 7 - 7);
     }
     if (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 6) {
-        if (currday == 6) {
+        if (Number(currday) === 6) {
             currday = -1;
         }
         daycalno = (7 - currday - 10 - 7 - 7 - 7);

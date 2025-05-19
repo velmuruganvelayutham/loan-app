@@ -3,7 +3,7 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import AsyncSelect from 'react-select/async';
 import axios from "axios";
 import { baseURL, getDefaultWeekCount, isReadOnlyLoanNo } from './utils/constant';
-import { startOfWeek, dateFormat, endOfWeek } from './FunctionsGlobal/StartDateFn';
+import { startOfWeek, dateFormat, endOfWeek, getDayBeforeToday } from './FunctionsGlobal/StartDateFn';
 import { useTranslation } from "react-i18next";
 import PlaceHolder from "./components/spinner/placeholder";
 import CustomConfirm from "./components/CustomConfirm";
@@ -13,9 +13,12 @@ import {
 import LoanFormPendingModal from './LoanFormPendingModal';
 var maxLoanNo = 0;
 const weekCount = process.env.REACT_APP_DEFAULT_WEEK_COUNT;
+const comname = process.env.REACT_APP_LOAN_APP_CUSTOMER;
+
 function LoanForm() {
 
     function endingDate() {
+
         var datestarted = new Date(startDate);
         var enddatecal = new Date(datestarted.setDate(datestarted.getDate() + ((weekscount - 1) * 7)))// weeks * 7days per week
         const dateendformat = new Date(enddatecal).toLocaleDateString('en-GB', {
@@ -44,9 +47,11 @@ function LoanForm() {
     const totalAmt = useRef(null);
     const dueAmt = useRef(null);
     const paidAmt = useRef(null);
-    const givenDate = useRef(null);
-    const dueDate = useRef(null)
+    
     const [startDate, setStartDate] = useState(startOfWeek());
+    const initialDate = process.env.REACT_APP_LOAN_APP_CUSTOMER === "VKSAMY FINANCE"? getDayBeforeToday(): startOfWeek();
+    const [givenDate, setGivenDate] =useState(initialDate);
+    const [dueDate,setDueDate] = useState(initialDate);;
     const endDateRef = useRef(null);
     const fathernameRef = useRef(null);
     const citynameRef = useRef(null);
@@ -77,7 +82,7 @@ function LoanForm() {
     const [pending, setPending] = useState([]);
     const [show, setShow] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
-    const[isUpdateNew,setIsUpdateNew]=useState(false)
+    const [isUpdateNew, setIsUpdateNew] = useState(false)
     var passingref = "update";
     const [formData, setFormData] = useState({ customernamefilter: "", citynamefilter: "" });
 
@@ -161,6 +166,7 @@ function LoanForm() {
         fetchData();
     }, [getToken, t]);
 
+
     useEffect(() => {
         document.addEventListener("keydown", function (event) {
             if (event.key === "Enter" && event.target.nodeName === "INPUT") {
@@ -180,6 +186,7 @@ function LoanForm() {
             }
         });
     }, []);
+
     const loadOptions = async (inputValue, callback) => {
         try {
             // Make an API call to fetch options based on the inputValue
@@ -239,7 +246,7 @@ function LoanForm() {
     function calculateTotalAmt() {
         let given = Number(givenAmt);
         let document = 0;
-        if (weekscount == 25 || weekscount==26) {
+        if (weekscount == 25 || weekscount == 26) {
             document = ((50 * given) / 1000);
         }
         else if (weekscount == 32) {
@@ -437,7 +444,7 @@ function LoanForm() {
             {
                 oldloanno: Number(oldLoanRef.current.value), customer_id: myForm.mySelectKey, lineman_id: linemanoptionRef.current.value, city_id: cityidRef.current.value,
                 weekno: weekRef.current.value, bookno: bookRef.current.value, lineno: lineRef.current.value, document: documentRef.current.value, cheque: chequeRef.current.value, bond: bondRef.current.value,
-                weekcount: weekscount, startdate: new Date(startDate), givendate: new Date(givenDate.current.value), duedate: new Date(dueDate.current.value), finisheddate: new Date(endDateRef.current.value),
+                weekcount: weekscount, startdate: new Date(startDate), givendate: new Date(givenDate), duedate: new Date(dueDate), finisheddate: new Date(endDateRef.current.value),
                 givenamount: Number(givenAmt), documentamount: Number(documentAmt.current.value), interestamount: Number(interestAmt.current.value),
                 totalamount: Number(totalAmt.current.value), dueamount: Number(dueAmt.current.value), paidamount: Number(paidAmt.current.value), advancetype: Number(receiptType), advanceless: Number(advanceLess),
                 advanceweekno: Number(advanceweekno), advancereceiptdate: new Date(startOfWeek())
@@ -481,7 +488,7 @@ function LoanForm() {
         axios.post(`${baseURL}/loancreate/save`, {
             loanno: Number(loannoRef.current.value), customer_id: myForm.mySelectKey, lineman_id: linemanoptionRef.current.value, city_id: cityidRef.current.value,
             weekno: weekRef.current.value, bookno: bookRef.current.value, lineno: lineRef.current.value, document: documentRef.current.value, cheque: chequeRef.current.value, bond: bondRef.current.value,
-            weekcount: weekscount, startdate: new Date(startDate), givendate: new Date(givenDate.current.value), duedate: new Date(dueDate.current.value), finisheddate: new Date(endDateRef.current.value),
+            weekcount: weekscount, startdate: new Date(startDate), givendate: new Date(givenDate), duedate: new Date(dueDate), finisheddate: new Date(endDateRef.current.value),
             givenamount: Number(givenAmt), documentamount: Number(documentAmt.current.value), interestamount: Number(interestAmt.current.value),
             totalamount: Number(totalAmt.current.value), dueamount: Number(dueAmt.current.value), paidamount: Number(paidAmt.current.value)
         })
@@ -552,8 +559,8 @@ function LoanForm() {
                     setSavedValue(saveOptions)
 
                     setMyForm({ ...myForm, mySelectKey: oldReference[0].customer_id });
-                    
-                    setFormData({ ...formData, customernamefilter: oldReference[0].customer,citynamefilter: oldReference[0].cityname});
+
+                    setFormData({ ...formData, customernamefilter: oldReference[0].customer, citynamefilter: oldReference[0].cityname });
                     linemanoptionRef.current.value = oldReference[0].lineman_id;
                     setInputMobileno(oldReference[0].mobileno);
                     fathernameRef.current.value = oldReference[0].fathername;
@@ -577,8 +584,8 @@ function LoanForm() {
                     dueAmt.current.value = oldReference[0].dueamount;
                     paidAmt.current.value = oldReference[0].paidamount;
                     setStartDate(dateFormat(oldReference[0].startdate));
-                    givenDate.current.value = dateFormat(oldReference[0].givendate);
-                    dueDate.current.value = dateFormat(oldReference[0].duedate);
+                    setGivenDate(dateFormat(oldReference[0].givendate));
+                    setDueDate(dateFormat(oldReference[0].duedate));
                     endDateRef.current.value = dateFormat(oldReference[0].finisheddate);
                     setWeeksCount(oldReference[0].weekcount);
                     setBalanceAmount(oldReference[0].totalamount - oldReference[0].advanceless);
@@ -615,8 +622,9 @@ function LoanForm() {
         chequeRef.current.value = "";
         bondRef.current.value = "";
         setStartDate(startOfWeek());
-        givenDate.current.value = startOfWeek();
-
+        const initialDate = process.env.REACT_APP_LOAN_APP_CUSTOMER === "VKSAMY FINANCE"? getDayBeforeToday(): startOfWeek();
+        setGivenDate(initialDate);
+        setDueDate(initialDate);
         setGivenAmt("");
         documentAmt.current.value = "";
         interestAmt.current.value = "";
@@ -653,15 +661,15 @@ function LoanForm() {
     const processList = async (value) => {
         setIsLoading(true);
         const mobileArray = inputmobileno.split(/\s+/).filter(Boolean);
-        
+
         const token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         return (
             axios.get(`${baseURL}/loan/givenmoneypending`, {
                 params: {
                     mobileNumbers: mobileArray,
-                    customername:formData.customernamefilter.toString(),
-                    cityname:formData.citynamefilter.toString(),
+                    customername: formData.customernamefilter.toString(),
+                    cityname: formData.citynamefilter.toString(),
                     todate: new Date(endOfWeek())
                 }
             }).then((res) => {
@@ -692,14 +700,15 @@ function LoanForm() {
         if (myForm.mySelectKey !== null) {
             processList(myForm.mySelectKey);
             setStartDate(startOfWeek());
-            givenDate.current.value = startOfWeek();
-            dueDate.current.value = startOfWeek();
+            const initialDate = process.env.REACT_APP_LOAN_APP_CUSTOMER === "VKSAMY FINANCE"? getDayBeforeToday(): startOfWeek();
+            setGivenDate(initialDate);
+            setDueDate(initialDate);
             endDateRef.current.value = endingDate();
 
         }
         setShowConfirm(false);
     }
-    const handleClosee=()=>{
+    const handleClosee = () => {
         setShowConfirm(false);
         setIsUpdateNew(false);
     }
@@ -886,13 +895,14 @@ function LoanForm() {
                         <Col xs={12} md={3} className="rounded bg-white">
                             <Form.Group className="mb-3" name="givendate" border="primary" >
                                 <Form.Label>{t('givendatedetail')}</Form.Label>{/*given Date*/}
-                                <Form.Control type="date" ref={givenDate} data-cypress-loan-app-givendate="givendate" required defaultValue={startOfWeek()} />
+                                <Form.Control type="date" data-cypress-loan-app-givendate="givendate" required value={givenDate} onChange={(e) => setGivenDate(e.target.value)} />
                             </Form.Group>
                         </Col>
+
                         <Col xs={12} md={3} className="rounded bg-white">
                             <Form.Group className="mb-3" name="givendate" border="primary" >
                                 <Form.Label>{t('payingdate')}</Form.Label>{/*paid date*/}
-                                <Form.Control data-cypress-loan-app-payingdate="payingdate" type="date" ref={dueDate} required defaultValue={startOfWeek()} />
+                                <Form.Control data-cypress-loan-app-payingdate="payingdate" type="date" value={dueDate} onChange={(e)=>setDueDate(e.target.value)} required/>
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={3} className="rounded bg-white">
@@ -954,7 +964,7 @@ function LoanForm() {
                                 {t('generatenew')}
                             </Button>{' '}
                             <Button variant="primary" data-cypress-loan-app-save="save" size="lg" type="button" className="text-center"
-                                onClick={handleSubmit} disabled={isButtonDisabled|| isUpdateNew?true:false}>
+                                onClick={handleSubmit} disabled={isButtonDisabled || isUpdateNew ? true : false}>
                                 {updateUI ? t('updatebutton') : t('savebutton')}
                             </Button>{' '}
                             <Button variant="primary" size="lg" type="button" className="text-center"
