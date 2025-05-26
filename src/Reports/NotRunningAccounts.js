@@ -26,47 +26,90 @@ const NotRunningAccounts = ({ pendingLoans, date, company, isPrinting, lineman, 
   const totals = useMemo(() => {
     const total = pendingLoans.reduce((acc, item) => acc + (item.totalamount - item.collectedtotal), 0);
     const totalDuePending = pendingLoans.reduce((previous, current) => {
-      if (current.finisheddatepending !== 1) {
-        duependingcheck = current.dueamount;
+      if (current.collectedamountdate > 0 && current.collectedamountdate >= current.dueamount || current.topay <= 0 || current.finisheddatepending == 1) {
+        return previous + 0;
+      }
+      else if (current.collectedamountdate == 0 && current['addFields'].receiptpendingweekafter <= 0 && current.topay > 0) {
+        if ((-1 * (current['addFields'].receiptpendingweekafter * current.dueamount)) < current.dueamount && ((current['addFields'].receiptpendingweekafter * current.dueamount) != 0)) {
+
+          return previous + (current.dueamount - (-1 * (current['addFields'].receiptpendingweekafter * current.dueamount)))
+        }
+        else {
+          return previous + (-1 * (current['addFields'].receiptpendingweekafter) * current.dueamount)
+        }
+
+      }
+      else if (current.collectedamountdate > 0 && current.collectedamountdate < current.dueamount) {
+        return previous + (current.dueamount - current.collectedamountdate)
       }
       else {
-        duependingcheck = 0;
+        duependingcheck = ((current['addFields'].receiptpendingweekafter * current.dueamount) < current.dueamount && current.dueamount != 0 ? current['addFields'].receiptpendingweekafter * current.dueamount : current.dueamount)
+        duependingcheck = parseFloat(duependingcheck.toFixed(2))
+        return previous + duependingcheck
       }
-      return previous + duependingcheck
-
     }, 0);
 
     const totalPendingWeek = pendingLoans.reduce((previousval, currentval) => {
+      duependingcheck = 0;
+      if (currentval['addFields'].receiptpendingweekafter > 0 && currentval['addFields'].receiptpendingweekafter < 8) {
+        if (currentval.collectedamountdate > 0 && currentval.collectedamountdate >= currentval.dueamount || currentval.topay <= 0 || currentval.finisheddatepending == 1) {
+          duependingcheck = 0;
+        }
+        else if (currentval.collectedamountdate == 0 && currentval['addFields'].receiptpendingweekafter <= 0 && currentval.topay > 0) {
+
+          duependingcheck = -1 * (currentval['addFields'].receiptpendingweekafter) * currentval.dueamount
+          if (duependingcheck < currentval.dueamount && duependingcheck != 0) {
+            duependingcheck = currentval.dueamount - duependingcheck
+          }
+        }
+        else if (currentval.collectedamountdate > 0 && currentval.collectedamountdate < currentval.dueamount) {
+          duependingcheck = currentval.dueamount - currentval.collectedamountdate;
+        }
+        else {
+          duependingcheck = currentval.dueamount
+        }
+
+        pendingweekcheck = (currentval['addFields'].receiptpendingweekafter * currentval.dueamount);
+        duependingcheckval = ((pendingweekcheck) < duependingcheck && duependingcheck != 0 ? (pendingweekcheck) : duependingcheck)
+        duependingweekcheck = pendingweekcheck - duependingcheckval;
+
+        duependingweekcheck = parseFloat(duependingweekcheck.toFixed(2))
 
 
+        return previousval + duependingweekcheck;
+      }
+      else if (currentval['addFields'].receiptpendingweekafter >= 8) {
+        if (currentval.collectedamountdate > 0 && currentval.collectedamountdate >= currentval.dueamount || currentval.topay <= 0 || currentval.finisheddatepending == 1) {
+          duependingcheck = 0;
+        }
+        else if (currentval.collectedamountdate == 0 && currentval['addFields'].receiptpendingweekafter <= 0 && currentval.topay > 0) {
 
-      if (currentval.finisheddatepending !== 1) {
-        duependingcheck = currentval.dueamount;
+          duependingcheck = -1 * (currentval['addFields'].receiptpendingweekafter) * currentval.dueamount
+          if (duependingcheck < currentval.dueamount && duependingcheck != 0) {
+            duependingcheck = currentval.dueamount - duependingcheck
+          }
+        }
+        else if (currentval.collectedamountdate > 0 && currentval.collectedamountdate < currentval.dueamount) {
+          duependingcheck = currentval.dueamount - currentval.collectedamountdate;
+        }
+        else {
+          duependingcheck = currentval.dueamount
+        }
+        pendingweekcheck = (currentval['addFields'].receiptpendingweekafter * currentval.dueamount);
+        duependingcheckval = ((pendingweekcheck) < duependingcheck && duependingcheck != 0 ? (pendingweekcheck) : duependingcheck)
+        duependingweekcheck = pendingweekcheck;
+
+        duependingweekcheck = parseFloat(duependingweekcheck.toFixed(2))
+        return previousval + duependingweekcheck - duependingcheckval;
+
       }
       else {
-        duependingcheck = 0;
+        return previousval + 0;
       }
-
-      if (currentval.finisheddatepending !== 1 && currentval.pendingweekcolor >= 4) {
-        pendingweekcheck = (currentval.pendingweekcolor * currentval.dueamount);
-      }
-      else if (currentval.finisheddatepending == 1 && currentval.pendingweekcolor >= 4) {
-        pendingweekcheck = (currentval.totalamount - currentval.collectedtotal);
-      }
-      else {
-        pendingweekcheck = 0;
-      }
-
-      duependingcheckval = ((pendingweekcheck) < duependingcheck && duependingcheck != 0 ? (pendingweekcheck) : duependingcheck)
-      duependingweekcheck = pendingweekcheck - duependingcheckval;
-
-      duependingweekcheck = parseFloat(duependingweekcheck.toFixed(2))
-      return previousval + duependingweekcheck;
-
-
     }, 0);
     return { total, totalDuePending, totalPendingWeek };
   }, [pendingLoans]);
+
 
   const renderPage = (page) => {
 
@@ -125,7 +168,7 @@ const NotRunningAccounts = ({ pendingLoans, date, company, isPrinting, lineman, 
               </th>
               <th style={{ fontSize: "9px", width: "6.9%" }}>{t('city')}</th>
               <th style={{ fontSize: "11px", width: "6%" }}>
-              {bond?t('cheque'):t('phoneno')}
+                {bond ? t('cheque') : t('phoneno')}
               </th>
               <th style={{ fontSize: "9px", width: "5%" }}>
                 {t('enddate')}
@@ -154,19 +197,47 @@ const NotRunningAccounts = ({ pendingLoans, date, company, isPrinting, lineman, 
                   pagetotal = pagetotal + pending;
 
 
-                  if (customer.finisheddatepending !== 1) {
+                  /*if (customer.finisheddatepending !== 1) {
                     duepending = customer.dueamount;
                   }
                   else {
                     duepending = 0;
                   }
-
+                  
                   if (customer.pendingweekcolor >= 4 && customer.finisheddatepending !== 1) {
                     pendingweek = (customer.pendingweekcolor * customer.dueamount);
 
                   }
                   else if (customer.pendingweekcolor >= 4 && customer.finisheddatepending === 1) {
                     pendingweek = pending;
+                  }
+                  else {
+                    pendingweek = 0;
+                  }*/
+                  /* here calculate the dueamount */
+                  if (customer.collectedamountdate > 0 && customer.collectedamountdate >= customer.dueamount || customer.topay <= 0 || customer.finisheddatepending == 1) {
+                    duepending = 0
+                  }
+                  else if (customer.collectedamountdate == 0 && customer['addFields'].receiptpendingweekafter <= 0 && customer.topay > 0) {
+
+                    duepending = -1 * (customer['addFields'].receiptpendingweekafter) * customer.dueamount
+                    if (duepending < customer.dueamount && duepending != 0) {
+                      duepending = customer.dueamount - duepending
+                    }
+                  }
+                  else if (customer.collectedamountdate > 0 && customer.collectedamountdate < customer.dueamount) {
+                    duepending = customer.dueamount - customer.collectedamountdate
+                  }
+                  else {
+                    duepending = customer.dueamount
+                  }
+                  /* here calculate the pending amount */
+                  if (customer['addFields'].receiptpendingweekafter > 0 && customer['addFields'].receiptpendingweekafter < 8) {
+                    pendingweek = (customer['addFields'].receiptpendingweekafter * customer.dueamount);
+                  }
+                  else if (customer['addFields'].receiptpendingweekafter >= 8) {
+                    pendingweek = (customer['addFields'].receiptpendingweekafter * customer.dueamount);
+
                   }
                   else {
                     pendingweek = 0;
@@ -196,8 +267,8 @@ const NotRunningAccounts = ({ pendingLoans, date, company, isPrinting, lineman, 
                       <td style={{ fontSize: "11px", width: "12%" }} className='text-nowrap overflow-hidden'>{customer.fathername}</td>
                       <td style={{ fontSize: "11px", overflow: "hidden" }} className='text-nowrap overflow-hidden'>{bond ? customer.bond : customer.address}</td>
                       <td style={{ fontSize: "10px", overflow: "hidden", }} className='text-nowrap overflow-hidden'>{customer.city}</td>
-                      {bond?<td style={{ fontSize: "11px",fontWeight: "500" }}>{customer.cheque}</td>:<td style={{ fontSize: "11px", wordWrap: "break-word", padding: "0px", margin: "0px", fontWeight: "500" }}>{customer.mobileno}</td>}
-                      
+                      {bond ? <td style={{ fontSize: "11px", fontWeight: "500" }}>{customer.cheque}</td> : <td style={{ fontSize: "11px", wordWrap: "break-word", padding: "0px", margin: "0px", fontWeight: "500" }}>{customer.mobileno}</td>}
+
                       <td style={{ fontSize: "11px" }} className='text-nowrap overflow-hidden'>{dateFormatdd(customer.finisheddate)}</td>
                       <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{pending}</td>
                       <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{duepending > 0 ? duepending : ""}</td>
