@@ -12,8 +12,6 @@ import {
 } from "@clerk/clerk-react";
 import LoanFormPendingModal from './LoanFormPendingModal';
 var maxLoanNo = 0;
-const weekCount = process.env.REACT_APP_DEFAULT_WEEK_COUNT;
-const comname = process.env.REACT_APP_LOAN_APP_CUSTOMER;
 
 function LoanForm() {
 
@@ -239,7 +237,13 @@ function LoanForm() {
             addressRef.current.value = filtered[0].address;
             workRef.current.value = filtered[0].work;
             lineRef.current.value = filtered[0].lineno;
-
+            setFormData({ ...formData, customernamefilter: filtered[0].customer, citynamefilter: filtered[0].cityname });
+            
+            if(!updateUI){
+                processList(filtered[0].customer,filtered[0].cityname);
+                
+            }
+            
         }
 
     }
@@ -658,7 +662,7 @@ function LoanForm() {
         setAdvanceLess(0);
         calBalance()
     }
-    const processList = async (value) => {
+    const processList = async (customer,city) => {
         setIsLoading(true);
         const mobileArray = inputmobileno.split(/\s+/).filter(Boolean);
 
@@ -668,8 +672,8 @@ function LoanForm() {
             axios.get(`${baseURL}/loan/givenmoneypending`, {
                 params: {
                     mobileNumbers: mobileArray,
-                    customername: formData.customernamefilter.toString(),
-                    cityname: formData.citynamefilter.toString(),
+                    customername: customer.toString(),
+                    cityname: city.toString(),
                     todate: new Date(endOfWeek())
                 }
             }).then((res) => {
@@ -698,7 +702,7 @@ function LoanForm() {
     const handleConfirm = () => {
         setIsUpdateNew(true);
         if (myForm.mySelectKey !== null) {
-            processList(myForm.mySelectKey);
+            processList(formData.customernamefilter,formData.citynamefilter);
             setStartDate(startOfWeek());
             const initialDate = process.env.REACT_APP_LOAN_APP_CUSTOMER === "VKSAMY FINANCE"? getDayBeforeToday(): startOfWeek();
             setGivenDate(initialDate);
