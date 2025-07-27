@@ -81,11 +81,11 @@ function Charrt({ loanno, ledger, company, date }) {
             arr2 = Array.from({ length: 25 }, (_, i) => i + 25)
             arr3 = Array.from({ length: (first.weekcount - 50) }, (_, i) => i + 51)
         }
-        else if (first.weekcount === 90) {
+        else if (first.weekcount >= 80 && first.weekcount <= 90) {
             arr1 = Array.from(Array(25).keys());
             arr2 = Array.from({ length: 25 }, (_, i) => i + 25)
             arr3 = Array.from({ length: 25 }, (_, i) => i + 51)
-            arr4 = Array.from({ length: 15 }, (_, i) => i + 76)
+            arr4 = Array.from({ length: (first.weekcount - 75) }, (_, i) => i + 76)
         }
         else if (first.weekcount === 100) {
             arr1 = Array.from(Array(25).keys());

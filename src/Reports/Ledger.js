@@ -13,11 +13,11 @@ function Ledger({ loanno, ledger, company, date }) {
 
     var serialno = 0;
     var records = ledger
-
+    
     function TablesRows(no, date, income, weekno, type, receipttype) {
 
         return (
-            <tr className={receipttype>0? 'chartheight table-danger' : 'chartheight'}>
+            <tr className={receipttype>1? 'chartheight table-danger' : 'chartheight'}>
                 <td style={{ fontSize: "11px", padding: "0", margin: "0" }}>{date !== "" ? dateFormatdd(date) : ""}</td>
                 <td style={{ fontSize: "11px", padding: "0", margin: "0" }}>{Number(no) === 1 && (weekno === "") ? income : no}</td>
                 <td style={{ fontSize: "11px", padding: "0", margin: "0" }}>{Number(no) === 1 && (weekno === "") ? "" : income}</td>
@@ -86,11 +86,11 @@ function Ledger({ loanno, ledger, company, date }) {
             arr2 = Array.from({ length: 25 }, (_, i) => i + 25)
             arr3 = Array.from({ length: (first.weekcount-50) }, (_, i) => i + 51)
         }
-        else if (first.weekcount === 90) {
+        else if (first.weekcount >= 80 && first.weekcount <= 90) {
             arr1 = Array.from(Array(25).keys());
             arr2 = Array.from({ length: 25 }, (_, i) => i + 25)
             arr3 = Array.from({ length: 25 }, (_, i) => i + 51)
-            arr4 = Array.from({ length: 15 }, (_, i) => i + 76)
+            arr4 = Array.from({ length: (first.weekcount-75) }, (_, i) => i + 76)
         }
         else if (first.weekcount === 100) {
             arr1 = Array.from(Array(25).keys());
