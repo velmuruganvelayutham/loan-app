@@ -353,7 +353,7 @@ function Ledger({ loanno, ledger, company, date }) {
                             </tr>
                         </thead>
                         <tbody>
-                            {tableData.slice(arr2.length, (arr2.length + arr3.length)).map((item, index) => {
+                            {tableData.slice(arr1.length+arr2.length, (arr1.length + arr2.length + arr3.length)).map((item, index) => {
                                 serialno += 1;
                                 totalamount -= item.collectedamount || 0;
 
@@ -389,7 +389,7 @@ function Ledger({ loanno, ledger, company, date }) {
                             </tr>
                         </thead>
                         <tbody>
-                            {tableData.slice(arr3.length, (arr3.length + arr4.length)).map((item, index) => {
+                            {tableData.slice(arr1.length+arr2.length+arr3.length, (arr1.length + arr2.length + arr3.length + arr4.length)).map((item, index) => {
                                 serialno += 1;
                                 totalamount -= item.collectedamount || 0;
 
