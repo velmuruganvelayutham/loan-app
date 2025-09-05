@@ -15,12 +15,13 @@ const AccountReports = () => {
     const { getToken } = useAuth();
     const componentRef = useRef(null);
     const { t } = useTranslation();
+    const [isLoading, setIsLoading] = useState(false);
     const fetchLedgerReport = async () => {
         if (!fromDate || !toDate) {
             alert("Please select both dates");
             return;
         }
-
+        setIsLoading(true);
         const token = await getToken();
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
@@ -33,8 +34,10 @@ const AccountReports = () => {
             });
             //console.log(res.data);
             setLedger(res.data);
+            setIsLoading(false);
         } catch (err) {
             console.error("Error fetching ledger:", err);
+            setIsLoading(false);
         }
     };
     const handlePrintAll = () => {
@@ -84,7 +87,9 @@ const AccountReports = () => {
             </Form>
 
             <Row ref={componentRef}>
-                {(ledger.transactions.length > 0 || ledger.openingBalance !== 0) && (<LedgerReport data={ledger} />)}
+                {isLoading ? (
+                <div className="skeleton-loader">Loading.....</div>
+            ) :(ledger.transactions.length > 0 || ledger.openingBalance !== 0) && (<LedgerReport data={ledger} />)}
             </Row>
         </div>
     );

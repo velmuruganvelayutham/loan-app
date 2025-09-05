@@ -222,6 +222,7 @@
   "dueshort":"Due",
   "weenkendnewaccounts":"Ween End Not New Account ",
   "latependingadvanceless":"Late Pending And Advance Less",
-  "type":"Type"
+  "type":"Type",
+  "paymenttype":"Payment Type"
 
 }

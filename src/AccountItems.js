@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 const AccountItems = () => {
   const { getToken } = useAuth();
   const [transactions, setTransactions] = useState([
-    { accountId: "", amount: "", transactionType: "", description: "" },
+    { accountId: "", amount: "", transactionType: "", paymentType: "", description: "" },
   ]);
   const [accountOptions, setAccountOptions] = useState([]); // Account list
   //const [entryNumber, setEntryNumber] = useState("");
@@ -63,7 +63,8 @@ const AccountItems = () => {
       (t, i) =>
         i !== index &&
         t.accountId === newTransactions[index].accountId &&
-        t.transactionType === newTransactions[index].transactionType
+        t.transactionType === newTransactions[index].transactionType &&
+        t.paymentType === newTransactions[index].paymentType
     );
 
     if (isDuplicate) {
@@ -77,7 +78,7 @@ const AccountItems = () => {
   const handleKeyDown = (index, field, event) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      const fields = ["accountId", "amount", "transactionType", "description"];
+      const fields = ["accountId", "amount", "transactionType", "paymentType", "description"];
       const currentFieldIndex = fields.indexOf(field);
 
 
@@ -91,17 +92,18 @@ const AccountItems = () => {
           transactions[index].accountId &&
           transactions[index].amount &&
           transactions[index].transactionType &&
+          transactions[index].paymentType &&
           transactions[index].description.trim()
         ) {
 
           setTransactions([
             ...transactions,
-            { accountId: "", amount: "", transactionType: "", description: "" },
+            { accountId: "", amount: "", transactionType: "", paymentType: "", description: "" },
           ]);
 
           setTimeout(() => {
             if (inputRefs.current[index + 1] && inputRefs.current[index + 1][0]) {
-              inputRefs.current[index + 1][0].focus(); 
+              inputRefs.current[index + 1][0].focus();
             }
 
           }, 100);
@@ -120,13 +122,14 @@ const AccountItems = () => {
     e.preventDefault();
 
     const validTransactions = transactions
-      .filter((t) => t.accountId && t.amount && t.transactionType && t.description.trim()) // Filtering
+      .filter((t) => t.accountId && t.amount && t.transactionType && t.paymentType && t.description.trim()) // Filtering
       .map((t) => ({
         paymentno: paymentRef.current.value.toString(),  // Payment Number First
         paymentdate: new Date(transactionDate), // Payment Date Next
         account_id: t.accountId, // Then Account ID
         amount: t.amount,
         transactiontype: t.transactionType,
+        paymenttype: t.paymentType,
         description: t.description
       }));
 
@@ -177,6 +180,7 @@ const AccountItems = () => {
               accountId: transaction.account_id,
               amount: transaction.amount,
               transactionType: transaction.transactiontype,
+              paymentType: transaction.paymenttype,
               description: transaction.description
             }));
 
@@ -193,7 +197,7 @@ const AccountItems = () => {
     //setIsRestore(false);
   }
   const ClearDetails = () => {
-    setTransactions([{ accountId: "", amount: "", transactionType: "", description: "" }]);
+    setTransactions([{ accountId: "", amount: "", transactionType: "", paymentType: "", description: "" }]);
     setUpdateUI(false);
     setRefresh((prevState) => !prevState)
     setTransactionDate(new Date().toISOString().split("T")[0]);
@@ -217,7 +221,7 @@ const AccountItems = () => {
   }
   return (
     <div className="container mt-4">
-      
+
       <form onSubmit={handleSubmit} className="card p-4 shadow">
         <div className="row mb-3">
           <div className="col-md-3">
@@ -244,6 +248,7 @@ const AccountItems = () => {
               <th>{t('accountname')}</th>
               <th>{t('amount')}</th>
               <th>{t('transactiontype')}</th>
+              <th>{t('paymenttype')}</th>
               <th>{t('description')}</th>
               <th>{t('tableaction')}</th>
             </tr>
@@ -257,7 +262,7 @@ const AccountItems = () => {
                     onChange={(selectedOption) =>
                       handleInputChange(index, "accountId", selectedOption ? selectedOption.value : "")
                     }
-                    value={accountOptions.find(option => option.value === transaction.accountId)} 
+                    value={accountOptions.find(option => option.value === transaction.accountId)}
                     className="fixed-width"
                     styles={{ menuPortal: (base) => ({ ...base, width: 200 }) }}
                     menuPortalTarget={document.body}
@@ -284,6 +289,7 @@ const AccountItems = () => {
                     required
                   />
                 </td>
+
                 <td>
                   <select
                     name="transactionType"
@@ -297,6 +303,21 @@ const AccountItems = () => {
                     <option value="">{t('search')}</option>
                     <option value={1}>{t('credit')}</option>
                     <option value={2}>{t('debit')}</option>
+                  </select>
+                </td>
+                <td>
+                  <select
+                    name="paymentType"
+                    className="form-select"
+                    value={transaction.paymentType}
+                    onChange={(e) => handleInputChange(index, "paymentType", e.target.value)}
+                    onKeyDown={(e) => handleKeyDown(index, "paymentType", e)}
+                    ref={(el) => (inputRefs.current[index][2] = el)}
+                    required
+                  >
+                    <option value="">{t('search')}</option>
+                    <option value={0}>{t('Cash')}</option>
+                    <option value={1}>{t('Bank')}</option>
                   </select>
                 </td>
                 <td>
