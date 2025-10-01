@@ -236,13 +236,13 @@ function Charrt({ loanno, ledger, company, date }) {
                                 <th style={{ fontSize: "11px", padding: "0", margin: "0", width: "6%" }}>
                                     {t('countshort')}
                                 </th >
-                                <th style={{ fontSize: "11px", padding: "0", margin: "0", width: "15%" }}>
+                                <th style={{ fontSize: "11px", padding: "0", margin: "0", width: "14%" }}>
                                     {t('date')}
                                 </th>
                                 <th style={{ fontSize: "11px", padding: "0", margin: "0", width: "9%" }}>
                                     {t('pay')}
                                 </th>
-                                <th style={{ fontSize: "11px", padding: "0", margin: "0", width: "10%" }}>
+                                <th style={{ fontSize: "11px", padding: "0", margin: "0", width: "11%" }}>
                                     {totalamount}
                                 </th>
                             </tr>
