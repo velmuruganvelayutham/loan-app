@@ -16,6 +16,7 @@ function TotalLedger() {
     const [errorMessage, setErrorMessage] = useState("");
     const [ledger, setLedger] = useState([]);
     const [linemannames, setLinemanNames] = useState([]);
+    const [sectionnames, setSectionNames] = useState([]);
     const { t } = useTranslation();
     const startDateRef = useRef(startOfWeek());
     const endDateRef = useRef(endOfWeek());
@@ -67,6 +68,24 @@ function TotalLedger() {
         }
         fetchData();
     }, [getToken])
+    useEffect(() => {
+        async function fetchData() {
+            setIsLoading(true);
+            const token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            axios.get(`${baseURL}/section/get`).then((res) => {
+                setSectionNames(res.data)
+                setIsLoading(false);
+                setErrorMessage("");
+            })
+                .catch(error => {
+                    console.log("error=", error);
+                    setErrorMessage(t('errormessagesection'));
+                    setIsLoading(false);
+                })  
+        }
+        fetchData();
+    }, [getToken]);
     const processList = async () => {
         //alert(reportType.current.value);
         var reporttypename = ""
@@ -79,7 +98,7 @@ function TotalLedger() {
         }
         else {
             reporttypename = "totalledger"
-            passingargument = "";
+            passingargument = linemanoptionRef.current.value;
         }
         const token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -112,7 +131,7 @@ function TotalLedger() {
             <ListTotalLedger totalledger={ledger} datefrom={startDateRef.current.value}
                 dateto={endDateRef.current.value} notrunningdate={previousDate} 
                 reportypeval={reportType.current.value} 
-                companyname={company.length > 0 ? company[0].companyname : ""} linemanname={linemannameday} linamnline={linemanlineno}/>
+                companyname={company.length > 0 ? company[0].companyname : ""} linemanname={linemannameday} linamnline={linemanlineno} />
         </Row>
     )
     
@@ -136,6 +155,23 @@ function TotalLedger() {
         </Col>
 
     )
+    const sectionshow = (
+        <Col xs={12} md={3} className="rounded bg-white">
+            <Form.Group className="mb-3" name="sectionname" border="primary" > 
+            <Form.Label>{t('section')}</Form.Label>
+                <Form.Select aria-label="Default select example" value={line}
+                    onChange={(e) => setLine(e.target.value)} ref={linemanoptionRef} >
+                    <option key={""} value={""} defaultValue={""}>{t('section')}</option> 
+                    {
+                        sectionnames.map((sectionname) => (
+                            <option key={sectionname._id} value={sectionname._id}
+                                selected={sectionname._id} >{sectionname.sectionname}</option>
+                        ))}
+                </Form.Select>
+            </Form.Group>
+        </Col>
+
+    )   
     const handleClick = () => {
 
         if (Number(reportType.current.value) === 0) {
@@ -161,7 +197,7 @@ function TotalLedger() {
             <Row>
                 <Form>
                     <Row className="rounder bg-white ">
-                        {show === true ? linemanshow : null}
+                        {show === true ? linemanshow : sectionshow}
                         <Col md={show === true ? 2 : 3} className="rounder bg-white">
                             <Form.Group>
                                 <Form.Label>{t('startdate')}</Form.Label>

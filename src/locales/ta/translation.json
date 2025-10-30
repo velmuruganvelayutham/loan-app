@@ -263,7 +263,19 @@
   "weenkendnewaccounts":"புதிய அக்கவுண்டாக மாற்றப்படாதது",
   "latependingadvanceless":"வாரா கடன் மற்றும் அட்வான்ஸ் லெஸ்",
   "type":"வகை",
-  "paymenttype":"கட்டண வகை"
+  "paymenttype":"கட்டண வகை",
+  "sectionname":"பிரிவு பெயர்",
+  "sectionheader":"பிரிவு விபரம்",
+  "section":"பிரிவு",
+  "sectionassinheader":"பிரிவு ஒதுக்கீடு",
+  "editsectionassineditheader":"பிரிவு ஒதுக்கீட்டு திருத்தம்",
+  "selectlinemen":"லைன்மேன்களை தேர்ந்தெடு",
+  "updateassignment":"ஒதுக்கீட்டை மாற்று",
+  "assignsection":"பிரிவை ஒதுக்கீடு",
+  "canceledit":"திருத்தத்தை ரத்து செய்",
+  "currentassignments":"தற்போதைய பிரிவு ஒதுக்கீடுகள்",
+  "assignedlinemen":"ஒதுக்கப்பட்ட லைன்மேன்கள்"
+
 
 
 }

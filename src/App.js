@@ -9,6 +9,8 @@ import {
   RedirectToSignIn
 } from "@clerk/clerk-react";
 import LedgerForm from './Reports/LedgerForm';
+
+
 const ReceiptByImage = lazy(() => import('./ReceiptByImage'));
 const AddCustomer = lazy(() => import('./AddCustomer'));
 const NavBar = lazy(() => import('./NavBar'));
@@ -29,6 +31,9 @@ const Home=lazy(()=>import ('./Home'))
 const AccountMaster=lazy(()=>import('./AccountMaster'))
 const AccountEntry=lazy(()=>import('./AccountItems'))
 const AccountReport=lazy(()=>import('./AccountReports'))
+const HelpPage=lazy(()=>import('./pages/HelpPage'))
+const SectionCreate=lazy(()=>import('./AddSection'))
+const SectionAssign=lazy(()=>import('./SectionAssign'))
 //const CheckingSample=lazy(()=>import('./Reports/checkingsample'))
 if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key")
@@ -112,6 +117,33 @@ function ClerkProviderWithRoutes() {
               <SignedIn>
                 <NavBar />
                 <Line />
+              </SignedIn>
+              <SignedOut>
+                <RedirectToSignIn />
+              </SignedOut>
+            </>
+          }
+        />
+        <Route
+          path="/section"
+          element={
+            <>
+              <SignedIn>
+                <NavBar />
+                <SectionCreate />
+              </SignedIn>
+              <SignedOut>
+                <RedirectToSignIn />
+              </SignedOut>
+            </>
+          }
+        />
+        <Route
+          path="/sectionassign"
+          element={ <>
+              <SignedIn>
+                <NavBar />
+                <SectionAssign />
               </SignedIn>
               <SignedOut>
                 <RedirectToSignIn />
@@ -291,7 +323,19 @@ function ClerkProviderWithRoutes() {
               </SignedOut>
             </>
           } />
- 
+          <Route
+          path="/help"
+          element={
+            <>
+              <SignedIn>
+                <NavBar />
+                <HelpPage />
+              </SignedIn>
+              <SignedOut>
+                <RedirectToSignIn />
+              </SignedOut>
+            </>
+          } />
         <Route index element={<Navigate to="/home" />} />
       </Routes>
 

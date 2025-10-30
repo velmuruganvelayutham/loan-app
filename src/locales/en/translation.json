@@ -223,6 +223,18 @@
   "weenkendnewaccounts":"Ween End Not New Account ",
   "latependingadvanceless":"Late Pending And Advance Less",
   "type":"Type",
-  "paymenttype":"Payment Type"
+  "paymenttype":"Payment Type",
+  "sectionname":"Section Name",
+  "sectionheader":"SECTION MASTER",
+  "section":"Section",
+  "sectionassinheader":"SECTION ASSIGN",
+  "editsectionassineditheader":"EDIT SECTION ASSIGNMENT",
+  "selectlinemen":"Select Linemen",
+  "updateassignment":"Update Assignment",
+  "assignsection":"Assign Section",
+  "canceledit":"Cancel Edit",
+  "currentassignments":"Current Assignments",
+  "assignedlinemen":"Assigned Linemen"
+
 
 }

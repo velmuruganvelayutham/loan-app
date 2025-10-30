@@ -75,6 +75,15 @@ function NavBar() {
         else if (languageValue === "AccountReport"){
             navigate("/accountreport")
         }
+        else if (languageValue === "Section"){
+            navigate("/section")
+        }
+        else if (languageValue === "Section Assign"){
+            navigate("/sectionassign")
+        }
+        else if (languageValue === "Help"){
+            navigate("/help")
+        }
     }
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" onSelect={handleSelect} >
@@ -94,6 +103,8 @@ function NavBar() {
                             <NavDropdown.Item href="citycreate" id="loan-app-nav-dropdown-item-city">City</NavDropdown.Item>
                             <NavDropdown.Item href="linemancreate" id="loan-app-nav-dropdown-item-lineman">LineMan</NavDropdown.Item>
                             <NavDropdown.Item href="linecreate" id="loan-app-nav-dropdown-item-line">Line</NavDropdown.Item>
+                            <NavDropdown.Item href="section" id="loan-app-nav-dropdown-item-section">Section</NavDropdown.Item>
+                            <NavDropdown.Item href="sectionassign" id="loan-app-nav-dropdown-item-sectionassign">Section Assign</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title="Entry" id="loan-app-nav-dropdown-entry">
                             <NavDropdown.Item id="loan-app-dropdown-item-loan" href="loan">Loan</NavDropdown.Item>
@@ -117,6 +128,9 @@ function NavBar() {
                         <NavDropdown title="Settings" id="basic-nav-dropdown">
                             <NavDropdown.Item href="updatebookcity">UpdateBookByCity</NavDropdown.Item>
                             <NavDropdown.Item href="updatebookcity">LinemanBookWise</NavDropdown.Item>
+                        </NavDropdown>
+                        <NavDropdown title="help" >
+                            <NavDropdown.Item href="help">Help</NavDropdown.Item>
                         </NavDropdown>
                         <Nav.Item>
                             <SignedIn>
