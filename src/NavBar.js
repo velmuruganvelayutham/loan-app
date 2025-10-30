@@ -81,9 +81,9 @@ function NavBar() {
         else if (languageValue === "Section Assign"){
             navigate("/sectionassign")
         }
-        else if (languageValue === "Help"){
+        /*else if (languageValue === "Help"){
             navigate("/help")
-        }
+        }*/
     }
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" onSelect={handleSelect} >
@@ -129,9 +129,7 @@ function NavBar() {
                             <NavDropdown.Item href="updatebookcity">UpdateBookByCity</NavDropdown.Item>
                             <NavDropdown.Item href="updatebookcity">LinemanBookWise</NavDropdown.Item>
                         </NavDropdown>
-                        <NavDropdown title="help" >
-                            <NavDropdown.Item href="help">Help</NavDropdown.Item>
-                        </NavDropdown>
+                        
                         <Nav.Item>
                             <SignedIn>
                                 <UserButton />

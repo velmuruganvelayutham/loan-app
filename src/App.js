@@ -31,7 +31,7 @@ const Home=lazy(()=>import ('./Home'))
 const AccountMaster=lazy(()=>import('./AccountMaster'))
 const AccountEntry=lazy(()=>import('./AccountItems'))
 const AccountReport=lazy(()=>import('./AccountReports'))
-const HelpPage=lazy(()=>import('./pages/HelpPage'))
+//const HelpPage=lazy(()=>import('./pages/HelpPage'))
 const SectionCreate=lazy(()=>import('./AddSection'))
 const SectionAssign=lazy(()=>import('./SectionAssign'))
 //const CheckingSample=lazy(()=>import('./Reports/checkingsample'))
@@ -323,19 +323,7 @@ function ClerkProviderWithRoutes() {
               </SignedOut>
             </>
           } />
-          <Route
-          path="/help"
-          element={
-            <>
-              <SignedIn>
-                <NavBar />
-                <HelpPage />
-              </SignedIn>
-              <SignedOut>
-                <RedirectToSignIn />
-              </SignedOut>
-            </>
-          } />
+         
         <Route index element={<Navigate to="/home" />} />
       </Routes>
 
