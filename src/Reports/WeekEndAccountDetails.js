@@ -60,8 +60,12 @@ const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting, lin
                     <thead>
                         <tr>
                             <th style={{ fontSize: "11px", width: "1%" }}></th>
+                            
                             <th style={{ fontSize: "12px" }}>
                                 {t('no')}
+                            </th>
+                            <th style={{ fontSize: "12px", width: "3%" }}>
+                                {t('startdate')}
                             </th>
                             <th style={{ fontSize: "12px" }}>
                                 {t('loannotooshort')}
@@ -104,6 +108,7 @@ const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting, lin
 
                                             <td></td>
                                             <td style={{ fontSize: "12px" }}>{serialno}</td>
+                                            <td style={{ fontSize: "12px" }}>{dateFormatdd(customer.startdate)}</td>
                                             <td className="fw-bold" style={{ fontSize: "12px"}}>{customer.loannumber}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.document}</td>
                                             {bond && <><td style={{ fontSize: "12px" }}>{customer.bond}</td>
@@ -111,7 +116,7 @@ const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting, lin
                                             <td style={{ fontSize: "12px" }}>{customer.customer}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.referencecity}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.bookno}</td>
-                                            <td style={{ fontSize: "12px" }}>{dateFormatdd(customer.lastreceipt)}</td>
+                                            <td style={{ fontSize: "12px" }}>{dateFormatdd(customer.finisheddate)}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.totalamount}</td>
                                             <td style={{ fontSize: "12px" }}>{customer.collected}</td>
                                             <td style={{ fontSize: "12px" }}>{Number(customer.incentivepercentage) === 1 ? customer.incentivepercentage : 0.0}</td>
@@ -133,6 +138,7 @@ const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting, lin
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td></td>
                             {bond && <><td></td><td></td></>}
                             <td></td>
                             <td></td>
@@ -150,6 +156,7 @@ const WeekEndAccountDetails = ({ pendingLoans, datefrom, dateto, isPrinting, lin
                     {
                         isLastPage ? <tr className="rounded bg-white newaccountaddress">
 
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
