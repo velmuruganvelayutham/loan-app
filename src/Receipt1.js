@@ -219,7 +219,7 @@ function AddReceipt1() {
       axios.get(`${baseURL}/receipt1/get/loanpendingduplicate`, {
         params:
           { loanno: loanno, lineno: lineRef.current.value, receiptdate: dateFormat(startdateRef.current.value).toString() }
-      }).then((res) => {
+      }).then(async (res) => {
         if (res.data.length > 0) {
           let isexist = 0;
           rowsData.find((checkloan, i) => {
@@ -231,9 +231,36 @@ function AddReceipt1() {
           })
 
           if (!isexist) {
+            // Get max weekno only for the first row (index === 0)
+            let weeknoValue;
+            
+            if (index === 0 ) {
+              try {
+                const weeknoResponse = await axios.get(`${baseURL}/loan/weeknocurrentweek`, {
+                  params: {
+                    lineno: lineRef.current.value,
+                    todate: new Date(startdateRef.current.value)
+                  }
+                });
+                 
+                weeknoValue = Number(weeknoResponse.data[0].maxval)+1;
+              } catch (error) {
+                console.error("Error fetching max weekno:", error);
+                weeknoValue = 1; // Default to 1 if error
+              }
+            } 
+            
             const Editcheck = rowsData.map((item, i) => {
               if (i === index)
-                return { ...item, customer_id: res.data[0]["_id"].customer_id, customername: res.data[0]["_id"].customer, loanamount: res.data[0].pending, dueamount: res.data[0]["_id"].dueamount,amount:res.data[0]["_id"].dueamount };
+                return { 
+                  ...item, 
+                  customer_id: res.data[0]["_id"].customer_id, 
+                  customername: res.data[0]["_id"].customer, 
+                  loanamount: res.data[0].pending, 
+                  dueamount: res.data[0]["_id"].dueamount,
+                  amount: res.data[0]["_id"].dueamount,
+                  weekno: index === 0 ? weeknoValue : item.weekno
+                };
               return item
             });
 

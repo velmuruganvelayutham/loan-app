@@ -234,7 +234,8 @@
   "assignsection":"Assign Section",
   "canceledit":"Cancel Edit",
   "currentassignments":"Current Assignments",
-  "assignedlinemen":"Assigned Linemen"
+  "assignedlinemen":"Assigned Linemen",
+  "lastreceiptdate":"L.RDate"
 
 
 }

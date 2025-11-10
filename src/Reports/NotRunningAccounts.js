@@ -146,43 +146,46 @@ const NotRunningAccounts = ({ pendingLoans, date, company, isPrinting, lineman, 
           <thead>
             <tr>
 
-              <th style={{ fontSize: "11px", width: "1%" }}></th>
-              <th style={{ fontSize: "11px", width: "2.5%" }}>
+              <th style={{ fontSize: "10px", width: "1%" }}></th>
+              <th style={{ fontSize: "10px", width: "2.5%" }}>
                 {t('noshort')}
               </th>
-              <th style={{ fontSize: "9px", width: "5%" }}>
+              <th style={{ fontSize: "8px", width: "5.2%" }}>
                 {t('startdate')}
               </th >
-              <th style={{ fontSize: "11px", width: "4%" }}>
+              <th style={{ fontSize: "10px", width: "4%" }}>
                 {t('loannotooshort')}
               </th>
-              <th style={{ fontSize: "11px", width: "8%" }} >
+              <th style={{ fontSize: "10px", width: "7.5%" }} >
                 {t('customer')}
               </th>
-              <th style={{ fontSize: "11px", width: "2%" }}></th>
-              <th style={{ fontSize: "10px", width: "7.5%" }} >
+              <th style={{ fontSize: "10px", width: "2%" }}></th>
+              <th style={{ fontSize: "9px", width: "7.5%" }} >
                 {t('fathername')}
               </th>
               <th style={{ fontSize: "10px", width: "6.5%" }} >
                 {bond ? t('bond') : t('address')}
               </th>
-              <th style={{ fontSize: "9px", width: "6.9%" }}>{t('city')}</th>
-              <th style={{ fontSize: "11px", width: "6%" }}>
+              <th style={{ fontSize: "9px", width: "6.5%" }}>{t('city')}</th>
+              <th style={{ fontSize: "10px", width: "6%" }}>
                 {bond ? t('cheque') : t('phoneno')}
               </th>
               <th style={{ fontSize: "9px", width: "5%" }}>
+                {t('lastreceiptdate')}
+              </th>
+              <th style={{ fontSize: "8px", width: "5.2%" }}>
                 {t('enddate')}
               </th>
-              <th style={{ fontSize: "11px", width: "5.1%", textAlign: "center" }}>
+              <th style={{ fontSize: "10px", width: "4.7%", textAlign: "center" }}>
                 {t('loanamount')}
               </th>
-              <th style={{ fontSize: "11px", width: "4%", textAlign: "center" }}>
+              <th style={{ fontSize: "8px", width: "4%", textAlign: "center" }}>
                 {t('pay')}
               </th>
-              <th style={{ fontSize: "9px", width: "6%", textAlign: "left" }}>
+              <th style={{ fontSize: "8px", width: "5.3%", textAlign: "left" }}>
                 {t('pending')}
               </th>
-              <th style={{ fontSize: "11px", width: "1.5%" }}></th>
+              <th style={{ fontSize: "10px", width: "1.5%" }}></th>
 
             </tr>
           </thead>
@@ -259,29 +262,29 @@ const NotRunningAccounts = ({ pendingLoans, date, company, isPrinting, lineman, 
                   return (
                     <tr className='linechecking'>
                       <td></td>
-                      <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden' id='nowidth'>{serialno}</td>
-                      <td style={{ fontSize: "11px" }} className='text-nowrap overflow-hidden'>{dateFormatdd(customer.startdate)}</td>
-                      <td style={{ fontSize: "11px" }} className='text-nowrap overflow-hidden'>{customer.loannumber}</td>
-                      <td style={{ fontSize: "11px" }} className='text-nowrap overflow-hidden'>{customer.customer}</td>
-                      <td style={{ fontSize: "11px", width: "1%" }} >{customer.relationtype == 0 ? t('fathershort') : t('husbandshort')}</td>
-                      <td style={{ fontSize: "11px", width: "12%" }} className='text-nowrap overflow-hidden'>{customer.fathername}</td>
-                      <td style={{ fontSize: "11px", overflow: "hidden" }} className='text-nowrap overflow-hidden'>{bond ? customer.bond : customer.address}</td>
+                      <td style={{ fontSize: "10px", textAlign: "center" }} className='text-nowrap overflow-hidden' id='nowidth'>{serialno}</td>
+                      <td style={{ fontSize: "10px" }} className='text-nowrap overflow-hidden'>{dateFormatdd(customer.startdate)}</td>
+                      <td style={{ fontSize: "10px" }} className='text-nowrap overflow-hidden'>{customer.loannumber}</td>
+                      <td style={{ fontSize: "10px" }} className='text-nowrap overflow-hidden'>{customer.customer}</td>
+                      <td style={{ fontSize: "10px", width: "1%" }} >{customer.relationtype == 0 ? t('fathershort') : t('husbandshort')}</td>
+                      <td style={{ fontSize: "10px", width: "12%" }} className='text-nowrap overflow-hidden'>{customer.fathername}</td>
+                      <td style={{ fontSize: "10px", overflow: "hidden" }} className='text-nowrap overflow-hidden'>{bond ? customer.bond : customer.address}</td>
                       <td style={{ fontSize: "10px", overflow: "hidden", }} className='text-nowrap overflow-hidden'>{customer.city}</td>
-                      {bond ? <td style={{ fontSize: "11px", fontWeight: "500" }}>{customer.cheque}</td> : <td style={{ fontSize: "11px", wordWrap: "break-word", padding: "0px", margin: "0px", fontWeight: "500" }}>{customer.mobileno}</td>}
-
-                      <td style={{ fontSize: "11px" }} className='text-nowrap overflow-hidden'>{dateFormatdd(customer.finisheddate)}</td>
-                      <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{pending}</td>
-                      <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{duepending > 0 ? duepending : ""}</td>
+                      {bond ? <td style={{ fontSize: "10px", fontWeight: "500" }}>{customer.cheque}</td> : <td style={{ fontSize: "10px", wordWrap: "break-word", padding: "0px", margin: "0px", fontWeight: "500" }}>{customer.mobileno}</td>}
+                      <td style={{ fontSize: "10px" }} className='text-nowrap overflow-hidden'>{dateFormatdd(customer.lastreceiptdate)}</td>
+                      <td style={{ fontSize: "10px" }} className='text-nowrap overflow-hidden'>{dateFormatdd(customer.finisheddate)}</td>
+                      <td style={{ fontSize: "10px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{pending}</td>
+                      <td style={{ fontSize: "10px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{duepending > 0 ? duepending : ""}</td>
                       {
                         customer.pendingweekcolor >= 4
                           ?
-                          <td style={{ backgroundColor: "black", color: "white", fontSize: "11px", textAlign: "center", fontWeight: "500" }} >{pendingweek > 0 ? pendingweek : ""}</td>
+                          <td style={{ backgroundColor: "black", color: "white", fontSize: "10px", textAlign: "center", fontWeight: "500" }} >{pendingweek > 0 ? pendingweek : ""}</td>
                           :
                           customer.pendingweekcolor <= 4 && customer['addFields'].receiptpendingweekafter > 0
                             ?
-                            <td style={{ fontSize: "11px", textAlign: "center" }} >{pendingweek > 0 ? pendingweek : ""}</td>
+                            <td style={{ fontSize: "10px", textAlign: "center" }} >{pendingweek > 0 ? pendingweek : ""}</td>
                             :
-                            <td style={{ fontSize: "11px", textAlign: "center" }} ></td>
+                            <td style={{ fontSize: "10px", textAlign: "center" }} ></td>
                       }
                       <td></td>
                     </tr>
@@ -294,6 +297,7 @@ const NotRunningAccounts = ({ pendingLoans, date, company, isPrinting, lineman, 
             }
             <tr className='linechecking'>
               <td></td>
+              <td></td>
               <td ></td>
               <td ></td>
               <td ></td>
@@ -303,10 +307,10 @@ const NotRunningAccounts = ({ pendingLoans, date, company, isPrinting, lineman, 
               <td ></td>
               <td ></td>
               <td ></td>
-              <td className='fw-bold' style={{ fontSize: "10px", textAlign: "center" }}>{t('pagetotal')}</td>
-              <td style={{ fontSize: "11px", fontWeight: "600" }}>{pagetotal}</td>
-              <td style={{ fontSize: "11px", fontWeight: "600" }}>{pendingtotal}</td>
-              <td style={{ fontSize: "11px", fontWeight: "600" }}>{pendingweektotal}</td>
+              <td className='fw-bold' style={{ fontSize: "9px", textAlign: "center" }}>{t('pagetotal')}</td>
+              <td style={{ fontSize: "10px", fontWeight: "600" }}>{pagetotal}</td>
+              <td style={{ fontSize: "10px", fontWeight: "600" }}>{pendingtotal}</td>
+              <td style={{ fontSize: "10px", fontWeight: "600" }}>{pendingweektotal}</td>
               <td></td>
             </tr>
           </tbody>
@@ -324,10 +328,11 @@ const NotRunningAccounts = ({ pendingLoans, date, company, isPrinting, lineman, 
               <td></td>
               <td></td>
               <td></td>
-              <td className='fw-bold' style={{ fontSize: "12px", textAlign: "center" }}>{t('totalcount')}</td>
-              <td className='fw-bold' style={{ fontSize: "12px", textAlign: "center" }}>{totals.total}</td>
-              <td className='fw-bold' style={{ fontSize: "12px", textAlign: "center" }}>{totals.totalDuePending}</td>
-              <td className='fw-bold' style={{ fontSize: "12px", textAlign: "center" }}>{totals.totalPendingWeek.toFixed(2)}</td>
+              <td></td>
+              <td className='fw-bold' style={{ fontSize: "10px", textAlign: "center" }}>{t('totalcount')}</td>
+              <td className='fw-bold' style={{ fontSize: "10px", textAlign: "center" }}>{totals.total}</td>
+              <td className='fw-bold' style={{ fontSize: "10px", textAlign: "center" }}>{totals.totalDuePending}</td>
+              <td className='fw-bold' style={{ fontSize: "10px", textAlign: "center" }}>{totals.totalPendingWeek.toFixed(2)}</td>
               <td></td>
             </tr> : null
           }
