@@ -235,7 +235,9 @@
   "canceledit":"Cancel Edit",
   "currentassignments":"Current Assignments",
   "assignedlinemen":"Assigned Linemen",
-  "lastreceiptdate":"L.RDate"
+  "lastreceiptdate":"L.RDate",
+  "lessthan":"is less than due amount",
+  "amountadjusted":"Amount adjusted to pending"
 
 
 }

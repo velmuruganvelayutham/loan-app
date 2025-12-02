@@ -250,15 +250,22 @@ function AddReceipt1() {
               }
             } 
             
+            // Check if pending is less than dueamount and show alert
+            const pending = res.data[0].pending;
+            const dueamount = res.data[0]["_id"].dueamount;
+            if (pending < dueamount) {
+              alert(t('pending')`(${pending}) ${t('lessthan')} (${dueamount}). ${t('amountadjusted')}.`);
+            }
+            
             const Editcheck = rowsData.map((item, i) => {
               if (i === index)
                 return { 
                   ...item, 
                   customer_id: res.data[0]["_id"].customer_id, 
                   customername: res.data[0]["_id"].customer, 
-                  loanamount: res.data[0].pending, 
-                  dueamount: res.data[0]["_id"].dueamount,
-                  amount: res.data[0]["_id"].dueamount,
+                  loanamount: pending, 
+                  dueamount: dueamount,
+                  amount: pending < dueamount ? pending : dueamount,
                   weekno: index === 0 ? weeknoValue : item.weekno
                 };
               return item

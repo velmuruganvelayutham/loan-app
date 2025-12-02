@@ -275,7 +275,9 @@
   "canceledit":"திருத்தத்தை ரத்து செய்",
   "currentassignments":"தற்போதைய பிரிவு ஒதுக்கீடுகள்",
   "assignedlinemen":"ஒதுக்கப்பட்ட லைன்மேன்கள்",
-  "lastreceiptdate":"க.தேதி"
+  "lastreceiptdate":"க.தேதி",
+  "lessthan":"தவணை தொகையை விட குறைவாக உள்ளது",
+  "amountadjusted":"பெண்டிங் தவணைக்கு சரிசெய்யப்பட்டது"
 
 
 
