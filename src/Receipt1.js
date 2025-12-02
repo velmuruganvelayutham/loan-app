@@ -254,7 +254,7 @@ function AddReceipt1() {
             const pending = res.data[0].pending;
             const dueamount = res.data[0]["_id"].dueamount;
             if (pending < dueamount) {
-              alert(t('pending')`(${pending}) ${t('lessthan')} (${dueamount}). ${t('amountadjusted')}.`);
+              alert(`${t('loanamount')} (${pending}) ${t('lessthan')} ${t('due')} (${dueamount}). ${t('amountadjusted')}.`);
             }
             
             const Editcheck = rowsData.map((item, i) => {
