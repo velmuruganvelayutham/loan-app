@@ -56,7 +56,7 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
                             {t('totalloancount')}
                         </th>
                         <th style={{ fontSize: "12px", width: "11%" }} >
-                            {t('totalcollection')}
+                            {t('totalcollectionnew')}
                         </th>
                         <th style={{ fontSize: "12px", width: "8%" }} >
                             {t('Administrationincomeshort')}
@@ -362,7 +362,7 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
                             <span style={{ paddingLeft: "3px", textAlign: "right",fontSize:"11px" }}>{t('rs')}</span>
                         </td>
                         <td style={{ borderBottom: "3px solid black", borderTop: "3px solid black",padding: "0", margin: "0" }}>
-                            <span className='v4'></span>
+                            {t('time')}
                         </td>
                         <td style={{ borderBottom: "3px solid black", borderTop: "3px solid black",padding: "0", margin: "0" }}>
                             <span className='v5'></span></td>
@@ -381,9 +381,9 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
                         <td style={{ border: "none" }}></td>
                         <td style={{ borderLeft: "none", borderRight: "2px solid black", borderBottom: "none", borderTop: "none" }}></td>
                         <td style={{ borderLeft: "3px solid black", borderRight: "2px solid black", borderBottom: "3px solid black", borderTop: "none",fontSize:"12px",fontWeight:"bold" }}>{t('customeren')}</td>
-                        <td style={{ borderLeft: "none", borderRight: "3px solid black", borderBottom: "3px solid black", borderTop: "none" }}>
+                        <td style={{ borderLeft: "none", borderRight: "2px solid black", borderBottom: "2px solid black", borderTop: "none" }}>
                             <span style={{ textAlign: 'center' }}></span><span className='v10'></span><span style={{ marginLeft: "3px" }}></span></td>
-                        <td style={{ border: "none" }}></td>
+                        <td style={{ border: "2px solid black" }}></td>
                         <td style={{ border: "none" }}></td>
                         <td style={{ border: "none" }}></td>
                         <td style={{ border: "none" }}></td>
@@ -399,9 +399,9 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
                         <td style={{ border: "none" }}></td>
                         <td style={{ borderLeft: "0", borderRight: "3px solid black", borderBottom: "none", borderTop: "none" }}></td>
                         <td style={{ borderLeft: "0", borderRight: "2px solid black", borderBottom: "3px solid black", borderTop: "none",fontSize:"11px",fontWeight:"bold",whiteSpace: "nowrap", overflow: "hidden",padding:"0",margin:"0" }}>{linemanname}</td>
-                        <td style={{ borderLeft: "0", borderRight: "3px solid black", borderBottom: "3px solid black", borderTop: "none" }}>
+                        <td style={{ borderLeft: "0", borderRight: "1px solid black", borderBottom: "3px solid black", borderTop: "none" }}>
                             <span style={{ textAlign: 'center' }}></span><span className='v10'></span><span style={{ marginLeft: "3px" }}></span></td>
-                        <td style={{ border: "none" }}></td>
+                        <td style={{ borderLeft: "2px solid black",borderRight:"1px solid black",borderBottom:"3px solid black",borderTop:"3px solid black" }}></td>
                         <td style={{ border: "none" }}></td>
                         <td style={{ border: "none" }}></td>
                         <td style={{ border: "none" }}></td>
@@ -418,9 +418,9 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
                         <td style={{ border: "none" }}></td>
                         <td style={{ borderLeft: "0", borderRight: "3px solid black", borderBottom: "none", borderTop: "none" }}></td>
                         <td style={{ borderLeft: "0", borderRight: "2px solid black", borderBottom: "2px solid black", borderTop: "none",fontSize:"12px",fontWeight:"bold" }}>{t('totalcount')}</td>
-                        <td style={{ borderLeft: "0", borderRight: "3px solid black", borderBottom: "2px solid black" }}>
+                        <td style={{ borderLeft: "0", borderRight: "2px solid black", borderBottom: "2px solid black" }}>
                             <span style={{ textAlign: 'center' }}></span><span className='v10'></span><span ></span></td>
-                        <td style={{ borderLeft: "0", borderRight: "none", borderBottom: "none", borderTop: "none" }}></td>
+                        <td style={{ borderLeft:"1px solid black",borderRight:"1px solid black",borderBottom:"2px solid black",borderTop:"2px solid black" }}></td>
                         <td style={{ border: "none" }}></td>
                         <td style={{ border: "none" }}></td>
                         <td style={{ border: "none" }}></td>
