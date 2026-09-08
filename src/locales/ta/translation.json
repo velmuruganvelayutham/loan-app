@@ -280,8 +280,8 @@
   "assignedlinemen":"ஒதுக்கப்பட்ட லைன்மேன்கள்",
   "lastreceiptdate":"க.தேதி",
   "lessthan":"தவணை தொகையை விட குறைவாக உள்ளது",
-  "amountadjusted":"பற்று தவணைக்கு சரிசெய்யப்பட்டது"
-
+  "amountadjusted":"பற்று தவணைக்கு சரிசெய்யப்பட்டது",
+  "errormessageupdatebook":"புக் எண் மாற்ற முடியவில்லை"
 
 
 }

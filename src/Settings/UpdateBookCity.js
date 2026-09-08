@@ -7,19 +7,20 @@ import PlaceHolder from "../components/spinner/placeholder";
 import {
     useAuth
 } from "@clerk/clerk-react";
+import Select from 'react-select';
 function UpdateBookCity() {
     const { getToken } = useAuth();
     const [citynames, setcitynames] = useState([]);
     const { t, i18n } = useTranslation();
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-
+      const [selectedCity, setSelectedCity] = useState(null);
+    
     const [state, setState] = useState({
-        city: '',
         actualbkno: 0,
         changedbkno: 0
     });
-    const { city, actualbkno, changedbkno } = state
+    const { actualbkno, changedbkno } = state
 
     useEffect(() => {
         async function fetchData() {
@@ -51,9 +52,13 @@ function UpdateBookCity() {
 
         const token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        if(!selectedCity || !actualbkno || !changedbkno){
+            alert(t('errormessageupdatebook'));
+            return;
+        }
         axios.put(`${baseURL}/updatebookbycity/update`,
             {
-                city_id: city, actualbooknumber: actualbkno, changebooknumber: changedbkno
+                city_id: selectedCity ? selectedCity.value : '', actualbooknumber: actualbkno, changebooknumber: changedbkno
             }).then((res) => {
                 setErrorMessage("");
                 clearFields();
@@ -65,7 +70,8 @@ function UpdateBookCity() {
         alert(t('updatealertmessage'));
     }
     const clearFields = () => {
-        setState({ ...state, city: '', actualbkno: '', changedbkno: '' });
+        setState({ ...state, actualbkno: '', changedbkno: '' });
+        setSelectedCity(null);
     }
     return (
         <Container>
@@ -76,14 +82,22 @@ function UpdateBookCity() {
 
                             <Form.Group className="mb-3" name="lineno" border="primary" >
                                 <Form.Label>{t('city')}</Form.Label>
-                                <Form.Select aria-label="Default select example"
-                                    onChange={(e) => setState({ ...state, city: e.target.value })} value={city}>
-                                    <option value={''}> {t('lineplaceholder')}</option>
-                                    {
-                                        citynames.map((cityname) => (
-                                            <option key={cityname._id} value={cityname._id}>{cityname.cityname}</option>
-                                        ))}
-                                </Form.Select>
+                                <Select
+                                    options={citynames.map((cityname) => ({
+                                        value: cityname._id,
+                                        label: cityname.cityname
+                                    }))}
+                                    onChange={(selectedOption) => {
+                                        setState({ ...state, city: selectedOption ? selectedOption.value : '' });
+                                        setSelectedCity(selectedOption);
+                                    }}
+                                    isLoading={isLoading}
+                                    placeholder={t('cityplaceholder')}
+                                    value={selectedCity}
+                                    isSearchable
+                                    isClearable={true}
+                                />
+
                             </Form.Group>
                         </Col>
                         <Col xs={12} md={3} className="rounded bg-white">

@@ -141,7 +141,7 @@ function Ledger({ loanno, ledger, company, date }) {
                                 <Form.Label>&nbsp;{ledger.length > 0 ? first.customer : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group border="primary" >
-                                <Form.Label>{t('fathername')}&nbsp;:</Form.Label>
+                                <Form.Label>{ledger.length>0?first.relationtype===1?t('husbandname'):t('fathername'):t('fathername')}&nbsp;:</Form.Label>
                                 <Form.Label>&nbsp;{ledger.length > 0 ? first.fathername : ""}</Form.Label>
                             </Form.Group>
                             <Form.Group border="primary" >

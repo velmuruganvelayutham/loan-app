@@ -240,7 +240,7 @@ function LoanForm() {
             setFormData({ ...formData, customernamefilter: filtered[0].customer, citynamefilter: filtered[0].cityname });
             
             if(!updateUI){
-                processList(filtered[0].customer,filtered[0].cityname);
+                processList(filtered[0].customer,filtered[0].cityname,filtered[0].mobileno);
                 
             }
             
@@ -662,17 +662,17 @@ function LoanForm() {
         setAdvanceLess(0);
         calBalance()
     }
-    const processList = async (customer,city) => {
+    const processList = async (customer,city, mobileArrayval) => {
         setIsLoading(true);
-        const mobileArray = inputmobileno.split(/\s+/).filter(Boolean);
-
+        const mobileArray = mobileArrayval.split(/[\s-]+/).filter(Boolean);
+        //alert("mobileArray", inputmobileno);
         const token = await getToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         return (
             axios.get(`${baseURL}/loan/givenmoneypending`, {
                 params: {
                     mobileNumbers: mobileArray,
-                    customername: customer.toString(),
+                    customername:mobileArray.length>0?'': customer.toString(),
                     cityname: city.toString(),
                     todate: new Date(endOfWeek())
                 }
@@ -702,7 +702,7 @@ function LoanForm() {
     const handleConfirm = () => {
         setIsUpdateNew(true);
         if (myForm.mySelectKey !== null) {
-            processList(formData.customernamefilter,formData.citynamefilter);
+            processList(formData.customernamefilter,formData.citynamefilter, inputmobileno);
             setStartDate(startOfWeek());
             const initialDate = process.env.REACT_APP_LOAN_APP_CUSTOMER === "VKSAMY FINANCE"? getDayBeforeToday(): startOfWeek();
             setGivenDate(initialDate);

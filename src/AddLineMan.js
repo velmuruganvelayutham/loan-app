@@ -12,6 +12,7 @@ function AddLineMan() {
   const { getToken } = useAuth();
   const [input, setInput] = useState("");
   const [inputmobileno, setInputMobileno] = useState("")
+  const [inputlineno, setInputLineno] = useState("")
   const [lineMans, setLineMans] = useState([]);
   const [updateUI, setUpdateUI] = useState(false);
   const [updateId, setUpdateId] = useState(null);
@@ -55,7 +56,7 @@ function AddLineMan() {
       event.preventDefault();
     }
     setValidated(true);
-    if (input !== "" && inputmobileno !== "") {
+    if (input !== "" && inputmobileno !== "" && inputlineno !== "") {
       addLineMan();
     }
   };
@@ -64,10 +65,11 @@ function AddLineMan() {
     const token = await getToken();
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     setIsLoading(true);
-    axios.post(`${baseURL}/linemancreate/save`, { linemanname: input, mobileno: inputmobileno }).then((res) => {
+    axios.post(`${baseURL}/linemancreate/save`, { linemanname: input, mobileno: inputmobileno, lineno: inputlineno }).then((res) => {
       setIsLoading(false)
       setInput("")
       setInputMobileno("");
+      setInputLineno("");
       setUpdateUI((prevState) => !prevState);
       setErrorMessage("");
     })
@@ -79,20 +81,22 @@ function AddLineMan() {
     alert(t('savealertmessage'));
   }
 
-  const updateMode = (id, text, mobilenum) => {
+  const updateMode = (id, text, mobilenum, lineno) => {
     setInput(text);
     setInputMobileno(mobilenum);
+    setInputLineno(lineno);
     setUpdateId(id);
   }
 
   const updateLineMan =async () => {
     const token = await getToken();
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    axios.put(`${baseURL}/linemancreate/update/${updateId}`, { linemanname: input, mobileno: inputmobileno }).then((res) => {
+    axios.put(`${baseURL}/linemancreate/update/${updateId}`, { linemanname: input, mobileno: inputmobileno, lineno: inputlineno }).then((res) => {
       setIsLoading(false)
       setUpdateUI((prevState) => !prevState)
       setInput("");
       setInputMobileno("");
+      setInputLineno("");
       setUpdateId(null);
       setErrorMessage("");
     }).catch(error => {
@@ -105,6 +109,7 @@ function AddLineMan() {
   const clearFields = () => {
     setInput("");
     setInputMobileno("");
+    setInputLineno("");
     setUpdateId(null);
   }
 
@@ -134,6 +139,14 @@ function AddLineMan() {
                 <Form.Group className="mb-3" name="mobilenumber" border="primary" >
                   <Form.Label>{t('phoneno')}</Form.Label>
                   <Form.Control type="number" data-cypress-loan-app-mobilenumber="mobilenumber" placeholder={t('phonenoplaceholder')} required value={inputmobileno} onChange={(e) => setInputMobileno(e.target.value)} />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="rounded bg-white">
+              <Col xs={12} md={12} >
+                <Form.Group className="mb-3" name="mobilenumber" border="primary" >
+                  <Form.Label>{t('lineno')}</Form.Label>
+                  <Form.Control type="text" data-cypress-loan-app-lineno="lineno" required value={inputlineno} onChange={(e) => setInputLineno(e.target.value)} />
                 </Form.Group>
               </Col>
             </Row>
