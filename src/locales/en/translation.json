@@ -241,7 +241,8 @@
   "lastreceiptdate":"L.RDate",
   "lessthan":"is less than due amount",
   "amountadjusted":"Amount adjusted to LoanAmount",
-  "errormessageupdatebook":"Unable to Update Book Number"
+  "errormessageupdatebook":"Unable to Update Book Number",
+  "citywiselist":"City Wise List"
 
 
 }

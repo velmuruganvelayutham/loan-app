@@ -13,6 +13,8 @@ import CurrentWeekGivenAmount from "./CurrentWeekGivenAmount";
 import ReactToPrint from 'react-to-print';
 import PendingAccounts from "./PendingAccounts.js";
 import DailyRecords from "./DailyRecords";
+import CitywiseList from "./CitywiseList";
+
 
 import {
     useAuth
@@ -100,8 +102,8 @@ function LinecheckingReport() {
         if (Number(reportType.current.value) !== 5) {
             setIsLoading(true);
             //alert(linemanoptionRef.current.value);
-            if (Number(reportType.current.value) === 0) {
-
+            if (Number(reportType.current.value) === 0 || Number(reportType.current.value) === 10) {
+                
                 linecheckingreportname = "checkingdetails";
                 passingargument = line;
             }
@@ -144,7 +146,7 @@ function LinecheckingReport() {
                 passingargument = linemanoptionRef.current.value;
             }
 
-
+           // console.log(passingargument.toString());
             const token = await getToken();
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             return (
@@ -157,8 +159,9 @@ function LinecheckingReport() {
                         document: Number(radioRef.current.querySelector('input[name="option"]:checked').value)
                     }
                 }).then((res) => {
-                    console.log(res.data);
-                    Number(reportType.current.value) === 0 ? setCheckingData(res.data) : setCheckingDetailsLine(res.data)
+                    //console.log(res.data);
+                    Number(reportType.current.value) === 0 
+                    || Number(reportType.current.value) === 10 ? setCheckingData(res.data) : setCheckingDetailsLine(res.data)
 
                     setIsLoading(false);
 
@@ -246,6 +249,11 @@ function LinecheckingReport() {
             <WeekEndNewAccounts pendingLoans={checkingDetailsLine} datefrom={startDateRef.current.value} dateto={endDateRef.current.value} isPrinting={isPrinting} lineman={linemanoptionRef.current ? linemanoptionRef.current.value : ""} bond={radioRef.current ? Number(radioRef.current.querySelector('input[name="option"]:checked').value) === 4 ? true : false : false} />
         </Row>
     )
+    const rendercitywsielist = (
+            <Row ref={componentRef}>
+                <CitywiseList pendingLoans={Number(reportType.current.value) === 10 ? checkingData : checkingDetailsLine}  date={printDateRef} isPrinting={isPrinting} company={company.length > 0 ? company[0].companyname : ""}  cityselected={false} />
+            </Row>
+        )
     const restoreLineman = (e) => {
         const filtered = linemannames.filter(lineman => {
             return lineman._id === e.target.value;
@@ -294,7 +302,7 @@ function LinecheckingReport() {
     )
     const handleClick = () => {
 
-        if (Number(reportType.current.value) === 0 || Number(reportType.current.value) === 1 || Number(reportType.current.value) === 9) {
+        if (Number(reportType.current.value) === 0 || Number(reportType.current.value) === 1 || Number(reportType.current.value) === 9 || Number(reportType.current.value) === 10) {
             setShow(false);
         }
         else {
@@ -329,6 +337,7 @@ function LinecheckingReport() {
                                     <option value={7}>{t('pendingaccounts')}</option>
                                     <option value={8}>{t('weenkendnewaccounts')}</option>
                                     <option value={9}>{t('latependingadvanceless')}</option>
+                                    <option value={10}>{t('citywiselist')}</option>
                                 </Form.Select>
                             </Form.Group>
                         </Col>
@@ -400,8 +409,10 @@ function LinecheckingReport() {
                                         rendercurrentweekgivenaccountList : Number(reportType.current.value) === 4 ?
                                             renderweekendaccountList : Number(reportType.current.value) === 6 ?
                                                 renderNotRunningAccountList : Number(reportType.current.value) === 7 ?
-                                                    renderPendingAccountList : Number(reportType.current.value) === 8 ?
-                                                        renderWeekEndNewAccount : renderdailyrecords}
+                                                   renderPendingAccountList : Number(reportType.current.value) === 8 ?
+                                                        renderWeekEndNewAccount :Number(reportType.current.value) === 5?
+                                                         renderdailyrecords:Number(reportType.current.value) === 10?
+                                                         rendercitywsielist:null}
                         {errorMessage && <div className="error">{errorMessage}</div>}
                     </Row>
 

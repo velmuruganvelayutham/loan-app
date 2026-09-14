@@ -281,7 +281,8 @@
   "lastreceiptdate":"க.தேதி",
   "lessthan":"தவணை தொகையை விட குறைவாக உள்ளது",
   "amountadjusted":"பற்று தவணைக்கு சரிசெய்யப்பட்டது",
-  "errormessageupdatebook":"புக் எண் மாற்ற முடியவில்லை"
+  "errormessageupdatebook":"புக் எண் மாற்ற முடியவில்லை",
+  "citywiselist":"ஊர் வாரியாக பட்டியல்"
 
 
 }
