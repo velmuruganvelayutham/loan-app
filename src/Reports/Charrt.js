@@ -8,7 +8,7 @@ var arr2 = Array.from({ length: 9 }, (_, i) => i + 12);
 var arr3 = [];
 var arr4 = [];
 
-function Charrt({ loanno, ledger, company, date }) {
+function Charrt({ loanno, ledger, company, date,chartdisplay }) {
     let totalamount = 0;
     const { t, i18n } = useTranslation();
     var serialno = 0;
@@ -32,7 +32,7 @@ function Charrt({ loanno, ledger, company, date }) {
     if (loanno !== "") {
         first = records.length > 0 ? ledger[0] : "";
         totalamount = first.totalamount;
-        startdateadd = new Date(first.startdate);
+        startdateadd =chartdisplay==='givendate' ? new Date(first.givendate) : new Date(first.startdate);
         relationtype = first.relationtype;
         arr3 = [];
         arr4 = [];

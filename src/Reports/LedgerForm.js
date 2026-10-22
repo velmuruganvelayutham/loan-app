@@ -146,7 +146,7 @@ function LedgerForm() {
             {isLoadingLedger ? (
                 <div className="skeleton-loader">{t('loadingchart')}</div>
             ):(<Chart loanno={loannumberprocess} ledger={loanDetails}
-                company={company.length > 0 ? company[0].companyname : ""} date={new Date()} />)
+                company={company.length > 0 ? company[0].companyname : ""} date={new Date()} chartdisplay={company.length > 0 ?company[0].chartdisplay:''} />)
             }
         </Row>
     )

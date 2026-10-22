@@ -25,6 +25,9 @@ export function startOfWeek() {
             daycalno = 3 - currday;
         }
     }
+    if(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 7){
+        daycalno = -currday;
+    }
 
     var start = new Date(curr.setDate(curr.getDate() + daycalno));
 
@@ -89,6 +92,9 @@ export function endOfWeek() {
             currday = 7;
         }
         daycalno = (8 - currday) % 7;
+    }
+    if (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 7) {
+         daycalno = currday === 6 ? -1 : 5 - currday;
     }
 
     var start = new Date(curr.setDate(curr.getDate() + daycalno));
