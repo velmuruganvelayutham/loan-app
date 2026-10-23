@@ -673,7 +673,7 @@ function LoanForm() {
                 params: {
                     mobileNumbers: mobileArray,
                     customername:mobileArray.length>0?'': customer.toString(),
-                    cityname: city.toString(),
+                    cityname:mobileArray.length>0?'':city.toString(),
                     todate: new Date(endOfWeek())
                 }
             }).then((res) => {
