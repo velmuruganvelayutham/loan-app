@@ -333,7 +333,7 @@ function Charrt({ loanno, ledger, company, date,chartdisplay }) {
                     </Table>
                 </Col>}
             </Row>
-            {(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) || (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 3) ?
+            {(Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 0) || (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) || (Number(process.env.REACT_APP_LOAN_APP_STARTDATE) === 7) === 3) ?
                 <Row className='col-sm-8 col-md-8 mt-0 pt-0 print-margin-chartalign' style={{ paddingLeft: "14px", whiteSpace: "nowrap", overflow: "hidden" }}>
                     <Col className='col-sm-4 col-md-4' style={{ fontSize: "11px", textAlign: "center", padding: "0", margin: "0", width: "30%", textOverflow: "ellipsis" }}>
                         {t('forcontanct') + ":"}<span style={{ fontWeight: "bold", display: "inline-block", width: "50%", textOverflow: "ellipsis" }}>{first.linemanname}</span>
