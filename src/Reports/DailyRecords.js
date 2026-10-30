@@ -449,13 +449,13 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
                     <tr>
                         <th></th>
                         <th style={{ fontSize: "12px" }}>
-                            {t('no')}
+                            {t('noshort')}
                         </th>
                         <th style={{ fontSize: "12px" }}>
                             {t('loannoshort')}
                         </th>
                         <th></th>
-                        <th style={{ fontSize: "12px" }} className='col-md-2 col-sm-2'>
+                        <th style={{ fontSize: "12px",width: "20%" }} className='col-md-2 col-sm-2'>
                             {t('customer')}
                         </th>
                         <th style={{ fontSize: "12px" }}>
@@ -474,7 +474,7 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
                             {t('loannoshort')}
                         </th>
                         <th></th>
-                        <th style={{ fontSize: "12px" }} className='col-md-2 col-sm-2'>
+                        <th style={{ fontSize: "12px",width: "20%" }} className='col-md-2 col-sm-2'>
                             {t('customer')}
                         </th>
                         <th style={{ fontSize: "12px" }}>
@@ -795,13 +795,13 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
                     <tr>
                         <th></th>
                         <th style={{ fontSize: "12px" }}>
-                            {t('no')}
+                            {t('noshort')}
                         </th>
                         <th style={{ fontSize: "12px" }}>
                             {t('loannoshort')}
                         </th>
                         <th></th>
-                        <th style={{ fontSize: "12px" }} className='col-md-2 col-sm-2'>
+                        <th style={{ fontSize: "12px",width: "20%" }} className='col-md-2 col-sm-2' >
                             {t('customer')}
                         </th>
                         <th style={{ fontSize: "12px" }}>
@@ -820,7 +820,7 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
                             {t('loannoshort')}
                         </th>
                         <th></th>
-                        <th style={{ fontSize: "12px" }} className='col-md-2 col-sm-2'>
+                        <th style={{ fontSize: "12px",width: "20%" }} className='col-md-2 col-sm-2'>
                             {t('customer')}
                         </th>
                         <th style={{ fontSize: "12px" }}>
