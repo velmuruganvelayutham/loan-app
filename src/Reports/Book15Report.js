@@ -16,6 +16,9 @@ function Book15Report() {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [company, setCompany] = useState([]);
+    const [lineNames, setLineNames] = useState([]);
+    const [line, setLine] = useState("");
+    const [reportLine, setReportLine] = useState("");
     const [pendingLoans, setPendingLoans] = useState([]);
     const [isPrinting, setIsPrinting] = useState(false);
     const [dates, setDates] = useState({ from: startOfWeek(), to: endOfWeek() });
@@ -40,6 +43,20 @@ function Book15Report() {
         fetchData();
     }, [getToken])
 
+    useEffect(() => {
+        async function fetchLines() {
+            const token = await getToken();
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            axios.get(`${baseURL}/linemancreate/get/lines`).then((res) => {
+                setLineNames(res.data);
+            }).catch(error => {
+                console.log("error=", error);
+                setErrorMessage(t('errormessagecity'));
+            })
+        }
+        fetchLines();
+    }, [getToken])
+
     const processList = async () => {
         setIsLoading(true);
         setErrorMessage("");
@@ -49,7 +66,7 @@ function Book15Report() {
         const todate = endDateRef.current.value;
         return axios.get(`${baseURL}/loan/checkingdetails`, {
             params: {
-                city_id: "",
+                city_id: line,
                 fromdate: fromdate,
                 todate: todate,
                 bookno: BOOK_NO,
@@ -59,6 +76,8 @@ function Book15Report() {
         }).then((res) => {
             setPendingLoans(res.data);
             setDates({ from: fromdate, to: todate });
+            const selected = lineNames.find((l) => String(l.lineno) === String(line));
+            setReportLine(selected ? selected.linename : "");
             setIsLoading(false);
         }).catch(error => {
             console.log("error=", error);
@@ -86,6 +105,17 @@ function Book15Report() {
                             <Form.Group>
                                 <Form.Label>{t('bookno')}</Form.Label>
                                 <Form.Control type="number" value={BOOK_NO} disabled readOnly />
+                            </Form.Group>
+                        </Col>
+                        <Col md={2} className="rounded bg-white">
+                            <Form.Group className="mb-3">
+                                <Form.Label>{t('line')}</Form.Label>
+                                <Form.Select value={line} onChange={(e) => setLine(e.target.value)}>
+                                    <option value="">{t('lineplaceholder')}</option>
+                                    {lineNames.map((lines) => (
+                                        <option key={lines._id} value={lines.lineno}>{lines.linename}</option>
+                                    ))}
+                                </Form.Select>
                             </Form.Group>
                         </Col>
                         <Col md={3} className="rounded bg-white">
@@ -133,7 +163,7 @@ function Book15Report() {
                     </Row>
                     <Row>
                         {isLoading ? <PlaceHolder /> :
-                            <ListBookFifteen pendingLoans={pendingLoans} datefrom={dates.from} dateto={dates.to}
+                            <ListBookFifteen pendingLoans={pendingLoans} datefrom={dates.from} dateto={dates.to} linename={reportLine}
                                 company={company.length > 0 ? company[0].companyname : ""} isPrinting={isPrinting} />}
                         {errorMessage && <div className="error">{errorMessage}</div>}
                     </Row>

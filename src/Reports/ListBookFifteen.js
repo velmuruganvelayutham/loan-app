@@ -7,7 +7,7 @@ import { dateFormatdd } from "../FunctionsGlobal/StartDateFn"
 // Rows (city heading + account + subtotal rows) shown on one A4 landscape page.
 const ROWS_PER_PAGE = 22;
 
-const ListBookFifteen = ({ pendingLoans, datefrom, dateto, company, isPrinting }) => {
+const ListBookFifteen = ({ pendingLoans, datefrom, dateto, company, isPrinting, linename }) => {
   const { t } = useTranslation();
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -81,26 +81,28 @@ const ListBookFifteen = ({ pendingLoans, datefrom, dateto, company, isPrinting }
           <div className='col-sm-6 fixed'><h4>{t('book15report')}</h4></div>
         </div>
         <div style={{ display: "flex", alignItems: "center" }} className='col-sm-12 fixed linechecking-print-margin'>
-          <div className='col-sm-4 fixed'>{t('lineman') + " : " + (linemanname || "")}</div>
+          <div className='col-sm-3 fixed'>{t('lineman') + " : " + (linemanname || "")}</div>
+          <div className='col-sm-2 fixed'>{t('line') + " : " + (linename || "")}</div>
           <div className='col-sm-2 fixed'>{t('bookno') + " : 15"}</div>
-          <div className='col-sm-4 fixed'>{t('date') + " : " + (datefrom ? dateFormatdd(datefrom) : "") + " - " + (dateto ? dateFormatdd(dateto) : "")}</div>
+          <div className='col-sm-3 fixed'>{t('date') + " : " + (datefrom ? dateFormatdd(datefrom) : "") + " - " + (dateto ? dateFormatdd(dateto) : "")}</div>
         </div>
 
         <Table className='table table-bordered border-dark linecheckingtable' style={{ margin: 0, padding: 0, width: "100%" }}>
           <thead>
             <tr>
               <th style={{ fontSize: "11px", width: "3%" }}>{t('noshort')}</th>
-              <th style={{ fontSize: "11px", width: "7%" }}>{t('startdate')}</th>
+              <th style={{ fontSize: "11px", width: "6%" }}>{t('startdate')}</th>
               <th style={{ fontSize: "11px", width: "5%" }}>{t('loannotooshort')}</th>
-              <th style={{ fontSize: "11px", width: "14%" }}>{t('customer')}</th>
+              <th style={{ fontSize: "11px", width: "13%" }}>{t('customer')}</th>
               <th style={{ fontSize: "11px", width: "3%" }}></th>
-              <th style={{ fontSize: "11px", width: "12%" }}>{t('fathername')}</th>
-              <th style={{ fontSize: "11px", width: "16%" }}>{t('address')}</th>
+              <th style={{ fontSize: "11px", width: "11%" }}>{t('fathername')}</th>
+              <th style={{ fontSize: "11px", width: "11%" }}>{t('address')}</th>
               <th style={{ fontSize: "11px", width: "9%" }}>{t('phoneno')}</th>
-              <th style={{ fontSize: "11px", width: "7%" }}>{t('enddate')}</th>
+              <th style={{ fontSize: "11px", width: "6%" }}>{t('enddate')}</th>
               <th style={{ fontSize: "11px", width: "8%", textAlign: "center" }}>{t('loanamount')}</th>
               <th style={{ fontSize: "11px", width: "8%", textAlign: "center" }}>{t('paidlabel')}</th>
               <th style={{ fontSize: "11px", width: "8%", textAlign: "center" }}>{t('unpaidlabel')}</th>
+              <th style={{ fontSize: "11px", width: "9%", textAlign: "center" }}>{t('signature')}</th>
             </tr>
           </thead>
           <tbody>
@@ -108,7 +110,7 @@ const ListBookFifteen = ({ pendingLoans, datefrom, dateto, company, isPrinting }
               if (item.type === "city") {
                 return (
                   <tr className='linechecking' key={"c" + i}>
-                    <td colSpan={12} className='fw-bold' style={{ fontSize: "12px" }}>{t('city') + " : " + item.cityname}</td>
+                    <td colSpan={13} className='fw-bold' style={{ fontSize: "12px" }}>{t('city') + " : " + item.cityname}</td>
                   </tr>
                 );
               }
@@ -119,6 +121,7 @@ const ListBookFifteen = ({ pendingLoans, datefrom, dateto, company, isPrinting }
                     <td className='fw-bold' style={{ fontSize: "11px", textAlign: "center" }}>{item.loan}</td>
                     <td className='fw-bold' style={{ fontSize: "11px", textAlign: "center" }}>{item.paid}</td>
                     <td className='fw-bold' style={{ fontSize: "11px", textAlign: "center" }}>{item.unpaid}</td>
+                    <td></td>
                   </tr>
                 );
               }
@@ -137,10 +140,11 @@ const ListBookFifteen = ({ pendingLoans, datefrom, dateto, company, isPrinting }
                   <td style={{ fontSize: "11px", textAlign: "center" }}>{item.total}</td>
                   <td style={{ fontSize: "11px", textAlign: "center" }}>{item.paid}</td>
                   <td style={{ fontSize: "11px", textAlign: "center" }}>{item.unpaid}</td>
+                  <td style={{ height: "28px" }}></td>
                 </tr>
               );
             }) : (
-              <tr><td colSpan={12}>{t('tabledata')}</td></tr>
+              <tr><td colSpan={13}>{t('tabledata')}</td></tr>
             )}
             {isLastPage && items.length > 0 ? (
               <tr className='linechecking'>
@@ -148,6 +152,7 @@ const ListBookFifteen = ({ pendingLoans, datefrom, dateto, company, isPrinting }
                 <td className='fw-bold' style={{ fontSize: "13px", textAlign: "center" }}>{grandLoan}</td>
                 <td className='fw-bold' style={{ fontSize: "13px", textAlign: "center" }}>{grandPaid}</td>
                 <td className='fw-bold' style={{ fontSize: "13px", textAlign: "center" }}>{grandUnpaid}</td>
+                <td></td>
               </tr>
             ) : null}
           </tbody>
