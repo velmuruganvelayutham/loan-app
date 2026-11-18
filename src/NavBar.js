@@ -51,6 +51,9 @@ function NavBar() {
         else if (languageValue === "LineChecking") {
             navigate("/linechecking");
         }
+        else if (languageValue === "Book15Report") {
+            navigate("/book15report");
+        }
         else if (languageValue === "TotalLedger") {
             navigate("/totalledger");
         }
@@ -118,6 +121,7 @@ function NavBar() {
                             <NavDropdown.Item href="ledger">Ledger</NavDropdown.Item>
                             <NavDropdown.Item href="linechecking">LineChecking</NavDropdown.Item>
                             <NavDropdown.Item href="updatebookcity">GivenMoneyDetails</NavDropdown.Item>
+                            <NavDropdown.Item href="book15report">Book15Report</NavDropdown.Item>
                             <NavDropdown.Item href="totalledger">TotalLedger</NavDropdown.Item>
                         </NavDropdown>
                         <NavDropdown title="Accounts" id="basic-nav-dropdown">

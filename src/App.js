@@ -21,6 +21,7 @@ const AddLineMan = lazy(() => import('./AddLineMan'));
 const AddReceipt = lazy(() => import('./Receipt'));
 const Ledger = lazy(() => import('./Reports/LedgerForm'));
 const LinecheckingReport = lazy(() => import('./Reports/LinecheckingReport'))
+const Book15Report = lazy(() => import('./Reports/Book15Report'))
 const TotalLedger = lazy(() => import('./Reports/totalLedger'));
 const Receipt1 = lazy(() => import('./Receipt1'));
 const Line = lazy(() => import('./AddLine'));
@@ -225,6 +226,20 @@ function ClerkProviderWithRoutes() {
               <SignedIn>
                 <NavBar />
                 <LinecheckingReport />
+              </SignedIn>
+              <SignedOut>
+                <RedirectToSignIn />
+              </SignedOut>
+            </>
+          }
+        />
+        <Route
+          path="/book15report"
+          element={
+            <>
+              <SignedIn>
+                <NavBar />
+                <Book15Report />
               </SignedIn>
               <SignedOut>
                 <RedirectToSignIn />

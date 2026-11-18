@@ -99,6 +99,10 @@ function LinecheckingReport() {
         fetchData();
     }, [getToken])
     const processList = async () => {
+        if (Number(bookRef.current.value) === 15) {
+            alert(t('book15onlyinownreport'));
+            return;
+        }
         if (Number(reportType.current.value) !== 5) {
             setIsLoading(true);
             //alert(linemanoptionRef.current.value);
