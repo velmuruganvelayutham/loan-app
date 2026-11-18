@@ -77,6 +77,8 @@ function Book15Report() {
 
     return (
         <Container>
+            {/* Whole print job is A4 landscape while this report is open. */}
+            <style>{`@media print { @page { size: 297mm 210mm; margin: 0; } }`}</style>
             <Row>
                 <Form ref={radioRef}>
                     <Row className="hide-on-print">

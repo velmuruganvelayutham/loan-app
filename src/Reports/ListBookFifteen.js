@@ -158,7 +158,7 @@ const ListBookFifteen = ({ pendingLoans, datefrom, dateto, company, isPrinting }
   };
 
   return (
-    <div className="landscape">
+    <div>
       {!isPrinting ? (
         <div>
           {renderPage(Math.min(currentPage, Math.max(totalPages, 1)))}
