@@ -327,7 +327,7 @@ const ListTotalLedger = ({ totalledger, datefrom, dateto, notrunningdate, report
                         <tr className='totalledgercitywise'>
                           <td></td>
                           <td>{customer.bookno}</td>
-                          <td style={{ fontSize: "12px" }}>{customer.cityname}</td>
+                          <td style={{ fontSize: "12px" }}>{Number(customer.bookno) === 15 ? t('notrunningaccountsbook') : customer.cityname}</td>
                           <td style={{ fontSize: "12px" }}>{(Number(customer.countbefore))}</td>
                           <td style={{ fontSize: "12px" }}>{customer.totalamountbefore}</td>
                           <td style={{ fontSize: "12px" }}>{customer.pendingbefore}</td>

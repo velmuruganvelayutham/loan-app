@@ -247,5 +247,6 @@
   "book15onlyinownreport":"Book 15 is available only in the Book 15 report",
   "paidlabel":"Paid",
   "unpaidlabel":"Unpaid",
-  "signature":"Sign"
+  "signature":"Sign",
+  "notrunningaccountsbook":"Not Running Accounts"
 }

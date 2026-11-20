@@ -19,7 +19,15 @@ const ListBookFifteen = ({ pendingLoans, datefrom, dateto, company, isPrinting, 
       if (!groups.has(cityname)) groups.set(cityname, []);
       groups.get(cityname).push(loan);
     });
-    const sortedCities = Array.from(groups.keys()).sort((a, b) => a.localeCompare(b));
+    // Loans without an old book number sort last.
+    const oldBook = (loan) => (loan.oldbookno === undefined || loan.oldbookno === null || loan.oldbookno === "")
+      ? Number.MAX_SAFE_INTEGER : Number(loan.oldbookno);
+    groups.forEach((loans) => {
+      loans.sort((a, b) => (oldBook(a) - oldBook(b)) || (Number(a.loannumber) - Number(b.loannumber)));
+    });
+    // City groups are ordered by the smallest old book number inside each city.
+    const cityOrder = (cityname) => Math.min(...groups.get(cityname).map(oldBook));
+    const sortedCities = Array.from(groups.keys()).sort((a, b) => (cityOrder(a) - cityOrder(b)) || a.localeCompare(b));
 
     const list = [];
     let loanSum = 0, paidSum = 0, unpaidSum = 0;
