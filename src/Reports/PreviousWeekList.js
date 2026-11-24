@@ -35,6 +35,8 @@ const PreviousWeekList = ({ pendingLoans, date, company, isPrinting,reporttype }
         const pageRecords = pendingLoans.slice(startIndex, startIndex + recordsPerPage);
         const isLastPage = page === totalPages;
         first = pageRecords.length > 0 ? pendingLoans[0] : "";
+        // Book 15 combines several cities and lines, so the heading shows lineman, book no and date only.
+        const isBookFifteen = pendingLoans.length > 0 && Number(first.bookno) === 15;
         serialno = startIndex;
         return (
             <Fragment>
@@ -45,7 +47,9 @@ const PreviousWeekList = ({ pendingLoans, date, company, isPrinting,reporttype }
                     <div className='col-sm-7 fixed mt-5'><h4>{Number(reporttype)==1?t('previousweekdetails'):t('latependingadvanceless')}</h4></div>
                 </div>
                 <div style={{ paddingLeft: "27px", display: "flex", alignItems: "center" }} className='print-margin'>
-                    <div className='col-sm-2 fixed' >{t('line') + " : " + (pendingLoans.length > 0 ? first.lineno : "")}</div>
+                    {isBookFifteen
+                        ? <div className='col-sm-4 fixed'>{t('lineman') + " : " + (first.linemanname || "")}</div>
+                        : <div className='col-sm-2 fixed' >{t('line') + " : " + (pendingLoans.length > 0 ? first.lineno : "")}</div>}
                     <div className='col-sm-2 fixed'>{t("bookno") + " : " + (pendingLoans.length > 0 ? first.bookno : "")}</div>
                     <div className='col-sm-2 fixed'>{t("date") + " : " + dateFormatdd(date)}</div>
                 </div>

@@ -99,7 +99,9 @@ function LinecheckingReport() {
         fetchData();
     }, [getToken])
     const processList = async () => {
-        if (Number(bookRef.current.value) === 15) {
+        // Book 15 is allowed only in the Previous Week reports (types 1 and 9) and its own report.
+        const book15Allowed = Number(reportType.current.value) === 1 || Number(reportType.current.value) === 9;
+        if (Number(bookRef.current.value) === 15 && !book15Allowed) {
             alert(t('book15onlyinownreport'));
             return;
         }
@@ -159,6 +161,7 @@ function LinecheckingReport() {
                         city_id: passingargument.toString(),
                         fromdate: startDateRef.current.value, todate: endDateRef.current.value,
                         bookno: Number(bookRef.current.value),
+                        allowbook15: (Number(bookRef.current.value) === 15 && book15Allowed) ? 1 : 0,
                         reporttype:Number(reportType.current.value),
                         document: Number(radioRef.current.querySelector('input[name="option"]:checked').value)
                     }
