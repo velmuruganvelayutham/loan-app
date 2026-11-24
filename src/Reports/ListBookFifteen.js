@@ -89,7 +89,7 @@ const ListBookFifteen = ({ pendingLoans, datefrom, dateto, company, isPrinting, 
           <div className='col-sm-6 fixed'><h4>{t('book15report')}</h4></div>
         </div>
         <div style={{ display: "flex", alignItems: "center" }} className='col-sm-12 fixed linechecking-print-margin'>
-          <div className='col-sm-3 fixed'>{t('lineman') + " : " + (linemanname || "")}</div>
+          <div className='col-sm-3 fixed'>{t('customer') + " : " + (linemanname || "")}</div>
           <div className='col-sm-2 fixed'>{t('line') + " : " + (linename || "")}</div>
           <div className='col-sm-2 fixed'>{t('bookno') + " : 15"}</div>
           <div className='col-sm-3 fixed'>{t('date') + " : " + (datefrom ? dateFormatdd(datefrom) : "") + " - " + (dateto ? dateFormatdd(dateto) : "")}</div>
