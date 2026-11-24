@@ -51,7 +51,7 @@ function NavBar() {
         else if (languageValue === "LineChecking") {
             navigate("/linechecking");
         }
-        else if (languageValue === "Book15Report") {
+        else if (languageValue.trim() === "Not Running Main List") {
             navigate("/book15report");
         }
         else if (languageValue === "TotalLedger") {
