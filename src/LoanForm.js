@@ -271,6 +271,12 @@ function LoanForm() {
         else if (weekscount == 11) {
             document = ((100 * given) / 1000);
         }
+        else if (weekscount == 21) {
+            document = ((60 * given) / 1000);
+        }
+        else if (weekscount == 30) {
+            document = ((50 * given) / 1000);
+        }
 
         documentAmt.current.value = document.toFixed(2);
         let intrested = 0
@@ -301,6 +307,12 @@ function LoanForm() {
         }
         else if (weekscount == 11) {
             intrested = ((given * 0) / 100);
+        }
+        else if (weekscount == 21) {
+            intrested = ((given * 20) / 100);
+        }
+        else if (weekscount == 30) {
+            intrested = ((given * 15) / 100);
         }
 
         interestAmt.current.value = intrested.toFixed(2);

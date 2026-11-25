@@ -77,6 +77,14 @@ function Charrt({ loanno, ledger, company, date,chartdisplay }) {
             arr1 = Array.from(Array(12).keys());
             arr2 = Array.from({ length: 8 }, (_, i) => i + 12)
         }
+        else if (first.weekcount === 21) {
+            arr1 = Array.from(Array(16).keys());
+            arr2 = Array.from({ length: 5 }, (_, i) => i + 17)
+        }
+        else if (first.weekcount === 30) {
+            arr1 = Array.from(Array(16).keys());
+            arr2 = Array.from({ length: 14 }, (_, i) => i + 17)
+        }
         else if (first.weekcount === 11) {
             arr1 = Array.from(Array(11).keys());
             arr2 = Array.from({ length: 0 }, (_, i) => i + 12)

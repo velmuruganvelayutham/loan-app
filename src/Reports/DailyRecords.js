@@ -894,6 +894,120 @@ const DailyRecords = ({ datefrom, dateto, linemanname, linamnline, collectiondat
 
 
             </Table>
+            {(Number(process.env.REACT_APP_DEFAULT_WEEK_COUNT) === 24) ?
+                <div style={{ paddingTop: "65px" }}></div>
+                : null}
+            {(Number(process.env.REACT_APP_DEFAULT_WEEK_COUNT) === 24) ?<div style={{ paddingLeft: "15px", display: "flex", alignItems: "center" }}>
+                <div className='fw-bold pt-5' style={{ width: "20%", paddingLeft: "20px" }}>{t('customer') + " : "}</div>
+                <div className='fw-bold pt-5' style={{ width: "15%" }}>{t('line') + " : "}</div>
+                <div className='fw-bold pt-5' style={{ width: "35%" }}>{t("weekdate") + " : "}</div>
+                <div className='fw-bold pt-5' style={{ width: "30%" }}>{t("collectiondate") + " : "}</div>
+            </div>:null}
+            {(Number(process.env.REACT_APP_DEFAULT_WEEK_COUNT) === 24) ?<Table className='table  text-center table-bordered border-dark' >
+                <thead >
+                    <tr>
+                        <th></th>
+                        <th style={{ fontSize: "12px" }}>
+                            {t('noshort')}
+                        </th>
+                        <th style={{ fontSize: "12px" }}>
+                            {t('loannoshort')}
+                        </th>
+                        <th></th>
+                        <th style={{ fontSize: "12px",width: "20%" }} className='col-md-2 col-sm-2' >
+                            {t('customer')}
+                        </th>
+                        <th style={{ fontSize: "12px" }}>
+                            {t('weekshort')}
+                        </th>
+                        <th style={{ fontSize: "12px" }} className='col-md-1 col-sm-1'>
+                            {t('money')}
+                        </th>
+                        <th style={{
+                            fontSize: "12px", borderColor: "black !important",
+                            borderRight: "2px solid black"
+                        }} >
+                            {t('bill')}
+                        </th>
+                        <th style={{ fontSize: "12px" }}>
+                            {t('loannoshort')}
+                        </th>
+                        <th></th>
+                        <th style={{ fontSize: "12px",width: "20%" }} className='col-md-2 col-sm-2'>
+                            {t('customer')}
+                        </th>
+                        <th style={{ fontSize: "12px" }}>
+                            {t('weekshort')}
+                        </th>
+                        <th style={{ fontSize: "12px" }} className='col-md-1 col-sm-1'>
+                            {t('money')}
+                        </th>
+                        <th style={{ fontSize: "12px" }}>
+                            {t('bill')}
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        arr1 && arr1.length > 0
+                            ?
+                            (arr1.map((i) => {
+                                serialno = i + 1;
+
+                                return (
+                                    <tr className='dailyrecordsrough'>
+                                        <td></td>
+                                        <td>{serialno}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td style={{
+                                            borderColor: "black !important", borderRight: "2px solid black"
+                                        }}></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+
+                                    </tr>
+
+                                )
+                            })
+                            )
+                            :
+                            t('tabledata')
+                    }
+
+                    <tr className='dailyrecordtotalheight'>
+                        <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}>{(t('total'))}</td>
+                        <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderColor: "black !important", borderRight: "2px solid black", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
+                        <td style={{ borderLeft: "0", borderRight: "0", borderBottom: "2px solid black", borderTop: "2px solid black" }}></td>
+
+                    </tr>
+                </tbody>
+
+
+
+            </Table>:null}
+
 
 
         </Fragment>
