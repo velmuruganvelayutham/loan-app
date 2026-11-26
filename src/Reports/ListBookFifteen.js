@@ -94,21 +94,21 @@ const ListBookFifteen = ({ pendingLoans, datefrom, dateto, company, isPrinting, 
         <Table className='table table-bordered border-dark linecheckingtable' style={{ margin: 0, padding: 0, width: "100%" }}>
           <thead>
             <tr>
-              <th style={{ fontSize: "11px", width: "3%" }}>{t('noshort')}</th>
-              <th style={{ fontSize: "11px", width: "6%" }}>{t('startdate')}</th>
-              <th style={{ fontSize: "11px", width: "5%" }}>{t('loannotooshort')}</th>
-              <th style={{ fontSize: "11px", width: "10%" }}>{t('customer')}</th>
-              <th style={{ fontSize: "11px", width: "3%" }}></th>
-              <th style={{ fontSize: "11px", width: "9%" }}>{t('fathername')}</th>
-              <th style={{ fontSize: "11px", width: "9%" }}>{t('address')}</th>
-              <th style={{ fontSize: "11px", width: "14%" }}>{t('phoneno')}</th>
-              <th style={{ fontSize: "11px", width: "4%", textAlign: "center" }}>{t('due')}</th>
-              <th style={{ fontSize: "11px", width: "6%" }}>{t('lastpaiddate')}</th>
-              <th style={{ fontSize: "11px", width: "6%" }}>{t('enddate')}</th>
-              <th style={{ fontSize: "11px", width: "7%", textAlign: "center" }}>{t('loanamount')}</th>
-              <th style={{ fontSize: "11px", width: "7%", textAlign: "center" }}>{t('paidlabel')}</th>
-              <th style={{ fontSize: "11px", width: "7%", textAlign: "center" }}>{t('unpaidlabel')}</th>
-              <th style={{ fontSize: "11px", width: "4%", textAlign: "center" }}>{t('details')}</th>
+              <th style={{ fontSize: "13px", width: "3%" }}>{t('noshort')}</th>
+              <th style={{ fontSize: "13px", width: "6%" }}>{t('startdate')}</th>
+              <th style={{ fontSize: "13px", width: "5%" }}>{t('loannotooshort')}</th>
+              <th style={{ fontSize: "13px", width: "10%" }}>{t('customer')}</th>
+              <th style={{ fontSize: "13px", width: "3%" }}></th>
+              <th style={{ fontSize: "13px", width: "9%" }}>{t('fathername')}</th>
+              <th style={{ fontSize: "13px", width: "9%" }}>{t('address')}</th>
+              <th style={{ fontSize: "13px", width: "14%" }}>{t('phoneno')}</th>
+              <th style={{ fontSize: "13px", width: "4%", textAlign: "center" }}>{t('dueshort')}</th>
+              <th style={{ fontSize: "13px", width: "6%" }}>{t('lastpaiddate')}</th>
+              <th style={{ fontSize: "13px", width: "6%" }}>{t('enddate')}</th>
+              <th style={{ fontSize: "13px", width: "7%", textAlign: "center" }}>{t('loanamount')}</th>
+              <th style={{ fontSize: "13px", width: "7%", textAlign: "center" }}>{t('paidlabel')}</th>
+              <th style={{ fontSize: "13px", width: "7%", textAlign: "center" }}>{t('unpaidlabel')}</th>
+              <th style={{ fontSize: "13px", width: "4%", textAlign: "center" }}>{t('details')}</th>
             </tr>
           </thead>
           <tbody>
@@ -116,28 +116,28 @@ const ListBookFifteen = ({ pendingLoans, datefrom, dateto, company, isPrinting, 
               if (item.type === "city") {
                 return (
                   <tr className='linechecking' key={"c" + i}>
-                    <td colSpan={4} className='fw-bold text-nowrap' style={{ fontSize: "12px" }}>{item.cityname}</td>
-                    {Array.from({ length: 11 }, (_, k) => <td key={k}></td>)}
+                    <td className='fw-bold'><span style={{ display: "block", width: 0, whiteSpace: "nowrap", fontSize: "14px" }}>{item.cityname}</span></td>
+                    {Array.from({ length: 14 }, (_, k) => <td key={k}></td>)}
                   </tr>
                 );
               }
               const customer = item.loan;
               return (
                 <tr className='linechecking' key={"l" + customer.loannumber}>
-                  <td style={{ fontSize: "11px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{item.serial}</td>
-                  <td style={{ fontSize: "11px" }} className='text-nowrap overflow-hidden'>{dateFormatdd(customer.startdate)}</td>
-                  <td style={{ fontSize: "11px" }} className='text-nowrap overflow-hidden'>{customer.loannumber}</td>
-                  <td style={{ fontSize: "11px" }} className='text-nowrap overflow-hidden'>{customer.customer}</td>
-                  <td style={{ fontSize: "11px" }}>{customer.relationtype == 0 ? t('fathershort') : t('husbandshort')}</td>
-                  <td style={{ fontSize: "11px" }} className='text-nowrap overflow-hidden'>{customer.fathername}</td>
-                  <td style={{ fontSize: "11px" }} className='text-nowrap overflow-hidden'>{customer.address}</td>
-                  <td style={{ fontSize: "11px", wordBreak: "break-all" }}>{customer.mobileno}</td>
-                  <td style={{ fontSize: "11px", textAlign: "center" }}>{customer.dueamount}</td>
-                  <td style={{ fontSize: "11px" }} className='text-nowrap overflow-hidden'>{customer.lastreceiptdate ? dateFormatdd(customer.lastreceiptdate) : ""}</td>
-                  <td style={{ fontSize: "11px" }} className='text-nowrap overflow-hidden'>{dateFormatdd(customer.finisheddate)}</td>
-                  <td style={{ fontSize: "11px", textAlign: "center" }}>{item.total}</td>
-                  <td style={{ fontSize: "11px", textAlign: "center" }}>{item.paid}</td>
-                  <td style={{ fontSize: "11px", textAlign: "center" }}>{item.unpaid}</td>
+                  <td style={{ fontSize: "13px", textAlign: "center" }} className='text-nowrap overflow-hidden'>{item.serial}</td>
+                  <td style={{ fontSize: "13px" }} className='text-nowrap overflow-hidden'>{dateFormatdd(customer.startdate)}</td>
+                  <td style={{ fontSize: "13px" }} className='text-nowrap overflow-hidden'>{customer.loannumber}</td>
+                  <td style={{ fontSize: "13px" }} className='text-nowrap overflow-hidden'>{customer.customer}</td>
+                  <td style={{ fontSize: "13px" }}>{customer.relationtype == 0 ? t('fathershort') : t('husbandshort')}</td>
+                  <td style={{ fontSize: "13px" }} className='text-nowrap overflow-hidden'>{customer.fathername}</td>
+                  <td style={{ fontSize: "13px" }} className='text-nowrap overflow-hidden'>{customer.address}</td>
+                  <td style={{ fontSize: "13px", wordBreak: "break-all" }}>{customer.mobileno}</td>
+                  <td style={{ fontSize: "13px", textAlign: "center" }}>{customer.dueamount}</td>
+                  <td style={{ fontSize: "13px" }} className='text-nowrap overflow-hidden'>{customer.lastreceiptdate ? dateFormatdd(customer.lastreceiptdate) : ""}</td>
+                  <td style={{ fontSize: "13px" }} className='text-nowrap overflow-hidden'>{dateFormatdd(customer.finisheddate)}</td>
+                  <td style={{ fontSize: "13px", textAlign: "center" }}>{item.total}</td>
+                  <td style={{ fontSize: "13px", textAlign: "center" }}>{item.paid}</td>
+                  <td style={{ fontSize: "13px", textAlign: "center" }}>{item.unpaid}</td>
                   <td style={{ height: "28px" }}></td>
                 </tr>
               );
@@ -146,7 +146,7 @@ const ListBookFifteen = ({ pendingLoans, datefrom, dateto, company, isPrinting, 
             )}
             {isLastPage && items.length > 0 ? (
               <tr className='linechecking'>
-                <td colSpan={11} className='fw-bold' style={{ fontSize: "13px", textAlign: "right" }}>{t('totalcount')}</td>
+                <td colSpan={11} className='fw-bold' style={{ fontSize: "14px", textAlign: "right" }}>{t('totalcount')}</td>
                 <td className='fw-bold' style={{ fontSize: "13px", textAlign: "center" }}>{grandLoan}</td>
                 <td className='fw-bold' style={{ fontSize: "13px", textAlign: "center" }}>{grandPaid}</td>
                 <td className='fw-bold' style={{ fontSize: "13px", textAlign: "center" }}>{grandUnpaid}</td>
